@@ -11,7 +11,7 @@
     (closed)="touched.set(true)"
   >
     @for (opt of options(); track opt.value) {
-      <mat-option [value]="opt.value">{{ opt.label }}</mat-option>
+      <mat-option [value]="opt.value">{{ opt.label | a22T }}</mat-option>
     }
   </mat-select>
   @if (hint() !== '' && !showError()) {

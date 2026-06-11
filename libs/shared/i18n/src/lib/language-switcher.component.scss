@@ -1,0 +1,36 @@
+:host {
+  display: inline-flex;
+}
+
+.switcher {
+  display: inline-flex;
+  border: 1px solid color-mix(in srgb, currentcolor 35%, transparent);
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.lang {
+  background: transparent;
+  border: none;
+  color: inherit;
+  font: var(--mat-sys-label-large);
+  font-weight: 600;
+  padding: 0.25rem 0.75rem;
+  cursor: pointer;
+  opacity: 0.75;
+}
+
+.lang:hover {
+  opacity: 1;
+  background: color-mix(in srgb, currentcolor 12%, transparent);
+}
+
+.lang.active {
+  opacity: 1;
+  background: color-mix(in srgb, currentcolor 22%, transparent);
+}
+
+.lang:focus-visible {
+  outline: 2px solid currentcolor;
+  outline-offset: -2px;
+}

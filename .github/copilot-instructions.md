@@ -1,66 +1,73 @@
-# Instrukcje Copilota — nowiro/angular22
+# GitHub Copilot — angular22
 
-Monorepo demo: **Angular 22 + Nx + Angular Material + Signal Forms**. Dwa kreatory formularzy
-(`demo-individual-wizard`, `demo-business-wizard`) + landing (`angular22`). Czat prowadź po polsku;
-kod, nazwy, commity i identyfikatory — po angielsku.
+> Digest na każdą sesję. On-demand: serwery MCP + token economy →
+> [`instructions/mcp-usage.instructions.md`](instructions/mcp-usage.instructions.md);
+> reguły lintu → `instructions/code-quality.instructions.md` (auto na `**/*.ts`);
+> konwencje Angular → `instructions/angular.instructions.md` (auto na `{apps,libs}/**`);
+> agenci → [`AGENTS.md`](../AGENTS.md); SDD → [`docs/sdd/methodology.md`](../docs/sdd/methodology.md).
 
-## Stack (nie zmieniaj bez wyraźnego polecenia)
+## Tożsamość
 
-- Angular **22.0.0** — zoneless (bez zone.js), standalone, signals, **Signal Forms** (`@angular/forms/signals`).
-- Nx **22.7.5** — monorepo `apps/*` + `libs/*`, granice modułów przez tagi `scope:*` / `type:*`.
-- Angular Material **22** — wyłącznie przez wrappery z `@angular22/ui-material`.
-- pnpm (pin `packageManager`), Vitest (unit), Playwright (e2e, chromium), ESLint flat config, Prettier.
-- Node ≥ 24.15 (`.nvmrc`).
+**angular22** — demo monorepo **tylko dla GitHub Copilot** (VS Code ≥ 1.121): Angular 22
+(zoneless, standalone, signals, **Signal Forms**) + Nx 22 + Angular Material 22. Trzy apki:
+`angular22` (landing, :4200) · `demo-individual-wizard` (:4201) · `demo-business-wizard`
+(:4202) + 10 libów. Serwery MCP: `context7` · `nx` · `angular-cli` · `playwright`.
 
-## Twarde reguły
+## Język
 
-1. **Material wrapper gate** — import `@angular/material/*` lub `@angular/cdk/*` poza `libs/ui/material`
-   to błąd lintu. Używaj `<a22-text-field>`, `<a22-select>`, `<a22-checkbox>`, `<a22-date-field>`,
-   `<a22-number-field>`, `<a22-button>`, `<a22-card>`, `<a22-toolbar>`, `<a22-icon>`, `<a22-divider>`,
-   `<a22-wizard-stepper>` + `A22NotificationService`. Brakuje wrappera? Dodaj go w `libs/ui/material`.
-2. **Tylko Signal Forms** — model formularza to `signal<T>()`, walidacja w `schema()`
-   (`required`/`validate`/`applyWhen`/`applyEach`/`hidden`/`disabled` z komunikatami PL),
-   bindowanie przez `[formField]`. Zakaz `FormGroup`/`FormBuilder`/`ngModel`.
-   Wrappery pól implementują `FormValueControl`/`FormCheckboxControl`.
-3. **Komponenty zawsze w trzech plikach** — `*.component.ts` + `*.component.html` + `*.component.scss`
-   (`templateUrl`/`styleUrl`). Bez inline template/styles. SCSS domyślnie.
-4. **Standalone + OnPush + signals** — `input()`/`model()`/`output()`/`computed()`, `inject()` zamiast
-   konstruktora, natywny control flow (`@if`/`@for`/`@switch`). Selektory z prefiksem `a22`.
-5. **Granice modułów** — `scope:shared` (ui-material, wizard/\*) ← wszyscy;
-   `scope:individual-wizard` i `scope:business-wizard` nie widzą się nawzajem.
-   Warstwy: `app → feature → ui/data-access → util`. Public API liba wyłącznie przez `src/index.ts`.
-6. **Styling** — tokeny Material 3 (`--mat-sys-*`), motyw przez `mat.theme()` w `styles.scss` apki.
-   Zakaz `::ng-deep` i hardkodowanych kolorów.
-7. **Dane testowe** — generatory z `@angular22/wizard-core` produkują identyfikatory z poprawnymi
-   sumami kontrolnymi (PESEL/NIP/REGON). Panel dev-fill działa tylko na localhoście.
-8. **Zero GitHub Actions** — weryfikacja lokalna (`pnpm verify`), żadnych workflow/dependabota.
-9. **`data-testid`** na elementach interaktywnych; e2e wybiera `getByTestId`/`getByRole`.
+Czat **po polsku** (dopóki user nie przełączy); kod / git / ścieżki / nazwy — **po
+angielsku**. UI aplikacji: **PL domyślny, EN drugi** (i18n przez `a22T`). Odpowiadaj
+zwięźle: wynik ponad proces.
 
-## Komendy
+## Twarde reguły (jedyne źródło — inne pliki tu wskazują)
 
-```bash
-pnpm start:individual   # port 4201
-pnpm start:business     # port 4202
-pnpm start              # landing, port 4200
-
-pnpm lint && pnpm typecheck && pnpm test && pnpm build   # = pnpm verify
-pnpm e2e                # Playwright (wymaga: npx playwright install chromium)
-```
-
-Zadania uruchamiaj przez Nx (`pnpm nx run <projekt>:<target>`, `pnpm nx affected -t lint test build`).
-Nowe liby/komponenty generuj przez `pnpm nx g @nx/angular:library|component` (ustawienia domyślne
-w `nx.json`: scss, OnPush, prefix `a22`, bez unit-runnera — vitest dodajemy ręcznie wg wzorca
-z `libs/wizard/core`).
-
-## Serwery MCP (`.vscode/mcp.json`)
-
-- **context7** — aktualna dokumentacja bibliotek; użyj PRZED pisaniem kodu dotykającego API
-  Angular 22 / Signal Forms / Nx / Material.
-- **nx** — graf workspace, generatory, `nx_docs`.
-- **angular-cli** — `get_best_practices`, `search_documentation`, `find_examples`.
-- **playwright** — uruchamianie i debug e2e w przeglądarce.
+- ✅ Każde zadanie przez **orchestrator** (jedyny widoczny agent; `pnpm ai:validate`
+  wymusza 1) → plan → delegacja do subagenta → bramka DoD.
+- ✅ **SDD progowo** (kanon `docs/sdd/methodology.md`, adaptacja
+  [github/spec-kit](https://github.com/github/spec-kit)): ≥2 plików **lub** zmiana
+  behaviour → drabina specify (`pnpm workflow:specify`) → `/clarify` → plan → `/analyze`
+  → implement → **verify (orchestrator/Opus)**; trywialne → wprost. Verb: `feature` ·
+  `component` · `fix` / `refactor` / `deps` / `chore` / `security`. Każda iteracja →
+  **datowany run-log** `docs/runs/YYYY-MM-DD_HH-MM_<slug>.md` (krok = agent + model + wynik).
+- ✅ **Testy w każdym planie** (trójka): **scenariusze testowe** (z AC) + **testy
+  jednostkowe** (Vitest, `@nx/vitest:test`) + **testy e2e** (Playwright,
+  `@nx/playwright:playwright`; debug przez serwer **MCP `playwright`**). Brak = **no-go**.
+- ✅ **Lint PRZED kodem**: przeczytaj `code-quality.instructions.md` zanim napiszesz
+  pierwszą linię — kod ma przejść `pnpm lint` **z miejsca**, bez rundy poprawek.
+- ✅ **Komponenty TYLKO przez generator**: `pnpm nx g @nx/angular:component`
+  (SCSS + OnPush + trzy pliki `.ts`/`.html`/`.scss` + prefix `a22`). Nigdy ręcznie,
+  nigdy inline template/styles.
+- ✅ **Material gate**: `@angular/material/*`/`@angular/cdk/*` tylko w `libs/ui/material`
+  (lint error) — wszędzie indziej wrappery `@angular22/ui-material`. Theming tylko
+  `--mat-sys-*` + `mat.theme()`.
+- ✅ **Formularze = Signal Forms** (`form()`/`schema()`/`[formField]`); zakaz
+  `FormGroup`/`FormBuilder`/`ngModel`.
+- ✅ **i18n**: teksty UI literałem PL przez pipe `a22T` (PL = klucz, EN w mapach
+  tłumaczeń); nowy tekst = literał PL + wpis EN. Przełącznik w toolbarze; PL domyślny.
+- ✅ **Niepewne API → MCP** (`angular-cli`/`nx`/`context7`), nie z pamięci. **UX weryfikuj
+  uruchomieniem** (`pnpm start:*`), nie z kodu.
+- ✅ **Modele LLM** (token economy): orchestrator → `Claude Opus 4.8` (plan + weryfikacja
+  końcowa); agenci MCP (`nx`, `context7`) → `GPT-5 mini`; kod/testy/e2e/review/UX →
+  `Gemini 3.5 Flash`. Guard `ai:validate` wymusza `model:` + Opus na orchestratorze.
+- ❌ Zero nie-Copilot (`CLAUDE.md`/`.claude/`/`.ai/`) i zero GitHub Actions — verify lokalnie.
 
 ## Definition of Done
 
-`pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm build` i dotknięte `e2e` — wszystkie zielone.
-Po zmianie zachowania zaktualizuj testy i `README.md`.
+`pnpm verify` zielone (format:check + ai:validate + sdd:check + lint + typecheck + test +
+build) + dotknięte `e2e` zielone + UX z uruchomienia. **Weryfikacja końcowa orchestratora
+(Opus)** zapisana w run-logu. Po zmianie agentów / modeli: **Reload Window**.
+
+## Stack
+
+- **Runtime:** Node `>=24.15.0` (`.nvmrc` `24.16.0`) · `pnpm@11.1.3`
+- **Angular:** `22.0.0` (zoneless, Signal Forms stabilne) · **Material:** `22.0.0` ·
+  **Nx:** `22.7.5` · **TypeScript:** `6.0.3`
+- **Testy:** Vitest `4.1.8` (unit, liby) · Playwright `1.60.0` (e2e, chromium)
+- **Lint/format:** ESLint `10` flat (angular-eslint 22 + typescript-eslint 8 type-aware +
+  sonarjs + unicorn + import-x + jsdoc) + Prettier (sort importów)
+
+## Komendy
+
+`pnpm verify` (pełna bramka) · `pnpm e2e` (`--parallel=1`) · `pnpm start:individual` /
+`start:business` / `start` · `pnpm workflow:specify -- --verb=<v> --slug=<s>` ·
+`pnpm ai:validate` · `pnpm sdd:check` · `pnpm nx g @nx/angular:component <name>`.

@@ -3,14 +3,14 @@
     [formField]="field().code"
     [options]="codes"
     class="col-md-5 col-12"
-    label="Język"
+    [label]="'Język' | a22T"
     testId="language-code"
   />
   <a22-select
     [formField]="field().level"
     [options]="levels"
     class="col-md-5 col-12"
-    label="Poziom"
+    [label]="'Poziom' | a22T"
     testId="language-level"
   />
   @if (removable()) {
@@ -19,7 +19,7 @@
         (click)="remove.emit()"
         variant="icon"
         icon="delete"
-        ariaLabel="Usuń język"
+        [ariaLabel]="'Usuń język' | a22T"
         testId="language-remove"
       />
     </div>

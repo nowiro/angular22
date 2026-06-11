@@ -11,6 +11,7 @@ import {
   IT_BRANCHES,
   STUDY_FIELDS,
 } from '@angular22/individual-wizard-data';
+import { A22TranslatePipe } from '@angular22/shared-i18n';
 import {
   A22ButtonComponent,
   A22DateFieldComponent,
@@ -31,6 +32,7 @@ import { A22LanguageRowComponent } from '@angular22/wizard-ui';
   selector: 'a22-step-survey',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    A22TranslatePipe,
     A22ButtonComponent,
     A22DateFieldComponent,
     A22LanguageRowComponent,

@@ -3,52 +3,52 @@
     [formField]="field().purpose"
     [options]="purposeOptions()"
     class="col-md-3 col-12"
-    label="Przeznaczenie"
+    [label]="'Przeznaczenie' | a22T"
     testId="address-purpose"
   />
   <a22-select
     [formField]="field().streetType"
     [options]="streetTypes"
     class="col-md-3 col-12"
-    label="Typ"
+    [label]="'Typ' | a22T"
     testId="address-street-type"
   />
   <a22-text-field
     [formField]="field().street"
     class="col-md-6 col-12"
-    label="Nazwa ulicy"
+    [label]="'Nazwa ulicy' | a22T"
     testId="address-street"
   />
   <a22-text-field
     [formField]="field().houseNumber"
     class="col-md-2 col-12"
-    label="Numer"
+    [label]="'Numer' | a22T"
     testId="address-house-number"
   />
   <a22-text-field
     [formField]="field().flatNumber"
     class="col-md-2 col-12"
-    label="m."
+    [label]="'m.' | a22T"
     testId="address-flat-number"
   />
   <a22-text-field
     [formField]="field().postalCode"
     class="col-md-3 col-12"
-    label="Kod pocztowy"
-    placeholder="00-000"
+    [label]="'Kod pocztowy' | a22T"
+    [placeholder]="'00-000' | a22T"
     testId="address-postal-code"
   />
   <a22-text-field
     [formField]="field().city"
     class="col-md-5 col-12"
-    label="Miasto"
+    [label]="'Miasto' | a22T"
     testId="address-city"
   />
   <a22-select
     [formField]="field().country"
     [options]="countries"
     class="col-md-4 col-12"
-    label="Kraj"
+    [label]="'Kraj' | a22T"
     testId="address-country"
   />
 </div>

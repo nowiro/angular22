@@ -3,6 +3,7 @@ import { RouterLink } from '@angular/router';
 
 import type { IndividualWizardStepIndex } from '@angular22/individual-wizard-data';
 import { IndividualWizardStore, WizardNav } from '@angular22/individual-wizard-data';
+import { A22LanguageSwitcherComponent, A22TranslatePipe } from '@angular22/shared-i18n';
 import { A22IconComponent, A22ToolbarComponent } from '@angular22/ui-material';
 import type { WizardStepStatus, WizardTileDescriptor } from '@angular22/wizard-core';
 import { stepStatus } from '@angular22/wizard-core';
@@ -25,7 +26,7 @@ const STATUS_LABELS: Record<WizardStepStatus, string> = {
 @Component({
   selector: 'a22-wizard-dashboard',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [A22IconComponent, A22ToolbarComponent, RouterLink],
+  imports: [A22LanguageSwitcherComponent, A22TranslatePipe, A22IconComponent, A22ToolbarComponent, RouterLink],
   templateUrl: './wizard-dashboard.component.html',
   styleUrl: './wizard-dashboard.component.scss',
 })

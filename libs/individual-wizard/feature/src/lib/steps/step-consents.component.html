@@ -1,7 +1,9 @@
-<h2 class="step-heading">Zgody i sprzeciwy</h2>
+<h2 class="step-heading">{{ 'Zgody i sprzeciwy' | a22T }}</h2>
 <p class="lead">
-  Lista zgód dopasowuje się do Twoich odpowiedzi — obywatelstwo, kraj zamieszkania, wykształcenie i status zatrudnienia
-  zmieniają zestaw pozycji.
+  {{
+    'Lista zgód dopasowuje się do Twoich odpowiedzi — obywatelstwo, kraj zamieszkania, wykształcenie i status zatrudnienia zmieniają zestaw pozycji.'
+      | a22T
+  }}
 </p>
 
 @for (item of data().consents.items; track item.key; let i = $index) {

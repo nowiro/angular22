@@ -1,11 +1,11 @@
-<h2 class="step-heading">Ankieta</h2>
+<h2 class="step-heading">{{ 'Ankieta' | a22T }}</h2>
 
 <div class="form-grid">
   <a22-select
     [formField]="form.survey.educationLevel"
     [options]="educationLevels"
     class="col-md-6 col-12"
-    label="Wykształcenie"
+    [label]="'Wykształcenie' | a22T"
     testId="survey-education-level"
   />
 </div>
@@ -15,19 +15,19 @@
     class="nested"
     data-testid="survey-higher-education"
   >
-    <h3 class="section-heading">Wykształcenie wyższe</h3>
+    <h3 class="section-heading">{{ 'Wykształcenie wyższe' | a22T }}</h3>
     <div class="form-grid">
       <a22-text-field
         [formField]="form.survey.higherEducation.university"
         class="col-md-6 col-12"
-        label="Uczelnia"
+        [label]="'Uczelnia' | a22T"
         testId="survey-university"
       />
       <a22-select
         [formField]="form.survey.higherEducation.field"
         [options]="studyFields"
         class="col-md-6 col-12"
-        label="Kierunek"
+        [label]="'Kierunek' | a22T"
         testId="survey-study-field"
       />
     </div>
@@ -37,13 +37,13 @@
         class="nested"
         data-testid="survey-specialisation"
       >
-        <h4 class="subsection-heading">Specjalizacja IT</h4>
+        <h4 class="subsection-heading">{{ 'Specjalizacja IT' | a22T }}</h4>
         <div class="form-grid">
           <a22-select
             [formField]="form.survey.higherEducation.specialisation.branch"
             [options]="itBranches"
             class="col-md-6 col-12"
-            label="Branża"
+            [label]="'Branża' | a22T"
             testId="survey-branch"
           />
         </div>
@@ -53,13 +53,13 @@
             class="nested"
             data-testid="survey-thesis"
           >
-            <h4 class="subsection-heading">Praca doktorska</h4>
+            <h4 class="subsection-heading">{{ 'Praca doktorska' | a22T }}</h4>
             <a22-text-field
               [formField]="form.survey.higherEducation.specialisation.thesis.topic"
-              label="Temat pracy"
+              [label]="'Temat pracy' | a22T"
               testId="thesis-topic"
             />
-            <p class="hint">Słowa kluczowe (1–10):</p>
+            <p class="hint">{{ 'Słowa kluczowe (1–10):' | a22T }}</p>
             @for (
               keyword of data().survey.higherEducation.specialisation.thesis.keywords;
               track $index;
@@ -68,7 +68,7 @@
               <div class="keyword-row">
                 <a22-text-field
                   [formField]="keywordField(i)"
-                  [label]="'Słowo kluczowe ' + (i + 1)"
+                  [label]="('Słowo kluczowe' | a22T) + ' ' + (i + 1)"
                   testId="thesis-keyword"
                 />
                 @if (data().survey.higherEducation.specialisation.thesis.keywords.length > 1) {
@@ -76,7 +76,7 @@
                     (click)="store.removeKeyword(i)"
                     variant="icon"
                     icon="delete"
-                    ariaLabel="Usuń słowo kluczowe"
+                    [ariaLabel]="'Usuń słowo kluczowe' | a22T"
                     testId="thesis-keyword-remove"
                   />
                 }
@@ -87,7 +87,7 @@
               variant="outlined"
               icon="add"
               testId="thesis-keyword-add"
-              label="Dodaj słowo kluczowe"
+              [label]="'Dodaj słowo kluczowe' | a22T"
             />
           </div>
         }
@@ -96,13 +96,13 @@
   </section>
 }
 
-<h3 class="section-heading">Zatrudnienie</h3>
+<h3 class="section-heading">{{ 'Zatrudnienie' | a22T }}</h3>
 <div class="form-grid">
   <a22-select
     [formField]="form.survey.employment.status"
     [options]="employmentStatuses"
     class="col-md-6 col-12"
-    label="Status zatrudnienia"
+    [label]="'Status zatrudnienia' | a22T"
     testId="survey-employment-status"
   />
 </div>
@@ -116,37 +116,37 @@
       <a22-text-field
         [formField]="form.survey.employment.details.companyName"
         class="col-md-6 col-12"
-        label="Nazwa firmy"
+        [label]="'Nazwa firmy' | a22T"
         testId="employment-company"
       />
       <a22-text-field
         [formField]="form.survey.employment.details.position"
         class="col-md-6 col-12"
-        label="Stanowisko"
+        [label]="'Stanowisko' | a22T"
         testId="employment-position"
       />
     </div>
 
-    <h4 class="subsection-heading">Umowy</h4>
+    <h4 class="subsection-heading">{{ 'Umowy' | a22T }}</h4>
     @for (contract of data().survey.employment.details.contracts; track $index; let i = $index) {
       <div class="contract-row form-grid">
         <a22-select
           [formField]="contractField(i).type"
           [options]="contractTypes"
           class="col-md-4 col-12"
-          label="Rodzaj umowy"
+          [label]="'Rodzaj umowy' | a22T"
           testId="contract-type"
         />
         <a22-date-field
           [formField]="contractField(i).since"
           class="col-md-3 col-12"
-          label="Od kiedy"
+          [label]="'Od kiedy' | a22T"
           testId="contract-since"
         />
         <a22-number-field
           [formField]="contractField(i).grossMonthly"
           class="col-md-3 col-12"
-          label="Brutto / mies."
+          [label]="'Brutto / mies.' | a22T"
           suffix="PLN"
           testId="contract-gross"
         />
@@ -156,7 +156,7 @@
               (click)="store.removeContract(i)"
               variant="icon"
               icon="delete"
-              ariaLabel="Usuń umowę"
+              [ariaLabel]="'Usuń umowę' | a22T"
               testId="contract-remove"
             />
           </div>
@@ -168,12 +168,12 @@
       variant="outlined"
       icon="add"
       testId="contract-add"
-      label="Dodaj umowę"
+      [label]="'Dodaj umowę' | a22T"
     />
   </section>
 }
 
-<h3 class="section-heading">Języki</h3>
+<h3 class="section-heading">{{ 'Języki' | a22T }}</h3>
 @for (language of data().survey.languages; track $index; let i = $index) {
   <a22-language-row
     [field]="languageField(i)"
@@ -186,5 +186,5 @@
   variant="outlined"
   icon="add"
   testId="language-add"
-  label="Dodaj język"
+  [label]="'Dodaj język' | a22T"
 />

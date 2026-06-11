@@ -3,14 +3,14 @@
     [formField]="field().type"
     [options]="typeOptions()"
     class="col-md-3 col-12"
-    label="Typ"
+    [label]="'Typ' | a22T"
     testId="phone-type"
   />
   <a22-text-field
     [formField]="field().number"
     class="col-md-5 col-12"
-    label="Numer telefonu"
-    placeholder="+48 601 234 567"
+    [label]="'Numer telefonu' | a22T"
+    [placeholder]="'+48 601 234 567' | a22T"
     type="tel"
     testId="phone-number"
   />
@@ -18,7 +18,7 @@
     <a22-text-field
       [formField]="field().extension"
       class="col-md-3 col-12"
-      label="Wewn."
+      [label]="'Wewn.' | a22T"
       testId="phone-extension"
     />
   }
@@ -28,7 +28,7 @@
         (click)="remove.emit()"
         variant="icon"
         icon="delete"
-        ariaLabel="Usuń telefon"
+        [ariaLabel]="'Usuń telefon' | a22T"
         testId="phone-remove"
       />
     </div>

@@ -5,10 +5,10 @@
   >
     <button
       [attr.aria-expanded]="expanded()"
+      [attr.aria-label]="'Otwórz panel narzędzi deweloperskich' | a22T"
       (click)="toggle()"
       class="toggle"
       type="button"
-      aria-label="Otwórz panel narzędzi deweloperskich"
       data-testid="dev-fab-toggle"
     >
       <a22-icon [name]="expanded() ? 'expand_more' : 'auto_fix_high'" />
@@ -21,32 +21,32 @@
       <div class="actions">
         <a22-button
           (click)="fill('required')"
+          [label]="'Tylko wymagane' | a22T"
           variant="filled"
           icon="edit_note"
           testId="dev-fill-required"
-          label="Tylko wymagane"
         />
         <a22-button
           (click)="fill('all')"
+          [label]="'Wszystkie pola' | a22T"
           variant="outlined"
           icon="auto_awesome"
           testId="dev-fill-all"
-          label="Wszystkie pola"
         />
         <a22-button
           (click)="fill('max')"
+          [label]="'Maksymalne zagnieżdżenia' | a22T"
           variant="outlined"
           icon="account_tree"
           testId="dev-fill-full-demo"
-          label="Maksymalne zagnieżdżenia"
         />
       </div>
       <p class="meta">
-        Wypełnia model formularza danymi demo (tylko localhost).
+        {{ 'Wypełnia model formularza danymi demo (tylko localhost).' | a22T }}
         @if (lastAction() !== '') {
           <br />
-          Ostatnio:
-          <strong>{{ lastAction() }}</strong>
+          {{ 'Ostatnio:' | a22T }}
+          <strong>{{ lastAction() | a22T }}</strong>
         }
       </p>
     }

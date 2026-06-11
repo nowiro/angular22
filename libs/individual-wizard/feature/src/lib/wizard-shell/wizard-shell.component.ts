@@ -3,6 +3,7 @@ import { Router, RouterLink } from '@angular/router';
 
 import type { IndividualWizardStepIndex } from '@angular22/individual-wizard-data';
 import { INDIVIDUAL_WIZARD_STEP_COUNT, WizardNav } from '@angular22/individual-wizard-data';
+import { A22LanguageSwitcherComponent, A22TranslatePipe } from '@angular22/shared-i18n';
 import {
   A22ButtonComponent,
   A22IconComponent,
@@ -27,6 +28,8 @@ import { StepSurveyComponent } from '../steps/step-survey.component';
   selector: 'a22-wizard-shell',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    A22LanguageSwitcherComponent,
+    A22TranslatePipe,
     A22ButtonComponent,
     A22IconComponent,
     A22StepDirective,

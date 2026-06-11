@@ -1,56 +1,56 @@
-<h2 class="step-heading">Dane firmy</h2>
+<h2 class="step-heading">{{ 'Dane firmy' | a22T }}</h2>
 
 <div class="form-grid">
   <a22-text-field
     [formField]="form.companyBasics.legalName"
     class="col-md-6 col-12"
-    label="Nazwa prawna"
+    [label]="'Nazwa prawna' | a22T"
     testId="basics-legal-name"
   />
   <a22-text-field
     [formField]="form.companyBasics.tradeName"
     class="col-md-6 col-12"
-    label="Nazwa handlowa (opcjonalnie)"
+    [label]="'Nazwa handlowa (opcjonalnie)' | a22T"
     testId="basics-trade-name"
   />
   <a22-select
     [formField]="form.companyBasics.legalForm"
     [options]="legalForms"
     class="col-md-6 col-12"
-    label="Forma prawna"
+    [label]="'Forma prawna' | a22T"
     testId="basics-legal-form"
   />
   <a22-number-field
     [formField]="form.companyBasics.foundingYear"
     class="col-md-6 col-12"
-    label="Rok założenia"
+    [label]="'Rok założenia' | a22T"
     testId="basics-founding-year"
   />
   <a22-text-field
     [formField]="form.companyBasics.nip"
     class="col-md-4 col-12"
-    label="NIP"
-    hint="10 cyfr"
+    [label]="'NIP' | a22T"
+    [hint]="'10 cyfr' | a22T"
     testId="basics-nip"
   />
   <a22-text-field
     [formField]="form.companyBasics.regon"
     class="col-md-4 col-12"
-    label="REGON"
-    hint="9 lub 14 cyfr"
+    [label]="'REGON' | a22T"
+    [hint]="'9 lub 14 cyfr' | a22T"
     testId="basics-regon"
   />
   <a22-text-field
     [formField]="form.companyBasics.krs"
-    [hint]="krsRequired() ? 'Wymagany dla tej formy prawnej' : 'Niewymagany dla tej formy prawnej'"
+    [hint]="(krsRequired() ? 'Wymagany dla tej formy prawnej' : 'Niewymagany dla tej formy prawnej') | a22T"
     class="col-md-4 col-12"
-    label="KRS"
+    [label]="'KRS' | a22T"
     testId="basics-krs"
   />
   <a22-text-field
     [formField]="form.companyBasics.websiteUrl"
     class="col-md-6 col-12"
-    label="Strona WWW (opcjonalnie)"
+    [label]="'Strona WWW (opcjonalnie)' | a22T"
     placeholder="https://…"
     testId="basics-website"
   />

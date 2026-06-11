@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import type { ValidationError, WithOptionalFieldTree } from '@angular/forms/signals';
 
+import { A22TranslatePipe } from '@angular22/shared-i18n';
+
 import { errorMessage } from './error-message';
 
 /**
@@ -11,6 +13,7 @@ import { errorMessage } from './error-message';
 @Component({
   selector: 'a22-field-error',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [A22TranslatePipe],
   templateUrl: './field-error.component.html',
   styleUrl: './field-error.component.scss',
 })

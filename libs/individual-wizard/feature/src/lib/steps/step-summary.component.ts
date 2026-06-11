@@ -9,6 +9,7 @@ import {
   GENDERS,
   IndividualWizardStore,
 } from '@angular22/individual-wizard-data';
+import { A22TranslatePipe, I18nStore } from '@angular22/shared-i18n';
 import {
   A22ButtonComponent,
   A22CheckboxComponent,
@@ -22,12 +23,21 @@ import { A22SummaryRowComponent } from '@angular22/wizard-ui';
 @Component({
   selector: 'a22-step-summary',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [A22ButtonComponent, A22CheckboxComponent, A22DividerComponent, A22SummaryRowComponent, DatePipe, FormField],
+  imports: [
+    A22TranslatePipe,
+    A22ButtonComponent,
+    A22CheckboxComponent,
+    A22DividerComponent,
+    A22SummaryRowComponent,
+    DatePipe,
+    FormField,
+  ],
   templateUrl: './step-summary.component.html',
   styleUrl: './step-summary.component.scss',
 })
 export class StepSummaryComponent {
   private readonly notifications = inject(A22NotificationService);
+  private readonly i18n = inject(I18nStore);
   protected readonly store = inject(IndividualWizardStore);
 
   protected readonly form = this.store.form;
@@ -49,8 +59,10 @@ export class StepSummaryComponent {
     return [basic.firstName, basic.middleName, basic.lastName].filter((part) => part !== '').join(' ');
   });
 
-  protected readonly genderLabel = computed(() => optionLabel(GENDERS, this.data().basicData.gender));
-  protected readonly citizenshipLabel = computed(() => optionLabel(COUNTRIES, this.data().basicData.citizenship));
+  protected readonly genderLabel = computed(() => this.i18n.t(optionLabel(GENDERS, this.data().basicData.gender)));
+  protected readonly citizenshipLabel = computed(() =>
+    this.i18n.t(optionLabel(COUNTRIES, this.data().basicData.citizenship)),
+  );
 
   protected readonly phonesSummary = computed(() =>
     this.data()
@@ -63,13 +75,13 @@ export class StepSummaryComponent {
     this.data().contact.addresses.map((address) => {
       const flat = address.flatNumber !== '' ? `/${address.flatNumber}` : '';
       const line = `${address.streetType} ${address.street} ${address.houseNumber}${flat}`.trim();
-      return `${line}, ${address.postalCode} ${address.city} (${optionLabel(COUNTRIES, address.country)})`;
+      return `${line}, ${address.postalCode} ${address.city} (${this.i18n.t(optionLabel(COUNTRIES, address.country))})`;
     }),
   );
 
   protected readonly educationSummary = computed(() => {
     const survey = this.data().survey;
-    const parts = [optionLabel(EDUCATION_LEVELS, survey.educationLevel)];
+    const parts = [this.i18n.t(optionLabel(EDUCATION_LEVELS, survey.educationLevel))];
     if (this.relevance().higherEducation && survey.higherEducation.university !== '') {
       parts.push(survey.higherEducation.university);
     }
@@ -78,11 +90,11 @@ export class StepSummaryComponent {
 
   protected readonly employmentSummary = computed(() => {
     const employment = this.data().survey.employment;
-    const parts = [optionLabel(EMPLOYMENT_STATUSES, employment.status)];
+    const parts = [this.i18n.t(optionLabel(EMPLOYMENT_STATUSES, employment.status))];
     if (this.relevance().employmentDetails && employment.details.companyName !== '') {
       parts.push(`${employment.details.companyName} (${employment.details.position})`);
       const contracts = employment.details.contracts
-        .map((contract) => optionLabel(CONTRACT_TYPES, contract.type))
+        .map((contract) => this.i18n.t(optionLabel(CONTRACT_TYPES, contract.type)))
         .join(', ');
       if (contracts !== '') parts.push(contracts);
     }
@@ -91,15 +103,17 @@ export class StepSummaryComponent {
 
   protected readonly languagesSummary = computed(() =>
     this.data()
-      .survey.languages.map((language) => `${optionLabel(LANGUAGE_CODES, language.code)} (${language.level})`)
+      .survey.languages.map(
+        (language) => `${this.i18n.t(optionLabel(LANGUAGE_CODES, language.code))} (${language.level})`,
+      )
       .join(', '),
   );
 
   protected submit(): void {
     if (this.store.submit()) {
-      this.notifications.show('Wniosek został zapisany.');
+      this.notifications.show(this.i18n.t('Wniosek został zapisany.'));
     } else {
-      this.notifications.show('Formularz zawiera błędy — uzupełnij brakujące pola.');
+      this.notifications.show(this.i18n.t('Formularz zawiera błędy — uzupełnij brakujące pola.'));
     }
   }
 }

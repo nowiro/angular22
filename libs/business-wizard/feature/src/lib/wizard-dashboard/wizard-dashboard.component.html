@@ -1,14 +1,15 @@
 <a22-toolbar>
   <a22-icon name="domain" />
-  <span class="brand">Kreator danych firmy</span>
+  <span class="brand">{{ 'Kreator danych firmy' | a22T }}</span>
   <span class="spacer"></span>
+  <a22-language-switcher />
   <a
     [routerLink]="wizardLink"
     class="home-link"
     data-testid="topbar-open-wizard"
   >
     <a22-icon name="play_arrow" />
-    Otwórz kreator
+    {{ 'Otwórz kreator' | a22T }}
   </a>
 </a22-toolbar>
 
@@ -17,10 +18,10 @@
   data-testid="wizard-dashboard"
 >
   <header class="intro">
-    <p class="intro__eyebrow">Demo · Angular 22 Signal Forms</p>
-    <h1 class="intro__title">Pulpit kreatora firmy</h1>
+    <p class="intro__eyebrow">{{ 'Demo · Angular 22 Signal Forms' | a22T }}</p>
+    <h1 class="intro__title">{{ 'Pulpit kreatora firmy' | a22T }}</h1>
     <p class="intro__lead">
-      Każdy kafelek prowadzi do jednego kroku. Statusy aktualizują się na żywo z sygnałów formularza.
+      {{ 'Każdy kafelek prowadzi do jednego kroku. Statusy aktualizują się na żywo z sygnałów formularza.' | a22T }}
     </p>
   </header>
 
@@ -35,14 +36,14 @@
           <a22-icon [name]="tile.icon" />
         </span>
         <span class="tile__body">
-          <span class="tile__title">{{ tile.title }}</span>
-          <span class="tile__subtitle">{{ tile.subtitle }}</span>
+          <span class="tile__title">{{ tile.title | a22T }}</span>
+          <span class="tile__subtitle">{{ tile.subtitle | a22T }}</span>
         </span>
         <span
           [class]="'status status--' + statuses()[tile.step]"
           [attr.data-testid]="'dashboard-status-' + tile.step"
         >
-          {{ statusLabels[statuses()[tile.step]] }}
+          {{ statusLabels[statuses()[tile.step]] | a22T }}
         </span>
       </a>
     }

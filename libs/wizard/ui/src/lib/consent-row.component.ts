@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, computed, input } from '@angular/co
 import type { FieldTree } from '@angular/forms/signals';
 import { FormField } from '@angular/forms/signals';
 
+import { A22TranslatePipe } from '@angular22/shared-i18n';
 import { A22CheckboxComponent } from '@angular22/ui-material';
 import type { ConsentItemValue } from '@angular22/wizard-core';
 
@@ -13,7 +14,7 @@ import type { ConsentItemValue } from '@angular22/wizard-core';
 @Component({
   selector: 'a22-consent-row',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [A22CheckboxComponent, FormField],
+  imports: [A22CheckboxComponent, A22TranslatePipe, FormField],
   templateUrl: './consent-row.component.html',
   styleUrl: './consent-row.component.scss',
 })

@@ -1,4 +1,4 @@
-<h2 class="step-heading">Podsumowanie</h2>
+<h2 class="step-heading">{{ 'Podsumowanie' | a22T }}</h2>
 
 @if (blockers().length > 0) {
   <div
@@ -6,7 +6,7 @@
     role="alert"
     data-testid="summary-errors"
   >
-    <p class="banner__title">Formularz zawiera braki:</p>
+    <p class="banner__title">{{ 'Formularz zawiera braki:' | a22T }}</p>
     <ul>
       @for (message of blockers(); track message) {
         <li>{{ message }}</li>
@@ -16,81 +16,81 @@
 }
 
 <section class="summary-section">
-  <h3 class="section-heading">Dane podstawowe</h3>
+  <h3 class="section-heading">{{ 'Dane podstawowe' | a22T }}</h3>
   <a22-summary-row
     [value]="fullName()"
-    label="Imię i nazwisko"
+    [label]="'Imię i nazwisko' | a22T"
   />
   <a22-summary-row
     [value]="data().basicData.pesel"
-    label="PESEL"
+    [label]="'PESEL' | a22T"
   />
   <a22-summary-row
     [value]="data().basicData.nip"
-    label="NIP"
+    [label]="'NIP' | a22T"
   />
   <a22-summary-row
     [value]="(data().basicData.dateOfBirth | date: 'yyyy-MM-dd') ?? ''"
-    label="Data urodzenia"
+    [label]="'Data urodzenia' | a22T"
   />
   <a22-summary-row
     [value]="genderLabel()"
-    label="Płeć"
+    [label]="'Płeć' | a22T"
   />
   <a22-summary-row
     [value]="citizenshipLabel()"
-    label="Obywatelstwo"
+    [label]="'Obywatelstwo' | a22T"
   />
 </section>
 <a22-divider />
 
 <section class="summary-section">
-  <h3 class="section-heading">Kontakt</h3>
+  <h3 class="section-heading">{{ 'Kontakt' | a22T }}</h3>
   <a22-summary-row
     [value]="data().contact.email"
-    label="E-mail"
+    [label]="'E-mail' | a22T"
   />
   <a22-summary-row
     [value]="phonesSummary()"
-    label="Telefony"
+    [label]="'Telefony' | a22T"
   />
   @for (address of addressSummaries(); track $index; let i = $index) {
     <a22-summary-row
       [value]="address"
-      [label]="'Adres ' + (i + 1)"
+      [label]="('Adres' | a22T) + ' ' + (i + 1)"
     />
   }
 </section>
 <a22-divider />
 
 <section class="summary-section">
-  <h3 class="section-heading">Ankieta</h3>
+  <h3 class="section-heading">{{ 'Ankieta' | a22T }}</h3>
   <a22-summary-row
     [value]="educationSummary()"
-    label="Wykształcenie"
+    [label]="'Wykształcenie' | a22T"
   />
   @if (relevance().thesis) {
     <a22-summary-row
       [value]="data().survey.higherEducation.specialisation.thesis.topic"
-      label="Praca doktorska"
+      [label]="'Praca doktorska' | a22T"
     />
   }
   <a22-summary-row
     [value]="employmentSummary()"
-    label="Zatrudnienie"
+    [label]="'Zatrudnienie' | a22T"
   />
   <a22-summary-row
     [value]="languagesSummary()"
-    label="Języki"
+    [label]="'Języki' | a22T"
   />
 </section>
 <a22-divider />
 
 <section class="summary-section">
-  <h3 class="section-heading">Zgody</h3>
+  <h3 class="section-heading">{{ 'Zgody' | a22T }}</h3>
   @for (item of data().consents.items; track item.key) {
     <a22-summary-row
-      [value]="item.granted ? '✓ udzielona' : '✗ brak'"
+      [value]="(item.granted ? '✓ udzielona' : '✗ brak') | a22T"
       [label]="item.label"
     />
   }
@@ -101,7 +101,7 @@
   [formField]="form.meta.acceptTerms"
   testId="summary-accept-terms"
 >
-  Akceptuję regulamin i potwierdzam prawdziwość danych.
+  {{ 'Akceptuję regulamin i potwierdzam prawdziwość danych.' | a22T }}
 </a22-checkbox>
 
 <div class="submit-row">
@@ -110,14 +110,14 @@
     (click)="submit()"
     icon="send"
     testId="summary-submit"
-    label="Wyślij wniosek"
+    [label]="'Wyślij wniosek' | a22T"
   />
   @if (data().meta.submittedAt !== null) {
     <span
       class="submitted"
       data-testid="summary-submitted"
     >
-      Wysłano: {{ data().meta.submittedAt | date: 'yyyy-MM-dd HH:mm' }}
+      {{ 'Wysłano' | a22T }}: {{ data().meta.submittedAt | date: 'yyyy-MM-dd HH:mm' }}
     </span>
   }
 </div>

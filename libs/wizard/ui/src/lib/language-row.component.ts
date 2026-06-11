@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, input, output } from '@angular/core
 import type { FieldTree } from '@angular/forms/signals';
 import { FormField } from '@angular/forms/signals';
 
+import { A22TranslatePipe } from '@angular22/shared-i18n';
 import { A22ButtonComponent, A22SelectComponent } from '@angular22/ui-material';
 import type { LanguageValue } from '@angular22/wizard-core';
 import { LANGUAGE_CODES, LANGUAGE_LEVELS } from '@angular22/wizard-core';
@@ -10,7 +11,7 @@ import { LANGUAGE_CODES, LANGUAGE_LEVELS } from '@angular22/wizard-core';
 @Component({
   selector: 'a22-language-row',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [A22ButtonComponent, A22SelectComponent, FormField],
+  imports: [A22TranslatePipe, A22ButtonComponent, A22SelectComponent, FormField],
   templateUrl: './language-row.component.html',
   styleUrl: './language-row.component.scss',
 })

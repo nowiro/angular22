@@ -1,31 +1,27 @@
 <a22-toolbar>
   <a22-icon name="badge" />
-  <span class="brand">Kreator danych osobowych</span>
+  <span class="brand">{{ 'Kreator danych osobowych' | a22T }}</span>
   <span class="spacer"></span>
+  <a22-language-switcher />
   <a
     [routerLink]="dashboardLink"
     class="home-link"
     data-testid="topbar-home"
   >
     <a22-icon name="dashboard" />
-    Pulpit
+    {{ 'Pulpit' | a22T }}
   </a>
 </a22-toolbar>
 
 <main class="page">
   <header class="intro">
-    <p class="intro__eyebrow">Demo · Angular 22 Signal Forms</p>
-    <h1 class="intro__title">Wprowadzenie danych w 5 krokach</h1>
+    <p class="intro__eyebrow">{{ 'Demo · Angular 22 Signal Forms' | a22T }}</p>
+    <h1 class="intro__title">{{ 'Wprowadzenie danych w 5 krokach' | a22T }}</h1>
     <p class="intro__lead">
-      Pokaz Signal Forms — model w
-      <code>signal()</code>
-      , walidacja w
-      <code>schema()</code>
-      , warunkowe sekcje przez
-      <code>applyWhen</code>
-      , komponenty Material przez wrappery
-      <code>FormValueControl</code>
-      .
+      {{
+        'Pokaz Signal Forms: model w signal(), walidacja w schema(), warunkowe sekcje przez applyWhen, komponenty Material przez wrappery FormValueControl.'
+          | a22T
+      }}
     </p>
   </header>
 
@@ -38,7 +34,7 @@
       [selectedIndex]="selectedIndex()"
       (selectedIndexChange)="onStepChange($event)"
     >
-      <ng-template a22Step="Dane podstawowe">
+      <ng-template [a22Step]="'Dane podstawowe' | a22T">
         <a22-step-basic-data />
         <div class="step-actions">
           <span></span>
@@ -46,12 +42,12 @@
             (click)="stepper.next()"
             icon="arrow_forward"
             testId="step-1-next"
-            label="Dalej"
+            [label]="'Dalej' | a22T"
           />
         </div>
       </ng-template>
 
-      <ng-template a22Step="Kontakt">
+      <ng-template [a22Step]="'Kontakt' | a22T">
         <a22-step-contact />
         <div class="step-actions">
           <a22-button
@@ -59,18 +55,18 @@
             variant="outlined"
             icon="arrow_back"
             testId="step-2-prev"
-            label="Wstecz"
+            [label]="'Wstecz' | a22T"
           />
           <a22-button
             (click)="stepper.next()"
             icon="arrow_forward"
             testId="step-2-next"
-            label="Dalej"
+            [label]="'Dalej' | a22T"
           />
         </div>
       </ng-template>
 
-      <ng-template a22Step="Ankieta">
+      <ng-template [a22Step]="'Ankieta' | a22T">
         <a22-step-survey />
         <div class="step-actions">
           <a22-button
@@ -78,18 +74,18 @@
             variant="outlined"
             icon="arrow_back"
             testId="step-3-prev"
-            label="Wstecz"
+            [label]="'Wstecz' | a22T"
           />
           <a22-button
             (click)="stepper.next()"
             icon="arrow_forward"
             testId="step-3-next"
-            label="Dalej"
+            [label]="'Dalej' | a22T"
           />
         </div>
       </ng-template>
 
-      <ng-template a22Step="Zgody">
+      <ng-template [a22Step]="'Zgody' | a22T">
         <a22-step-consents />
         <div class="step-actions">
           <a22-button
@@ -97,18 +93,18 @@
             variant="outlined"
             icon="arrow_back"
             testId="step-4-prev"
-            label="Wstecz"
+            [label]="'Wstecz' | a22T"
           />
           <a22-button
             (click)="stepper.next()"
             icon="arrow_forward"
             testId="step-4-next"
-            label="Dalej"
+            [label]="'Dalej' | a22T"
           />
         </div>
       </ng-template>
 
-      <ng-template a22Step="Podsumowanie">
+      <ng-template [a22Step]="'Podsumowanie' | a22T">
         <a22-step-summary />
         <div class="step-actions">
           <a22-button
@@ -116,7 +112,7 @@
             variant="outlined"
             icon="arrow_back"
             testId="step-5-prev"
-            label="Wstecz"
+            [label]="'Wstecz' | a22T"
           />
           <span></span>
         </div>

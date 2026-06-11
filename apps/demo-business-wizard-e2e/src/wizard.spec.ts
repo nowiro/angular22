@@ -36,6 +36,17 @@ test.describe('Business wizard — smoke', () => {
     await expect(page.getByTestId('consent-psd2-disclosure')).toBeVisible();
   });
 
+  test('language switcher flips PL → EN and back', async ({ page }) => {
+    await page.goto('/');
+    await expect(page.getByRole('heading', { name: 'Pulpit kreatora firmy' })).toBeVisible();
+
+    await page.getByTestId('lang-en').click();
+    await expect(page.getByRole('heading', { name: 'Company wizard dashboard' })).toBeVisible();
+
+    await page.getByTestId('lang-pl').click();
+    await expect(page.getByRole('heading', { name: 'Pulpit kreatora firmy' })).toBeVisible();
+  });
+
   test('happy path: dev-fill (max) → all statuses done → submit succeeds', async ({ page }) => {
     await page.goto('/');
 

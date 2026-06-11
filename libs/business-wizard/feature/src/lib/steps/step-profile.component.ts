@@ -10,6 +10,7 @@ import {
   INDUSTRIES,
   REVENUE_RANGES,
 } from '@angular22/business-wizard-data';
+import { A22TranslatePipe } from '@angular22/shared-i18n';
 import { A22ButtonComponent, A22CheckboxComponent, A22SelectComponent } from '@angular22/ui-material';
 import type { LanguageValue } from '@angular22/wizard-core';
 import { A22LanguageRowComponent } from '@angular22/wizard-ui';
@@ -18,7 +19,14 @@ import { A22LanguageRowComponent } from '@angular22/wizard-ui';
 @Component({
   selector: 'a22-step-profile',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [A22ButtonComponent, A22CheckboxComponent, A22LanguageRowComponent, A22SelectComponent, FormField],
+  imports: [
+    A22TranslatePipe,
+    A22ButtonComponent,
+    A22CheckboxComponent,
+    A22LanguageRowComponent,
+    A22SelectComponent,
+    FormField,
+  ],
   templateUrl: './step-profile.component.html',
   styleUrl: './step-profile.component.scss',
 })

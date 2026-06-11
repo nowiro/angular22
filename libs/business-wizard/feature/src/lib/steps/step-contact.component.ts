@@ -3,6 +3,7 @@ import type { FieldTree } from '@angular/forms/signals';
 import { FormField } from '@angular/forms/signals';
 
 import { ADDRESS_PURPOSES, BusinessWizardStore, PHONE_KINDS } from '@angular22/business-wizard-data';
+import { A22TranslatePipe } from '@angular22/shared-i18n';
 import { A22ButtonComponent, A22FieldErrorComponent, A22TextFieldComponent } from '@angular22/ui-material';
 import type { AddressValue, PhoneValue } from '@angular22/wizard-core';
 import { A22AddressFormComponent, A22PhoneRowComponent } from '@angular22/wizard-ui';
@@ -12,6 +13,7 @@ import { A22AddressFormComponent, A22PhoneRowComponent } from '@angular22/wizard
   selector: 'a22-step-contact',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    A22TranslatePipe,
     A22AddressFormComponent,
     A22ButtonComponent,
     A22FieldErrorComponent,

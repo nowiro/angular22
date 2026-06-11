@@ -16,11 +16,10 @@
       }
     },
     "test": {
-      "executor": "nx:run-commands",
+      "executor": "@nx/vitest:test",
       "outputs": ["{workspaceRoot}/coverage/libs/business-wizard/data"],
       "options": {
-        "command": "vitest run",
-        "cwd": "libs/business-wizard/data"
+        "configFile": "libs/business-wizard/data/vitest.config.ts"
       }
     }
   }

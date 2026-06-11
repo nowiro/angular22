@@ -40,7 +40,8 @@
       "@angular22/individual-wizard-data": ["./libs/individual-wizard/data/src/index.ts"],
       "@angular22/individual-wizard-feature": ["./libs/individual-wizard/feature/src/index.ts"],
       "@angular22/business-wizard-data": ["./libs/business-wizard/data/src/index.ts"],
-      "@angular22/business-wizard-feature": ["./libs/business-wizard/feature/src/index.ts"]
+      "@angular22/business-wizard-feature": ["./libs/business-wizard/feature/src/index.ts"],
+      "@angular22/shared-i18n": ["./libs/shared/i18n/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp", "dist", "coverage", "**/*.spec.ts", "**/*.test.ts"]

@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import type { FieldTree } from '@angular/forms/signals';
 
 import { BusinessWizardStore } from '@angular22/business-wizard-data';
+import { A22TranslatePipe } from '@angular22/shared-i18n';
 import type { ConsentItemValue } from '@angular22/wizard-core';
 import { A22ConsentRowComponent } from '@angular22/wizard-ui';
 
@@ -9,7 +10,7 @@ import { A22ConsentRowComponent } from '@angular22/wizard-ui';
 @Component({
   selector: 'a22-step-consents',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [A22ConsentRowComponent],
+  imports: [A22TranslatePipe, A22ConsentRowComponent],
   templateUrl: './step-consents.component.html',
   styleUrl: './step-consents.component.scss',
 })

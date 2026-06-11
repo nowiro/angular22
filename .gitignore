@@ -25,6 +25,11 @@ playwright-report
 # Local AI-tooling state (repo is Copilot-only; see .github/copilot-instructions.md)
 .claude
 
+# SDD artifacts are local-only (templates in docs/sdd/ stay tracked)
+docs/specs
+docs/plans
+docs/runs
+
 # IDE / OS
 .idea
 .DS_Store

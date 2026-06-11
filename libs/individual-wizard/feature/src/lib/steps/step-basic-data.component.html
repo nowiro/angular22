@@ -1,56 +1,56 @@
-<h2 class="step-heading">Dane podstawowe</h2>
+<h2 class="step-heading">{{ 'Dane podstawowe' | a22T }}</h2>
 
 <div class="form-grid">
   <a22-select
     [formField]="form.basicData.citizenship"
     [options]="countries"
     class="col-md-4 col-12"
-    label="Obywatelstwo"
+    [label]="'Obywatelstwo' | a22T"
     testId="basic-citizenship"
   />
   <a22-text-field
     [formField]="form.basicData.firstName"
     class="col-md-4 col-12"
-    label="Imię"
+    [label]="'Imię' | a22T"
     testId="basic-first-name"
   />
   <a22-text-field
     [formField]="form.basicData.middleName"
     class="col-md-4 col-12"
-    label="Drugie imię (opcjonalnie)"
+    [label]="'Drugie imię (opcjonalnie)' | a22T"
     testId="basic-middle-name"
   />
   <a22-text-field
     [formField]="form.basicData.lastName"
     class="col-md-4 col-12"
-    label="Nazwisko"
+    [label]="'Nazwisko' | a22T"
     testId="basic-last-name"
   />
   <a22-text-field
     [formField]="form.basicData.pesel"
     class="col-md-4 col-12"
-    label="PESEL"
-    hint="11 cyfr — uzupełni datę urodzenia i płeć"
+    [label]="'PESEL' | a22T"
+    [hint]="'11 cyfr — uzupełni datę urodzenia i płeć' | a22T"
     testId="basic-pesel"
   />
   <a22-text-field
     [formField]="form.basicData.nip"
     class="col-md-4 col-12"
-    label="NIP (opcjonalnie)"
-    hint="Wymagany przy samozatrudnieniu"
+    [label]="'NIP (opcjonalnie)' | a22T"
+    [hint]="'Wymagany przy samozatrudnieniu' | a22T"
     testId="basic-nip"
   />
   <a22-date-field
     [formField]="form.basicData.dateOfBirth"
     class="col-md-4 col-12"
-    label="Data urodzenia"
+    [label]="'Data urodzenia' | a22T"
     testId="basic-dob"
   />
   <a22-select
     [formField]="form.basicData.gender"
     [options]="genders"
     class="col-md-4 col-12"
-    label="Płeć"
+    [label]="'Płeć' | a22T"
     testId="basic-gender"
   />
   @if (peselLocked()) {
@@ -59,7 +59,7 @@
       data-testid="basic-pesel-lock"
     >
       <a22-icon name="lock" />
-      Uzupełnione z PESEL — data urodzenia i płeć są zablokowane.
+      {{ 'Uzupełnione z PESEL — data urodzenia i płeć są zablokowane.' | a22T }}
     </p>
   }
 </div>

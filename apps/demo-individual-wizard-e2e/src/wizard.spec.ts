@@ -65,6 +65,22 @@ test.describe('Individual wizard — smoke', () => {
     await expect(page.getByTestId('summary-submitted')).toBeVisible();
   });
 
+  test('language switcher flips PL → EN and persists across reload', async ({ page }) => {
+    await page.goto('/');
+    await expect(page.getByRole('heading', { name: 'Pulpit kreatora' })).toBeVisible();
+
+    await page.getByTestId('lang-en').click();
+    await expect(page.getByRole('heading', { name: 'Wizard dashboard' })).toBeVisible();
+    await expect(page.getByTestId('dashboard-status-1')).toHaveText('Not started');
+
+    // Choice is persisted in localStorage — survives a hard reload.
+    await page.reload();
+    await expect(page.getByRole('heading', { name: 'Wizard dashboard' })).toBeVisible();
+
+    await page.getByTestId('lang-pl').click();
+    await expect(page.getByRole('heading', { name: 'Pulpit kreatora' })).toBeVisible();
+  });
+
   test('conditional survey branches appear with education level', async ({ page }) => {
     await page.goto('/wizard/3');
     await expect(page.getByTestId('survey-higher-education')).toBeHidden();

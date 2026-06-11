@@ -1,4 +1,4 @@
-<h2 class="step-heading">Podsumowanie</h2>
+<h2 class="step-heading">{{ 'Podsumowanie' | a22T }}</h2>
 
 @if (blockers().length > 0) {
   <div
@@ -6,7 +6,7 @@
     role="alert"
     data-testid="summary-errors"
   >
-    <p class="banner__title">Formularz zawiera braki:</p>
+    <p class="banner__title">{{ 'Formularz zawiera braki:' | a22T }}</p>
     <ul>
       @for (message of blockers(); track message) {
         <li>{{ message }}</li>
@@ -16,102 +16,102 @@
 }
 
 <section class="summary-section">
-  <h3 class="section-heading">Dane firmy</h3>
+  <h3 class="section-heading">{{ 'Dane firmy' | a22T }}</h3>
   <a22-summary-row
     [value]="data().companyBasics.legalName"
-    label="Nazwa prawna"
+    [label]="'Nazwa prawna' | a22T"
   />
   <a22-summary-row
     [value]="data().companyBasics.tradeName"
-    label="Nazwa handlowa"
+    [label]="'Nazwa handlowa' | a22T"
   />
   <a22-summary-row
     [value]="legalFormLabel()"
-    label="Forma prawna"
+    [label]="'Forma prawna' | a22T"
   />
   <a22-summary-row
     [value]="data().companyBasics.nip"
-    label="NIP"
+    [label]="'NIP' | a22T"
   />
   <a22-summary-row
     [value]="data().companyBasics.regon"
-    label="REGON"
+    [label]="'REGON' | a22T"
   />
   <a22-summary-row
     [value]="data().companyBasics.krs"
-    label="KRS"
+    [label]="'KRS' | a22T"
   />
   <a22-summary-row
     [value]="foundingYear()"
-    label="Rok założenia"
+    [label]="'Rok założenia' | a22T"
   />
   <a22-summary-row
     [value]="data().companyBasics.websiteUrl"
-    label="Strona WWW"
+    [label]="'Strona WWW' | a22T"
   />
 </section>
 <a22-divider />
 
 <section class="summary-section">
-  <h3 class="section-heading">Kontakt</h3>
+  <h3 class="section-heading">{{ 'Kontakt' | a22T }}</h3>
   <a22-summary-row
     [value]="data().contact.email"
-    label="E-mail"
+    [label]="'E-mail' | a22T"
   />
   <a22-summary-row
     [value]="phonesSummary()"
-    label="Telefony"
+    [label]="'Telefony' | a22T"
   />
   @for (address of addressSummaries(); track $index; let i = $index) {
     <a22-summary-row
       [value]="address"
-      [label]="'Adres ' + (i + 1)"
+      [label]="('Adres' | a22T) + ' ' + (i + 1)"
     />
   }
 </section>
 <a22-divider />
 
 <section class="summary-section">
-  <h3 class="section-heading">Profil</h3>
+  <h3 class="section-heading">{{ 'Profil' | a22T }}</h3>
   <a22-summary-row
     [value]="industryLabel()"
-    label="Branża"
+    [label]="'Branża' | a22T"
   />
   <a22-summary-row
     [value]="segmentLabel()"
-    label="Segment klientów"
+    [label]="'Segment klientów' | a22T"
   />
   <a22-summary-row
     [value]="scaleSummary()"
-    label="Skala działalności"
+    [label]="'Skala działalności' | a22T"
   />
   <a22-summary-row
-    [value]="data().profile.hasExport ? 'tak' : 'nie'"
-    label="Eksport poza UE"
+    [value]="(data().profile.hasExport ? 'tak' : 'nie') | a22T"
+    [label]="'Eksport poza UE' | a22T"
   />
   <a22-summary-row
     [value]="languagesSummary()"
-    label="Języki robocze"
+    [label]="'Języki robocze' | a22T"
   />
 </section>
 <a22-divider />
 
 <section class="summary-section">
-  <h3 class="section-heading">Reprezentanci</h3>
+  <h3 class="section-heading">{{ 'Reprezentanci' | a22T }}</h3>
   @for (rep of representativeSummaries(); track $index; let i = $index) {
     <a22-summary-row
       [value]="rep"
-      [label]="'Reprezentant ' + (i + 1)"
+      [label]="('Reprezentant' | a22T) + ' ' + (i + 1)"
     />
   }
 </section>
 <a22-divider />
 
 <section class="summary-section">
-  <h3 class="section-heading">Zgody</h3>
+  <h3 class="section-heading">{{ 'Zgody' | a22T }}</h3>
   @for (item of data().consents.items; track item.key) {
     <a22-summary-row
-      [value]="item.granted ? '✓ udzielona' : '✗ brak'"
+      [value]="(item.granted ? '✓ udzielona' : '✗ brak') | a22T"
       [label]="item.label"
     />
   }
@@ -122,7 +122,7 @@
   [formField]="form.meta.acceptTerms"
   testId="summary-accept-terms"
 >
-  Akceptuję regulamin i potwierdzam prawdziwość danych.
+  {{ 'Akceptuję regulamin i potwierdzam prawdziwość danych.' | a22T }}
 </a22-checkbox>
 
 <div class="submit-row">
@@ -130,7 +130,7 @@
     [disabled]="!rootValid()"
     (click)="submit()"
     icon="send"
-    label="Wyślij wniosek"
+    [label]="'Wyślij wniosek' | a22T"
     testId="summary-submit"
   />
   @if (data().meta.submittedAt !== null) {
@@ -138,7 +138,7 @@
       class="submitted"
       data-testid="summary-submitted"
     >
-      Wysłano: {{ data().meta.submittedAt | date: 'yyyy-MM-dd HH:mm' }}
+      {{ 'Wysłano' | a22T }}: {{ data().meta.submittedAt | date: 'yyyy-MM-dd HH:mm' }}
     </span>
   }
 </div>

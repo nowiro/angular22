@@ -6,17 +6,17 @@
     [formField]="field().granted"
     [testId]="'consent-' + item().key"
   >
-    <span class="row__label">{{ item().label }}</span>
+    <span class="row__label">{{ item().label | a22T }}</span>
     @if (item().required) {
       <span
         class="row__badge"
         data-testid="consent-required-chip"
       >
-        wymagane
+        {{ 'wymagane' | a22T }}
       </span>
     }
   </a22-checkbox>
   @if (description() !== '') {
-    <p class="row__description">{{ description() }}</p>
+    <p class="row__description">{{ description() | a22T }}</p>
   }
 </div>

@@ -1,0 +1,26 @@
+<div
+  class="switcher"
+  role="group"
+  aria-label="Język / Language"
+>
+  <button
+    [class.active]="language() === 'pl'"
+    [attr.aria-pressed]="language() === 'pl'"
+    (click)="set('pl')"
+    class="lang"
+    type="button"
+    data-testid="lang-pl"
+  >
+    PL
+  </button>
+  <button
+    [class.active]="language() === 'en'"
+    [attr.aria-pressed]="language() === 'en'"
+    (click)="set('en')"
+    class="lang"
+    type="button"
+    data-testid="lang-en"
+  >
+    EN
+  </button>
+</div>

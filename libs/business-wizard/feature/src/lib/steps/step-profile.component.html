@@ -1,40 +1,40 @@
-<h2 class="step-heading">Profil działalności</h2>
+<h2 class="step-heading">{{ 'Profil działalności' | a22T }}</h2>
 
 <div class="form-grid">
   <a22-select
     [formField]="form.profile.industry"
     [options]="industries"
     class="col-md-6 col-12"
-    label="Branża"
-    hint="Finanse i opieka zdrowotna dodają obowiązkowe zgody"
+    [label]="'Branża' | a22T"
+    [hint]="'Finanse i opieka zdrowotna dodają obowiązkowe zgody' | a22T"
     testId="profile-industry"
   />
   <a22-select
     [formField]="form.profile.customerSegment"
     [options]="customerSegments"
     class="col-md-6 col-12"
-    label="Segment klientów"
+    [label]="'Segment klientów' | a22T"
     testId="profile-segment"
   />
   <a22-select
     [formField]="form.profile.revenueRange"
     [options]="revenueRanges"
     class="col-md-4 col-12"
-    label="Przychody roczne"
+    [label]="'Przychody roczne' | a22T"
     testId="profile-revenue"
   />
   <a22-select
     [formField]="form.profile.employeeRange"
     [options]="employeeRanges"
     class="col-md-4 col-12"
-    label="Zatrudnienie"
+    [label]="'Zatrudnienie' | a22T"
     testId="profile-employees"
   />
   <a22-select
     [formField]="form.profile.fiscalYearEnd"
     [options]="fiscalYearEnds"
     class="col-md-4 col-12"
-    label="Koniec roku obrotowego"
+    [label]="'Koniec roku obrotowego' | a22T"
     testId="profile-fiscal-year"
   />
 </div>
@@ -43,10 +43,10 @@
   [formField]="form.profile.hasExport"
   testId="profile-has-export"
 >
-  Firma prowadzi eksport poza UE (dodaje oświadczenie sankcyjne)
+  {{ 'Firma prowadzi eksport poza UE (dodaje oświadczenie sankcyjne)' | a22T }}
 </a22-checkbox>
 
-<h3 class="section-heading">Języki robocze</h3>
+<h3 class="section-heading">{{ 'Języki robocze' | a22T }}</h3>
 @for (language of data().profile.workingLanguages; track $index; let i = $index) {
   <a22-language-row
     [field]="languageField(i)"
@@ -58,6 +58,6 @@
   (click)="store.addLanguage()"
   variant="outlined"
   icon="add"
-  label="Dodaj język"
+  [label]="'Dodaj język' | a22T"
   testId="language-add"
 />

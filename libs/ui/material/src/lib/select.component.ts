@@ -3,6 +3,7 @@ import type { FormValueControl, ValidationError, WithOptionalFieldTree } from '@
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 
+import { A22TranslatePipe } from '@angular22/shared-i18n';
 import type { Option } from '@angular22/wizard-core';
 
 import { A22FieldErrorComponent } from './field-error.component';
@@ -19,7 +20,7 @@ import { A22FieldErrorComponent } from './field-error.component';
 @Component({
   selector: 'a22-select',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [A22FieldErrorComponent, MatFormFieldModule, MatSelectModule],
+  imports: [A22FieldErrorComponent, A22TranslatePipe, MatFormFieldModule, MatSelectModule],
   host: { '[style.display]': "hidden() ? 'none' : 'block'" },
   templateUrl: './select.component.html',
   styleUrl: './select.component.scss',

@@ -1,5 +1,5 @@
-<h2 class="step-heading">Reprezentanci</h2>
-<p class="lead">Osoby uprawnione do reprezentowania firmy. Wymagany co najmniej jeden reprezentant.</p>
+<h2 class="step-heading">{{ 'Reprezentanci' | a22T }}</h2>
+<p class="lead">{{ 'Osoby uprawnione do reprezentowania firmy. Wymagany co najmniej jeden reprezentant.' | a22T }}</p>
 
 @for (representative of data().representatives.items; track $index; let i = $index) {
   <div
@@ -7,13 +7,13 @@
     data-testid="representative-block"
   >
     <div class="rep-block__head">
-      <span class="rep-block__title">Reprezentant {{ i + 1 }}</span>
+      <span class="rep-block__title">{{ 'Reprezentant' | a22T }} {{ i + 1 }}</span>
       @if (data().representatives.items.length > 1) {
         <a22-button
           (click)="store.removeRepresentative(i)"
           variant="icon"
           icon="delete"
-          ariaLabel="Usuń reprezentanta"
+          [ariaLabel]="'Usuń reprezentanta' | a22T"
           testId="representative-remove"
         />
       }
@@ -22,27 +22,27 @@
       <a22-text-field
         [formField]="representativeField(i).fullName"
         class="col-md-6 col-12"
-        label="Imię i nazwisko"
+        [label]="'Imię i nazwisko' | a22T"
         testId="representative-name"
       />
       <a22-select
         [formField]="representativeField(i).role"
         [options]="roles"
         class="col-md-6 col-12"
-        label="Rola"
+        [label]="'Rola' | a22T"
         testId="representative-role"
       />
       <a22-text-field
         [formField]="representativeField(i).email"
         class="col-md-6 col-12"
-        label="E-mail"
+        [label]="'E-mail' | a22T"
         type="email"
         testId="representative-email"
       />
       <a22-text-field
         [formField]="representativeField(i).phone"
         class="col-md-6 col-12"
-        label="Telefon"
+        [label]="'Telefon' | a22T"
         type="tel"
         testId="representative-phone"
       />
@@ -51,7 +51,7 @@
       [formField]="representativeField(i).authorisedToSign"
       testId="representative-sign"
     >
-      Uprawniony/a do podpisywania umów
+      {{ 'Uprawniony/a do podpisywania umów' | a22T }}
     </a22-checkbox>
   </div>
 }
@@ -60,6 +60,6 @@
   (click)="store.addRepresentative()"
   variant="outlined"
   icon="person_add"
-  label="Dodaj reprezentanta"
+  [label]="'Dodaj reprezentanta' | a22T"
   testId="representative-add"
 />

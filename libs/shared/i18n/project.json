@@ -1,0 +1,19 @@
+{
+  "name": "shared-i18n",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/shared/i18n/src",
+  "prefix": "a22",
+  "projectType": "library",
+  "tags": ["scope:shared", "type:ui"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "tsc -p libs/shared/i18n/tsconfig.lib.json --noEmit"
+      }
+    }
+  }
+}

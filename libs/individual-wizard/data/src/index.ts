@@ -17,6 +17,7 @@ export {
   THESIS_BRANCHES,
 } from './lib/dictionaries';
 export { buildIndividualPreset } from './lib/fill-preset';
+export { INDIVIDUAL_WIZARD_EN } from './lib/i18n/individual-translations.en';
 export {
   ERROR_MISSING_RESIDENCE,
   ERROR_NIP_REQUIRED_FOR_SELF_EMPLOYED,

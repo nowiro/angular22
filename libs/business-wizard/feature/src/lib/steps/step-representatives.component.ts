@@ -4,6 +4,7 @@ import { FormField } from '@angular/forms/signals';
 
 import type { RepresentativeValue } from '@angular22/business-wizard-data';
 import { BusinessWizardStore, REPRESENTATIVE_ROLES } from '@angular22/business-wizard-data';
+import { A22TranslatePipe } from '@angular22/shared-i18n';
 import {
   A22ButtonComponent,
   A22CheckboxComponent,
@@ -15,7 +16,14 @@ import {
 @Component({
   selector: 'a22-step-representatives',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [A22ButtonComponent, A22CheckboxComponent, A22SelectComponent, A22TextFieldComponent, FormField],
+  imports: [
+    A22TranslatePipe,
+    A22ButtonComponent,
+    A22CheckboxComponent,
+    A22SelectComponent,
+    A22TextFieldComponent,
+    FormField,
+  ],
   templateUrl: './step-representatives.component.html',
   styleUrl: './step-representatives.component.scss',
 })

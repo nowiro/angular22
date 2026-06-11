@@ -16,11 +16,10 @@
       }
     },
     "test": {
-      "executor": "nx:run-commands",
+      "executor": "@nx/vitest:test",
       "outputs": ["{workspaceRoot}/coverage/libs/wizard/validators"],
       "options": {
-        "command": "vitest run",
-        "cwd": "libs/wizard/validators"
+        "configFile": "libs/wizard/validators/vitest.config.ts"
       }
     }
   }

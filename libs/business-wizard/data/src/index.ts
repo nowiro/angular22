@@ -18,6 +18,7 @@ export {
   REVENUE_RANGES,
 } from './lib/dictionaries';
 export { buildBusinessPreset } from './lib/fill-preset';
+export { BUSINESS_WIZARD_EN } from './lib/i18n/business-translations.en';
 export {
   businessWizardSchema,
   ERROR_MISSING_HEADQUARTERS,

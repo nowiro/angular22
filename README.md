@@ -32,6 +32,7 @@ Signal Forms**, with every Angular Material component consumed through Nx wrappe
 | `@angular22/wizard-validators`         | util        | PESEL / NIP / REGON / KRS / postal / phone validators (pure + Signal Forms adapters)               |
 | `@angular22/wizard-ui`                 | ui          | Shared wizard presentation (address form, consent row, summary rows)                               |
 | `@angular22/wizard-form-fill`          | ui          | Dev-only "fill form" panel — active on localhost only                                              |
+| `@angular22/shared-i18n`               | ui          | Signal-based runtime i18n (PL default), `a22T` pipe, language switcher                             |
 | `@angular22/individual-wizard-data`    | data-access | Model, dictionaries, Signal Forms schema, fill preset                                              |
 | `@angular22/individual-wizard-feature` | feature     | Step components + wizard shell                                                                     |
 | `@angular22/business-wizard-data`      | data-access | Model, dictionaries, Signal Forms schema, fill preset                                              |
@@ -57,6 +58,25 @@ pnpm test
 pnpm build
 pnpm e2e
 ```
+
+## i18n
+
+Polish is the **default** UI language, English the second one (toolbar switcher, persisted
+in `localStorage`, `document.lang` kept in sync). Runtime i18n is signal-based
+(`@angular22/shared-i18n`): Polish source strings ARE the translation keys (gettext-style),
+templates use the `a22T` pipe, wrappers translate data-driven texts (select options,
+validation messages, consent labels) so data libs stay Polish-only. English maps live next
+to each app/feature (`*-translations.en.ts`); a missing entry falls back to Polish.
+
+## Spec-Driven Development + Copilot agents
+
+The repo follows an SDD ladder adapted from [github/spec-kit](https://github.com/github/spec-kit)
+(`docs/sdd/methodology.md`): `pnpm workflow:specify` → `/clarify` → plan → `/analyze` →
+implement → orchestrator verify → `pnpm verify`. GitHub Copilot is configured with **one
+visible agent** (`orchestrator`, Opus-class) and 9 hidden specialists ([`AGENTS.md`](AGENTS.md)),
+plus skills (`signal-forms`, `material-wrappers`, `nx-generators`) and auto-applied
+instructions that make generated code pass ESLint on the first try. Gates: `pnpm ai:validate`
+(exactly 1 visible agent, frontmatter, mcp.json) and `pnpm sdd:check` (spec↔plan traceability).
 
 ## Conventions
 

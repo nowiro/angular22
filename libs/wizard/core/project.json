@@ -16,11 +16,10 @@
       }
     },
     "test": {
-      "executor": "nx:run-commands",
+      "executor": "@nx/vitest:test",
       "outputs": ["{workspaceRoot}/coverage/libs/wizard/core"],
       "options": {
-        "command": "vitest run",
-        "cwd": "libs/wizard/core"
+        "configFile": "libs/wizard/core/vitest.config.ts"
       }
     }
   }

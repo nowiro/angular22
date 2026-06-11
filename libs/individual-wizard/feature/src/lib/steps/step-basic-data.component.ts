@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/c
 import { FormField } from '@angular/forms/signals';
 
 import { GENDERS, IndividualWizardStore } from '@angular22/individual-wizard-data';
+import { A22TranslatePipe } from '@angular22/shared-i18n';
 import {
   A22DateFieldComponent,
   A22IconComponent,
@@ -15,7 +16,14 @@ import { parsePesel } from '@angular22/wizard-validators';
 @Component({
   selector: 'a22-step-basic-data',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [A22DateFieldComponent, A22IconComponent, A22SelectComponent, A22TextFieldComponent, FormField],
+  imports: [
+    A22TranslatePipe,
+    A22DateFieldComponent,
+    A22IconComponent,
+    A22SelectComponent,
+    A22TextFieldComponent,
+    FormField,
+  ],
   templateUrl: './step-basic-data.component.html',
   styleUrl: './step-basic-data.component.scss',
 })

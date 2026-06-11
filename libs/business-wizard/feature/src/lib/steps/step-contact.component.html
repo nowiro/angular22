@@ -1,13 +1,13 @@
-<h2 class="step-heading">Kontakt</h2>
+<h2 class="step-heading">{{ 'Kontakt' | a22T }}</h2>
 
 <a22-text-field
   [formField]="form.contact.email"
-  label="Adres e-mail firmy"
+  [label]="'Adres e-mail firmy' | a22T"
   type="email"
   testId="contact-email"
 />
 
-<h3 class="section-heading">Telefony</h3>
+<h3 class="section-heading">{{ 'Telefony' | a22T }}</h3>
 @for (phone of data().contact.phones; track $index; let i = $index) {
   <a22-phone-row
     [field]="phoneField(i)"
@@ -21,21 +21,21 @@
   (click)="store.addPhone()"
   variant="outlined"
   icon="add"
-  label="Dodaj telefon"
+  [label]="'Dodaj telefon' | a22T"
   testId="add-phone"
 />
 
-<h3 class="section-heading">Adresy</h3>
+<h3 class="section-heading">{{ 'Adresy' | a22T }}</h3>
 @for (address of data().contact.addresses; track $index; let i = $index) {
   <div class="address-block">
     <div class="address-block__head">
-      <span class="address-block__title">Adres {{ i + 1 }}</span>
+      <span class="address-block__title">{{ 'Adres' | a22T }} {{ i + 1 }}</span>
       @if (data().contact.addresses.length > 1) {
         <a22-button
           (click)="store.removeAddress(i)"
           variant="icon"
           icon="delete"
-          ariaLabel="Usuń adres"
+          [ariaLabel]="'Usuń adres' | a22T"
           testId="address-remove"
         />
       }
@@ -51,6 +51,6 @@
   (click)="store.addAddress()"
   variant="outlined"
   icon="add_home"
-  label="Dodaj adres"
+  [label]="'Dodaj adres' | a22T"
   testId="add-address"
 />
