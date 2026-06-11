@@ -1,0 +1,70 @@
+@switch (variant()) {
+  @case ('filled') {
+    <button
+      [type]="type()"
+      [disabled]="disabled()"
+      [attr.aria-label]="ariaLabel() || null"
+      [attr.data-testid]="testId() || null"
+      mat-flat-button
+      color="primary"
+    >
+      @if (icon() !== '') {
+        <mat-icon>{{ icon() }}</mat-icon>
+      }
+      {{ label() }}
+    </button>
+  }
+  @case ('outlined') {
+    <button
+      [type]="type()"
+      [disabled]="disabled()"
+      [attr.aria-label]="ariaLabel() || null"
+      [attr.data-testid]="testId() || null"
+      mat-stroked-button
+    >
+      @if (icon() !== '') {
+        <mat-icon>{{ icon() }}</mat-icon>
+      }
+      {{ label() }}
+    </button>
+  }
+  @case ('tonal') {
+    <button
+      [type]="type()"
+      [disabled]="disabled()"
+      [attr.aria-label]="ariaLabel() || null"
+      [attr.data-testid]="testId() || null"
+      mat-flat-button
+    >
+      @if (icon() !== '') {
+        <mat-icon>{{ icon() }}</mat-icon>
+      }
+      {{ label() }}
+    </button>
+  }
+  @case ('text') {
+    <button
+      [type]="type()"
+      [disabled]="disabled()"
+      [attr.aria-label]="ariaLabel() || null"
+      [attr.data-testid]="testId() || null"
+      mat-button
+    >
+      @if (icon() !== '') {
+        <mat-icon>{{ icon() }}</mat-icon>
+      }
+      {{ label() }}
+    </button>
+  }
+  @case ('icon') {
+    <button
+      [type]="type()"
+      [disabled]="disabled()"
+      [attr.aria-label]="ariaLabel() || null"
+      [attr.data-testid]="testId() || null"
+      mat-icon-button
+    >
+      <mat-icon>{{ icon() }}</mat-icon>
+    </button>
+  }
+}

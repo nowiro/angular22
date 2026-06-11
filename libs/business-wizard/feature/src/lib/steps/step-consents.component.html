@@ -1,0 +1,9 @@
+<h2 class="step-heading">Zgody i oświadczenia</h2>
+<p class="lead">
+  Zestaw zgód zależy od profilu: finanse dodają PSD2, opieka zdrowotna umowę powierzenia, segment B2C klauzulę
+  konsumencką, a eksport oświadczenie sankcyjne.
+</p>
+
+@for (item of data().consents.items; track item.key; let i = $index) {
+  <a22-consent-row [field]="consentField(i)" />
+}

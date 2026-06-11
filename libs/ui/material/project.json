@@ -1,0 +1,19 @@
+{
+  "name": "ui-material",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/ui/material/src",
+  "prefix": "a22",
+  "projectType": "library",
+  "tags": ["scope:shared", "type:ui"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "tsc -p libs/ui/material/tsconfig.lib.json --noEmit"
+      }
+    }
+  }
+}

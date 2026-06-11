@@ -1,0 +1,57 @@
+<h2 class="step-heading">Dane firmy</h2>
+
+<div class="form-grid">
+  <a22-text-field
+    [formField]="form.companyBasics.legalName"
+    class="col-md-6 col-12"
+    label="Nazwa prawna"
+    testId="basics-legal-name"
+  />
+  <a22-text-field
+    [formField]="form.companyBasics.tradeName"
+    class="col-md-6 col-12"
+    label="Nazwa handlowa (opcjonalnie)"
+    testId="basics-trade-name"
+  />
+  <a22-select
+    [formField]="form.companyBasics.legalForm"
+    [options]="legalForms"
+    class="col-md-6 col-12"
+    label="Forma prawna"
+    testId="basics-legal-form"
+  />
+  <a22-number-field
+    [formField]="form.companyBasics.foundingYear"
+    class="col-md-6 col-12"
+    label="Rok założenia"
+    testId="basics-founding-year"
+  />
+  <a22-text-field
+    [formField]="form.companyBasics.nip"
+    class="col-md-4 col-12"
+    label="NIP"
+    hint="10 cyfr"
+    testId="basics-nip"
+  />
+  <a22-text-field
+    [formField]="form.companyBasics.regon"
+    class="col-md-4 col-12"
+    label="REGON"
+    hint="9 lub 14 cyfr"
+    testId="basics-regon"
+  />
+  <a22-text-field
+    [formField]="form.companyBasics.krs"
+    [hint]="krsRequired() ? 'Wymagany dla tej formy prawnej' : 'Niewymagany dla tej formy prawnej'"
+    class="col-md-4 col-12"
+    label="KRS"
+    testId="basics-krs"
+  />
+  <a22-text-field
+    [formField]="form.companyBasics.websiteUrl"
+    class="col-md-6 col-12"
+    label="Strona WWW (opcjonalnie)"
+    placeholder="https://…"
+    testId="basics-website"
+  />
+</div>

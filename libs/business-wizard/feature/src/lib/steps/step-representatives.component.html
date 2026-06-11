@@ -1,0 +1,65 @@
+<h2 class="step-heading">Reprezentanci</h2>
+<p class="lead">Osoby uprawnione do reprezentowania firmy. Wymagany co najmniej jeden reprezentant.</p>
+
+@for (representative of data().representatives.items; track $index; let i = $index) {
+  <div
+    class="rep-block"
+    data-testid="representative-block"
+  >
+    <div class="rep-block__head">
+      <span class="rep-block__title">Reprezentant {{ i + 1 }}</span>
+      @if (data().representatives.items.length > 1) {
+        <a22-button
+          (click)="store.removeRepresentative(i)"
+          variant="icon"
+          icon="delete"
+          ariaLabel="Usuń reprezentanta"
+          testId="representative-remove"
+        />
+      }
+    </div>
+    <div class="form-grid">
+      <a22-text-field
+        [formField]="representativeField(i).fullName"
+        class="col-md-6 col-12"
+        label="Imię i nazwisko"
+        testId="representative-name"
+      />
+      <a22-select
+        [formField]="representativeField(i).role"
+        [options]="roles"
+        class="col-md-6 col-12"
+        label="Rola"
+        testId="representative-role"
+      />
+      <a22-text-field
+        [formField]="representativeField(i).email"
+        class="col-md-6 col-12"
+        label="E-mail"
+        type="email"
+        testId="representative-email"
+      />
+      <a22-text-field
+        [formField]="representativeField(i).phone"
+        class="col-md-6 col-12"
+        label="Telefon"
+        type="tel"
+        testId="representative-phone"
+      />
+    </div>
+    <a22-checkbox
+      [formField]="representativeField(i).authorisedToSign"
+      testId="representative-sign"
+    >
+      Uprawniony/a do podpisywania umów
+    </a22-checkbox>
+  </div>
+}
+
+<a22-button
+  (click)="store.addRepresentative()"
+  variant="outlined"
+  icon="person_add"
+  label="Dodaj reprezentanta"
+  testId="representative-add"
+/>

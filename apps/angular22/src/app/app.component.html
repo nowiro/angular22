@@ -1,0 +1,98 @@
+<a22-toolbar>
+  <a22-icon name="rocket_launch" />
+  <span class="brand">angular22</span>
+  <span class="spacer"></span>
+  <a
+    class="repo-link"
+    href="https://github.com/nowiro/angular22"
+    rel="noopener"
+    target="_blank"
+  >
+    <a22-icon name="code" />
+    GitHub
+  </a>
+</a22-toolbar>
+
+<main class="page">
+  <header class="intro">
+    <p class="intro__eyebrow">Angular 22 · Nx · Angular Material · Signal Forms</p>
+    <h1 class="intro__title">Demo monorepo angular22</h1>
+    <p class="intro__lead">
+      Dwa kreatory formularzy zbudowane w 100% na stabilnych Signal Forms z Angular 22. Wszystkie komponenty Angular
+      Material są opakowane w biblioteki Nx (
+      <code>&#64;angular22/ui-material</code>
+      ) jako kontrolki
+      <code>FormValueControl</code>
+      , a wypełnianie danymi demo działa wyłącznie na localhoście.
+    </p>
+  </header>
+
+  <div class="cards">
+    <a22-card
+      title="Kreator danych osobowych"
+      subtitle="demo-individual-wizard · port 4201"
+    >
+      <p class="card-text">
+        5 kroków: dane podstawowe (PESEL z auto-uzupełnianiem daty urodzenia), kontakt z wieloma adresami, warunkowa
+        ankieta (wykształcenie → specjalizacja IT → praca doktorska), zgody zależne od kontekstu i podsumowanie.
+      </p>
+      <a
+        class="cta"
+        href="http://localhost:4201"
+        data-testid="open-individual"
+      >
+        <a22-icon name="badge" />
+        Otwórz demo
+      </a>
+    </a22-card>
+
+    <a22-card
+      title="Kreator danych firmy"
+      subtitle="demo-business-wizard · port 4202"
+    >
+      <p class="card-text">
+        6 kroków: dane rejestrowe (NIP/REGON/KRS z walidacją sum kontrolnych, KRS warunkowy od formy prawnej), kontakt,
+        profil działalności sterujący katalogiem zgód (PSD2, sankcje), reprezentanci i podsumowanie.
+      </p>
+      <a
+        class="cta"
+        href="http://localhost:4202"
+        data-testid="open-business"
+      >
+        <a22-icon name="domain" />
+        Otwórz demo
+      </a>
+    </a22-card>
+  </div>
+
+  <section class="stack">
+    <h2 class="stack__title">Stack</h2>
+    <ul class="stack__list">
+      <li>
+        <strong>Angular 22</strong>
+        — zoneless, standalone, signals, Signal Forms (stabilne)
+      </li>
+      <li>
+        <strong>Nx</strong>
+        — monorepo, granice modułów, cache zadań
+      </li>
+      <li>
+        <strong>Angular Material 22</strong>
+        — tokeny M3, wrappery w
+        <code>libs/ui/material</code>
+      </li>
+      <li>
+        <strong>Vitest</strong>
+        — testy jednostkowe libów
+      </li>
+      <li>
+        <strong>Playwright</strong>
+        — testy e2e obu kreatorów
+      </li>
+      <li>
+        <strong>pnpm</strong>
+        + ESLint flat config (angular-eslint, sonarjs, unicorn, import-x)
+      </li>
+    </ul>
+  </section>
+</main>

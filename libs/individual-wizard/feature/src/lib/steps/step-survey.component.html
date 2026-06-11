@@ -1,0 +1,190 @@
+<h2 class="step-heading">Ankieta</h2>
+
+<div class="form-grid">
+  <a22-select
+    [formField]="form.survey.educationLevel"
+    [options]="educationLevels"
+    class="col-md-6 col-12"
+    label="Wykształcenie"
+    testId="survey-education-level"
+  />
+</div>
+
+@if (relevance().higherEducation) {
+  <section
+    class="nested"
+    data-testid="survey-higher-education"
+  >
+    <h3 class="section-heading">Wykształcenie wyższe</h3>
+    <div class="form-grid">
+      <a22-text-field
+        [formField]="form.survey.higherEducation.university"
+        class="col-md-6 col-12"
+        label="Uczelnia"
+        testId="survey-university"
+      />
+      <a22-select
+        [formField]="form.survey.higherEducation.field"
+        [options]="studyFields"
+        class="col-md-6 col-12"
+        label="Kierunek"
+        testId="survey-study-field"
+      />
+    </div>
+
+    @if (relevance().specialisation) {
+      <div
+        class="nested"
+        data-testid="survey-specialisation"
+      >
+        <h4 class="subsection-heading">Specjalizacja IT</h4>
+        <div class="form-grid">
+          <a22-select
+            [formField]="form.survey.higherEducation.specialisation.branch"
+            [options]="itBranches"
+            class="col-md-6 col-12"
+            label="Branża"
+            testId="survey-branch"
+          />
+        </div>
+
+        @if (relevance().thesis) {
+          <div
+            class="nested"
+            data-testid="survey-thesis"
+          >
+            <h4 class="subsection-heading">Praca doktorska</h4>
+            <a22-text-field
+              [formField]="form.survey.higherEducation.specialisation.thesis.topic"
+              label="Temat pracy"
+              testId="thesis-topic"
+            />
+            <p class="hint">Słowa kluczowe (1–10):</p>
+            @for (
+              keyword of data().survey.higherEducation.specialisation.thesis.keywords;
+              track $index;
+              let i = $index
+            ) {
+              <div class="keyword-row">
+                <a22-text-field
+                  [formField]="keywordField(i)"
+                  [label]="'Słowo kluczowe ' + (i + 1)"
+                  testId="thesis-keyword"
+                />
+                @if (data().survey.higherEducation.specialisation.thesis.keywords.length > 1) {
+                  <a22-button
+                    (click)="store.removeKeyword(i)"
+                    variant="icon"
+                    icon="delete"
+                    ariaLabel="Usuń słowo kluczowe"
+                    testId="thesis-keyword-remove"
+                  />
+                }
+              </div>
+            }
+            <a22-button
+              (click)="store.addKeyword()"
+              variant="outlined"
+              icon="add"
+              testId="thesis-keyword-add"
+              label="Dodaj słowo kluczowe"
+            />
+          </div>
+        }
+      </div>
+    }
+  </section>
+}
+
+<h3 class="section-heading">Zatrudnienie</h3>
+<div class="form-grid">
+  <a22-select
+    [formField]="form.survey.employment.status"
+    [options]="employmentStatuses"
+    class="col-md-6 col-12"
+    label="Status zatrudnienia"
+    testId="survey-employment-status"
+  />
+</div>
+
+@if (relevance().employmentDetails) {
+  <section
+    class="nested"
+    data-testid="survey-employment-details"
+  >
+    <div class="form-grid">
+      <a22-text-field
+        [formField]="form.survey.employment.details.companyName"
+        class="col-md-6 col-12"
+        label="Nazwa firmy"
+        testId="employment-company"
+      />
+      <a22-text-field
+        [formField]="form.survey.employment.details.position"
+        class="col-md-6 col-12"
+        label="Stanowisko"
+        testId="employment-position"
+      />
+    </div>
+
+    <h4 class="subsection-heading">Umowy</h4>
+    @for (contract of data().survey.employment.details.contracts; track $index; let i = $index) {
+      <div class="contract-row form-grid">
+        <a22-select
+          [formField]="contractField(i).type"
+          [options]="contractTypes"
+          class="col-md-4 col-12"
+          label="Rodzaj umowy"
+          testId="contract-type"
+        />
+        <a22-date-field
+          [formField]="contractField(i).since"
+          class="col-md-3 col-12"
+          label="Od kiedy"
+          testId="contract-since"
+        />
+        <a22-number-field
+          [formField]="contractField(i).grossMonthly"
+          class="col-md-3 col-12"
+          label="Brutto / mies."
+          suffix="PLN"
+          testId="contract-gross"
+        />
+        @if (data().survey.employment.details.contracts.length > 1) {
+          <div class="col-md-2 col-12 remove">
+            <a22-button
+              (click)="store.removeContract(i)"
+              variant="icon"
+              icon="delete"
+              ariaLabel="Usuń umowę"
+              testId="contract-remove"
+            />
+          </div>
+        }
+      </div>
+    }
+    <a22-button
+      (click)="store.addContract()"
+      variant="outlined"
+      icon="add"
+      testId="contract-add"
+      label="Dodaj umowę"
+    />
+  </section>
+}
+
+<h3 class="section-heading">Języki</h3>
+@for (language of data().survey.languages; track $index; let i = $index) {
+  <a22-language-row
+    [field]="languageField(i)"
+    [removable]="data().survey.languages.length > 1"
+    (remove)="store.removeLanguage(i)"
+  />
+}
+<a22-button
+  (click)="store.addLanguage()"
+  variant="outlined"
+  icon="add"
+  testId="language-add"
+  label="Dodaj język"
+/>

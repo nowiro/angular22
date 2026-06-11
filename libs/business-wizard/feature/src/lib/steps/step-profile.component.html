@@ -1,0 +1,63 @@
+<h2 class="step-heading">Profil działalności</h2>
+
+<div class="form-grid">
+  <a22-select
+    [formField]="form.profile.industry"
+    [options]="industries"
+    class="col-md-6 col-12"
+    label="Branża"
+    hint="Finanse i opieka zdrowotna dodają obowiązkowe zgody"
+    testId="profile-industry"
+  />
+  <a22-select
+    [formField]="form.profile.customerSegment"
+    [options]="customerSegments"
+    class="col-md-6 col-12"
+    label="Segment klientów"
+    testId="profile-segment"
+  />
+  <a22-select
+    [formField]="form.profile.revenueRange"
+    [options]="revenueRanges"
+    class="col-md-4 col-12"
+    label="Przychody roczne"
+    testId="profile-revenue"
+  />
+  <a22-select
+    [formField]="form.profile.employeeRange"
+    [options]="employeeRanges"
+    class="col-md-4 col-12"
+    label="Zatrudnienie"
+    testId="profile-employees"
+  />
+  <a22-select
+    [formField]="form.profile.fiscalYearEnd"
+    [options]="fiscalYearEnds"
+    class="col-md-4 col-12"
+    label="Koniec roku obrotowego"
+    testId="profile-fiscal-year"
+  />
+</div>
+
+<a22-checkbox
+  [formField]="form.profile.hasExport"
+  testId="profile-has-export"
+>
+  Firma prowadzi eksport poza UE (dodaje oświadczenie sankcyjne)
+</a22-checkbox>
+
+<h3 class="section-heading">Języki robocze</h3>
+@for (language of data().profile.workingLanguages; track $index; let i = $index) {
+  <a22-language-row
+    [field]="languageField(i)"
+    [removable]="data().profile.workingLanguages.length > 1"
+    (remove)="store.removeLanguage(i)"
+  />
+}
+<a22-button
+  (click)="store.addLanguage()"
+  variant="outlined"
+  icon="add"
+  label="Dodaj język"
+  testId="language-add"
+/>

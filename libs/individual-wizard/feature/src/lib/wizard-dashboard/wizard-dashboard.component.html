@@ -1,0 +1,50 @@
+<a22-toolbar>
+  <a22-icon name="badge" />
+  <span class="brand">Kreator danych osobowych</span>
+  <span class="spacer"></span>
+  <a
+    [routerLink]="wizardLink"
+    class="home-link"
+    data-testid="topbar-open-wizard"
+  >
+    <a22-icon name="play_arrow" />
+    Otwórz kreator
+  </a>
+</a22-toolbar>
+
+<main
+  class="page"
+  data-testid="wizard-dashboard"
+>
+  <header class="intro">
+    <p class="intro__eyebrow">Demo · Angular 22 Signal Forms</p>
+    <h1 class="intro__title">Pulpit kreatora</h1>
+    <p class="intro__lead">
+      Każdy kafelek prowadzi do jednego kroku. Statusy aktualizują się na żywo z sygnałów formularza.
+    </p>
+  </header>
+
+  <div class="tiles">
+    @for (tile of tiles; track tile.step) {
+      <a
+        [routerLink]="stepLink(tile.step)"
+        [attr.data-testid]="'dashboard-tile-' + tile.step"
+        class="tile"
+      >
+        <span class="tile__icon">
+          <a22-icon [name]="tile.icon" />
+        </span>
+        <span class="tile__body">
+          <span class="tile__title">{{ tile.title }}</span>
+          <span class="tile__subtitle">{{ tile.subtitle }}</span>
+        </span>
+        <span
+          [class]="'status status--' + statuses()[tile.step]"
+          [attr.data-testid]="'dashboard-status-' + tile.step"
+        >
+          {{ statusLabels[statuses()[tile.step]] }}
+        </span>
+      </a>
+    }
+  </div>
+</main>

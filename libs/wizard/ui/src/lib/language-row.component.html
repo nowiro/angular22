@@ -1,0 +1,27 @@
+<div class="language-row">
+  <a22-select
+    [formField]="field().code"
+    [options]="codes"
+    class="col-md-5 col-12"
+    label="Język"
+    testId="language-code"
+  />
+  <a22-select
+    [formField]="field().level"
+    [options]="levels"
+    class="col-md-5 col-12"
+    label="Poziom"
+    testId="language-level"
+  />
+  @if (removable()) {
+    <div class="remove col-md-1 col-12">
+      <a22-button
+        (click)="remove.emit()"
+        variant="icon"
+        icon="delete"
+        ariaLabel="Usuń język"
+        testId="language-remove"
+      />
+    </div>
+  }
+</div>

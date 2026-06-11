@@ -1,0 +1,19 @@
+{
+  "name": "business-wizard-feature",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/business-wizard/feature/src",
+  "prefix": "a22",
+  "projectType": "library",
+  "tags": ["scope:business-wizard", "type:feature"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "tsc -p libs/business-wizard/feature/tsconfig.lib.json --noEmit"
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+<h2 class="step-heading">Zgody i sprzeciwy</h2>
+<p class="lead">
+  Lista zgód dopasowuje się do Twoich odpowiedzi — obywatelstwo, kraj zamieszkania, wykształcenie i status zatrudnienia
+  zmieniają zestaw pozycji.
+</p>
+
+@for (item of data().consents.items; track item.key; let i = $index) {
+  <a22-consent-row
+    [field]="consentField(i)"
+    [description]="descriptionOf(item.key)"
+  />
+}

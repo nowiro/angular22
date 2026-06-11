@@ -1,0 +1,19 @@
+{
+  "name": "wizard-form-fill",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/wizard/form-fill/src",
+  "prefix": "a22",
+  "projectType": "library",
+  "tags": ["scope:shared", "type:ui"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "tsc -p libs/wizard/form-fill/tsconfig.lib.json --noEmit"
+      }
+    }
+  }
+}

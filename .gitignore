@@ -1,0 +1,33 @@
+# Dependencies
+node_modules
+
+# Build outputs
+dist
+tmp
+out-tsc
+
+# Caches
+.nx/cache
+.nx/workspace-data
+.angular
+.eslintcache
+
+# Tests
+coverage
+test-results
+playwright-report
+/dist/.playwright
+
+# Environment
+.env
+.env.local
+
+# Local AI-tooling state (repo is Copilot-only; see .github/copilot-instructions.md)
+.claude
+
+# IDE / OS
+.idea
+.DS_Store
+Thumbs.db
+*.launch
+.history

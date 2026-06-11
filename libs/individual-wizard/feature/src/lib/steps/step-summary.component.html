@@ -1,0 +1,123 @@
+<h2 class="step-heading">Podsumowanie</h2>
+
+@if (blockers().length > 0) {
+  <div
+    class="banner"
+    role="alert"
+    data-testid="summary-errors"
+  >
+    <p class="banner__title">Formularz zawiera braki:</p>
+    <ul>
+      @for (message of blockers(); track message) {
+        <li>{{ message }}</li>
+      }
+    </ul>
+  </div>
+}
+
+<section class="summary-section">
+  <h3 class="section-heading">Dane podstawowe</h3>
+  <a22-summary-row
+    [value]="fullName()"
+    label="Imię i nazwisko"
+  />
+  <a22-summary-row
+    [value]="data().basicData.pesel"
+    label="PESEL"
+  />
+  <a22-summary-row
+    [value]="data().basicData.nip"
+    label="NIP"
+  />
+  <a22-summary-row
+    [value]="(data().basicData.dateOfBirth | date: 'yyyy-MM-dd') ?? ''"
+    label="Data urodzenia"
+  />
+  <a22-summary-row
+    [value]="genderLabel()"
+    label="Płeć"
+  />
+  <a22-summary-row
+    [value]="citizenshipLabel()"
+    label="Obywatelstwo"
+  />
+</section>
+<a22-divider />
+
+<section class="summary-section">
+  <h3 class="section-heading">Kontakt</h3>
+  <a22-summary-row
+    [value]="data().contact.email"
+    label="E-mail"
+  />
+  <a22-summary-row
+    [value]="phonesSummary()"
+    label="Telefony"
+  />
+  @for (address of addressSummaries(); track $index; let i = $index) {
+    <a22-summary-row
+      [value]="address"
+      [label]="'Adres ' + (i + 1)"
+    />
+  }
+</section>
+<a22-divider />
+
+<section class="summary-section">
+  <h3 class="section-heading">Ankieta</h3>
+  <a22-summary-row
+    [value]="educationSummary()"
+    label="Wykształcenie"
+  />
+  @if (relevance().thesis) {
+    <a22-summary-row
+      [value]="data().survey.higherEducation.specialisation.thesis.topic"
+      label="Praca doktorska"
+    />
+  }
+  <a22-summary-row
+    [value]="employmentSummary()"
+    label="Zatrudnienie"
+  />
+  <a22-summary-row
+    [value]="languagesSummary()"
+    label="Języki"
+  />
+</section>
+<a22-divider />
+
+<section class="summary-section">
+  <h3 class="section-heading">Zgody</h3>
+  @for (item of data().consents.items; track item.key) {
+    <a22-summary-row
+      [value]="item.granted ? '✓ udzielona' : '✗ brak'"
+      [label]="item.label"
+    />
+  }
+</section>
+<a22-divider />
+
+<a22-checkbox
+  [formField]="form.meta.acceptTerms"
+  testId="summary-accept-terms"
+>
+  Akceptuję regulamin i potwierdzam prawdziwość danych.
+</a22-checkbox>
+
+<div class="submit-row">
+  <a22-button
+    [disabled]="!rootValid()"
+    (click)="submit()"
+    icon="send"
+    testId="summary-submit"
+    label="Wyślij wniosek"
+  />
+  @if (data().meta.submittedAt !== null) {
+    <span
+      class="submitted"
+      data-testid="summary-submitted"
+    >
+      Wysłano: {{ data().meta.submittedAt | date: 'yyyy-MM-dd HH:mm' }}
+    </span>
+  }
+</div>

@@ -1,0 +1,20 @@
+import type { ApplicationConfig } from '@angular/core';
+import { provideBrowserGlobalErrorListeners } from '@angular/core';
+import { provideRouter, withComponentInputBinding } from '@angular/router';
+
+import { BusinessWizardStore } from '@angular22/business-wizard-data';
+import { WIZARD_FILL_PRESETS } from '@angular22/wizard-core';
+
+import { appRoutes } from './app.routes';
+
+/**
+ * Zoneless by construction (no zone.js in polyfills — Angular 22 default).
+ * `WIZARD_FILL_PRESETS` wires the dev-fill panel to this wizard's store.
+ */
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideBrowserGlobalErrorListeners(),
+    provideRouter(appRoutes, withComponentInputBinding()),
+    { provide: WIZARD_FILL_PRESETS, useExisting: BusinessWizardStore },
+  ],
+};

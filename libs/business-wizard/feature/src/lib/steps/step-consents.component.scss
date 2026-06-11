@@ -1,0 +1,16 @@
+:host {
+  display: block;
+}
+
+.step-heading {
+  font: var(--mat-sys-headline-small);
+  margin: 0 0 1rem;
+  color: var(--mat-sys-on-surface);
+}
+
+.lead {
+  font: var(--mat-sys-body-medium);
+  color: var(--mat-sys-on-surface-variant);
+  margin: 0 0 1rem;
+  max-width: 60ch;
+}

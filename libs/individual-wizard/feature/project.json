@@ -1,0 +1,19 @@
+{
+  "name": "individual-wizard-feature",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/individual-wizard/feature/src",
+  "prefix": "a22",
+  "projectType": "library",
+  "tags": ["scope:individual-wizard", "type:feature"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "tsc -p libs/individual-wizard/feature/tsconfig.lib.json --noEmit"
+      }
+    }
+  }
+}

@@ -1,0 +1,9 @@
+<mat-checkbox
+  [checked]="checked()"
+  [disabled]="disabled()"
+  [attr.data-testid]="testId() || null"
+  (change)="onChange($event.checked)"
+>
+  <ng-content />
+</mat-checkbox>
+<a22-field-error [errors]="showError() ? errors() : []" />

@@ -1,0 +1,36 @@
+<div class="phone-row">
+  <a22-select
+    [formField]="field().type"
+    [options]="typeOptions()"
+    class="col-md-3 col-12"
+    label="Typ"
+    testId="phone-type"
+  />
+  <a22-text-field
+    [formField]="field().number"
+    class="col-md-5 col-12"
+    label="Numer telefonu"
+    placeholder="+48 601 234 567"
+    type="tel"
+    testId="phone-number"
+  />
+  @if (showExtension()) {
+    <a22-text-field
+      [formField]="field().extension"
+      class="col-md-3 col-12"
+      label="Wewn."
+      testId="phone-extension"
+    />
+  }
+  @if (removable()) {
+    <div class="remove col-md-1 col-12">
+      <a22-button
+        (click)="remove.emit()"
+        variant="icon"
+        icon="delete"
+        ariaLabel="Usuń telefon"
+        testId="phone-remove"
+      />
+    </div>
+  }
+</div>

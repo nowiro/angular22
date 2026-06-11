@@ -1,0 +1,30 @@
+{
+  "$schema": "https://aka.ms/vscode-mcp.schema.json",
+  "comment": "MCP servers dla nowiro/angular22 (VS Code >= 1.121). Wszystkie serwery przez `cmd /c npx` (PATH-relative) — działa wymiennie z nvm-windows i standardową instalacją Node. macOS/Linux: zamień command: \"cmd\", args: [\"/c\", \"npx\", …] na command: \"npx\", args: [\"-y\", …]. BEZ `inputs`/promptów — opcje opisane w polu `comment` każdego serwera. context7 działa keyless; playwright wymaga jednorazowo `npx playwright install chromium`.",
+  "servers": {
+    "context7": {
+      "comment": "Up-to-date docs bibliotek (Angular 22, Signal Forms, Nx, Material), keyless. Opcja: env CONTEXT7_API_KEY (klucz z context7.com) dla wyższych limitów.",
+      "type": "stdio",
+      "command": "cmd",
+      "args": ["/c", "npx", "-y", "@upstash/context7-mcp"]
+    },
+    "nx": {
+      "comment": "Nx-aware MCP — standalone `nx-mcp` wycelowany w ten workspace: nx_workspace, nx_project_details, nx_generators, nx_docs. Pozycyjny arg = workspace root.",
+      "type": "stdio",
+      "command": "cmd",
+      "args": ["/c", "npx", "-y", "nx-mcp@latest", "${workspaceFolder}"]
+    },
+    "angular-cli": {
+      "comment": "Angular-aware MCP (`@angular/cli mcp`): get_best_practices / search_documentation / find_examples / list_projects. Brak env/opcji.",
+      "type": "stdio",
+      "command": "cmd",
+      "args": ["/c", "npx", "-y", "@angular/cli", "mcp"]
+    },
+    "playwright": {
+      "comment": "Browser e2e w trybie UI (widoczna przeglądarka, headed = domyślnie). Opcje w args: \"--headless\" by ukryć okno · \"--browser\" chrome|chromium|firefox|webkit · \"--viewport-size\" \"1280,720\" · \"--isolated\" (czysty profil).",
+      "type": "stdio",
+      "command": "cmd",
+      "args": ["/c", "npx", "-y", "@playwright/mcp@latest", "--browser", "chrome"]
+    }
+  }
+}

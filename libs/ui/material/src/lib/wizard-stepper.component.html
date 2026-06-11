@@ -1,0 +1,14 @@
+<mat-stepper
+  [linear]="false"
+  [orientation]="orientation()"
+  [selectedIndex]="selectedIndex()"
+  (selectionChange)="onSelectionChange($event)"
+  animationDuration="150ms"
+  data-testid="wizard-stepper"
+>
+  @for (step of steps(); track step) {
+    <mat-step [label]="step.a22Step()">
+      <ng-container [ngTemplateOutlet]="step.template" />
+    </mat-step>
+  }
+</mat-stepper>

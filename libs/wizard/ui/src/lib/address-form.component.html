@@ -1,0 +1,54 @@
+<div class="address-grid">
+  <a22-select
+    [formField]="field().purpose"
+    [options]="purposeOptions()"
+    class="col-md-3 col-12"
+    label="Przeznaczenie"
+    testId="address-purpose"
+  />
+  <a22-select
+    [formField]="field().streetType"
+    [options]="streetTypes"
+    class="col-md-3 col-12"
+    label="Typ"
+    testId="address-street-type"
+  />
+  <a22-text-field
+    [formField]="field().street"
+    class="col-md-6 col-12"
+    label="Nazwa ulicy"
+    testId="address-street"
+  />
+  <a22-text-field
+    [formField]="field().houseNumber"
+    class="col-md-2 col-12"
+    label="Numer"
+    testId="address-house-number"
+  />
+  <a22-text-field
+    [formField]="field().flatNumber"
+    class="col-md-2 col-12"
+    label="m."
+    testId="address-flat-number"
+  />
+  <a22-text-field
+    [formField]="field().postalCode"
+    class="col-md-3 col-12"
+    label="Kod pocztowy"
+    placeholder="00-000"
+    testId="address-postal-code"
+  />
+  <a22-text-field
+    [formField]="field().city"
+    class="col-md-5 col-12"
+    label="Miasto"
+    testId="address-city"
+  />
+  <a22-select
+    [formField]="field().country"
+    [options]="countries"
+    class="col-md-4 col-12"
+    label="Kraj"
+    testId="address-country"
+  />
+</div>

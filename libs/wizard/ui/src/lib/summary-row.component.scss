@@ -1,0 +1,18 @@
+:host {
+  display: flex;
+  gap: 1rem;
+  padding: 0.25rem 0;
+}
+
+.label {
+  flex: 0 0 14rem;
+  font: var(--mat-sys-body-small);
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.value {
+  flex: 1 1 auto;
+  font: var(--mat-sys-body-medium);
+  color: var(--mat-sys-on-surface);
+  overflow-wrap: anywhere;
+}

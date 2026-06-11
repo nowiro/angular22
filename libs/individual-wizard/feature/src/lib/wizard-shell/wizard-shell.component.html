@@ -1,0 +1,126 @@
+<a22-toolbar>
+  <a22-icon name="badge" />
+  <span class="brand">Kreator danych osobowych</span>
+  <span class="spacer"></span>
+  <a
+    [routerLink]="dashboardLink"
+    class="home-link"
+    data-testid="topbar-home"
+  >
+    <a22-icon name="dashboard" />
+    Pulpit
+  </a>
+</a22-toolbar>
+
+<main class="page">
+  <header class="intro">
+    <p class="intro__eyebrow">Demo · Angular 22 Signal Forms</p>
+    <h1 class="intro__title">Wprowadzenie danych w 5 krokach</h1>
+    <p class="intro__lead">
+      Pokaz Signal Forms — model w
+      <code>signal()</code>
+      , walidacja w
+      <code>schema()</code>
+      , warunkowe sekcje przez
+      <code>applyWhen</code>
+      , komponenty Material przez wrappery
+      <code>FormValueControl</code>
+      .
+    </p>
+  </header>
+
+  <section
+    class="shell-card"
+    data-testid="wizard-shell"
+  >
+    <a22-wizard-stepper
+      #stepper
+      [selectedIndex]="selectedIndex()"
+      (selectedIndexChange)="onStepChange($event)"
+    >
+      <ng-template a22Step="Dane podstawowe">
+        <a22-step-basic-data />
+        <div class="step-actions">
+          <span></span>
+          <a22-button
+            (click)="stepper.next()"
+            icon="arrow_forward"
+            testId="step-1-next"
+            label="Dalej"
+          />
+        </div>
+      </ng-template>
+
+      <ng-template a22Step="Kontakt">
+        <a22-step-contact />
+        <div class="step-actions">
+          <a22-button
+            (click)="stepper.previous()"
+            variant="outlined"
+            icon="arrow_back"
+            testId="step-2-prev"
+            label="Wstecz"
+          />
+          <a22-button
+            (click)="stepper.next()"
+            icon="arrow_forward"
+            testId="step-2-next"
+            label="Dalej"
+          />
+        </div>
+      </ng-template>
+
+      <ng-template a22Step="Ankieta">
+        <a22-step-survey />
+        <div class="step-actions">
+          <a22-button
+            (click)="stepper.previous()"
+            variant="outlined"
+            icon="arrow_back"
+            testId="step-3-prev"
+            label="Wstecz"
+          />
+          <a22-button
+            (click)="stepper.next()"
+            icon="arrow_forward"
+            testId="step-3-next"
+            label="Dalej"
+          />
+        </div>
+      </ng-template>
+
+      <ng-template a22Step="Zgody">
+        <a22-step-consents />
+        <div class="step-actions">
+          <a22-button
+            (click)="stepper.previous()"
+            variant="outlined"
+            icon="arrow_back"
+            testId="step-4-prev"
+            label="Wstecz"
+          />
+          <a22-button
+            (click)="stepper.next()"
+            icon="arrow_forward"
+            testId="step-4-next"
+            label="Dalej"
+          />
+        </div>
+      </ng-template>
+
+      <ng-template a22Step="Podsumowanie">
+        <a22-step-summary />
+        <div class="step-actions">
+          <a22-button
+            (click)="stepper.previous()"
+            variant="outlined"
+            icon="arrow_back"
+            testId="step-5-prev"
+            label="Wstecz"
+          />
+          <span></span>
+        </div>
+      </ng-template>
+    </a22-wizard-stepper>
+  </section>
+</main>

@@ -1,0 +1,65 @@
+<h2 class="step-heading">Dane podstawowe</h2>
+
+<div class="form-grid">
+  <a22-select
+    [formField]="form.basicData.citizenship"
+    [options]="countries"
+    class="col-md-4 col-12"
+    label="Obywatelstwo"
+    testId="basic-citizenship"
+  />
+  <a22-text-field
+    [formField]="form.basicData.firstName"
+    class="col-md-4 col-12"
+    label="Imię"
+    testId="basic-first-name"
+  />
+  <a22-text-field
+    [formField]="form.basicData.middleName"
+    class="col-md-4 col-12"
+    label="Drugie imię (opcjonalnie)"
+    testId="basic-middle-name"
+  />
+  <a22-text-field
+    [formField]="form.basicData.lastName"
+    class="col-md-4 col-12"
+    label="Nazwisko"
+    testId="basic-last-name"
+  />
+  <a22-text-field
+    [formField]="form.basicData.pesel"
+    class="col-md-4 col-12"
+    label="PESEL"
+    hint="11 cyfr — uzupełni datę urodzenia i płeć"
+    testId="basic-pesel"
+  />
+  <a22-text-field
+    [formField]="form.basicData.nip"
+    class="col-md-4 col-12"
+    label="NIP (opcjonalnie)"
+    hint="Wymagany przy samozatrudnieniu"
+    testId="basic-nip"
+  />
+  <a22-date-field
+    [formField]="form.basicData.dateOfBirth"
+    class="col-md-4 col-12"
+    label="Data urodzenia"
+    testId="basic-dob"
+  />
+  <a22-select
+    [formField]="form.basicData.gender"
+    [options]="genders"
+    class="col-md-4 col-12"
+    label="Płeć"
+    testId="basic-gender"
+  />
+  @if (peselLocked()) {
+    <p
+      class="pesel-lock col-md-4 col-12"
+      data-testid="basic-pesel-lock"
+    >
+      <a22-icon name="lock" />
+      Uzupełnione z PESEL — data urodzenia i płeć są zablokowane.
+    </p>
+  }
+</div>

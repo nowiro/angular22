@@ -1,0 +1,85 @@
+{
+  "name": "demo-individual-wizard",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "a22",
+  "sourceRoot": "apps/demo-individual-wizard/src",
+  "tags": ["scope:individual-wizard", "type:app"],
+  "targets": {
+    "build": {
+      "executor": "@angular/build:application",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/demo-individual-wizard",
+        "browser": "apps/demo-individual-wizard/src/main.ts",
+        "tsConfig": "apps/demo-individual-wizard/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": [
+          {
+            "glob": "**/*",
+            "input": "apps/demo-individual-wizard/public"
+          }
+        ],
+        "styles": ["apps/demo-individual-wizard/src/styles.scss"]
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "1.5mb",
+              "maximumError": "2.5mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "4kb",
+              "maximumError": "8kb"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "optimization": false,
+          "extractLicenses": false,
+          "sourceMap": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "continuous": true,
+      "executor": "@angular/build:dev-server",
+      "options": {
+        "port": 4201
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "demo-individual-wizard:build:production"
+        },
+        "development": {
+          "buildTarget": "demo-individual-wizard:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "serve-static": {
+      "continuous": true,
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "demo-individual-wizard:build",
+        "port": 4201,
+        "staticFilePath": "dist/apps/demo-individual-wizard/browser",
+        "spa": true
+      }
+    },
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "tsc -p apps/demo-individual-wizard/tsconfig.app.json --noEmit"
+      }
+    }
+  }
+}

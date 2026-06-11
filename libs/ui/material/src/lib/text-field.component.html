@@ -1,0 +1,22 @@
+<mat-form-field
+  appearance="outline"
+  subscriptSizing="dynamic"
+>
+  <mat-label>{{ label() }}</mat-label>
+  <input
+    [type]="type()"
+    [value]="value()"
+    [disabled]="disabled()"
+    [readonly]="readonly()"
+    [placeholder]="placeholder()"
+    [attr.aria-invalid]="showError()"
+    [attr.data-testid]="testId() || null"
+    (input)="onInput($event)"
+    (blur)="touched.set(true)"
+    matInput
+  />
+  @if (hint() !== '' && !showError()) {
+    <mat-hint>{{ hint() }}</mat-hint>
+  }
+</mat-form-field>
+<a22-field-error [errors]="showError() ? errors() : []" />

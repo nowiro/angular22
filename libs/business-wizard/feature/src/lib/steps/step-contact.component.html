@@ -1,0 +1,56 @@
+<h2 class="step-heading">Kontakt</h2>
+
+<a22-text-field
+  [formField]="form.contact.email"
+  label="Adres e-mail firmy"
+  type="email"
+  testId="contact-email"
+/>
+
+<h3 class="section-heading">Telefony</h3>
+@for (phone of data().contact.phones; track $index; let i = $index) {
+  <a22-phone-row
+    [field]="phoneField(i)"
+    [typeOptions]="phoneKinds"
+    [showExtension]="true"
+    [removable]="data().contact.phones.length > 1"
+    (remove)="store.removePhone(i)"
+  />
+}
+<a22-button
+  (click)="store.addPhone()"
+  variant="outlined"
+  icon="add"
+  label="Dodaj telefon"
+  testId="add-phone"
+/>
+
+<h3 class="section-heading">Adresy</h3>
+@for (address of data().contact.addresses; track $index; let i = $index) {
+  <div class="address-block">
+    <div class="address-block__head">
+      <span class="address-block__title">Adres {{ i + 1 }}</span>
+      @if (data().contact.addresses.length > 1) {
+        <a22-button
+          (click)="store.removeAddress(i)"
+          variant="icon"
+          icon="delete"
+          ariaLabel="Usuń adres"
+          testId="address-remove"
+        />
+      }
+    </div>
+    <a22-address-form
+      [field]="addressField(i)"
+      [purposeOptions]="addressPurposes"
+    />
+  </div>
+}
+<a22-field-error [errors]="addressListErrors()" />
+<a22-button
+  (click)="store.addAddress()"
+  variant="outlined"
+  icon="add_home"
+  label="Dodaj adres"
+  testId="add-address"
+/>

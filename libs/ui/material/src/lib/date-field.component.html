@@ -1,0 +1,26 @@
+<mat-form-field
+  appearance="outline"
+  subscriptSizing="dynamic"
+>
+  <mat-label>{{ label() }}</mat-label>
+  <input
+    [matDatepicker]="picker"
+    [value]="value()"
+    [disabled]="disabled()"
+    [attr.aria-invalid]="showError()"
+    [attr.data-testid]="testId() || null"
+    (dateChange)="onDate($event.value ?? null)"
+    (blur)="touched.set(true)"
+    matInput
+  />
+  <mat-datepicker-toggle
+    [for]="picker"
+    [disabled]="disabled()"
+    matIconSuffix
+  />
+  <mat-datepicker #picker />
+  @if (hint() !== '' && !showError()) {
+    <mat-hint>{{ hint() }}</mat-hint>
+  }
+</mat-form-field>
+<a22-field-error [errors]="showError() ? errors() : []" />

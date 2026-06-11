@@ -1,0 +1,24 @@
+<mat-form-field
+  appearance="outline"
+  subscriptSizing="dynamic"
+>
+  <mat-label>{{ label() }}</mat-label>
+  <input
+    [value]="displayValue()"
+    [disabled]="disabled()"
+    [readonly]="readonly()"
+    [attr.aria-invalid]="showError()"
+    [attr.data-testid]="testId() || null"
+    (input)="onInput($event)"
+    (blur)="touched.set(true)"
+    matInput
+    type="number"
+  />
+  @if (suffix() !== '') {
+    <span matTextSuffix>{{ suffix() }}</span>
+  }
+  @if (hint() !== '' && !showError()) {
+    <mat-hint>{{ hint() }}</mat-hint>
+  }
+</mat-form-field>
+<a22-field-error [errors]="showError() ? errors() : []" />
