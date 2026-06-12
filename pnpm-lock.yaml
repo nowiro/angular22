@@ -100,9 +100,6 @@ importers:
       '@schematics/angular':
         specifier: 22.0.1
         version: 22.0.1(chokidar@5.0.0)
-      '@swc/helpers':
-        specifier: 0.5.23
-        version: 0.5.23
       '@trivago/prettier-plugin-sort-imports':
         specifier: 6.0.2
         version: 6.0.2(prettier@3.8.4)
@@ -10676,6 +10673,7 @@ snapshots:
   '@swc/helpers@0.5.23':
     dependencies:
       tslib: 2.8.1
+    optional: true
 
   '@swc/types@0.1.26':
     dependencies:
