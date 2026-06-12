@@ -5,6 +5,7 @@
  * @packageDocumentation
  */
 export { A22AddressFormComponent } from './lib/address-form.component';
+export { A22AppDisabledComponent } from './lib/app-disabled.component';
 export { A22ConsentRowComponent } from './lib/consent-row.component';
 export { A22LanguageRowComponent } from './lib/language-row.component';
 export { A22PhoneRowComponent } from './lib/phone-row.component';

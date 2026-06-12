@@ -1,0 +1,49 @@
+<main
+  class="page"
+  data-testid="embed-page"
+>
+  <div class="bar">
+    <a
+      [routerLink]="homeLink"
+      class="back"
+      data-testid="embed-back"
+    >
+      <a22-icon name="arrow_back" />
+      {{ 'Wróć do listy aplikacji' | a22T }}
+    </a>
+    <a
+      [href]="standaloneUrl()"
+      class="back"
+      data-testid="embed-open-tab"
+      target="_blank"
+      rel="noopener"
+    >
+      <a22-icon name="open_in_new" />
+      {{ 'Otwórz w nowej karcie' | a22T }}
+    </a>
+  </div>
+
+  @if (state() === 'loading') {
+    <p
+      class="status"
+      data-testid="embed-loading"
+    >
+      {{ 'Ładowanie aplikacji…' | a22T }}
+    </p>
+  }
+  @if (state() === 'error') {
+    <p
+      class="status status--error"
+      role="alert"
+      data-testid="embed-error"
+    >
+      {{ 'Nie udało się załadować aplikacji. Odśwież stronę lub spróbuj później.' | a22T }}
+    </p>
+  }
+
+  <div
+    #host
+    class="host"
+    data-testid="embed-host"
+  ></div>
+</main>

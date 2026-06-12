@@ -12,7 +12,7 @@ export default defineConfig({
     screenshot: 'only-on-failure',
   },
   webServer: {
-    command: 'pnpm exec nx run angular22:serve',
+    command: 'pnpm exec nx run portal:serve',
     url: baseURL,
     reuseExistingServer: true,
     timeout: 120_000,

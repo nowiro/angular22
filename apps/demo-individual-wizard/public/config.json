@@ -1,0 +1,8 @@
+{
+  "features": {
+    "individual-wizard": {
+      "enabled": true,
+      "standaloneUrl": "http://localhost:4201/"
+    }
+  }
+}

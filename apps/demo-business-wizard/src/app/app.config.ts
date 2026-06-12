@@ -3,6 +3,7 @@ import { provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
 
 import { BUSINESS_WIZARD_EN, BusinessWizardStore } from '@angular22/business-wizard-data';
+import { provideFeatureFlags } from '@angular22/shared-config';
 import { provideEnTranslations } from '@angular22/shared-i18n';
 import { WIZARD_FILL_PRESETS } from '@angular22/wizard-core';
 
@@ -15,6 +16,7 @@ import { appRoutes } from './app.routes';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
+    provideFeatureFlags(),
     provideRouter(appRoutes, withComponentInputBinding()),
     provideEnTranslations(BUSINESS_WIZARD_EN),
     { provide: WIZARD_FILL_PRESETS, useExisting: BusinessWizardStore },

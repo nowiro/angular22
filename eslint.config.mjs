@@ -137,7 +137,7 @@ export default tseslint.config(
           allow: ['^.*/eslint(\\.base)?\\.config\\.[cm]?js$'],
           depConstraints: [
             {
-              sourceTag: 'scope:landing',
+              sourceTag: 'scope:portal',
               onlyDependOnLibsWithTags: ['scope:shared'],
             },
             {

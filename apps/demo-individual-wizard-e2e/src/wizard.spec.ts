@@ -65,6 +65,25 @@ test.describe('Individual wizard — smoke', () => {
     await expect(page.getByTestId('summary-submitted')).toBeVisible();
   });
 
+  test('standalone mode shows the wizard header (toolbar)', async ({ page }) => {
+    await page.goto('/wizard/1');
+    await expect(page.getByTestId('topbar-home')).toBeVisible();
+  });
+
+  test('disabled feature flag blocks the whole app with a notice', async ({ page }) => {
+    await page.route('**/config.json', (route) =>
+      route.fulfill({
+        contentType: 'application/json',
+        body: JSON.stringify({ features: { 'individual-wizard': { enabled: false } } }),
+      }),
+    );
+
+    await page.goto('/');
+    await expect(page.getByTestId('app-disabled')).toBeVisible();
+    await page.goto('/wizard/1');
+    await expect(page.getByTestId('app-disabled')).toBeVisible();
+  });
+
   test('language switcher flips PL → EN and persists across reload', async ({ page }) => {
     await page.goto('/');
     await expect(page.getByRole('heading', { name: 'Pulpit kreatora' })).toBeVisible();

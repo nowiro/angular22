@@ -52,5 +52,5 @@ ustawiasz globalnie w pickerze VS Code.
 | `pnpm sdd:check`                                     | Bramka SDD (spec↔plan, traceability)                                                   |
 | `pnpm workflow:specify -- --verb=<v> --slug=<s>`     | Scaffold spec + plan + datowany run-log                                                |
 | `pnpm e2e`                                           | Wszystkie suity Playwright (`--parallel=1`)                                            |
-| `pnpm start` / `start:individual` / `start:business` | Serve apek (4200 / 4201 / 4202)                                                        |
+| `pnpm start` / `start:individual` / `start:business` | Serve apek (portal 4200 / individual 4201 / business 4202)                             |
 | `pnpm nx g @nx/angular:component <name>`             | Nowy komponent (SCSS + OnPush + 3 pliki + prefix `a22`)                                |

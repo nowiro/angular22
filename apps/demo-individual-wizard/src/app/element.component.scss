@@ -1,0 +1,25 @@
+@use '@angular/material' as mat;
+
+/*
+ * Web-component host — the element carries its own Material theme on :host
+ * (CSS custom properties inherit into all descendants), so the portal page
+ * needs no extra stylesheet for the embedded wizard. Overlay-based Material
+ * (select panels, datepicker) attaches to the host page body and inherits the
+ * PORTAL's html-level theme instead — an accepted, documented trade-off.
+ */
+:host {
+  display: block;
+  color-scheme: light;
+  color: var(--mat-sys-on-surface);
+
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$azure-palette,
+        tertiary: mat.$rose-palette,
+      ),
+      typography: Roboto,
+      density: -1,
+    )
+  );
+}

@@ -1,0 +1,23 @@
+@use '@angular/material' as mat;
+
+/*
+ * Web-component host — carries its own Material theme on :host (custom
+ * properties inherit into descendants). Overlay-based Material attaches to
+ * the host page body and inherits the PORTAL's theme — documented trade-off.
+ */
+:host {
+  display: block;
+  color-scheme: light;
+  color: var(--mat-sys-on-surface);
+
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$violet-palette,
+        tertiary: mat.$cyan-palette,
+      ),
+      typography: Roboto,
+      density: -1,
+    )
+  );
+}

@@ -1,0 +1,20 @@
+{
+  "features": {
+    "individual-wizard": {
+      "enabled": true,
+      "standaloneUrl": "http://localhost:4201/",
+      "element": {
+        "scriptUrl": "/elements/demo-individual-wizard/main.js",
+        "tagName": "a22-individual-wizard-element"
+      }
+    },
+    "business-wizard": {
+      "enabled": true,
+      "standaloneUrl": "http://localhost:4202/",
+      "element": {
+        "scriptUrl": "/elements/demo-business-wizard/main.js",
+        "tagName": "a22-business-wizard-element"
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+<a22-toolbar>
+  <a
+    [routerLink]="homeLink"
+    class="brand-link"
+    data-testid="portal-home"
+  >
+    <a22-icon name="apps" />
+    <span class="brand">{{ 'Portal aplikacji angular22' | a22T }}</span>
+  </a>
+  <span class="spacer"></span>
+  <a22-language-switcher />
+</a22-toolbar>
+
+<router-outlet />

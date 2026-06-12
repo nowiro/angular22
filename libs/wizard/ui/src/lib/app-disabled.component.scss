@@ -1,0 +1,40 @@
+:host {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  padding: 2rem 1rem;
+}
+
+.disabled-card {
+  max-width: 28rem;
+  text-align: center;
+  background: var(--mat-sys-surface);
+  border: 1px solid var(--mat-sys-outline-variant);
+  border-radius: var(--mat-sys-corner-large);
+  box-shadow: var(--mat-sys-level1);
+  padding: 2.5rem 2rem;
+}
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 9999px;
+  background: var(--mat-sys-error-container);
+  color: var(--mat-sys-on-error-container);
+  margin-bottom: 1rem;
+}
+
+.title {
+  font: var(--mat-sys-headline-small);
+  margin: 0 0 0.5rem;
+  color: var(--mat-sys-on-surface);
+}
+
+.lead {
+  font: var(--mat-sys-body-medium);
+  color: var(--mat-sys-on-surface-variant);
+  margin: 0;
+}

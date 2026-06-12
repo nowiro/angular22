@@ -1,26 +1,31 @@
 {
-  "name": "angular22",
+  "name": "portal",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "prefix": "a22",
-  "sourceRoot": "apps/angular22/src",
-  "tags": ["scope:landing", "type:app"],
+  "sourceRoot": "apps/portal/src",
+  "tags": ["scope:portal", "type:app"],
   "targets": {
     "build": {
       "executor": "@angular/build:application",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/apps/angular22",
-        "browser": "apps/angular22/src/main.ts",
-        "tsConfig": "apps/angular22/tsconfig.app.json",
+        "outputPath": "dist/apps/portal",
+        "browser": "apps/portal/src/main.ts",
+        "tsConfig": "apps/portal/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
           {
             "glob": "**/*",
-            "input": "apps/angular22/public"
+            "input": "apps/portal/public"
+          },
+          {
+            "glob": "**/*",
+            "input": "dist/elements",
+            "output": "elements"
           }
         ],
-        "styles": ["apps/angular22/src/styles.scss"]
+        "styles": ["apps/portal/src/styles.scss"]
       },
       "configurations": {
         "production": {
@@ -44,7 +49,14 @@
           "sourceMap": true
         }
       },
-      "defaultConfiguration": "production"
+      "defaultConfiguration": "production",
+      "dependsOn": [
+        "^build",
+        {
+          "projects": ["demo-individual-wizard", "demo-business-wizard"],
+          "target": "build-element"
+        }
+      ]
     },
     "serve": {
       "continuous": true,
@@ -54,13 +66,19 @@
       },
       "configurations": {
         "production": {
-          "buildTarget": "angular22:build:production"
+          "buildTarget": "portal:build:production"
         },
         "development": {
-          "buildTarget": "angular22:build:development"
+          "buildTarget": "portal:build:development"
         }
       },
-      "defaultConfiguration": "development"
+      "defaultConfiguration": "development",
+      "dependsOn": [
+        {
+          "projects": ["demo-individual-wizard", "demo-business-wizard"],
+          "target": "build-element"
+        }
+      ]
     },
     "lint": {
       "executor": "@nx/eslint:lint"
@@ -69,16 +87,16 @@
       "continuous": true,
       "executor": "@nx/web:file-server",
       "options": {
-        "buildTarget": "angular22:build",
+        "buildTarget": "portal:build",
         "port": 4200,
-        "staticFilePath": "dist/apps/angular22/browser",
+        "staticFilePath": "dist/apps/portal/browser",
         "spa": true
       }
     },
     "typecheck": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "tsc -p apps/angular22/tsconfig.app.json --noEmit"
+        "command": "tsc -p apps/portal/tsconfig.app.json --noEmit"
       }
     }
   }

@@ -80,6 +80,34 @@
       "options": {
         "command": "tsc -p apps/demo-individual-wizard/tsconfig.app.json --noEmit"
       }
+    },
+    "build-element": {
+      "executor": "@angular/build:application",
+      "outputs": ["{options.outputPath.base}"],
+      "options": {
+        "outputPath": {
+          "base": "dist/elements/demo-individual-wizard",
+          "browser": ""
+        },
+        "index": false,
+        "browser": "apps/demo-individual-wizard/src/element.ts",
+        "polyfills": [],
+        "tsConfig": "apps/demo-individual-wizard/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "outputHashing": "none",
+        "budgets": [
+          {
+            "type": "initial",
+            "maximumWarning": "1.6mb",
+            "maximumError": "2.5mb"
+          },
+          {
+            "type": "anyComponentStyle",
+            "maximumWarning": "32kb",
+            "maximumError": "64kb"
+          }
+        ]
+      }
     }
   }
 }

@@ -1,0 +1,8 @@
+{
+  "features": {
+    "business-wizard": {
+      "enabled": true,
+      "standaloneUrl": "http://localhost:4202/"
+    }
+  }
+}

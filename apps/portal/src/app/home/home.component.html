@@ -1,0 +1,60 @@
+<main
+  class="page"
+  data-testid="portal-tiles"
+>
+  <header class="intro">
+    <h1 class="intro__title">{{ 'Wybierz aplikację' | a22T }}</h1>
+    <p class="intro__lead">
+      {{
+        'Każdą aplikację otworzysz w nowej karcie (pełna wersja z nagłówkiem) albo bezpośrednio w portalu jako web component (bez nagłówka). Dostępność aplikacji steruje config.json środowiska.'
+          | a22T
+      }}
+    </p>
+  </header>
+
+  @if (enabledTiles().length === 0) {
+    <p
+      class="empty"
+      data-testid="portal-empty"
+    >
+      {{ 'Wszystkie aplikacje są wyłączone w tym środowisku.' | a22T }}
+    </p>
+  }
+
+  <div class="tiles">
+    @for (tile of enabledTiles(); track tile.id) {
+      <div
+        [attr.data-testid]="'tile-' + tile.id"
+        class="tile"
+      >
+        <span class="tile__icon">
+          <a22-icon [name]="tile.icon" />
+        </span>
+        <h2 class="tile__title">{{ tile.title | a22T }}</h2>
+        <p class="tile__description">{{ tile.description | a22T }}</p>
+        <div class="tile__actions">
+          <a
+            [href]="standaloneUrl(tile.id)"
+            [attr.data-testid]="'open-tab-' + tile.id"
+            class="action action--secondary"
+            target="_blank"
+            rel="noopener"
+          >
+            <a22-icon name="open_in_new" />
+            {{ 'Otwórz w nowej karcie' | a22T }}
+          </a>
+          @if (canEmbed(tile.id)) {
+            <a
+              [routerLink]="tile.embedLink"
+              [attr.data-testid]="'open-embed-' + tile.id"
+              class="action action--primary"
+            >
+              <a22-icon name="picture_in_picture" />
+              {{ 'Otwórz w portalu' | a22T }}
+            </a>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</main>

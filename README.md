@@ -17,11 +17,11 @@ Signal Forms**, with every Angular Material component consumed through Nx wrappe
 
 ## Apps
 
-| App                      | Port | Description                                               |
-| ------------------------ | ---- | --------------------------------------------------------- |
-| `angular22`              | 4200 | Landing page linking both wizard demos                    |
-| `demo-individual-wizard` | 4201 | Personal-data wizard (PESEL, addresses, survey, consents) |
-| `demo-business-wizard`   | 4202 | Company wizard (NIP/REGON/KRS, profile, representatives)  |
+| App                      | Port | Description                                                                |
+| ------------------------ | ---- | -------------------------------------------------------------------------- |
+| `portal`                 | 4200 | Portal — tiles open the wizards in a new tab OR embedded as web components |
+| `demo-individual-wizard` | 4201 | Personal-data wizard (PESEL, addresses, survey, consents)                  |
+| `demo-business-wizard`   | 4202 | Company wizard (NIP/REGON/KRS, profile, representatives)                   |
 
 ## Libraries
 
@@ -33,6 +33,7 @@ Signal Forms**, with every Angular Material component consumed through Nx wrappe
 | `@angular22/wizard-ui`                 | ui          | Shared wizard presentation (address form, consent row, summary rows)                               |
 | `@angular22/wizard-form-fill`          | ui          | Dev-only "fill form" panel — active on localhost only                                              |
 | `@angular22/shared-i18n`               | ui          | Signal-based runtime i18n (PL default), `a22T` pipe, language switcher                             |
+| `@angular22/shared-config`             | util        | Runtime feature flags from `config.json`, route guard, element loader                              |
 | `@angular22/individual-wizard-data`    | data-access | Model, dictionaries, Signal Forms schema, fill preset                                              |
 | `@angular22/individual-wizard-feature` | feature     | Step components + wizard shell                                                                     |
 | `@angular22/business-wizard-data`      | data-access | Model, dictionaries, Signal Forms schema, fill preset                                              |
@@ -46,7 +47,7 @@ pnpm exec playwright install chromium   # once, for e2e
 
 pnpm start:individual    # http://localhost:4201
 pnpm start:business      # http://localhost:4202
-pnpm start               # landing, http://localhost:4200
+pnpm start               # portal, http://localhost:4200
 ```
 
 ## Verify
@@ -58,6 +59,17 @@ pnpm test
 pnpm build
 pnpm e2e
 ```
+
+## Portal, web components & feature flags
+
+The `portal` app (:4200) is the entry point: each wizard tile can be opened **in a new
+tab** (standalone app with its own header) or **inside the portal** as a **web component**
+(`@angular/elements`; the wizard shell hides its header in embedded mode). Element bundles
+are built per wizard (`pnpm nx run <app>:build-element` → `dist/elements/<app>/main.js`)
+and served by the portal under `/elements/...`. Runtime **feature flags** come from
+`config.json` next to `index.html` — each environment can enable/disable an app (tile AND
+route AND standalone access) without removing it from the hosting. Deployment guide:
+[`docs/deployment.md`](docs/deployment.md).
 
 ## i18n
 

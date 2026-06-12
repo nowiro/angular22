@@ -28,14 +28,14 @@ wizardy nie widzą się nawzajem; `scope:shared` widoczny dla wszystkich.
 
 ## Mapa executorów (wszystko przez Nx)
 
-| target    | executor                            | uwagi                                                 |
-| --------- | ----------------------------------- | ----------------------------------------------------- |
-| build     | `@angular/build:application`        | apki; budżety w project.json                          |
-| serve     | `@angular/build:dev-server`         | porty: 4200 landing · 4201 individual · 4202 business |
-| lint      | `@nx/eslint:lint` (inferred plugin) | flat config root                                      |
-| test      | `@nx/vitest:test`                   | `options.configFile` = per-lib vitest.config.ts       |
-| e2e       | `@nx/playwright:playwright`         | `options.config` = per-app playwright.config.ts       |
-| typecheck | `nx:run-commands` (tsc --noEmit)    | brak dedykowanego executora — świadomie               |
+| target    | executor                            | uwagi                                                |
+| --------- | ----------------------------------- | ---------------------------------------------------- |
+| build     | `@angular/build:application`        | apki; budżety w project.json                         |
+| serve     | `@angular/build:dev-server`         | porty: 4200 portal · 4201 individual · 4202 business |
+| lint      | `@nx/eslint:lint` (inferred plugin) | flat config root                                     |
+| test      | `@nx/vitest:test`                   | `options.configFile` = per-lib vitest.config.ts      |
+| e2e       | `@nx/playwright:playwright`         | `options.config` = per-app playwright.config.ts      |
+| typecheck | `nx:run-commands` (tsc --noEmit)    | brak dedykowanego executora — świadomie              |
 
 ## Wiring testów dla NOWEGO liba (unitTestRunner=none w defaults)
 

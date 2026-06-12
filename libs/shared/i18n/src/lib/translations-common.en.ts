@@ -119,6 +119,11 @@ export const COMMON_EN: Readonly<Record<string, string>> = {
   'Maksymalnie 80 znaków.': 'Max 80 characters.',
   'Numer telefonu jest wymagany.': 'Phone number is required.',
 
+  // ── Feature flags / disabled page ───────────────────────────────────────
+  'Aplikacja jest wyłączona': 'Application is disabled',
+  'Ta aplikacja jest obecnie wyłączona w tym środowisku. Skontaktuj się z administratorem.':
+    'This application is currently disabled in this environment. Contact your administrator.',
+
   // ── Summary commons ─────────────────────────────────────────────────────
   Podsumowanie: 'Summary',
   Zgody: 'Consents',
