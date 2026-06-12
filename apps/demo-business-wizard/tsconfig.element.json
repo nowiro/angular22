@@ -1,0 +1,8 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../dist/out-tsc-element",
+    "types": []
+  },
+  "include": ["src/element.ts", "src/app/element.component.ts", "src/**/*.d.ts"]
+}

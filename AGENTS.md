@@ -43,6 +43,24 @@ ustawiasz globalnie w pickerze VS Code.
   Artefakty `docs/specs|plans|runs` — local-only (gitignored).
 - **Brak** `CLAUDE.md` / `.claude/` / `.ai/` / `.github/workflows/` — Copilot-only, zero Actions.
 
+## Setup (bootstrap)
+
+Przed pierwszą instalacją projektu:
+
+```sh
+# 1. Sprawdź czy pnpm jest dostępny
+pnpm --version
+
+# 2. Jeśli brak — zainstaluj globalnie przez npm (pinowana wersja ze Stack)
+npm install -g pnpm@11.1.3
+
+# 3. Zainstaluj zależności projektu
+pnpm install
+```
+
+> **Reguła**: Zależności projektu instaluj **wyłącznie przez `pnpm install`**.  
+> Nigdy nie używaj `npm install` do instalacji zależności projektu.
+
 ## Komendy
 
 | Komenda                                              | Co robi                                                                                |

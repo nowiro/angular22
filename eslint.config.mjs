@@ -5,8 +5,13 @@ import angular from 'angular-eslint';
 import prettier from 'eslint-config-prettier';
 import importPlugin from 'eslint-plugin-import-x';
 import jsdoc from 'eslint-plugin-jsdoc';
+import nodePlugin from 'eslint-plugin-n';
+import noBarrel from 'eslint-plugin-no-barrel-files';
+import rxjsAngular from 'eslint-plugin-rxjs-angular-x';
+import rxjs from 'eslint-plugin-rxjs-x';
 import sonarjs from 'eslint-plugin-sonarjs';
 import unicorn from 'eslint-plugin-unicorn';
+import vitest from '@vitest/eslint-plugin';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
@@ -60,6 +65,8 @@ export default tseslint.config(
     plugins: {
       import: importPlugin,
       unicorn,
+      'rxjs-x': rxjs,
+      'rxjs-angular-x': rxjsAngular,
     },
     processor: angular.processInlineTemplates,
     rules: {
@@ -118,6 +125,19 @@ export default tseslint.config(
       'jsdoc/require-returns-description': 'off',
       'jsdoc/tag-lines': 'off',
       'jsdoc/check-tag-names': ['warn', { definedTags: ['packageDocumentation'] }],
+
+      // ── RxJS safety (rxjs-x) ──
+      'rxjs-x/no-async-subscribe': 'error',
+      'rxjs-x/no-floating-observables': 'error',
+      'rxjs-x/no-nested-subscribe': 'error',
+      'rxjs-x/no-unbound-methods': 'error',
+      'rxjs-x/throw-error': 'error',
+
+      // ── RxJS + Angular (rxjs-angular-x) ──
+      // prefer-takeuntil with DestroyRef alias — prevents subscription leaks in components
+      'rxjs-angular-x/prefer-takeuntil': ['warn', {
+        alias: ['takeUntilDestroyed'],
+      }],
 
       // ── No console ──
       'no-console': 'error',
@@ -220,6 +240,36 @@ export default tseslint.config(
     },
   },
 
+  // ─── Barrel files (Nx build performance) ────────────────────
+  // Blocks internal barrel files inside libs — they cause build graph
+  // explosion and slow down HMR / test runs in an Nx monorepo.
+  // Root index.ts of each lib is the intentional public API — allowed.
+  {
+    files: ['libs/**/src/**/*.ts'],
+    ignores: [
+      'libs/*/src/index.ts',      // public lib API boundary — allowed
+      'libs/*/*/src/index.ts',    // nested lib public API — allowed
+    ],
+    plugins: { 'no-barrel-files': noBarrel },
+    rules: {
+      'no-barrel-files/no-barrel-files': 'error',
+    },
+  },
+
+  // ─── Vitest rules (unit test files only) ─────────────────────
+  {
+    files: ['**/*.spec.ts', '**/*.test.ts'],
+    plugins: { vitest },
+    rules: {
+      'vitest/no-focused-tests': 'error',             // blocks committed test.only
+      'vitest/no-disabled-tests': 'warn',             // flags forgotten test.skip
+      'vitest/expect-expect': 'error',                // every test must have assertion
+      'vitest/no-identical-title': 'error',           // no duplicate describe/it names
+      'vitest/valid-expect': 'error',                 // correct expect() API usage
+      'vitest/consistent-test-it': ['warn', { fn: 'it' }], // prefer it() over test()
+    },
+  },
+
   // ─── Test / spec / e2e files (relaxed rules, still type-aware) ──
   {
     files: ['**/*.spec.ts', '**/*.test.ts', '**/test-setup.ts', '**/e2e/**/*.ts', 'apps/*-e2e/**/*.ts'],
@@ -251,6 +301,29 @@ export default tseslint.config(
     },
     rules: {
       'import/no-default-export': 'off',
+      // rxjs-x and rxjs-angular-x rules require type information — disable for non-typed files
+      'rxjs-x/no-async-subscribe': 'off',
+      'rxjs-x/no-floating-observables': 'off',
+      'rxjs-x/no-nested-subscribe': 'off',
+      'rxjs-x/no-unbound-methods': 'off',
+      'rxjs-x/throw-error': 'off',
+      'rxjs-angular-x/prefer-takeuntil': 'off',
+    },
+  },
+
+  // ─── Node.js rules (tooling scripts only) ────────────────────
+  {
+    files: [
+      'tools/**/*.{ts,mjs,js,cjs}',
+      '**/vitest.config.*',
+      '**/playwright.config.*',
+      'eslint.config.mjs',
+    ],
+    plugins: { n: nodePlugin },
+    rules: {
+      'n/no-missing-import': 'error',      // catches missing deps in scripts
+      'n/no-unpublished-import': 'warn',   // flags test-only packages in tooling
+      // n/prefer-node-protocol: OFF — duplicate of unicorn/prefer-node-protocol
     },
   },
 

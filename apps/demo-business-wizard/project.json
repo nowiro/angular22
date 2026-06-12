@@ -78,7 +78,11 @@
     "typecheck": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "tsc -p apps/demo-business-wizard/tsconfig.app.json --noEmit"
+        "commands": [
+          "tsc -p apps/demo-business-wizard/tsconfig.app.json --noEmit",
+          "tsc -p apps/demo-business-wizard/tsconfig.element.json --noEmit"
+        ],
+        "parallel": false
       }
     },
     "build-element": {
@@ -92,7 +96,7 @@
         "index": false,
         "browser": "apps/demo-business-wizard/src/element.ts",
         "polyfills": [],
-        "tsConfig": "apps/demo-business-wizard/tsconfig.app.json",
+        "tsConfig": "apps/demo-business-wizard/tsconfig.element.json",
         "inlineStyleLanguage": "scss",
         "outputHashing": "none",
         "budgets": [

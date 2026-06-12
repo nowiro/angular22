@@ -33,7 +33,10 @@ function readInitialLanguage(): AppLanguage {
 @Injectable({ providedIn: 'root' })
 export class I18nStore {
   private readonly contributed = inject(A22_TRANSLATIONS_EN, { optional: true }) ?? [];
-  private readonly en: Readonly<Record<string, string>> = Object.assign({}, COMMON_EN, ...this.contributed);
+  private readonly en: Readonly<Record<string, string>> = this.contributed.reduce<Record<string, string>>(
+    (merged, map) => ({ ...merged, ...map }),
+    { ...COMMON_EN },
+  );
 
   /** Active UI language — Polish by default, persisted across sessions. */
   readonly language = signal<AppLanguage>(readInitialLanguage());

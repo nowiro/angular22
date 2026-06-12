@@ -50,6 +50,9 @@ zwięźle: wynik ponad proces.
   końcowa); agenci MCP (`nx`, `context7`) → `GPT-5 mini`; kod/testy/e2e/review/UX →
   `Gemini 3.5 Flash`. Guard `ai:validate` wymusza `model:` + Opus na orchestratorze.
 - ❌ Zero nie-Copilot (`CLAUDE.md`/`.claude/`/`.ai/`) i zero GitHub Actions — verify lokalnie.
+- ✅ **Bootstrap środowiska**: przed `pnpm install` sprawdź czy `pnpm` jest dostępny
+  (`pnpm --version`). Jeśli brak → `npm install -g pnpm@11.1.3`, dopiero potem
+  `pnpm install`. Nigdy nie instaluj zależności projektu przez `npm install`.
 
 ## Definition of Done
 
