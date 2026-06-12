@@ -1,0 +1,1 @@
+pnpm format:check && pnpm ai:validate && pnpm lint && pnpm typecheck
