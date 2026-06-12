@@ -1,3 +1,10 @@
+# Dependency overrides — pnpm reads these ONLY from pnpm-workspace.yaml (a flat
+# "pnpm.overrides" key in package.json is silently ignored).
+# uuid: GHSA-w5hq-g745-h8pq (dev-only path via webpack-dev-server>sockjs).
+overrides:
+  uuid: ^11.0.3
+  whatwg-encoding: ^3.1.1
+
 # Native build scripts allow-list (pnpm 11+). Without this, pnpm warns at every
 # install. We trust these packages — they ship native bindings (file watchers,
 # esbuild binary, LMDB) or post-install codemods (nx).

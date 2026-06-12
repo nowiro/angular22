@@ -3,6 +3,9 @@
     "business-wizard": {
       "enabled": true,
       "standaloneUrl": "http://localhost:4202/"
+    },
+    "dev-tools": {
+      "enabled": true
     }
   }
 }

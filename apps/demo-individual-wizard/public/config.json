@@ -3,6 +3,9 @@
     "individual-wizard": {
       "enabled": true,
       "standaloneUrl": "http://localhost:4201/"
+    },
+    "dev-tools": {
+      "enabled": true
     }
   }
 }

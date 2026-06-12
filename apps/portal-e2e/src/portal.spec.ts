@@ -34,6 +34,26 @@ test.describe('Portal — smoke', () => {
     await expect(page.getByTestId('portal-home')).toBeVisible();
   });
 
+  test('stepping through the embedded wizard keeps the portal URL', async ({ page }) => {
+    // Regression: the element has no provideRouter(), but Router is a
+    // root-provided service — a navigate() on it used to reset the host URL
+    // to `/` via history.replaceState on every step change.
+    await page.goto('/apps/individual');
+    const element = page.locator('a22-individual-wizard-element');
+    await expect(element.getByTestId('wizard-stepper')).toBeVisible({ timeout: 20_000 });
+
+    for (const step of [1, 2, 3, 4]) {
+      await element.getByTestId(`step-${step}-next`).click();
+      await expect(element.getByTestId(`step-${step + 1}-prev`)).toBeVisible();
+      await expect(page).toHaveURL(/\/apps\/individual$/);
+    }
+
+    // Non-linear jump via a step header keeps the URL too.
+    await element.getByRole('tab').first().click();
+    await expect(element.getByTestId('step-1-next')).toBeVisible();
+    await expect(page).toHaveURL(/\/apps\/individual$/);
+  });
+
   test('embedded wizard follows the portal language switcher', async ({ page }) => {
     await page.goto('/apps/individual');
     const element = page.locator('a22-individual-wizard-element');

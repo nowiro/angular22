@@ -1,5 +1,5 @@
 import { booleanAttribute, ChangeDetectionStrategy, Component, computed, inject, input, signal } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 import type { IndividualWizardStepIndex } from '@angular22/individual-wizard-data';
 import { INDIVIDUAL_WIZARD_STEP_COUNT, WizardNav } from '@angular22/individual-wizard-data';
@@ -52,8 +52,13 @@ import { StepSurveyComponent } from '../steps/step-survey.component';
   styleUrl: './wizard-shell.component.scss',
 })
 export class WizardShellComponent {
-  /** Absent when hosted as a web component (no provideRouter in the element). */
-  private readonly router = inject(Router, { optional: true });
+  /**
+   * Null when hosted as a web component (no `provideRouter()` in the element).
+   * `Router` alone is no discriminator — it is root-provided, so even a
+   * router-less injector creates one, and `navigate()` on it fails and resets
+   * the host page URL to `/`. Only `provideRouter()` provides `ActivatedRoute`.
+   */
+  private readonly router = inject(ActivatedRoute, { optional: true }) === null ? null : inject(Router);
 
   /** Embedded mode (portal web component) — hides the toolbar + intro chrome. */
   readonly embedded = input(false, { transform: booleanAttribute });
