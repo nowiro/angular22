@@ -6,7 +6,7 @@
  */
 
 /** Stable feature ids — also the keys of `config.json#features`. */
-export type FeatureId = 'individual-wizard' | 'business-wizard';
+export type FeatureId = 'individual-wizard' | 'business-wizard' | 'dev-tools';
 
 /** Description of one embeddable web-component bundle. */
 export interface ElementConfig {
@@ -19,7 +19,7 @@ export interface ElementConfig {
 export interface FeatureConfig {
   /** Master switch — `false` hides tiles AND blocks routes/access. */
   readonly enabled: boolean;
-  /** Standalone deployment URL (opened in a new browser tab). */
+  /** Standalone deployment URL (opened in a new browser target). */
   readonly standaloneUrl: string;
   /** Web-component bundle for in-portal embedding (omit to disable embedding). */
   readonly element?: ElementConfig;
@@ -51,6 +51,10 @@ export const DEFAULT_APP_CONFIG: AppConfig = {
         scriptUrl: '/elements/demo-business-wizard/main.js',
         tagName: 'a22-business-wizard-element',
       },
+    },
+    'dev-tools': {
+      enabled: false,
+      standaloneUrl: '',
     },
   },
 };

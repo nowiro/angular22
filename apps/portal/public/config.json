@@ -15,6 +15,9 @@
         "scriptUrl": "/elements/demo-business-wizard/main.js",
         "tagName": "a22-business-wizard-element"
       }
+    },
+    "dev-tools": {
+      "enabled": false
     }
   }
 }

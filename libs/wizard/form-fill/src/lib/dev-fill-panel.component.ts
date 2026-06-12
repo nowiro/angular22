@@ -1,14 +1,15 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 
+import { FeatureFlagsStore } from '@angular22/shared-config';
 import { A22TranslatePipe } from '@angular22/shared-i18n';
 import { A22ButtonComponent, A22IconComponent } from '@angular22/ui-material';
 import type { FillMode } from '@angular22/wizard-core';
-import { isLocalhost, WIZARD_FILL_PRESETS } from '@angular22/wizard-core';
+import { WIZARD_FILL_PRESETS } from '@angular22/wizard-core';
 
 /**
  * Floating dev-tools panel anchored to the right edge of the viewport.
- * Renders ONLY on localhost (see `isLocalhost`) and delegates the three fill
- * actions to the wizard-provided `WIZARD_FILL_PRESETS`.
+ * Visibility is controlled by the 'dev-tools' feature flag from config.json.
+ * It delegates the three fill actions to the wizard-provided `WIZARD_FILL_PRESETS`.
  */
 @Component({
   selector: 'a22-dev-fill-panel',
@@ -19,8 +20,9 @@ import { isLocalhost, WIZARD_FILL_PRESETS } from '@angular22/wizard-core';
 })
 export class A22DevFillPanelComponent {
   private readonly presets = inject(WIZARD_FILL_PRESETS);
+  private readonly flags = inject(FeatureFlagsStore);
 
-  protected readonly visible = isLocalhost();
+  protected readonly visible = this.flags.isEnabled('dev-tools');
   protected readonly expanded = signal(false);
   protected readonly lastAction = signal('');
 

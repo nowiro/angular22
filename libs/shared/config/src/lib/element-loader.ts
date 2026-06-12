@@ -12,6 +12,12 @@ export class ElementLoader {
   private readonly loaded = new Map<string, Promise<void>>();
 
   async load(element: ElementConfig): Promise<void> {
+    // SECURITY: Prevent loading cross-origin/external scripts via config manipulation (XSS protection).
+    // The scriptUrl must be an absolute path starting with '/' but not '//' (protocol-relative).
+    if (!element.scriptUrl.startsWith('/') || element.scriptUrl.startsWith('//')) {
+      throw new Error(`ElementLoader: security policy blocks external script source: ${element.scriptUrl}`);
+    }
+
     if (customElements.get(element.tagName) !== undefined) return;
 
     let pending = this.loaded.get(element.scriptUrl);
