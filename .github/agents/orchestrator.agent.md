@@ -21,16 +21,18 @@ tools:
 agents:
   [
     'angular-engineer',
-    'angular',
     'typescript',
     'material-wrapper',
     'styles',
     'html',
     'seo-routing',
+    'i18n',
+    'performance',
     'eslint',
     'vitest',
     'playwright',
     'ux-verifier',
+    'accessibility',
     'reviewer',
     'security',
     'angular-cli',
@@ -93,16 +95,17 @@ Zanim ogłosisz Done, sam przejrzyj pracę tańszych modeli:
 
 ## Routing (→ subagent; pełne role w [`AGENTS.md`](../../AGENTS.md))
 
-- nowy komponent / ekran / feature / Signal Forms / store / i18n wiring → `angular-engineer`
+- nowy komponent / ekran / feature / Signal Forms / store / **logika frameworkowa**
+  (sygnały / DI `inject()` / control flow / wydajność) → `angular-engineer`
   (**komponenty TYLKO przez `pnpm nx g @nx/angular:component`** — nigdy ręcznie).
-- framework Angulara (sygnały / DI `inject()` / control flow / wykrywanie zmian / wydajność,
-  **poza** scaffoldingiem) → `angular`; typy / generyki / modele / kontrakty → `typescript`.
+- typy / generyki / modele / kontrakty → `typescript`; spójność i18n (mapy PL/EN, `a22T`) → `i18n`.
 - nowy wrapper Materiala / theming `--mat-sys-*` / bramka Material → `material-wrapper`;
   SCSS komponentów / layout / RWD (konsumując tokeny) → `styles`.
-- szablony / semantyka HTML / a11y / control flow / `data-testid` → `html`;
+- szablony / semantyka HTML / a11y-lint / control flow / `data-testid` → `html`;
   routing / guardy / lazy + SEO (`Title`/`Meta`) → `seo-routing`.
-- lint (eslint + sonarjs) / config → `eslint`; testy jednostkowe → `vitest`;
-  suity e2e → `playwright`; audyt UX/UI na żywej apce → `ux-verifier`.
+- lint (eslint + sonarjs) / config → `eslint`; wydajność / bundle / `@defer` → `performance`;
+  testy jednostkowe → `vitest`; suity e2e → `playwright`.
+- audyt UX/RWD/kontrast na żywej apce → `ux-verifier`; audyt WCAG na poziomie kodu → `accessibility`.
 - ocena diffu / go-no-go przed merge → `reviewer`; audyt web-security (verb `security`) → `security`.
 - **doc-MCP (TYLKO ci trzej wołają MCP; reszta deleguje do nich):** best-practices/przykłady
   Angular/Material → `angular-cli`; docs Nx / generatory / graf → `nx`; docs 3rd-party

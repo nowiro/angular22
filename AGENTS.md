@@ -11,16 +11,18 @@ Guard `pnpm ai:validate` wymusza 1 widocznego. Po zmianie agentów: **Reload Win
 | -------------------------------------------------------------- | ------------ | ----------------------------------------------------------------------------------------------- |
 | [`orchestrator`](.github/agents/orchestrator.agent.md)         | Opus 4.8     | **widoczny** — SDD (specify→…→verify), routing, delegacja, weryfikacja końcowa, bramka DoD      |
 | [`angular-engineer`](.github/agents/angular-engineer.agent.md) | Gemini Flash | komponenty (przez `nx g`) / Signal Forms / store'y / i18n; kod lint-clean z miejsca             |
-| [`angular`](.github/agents/angular.agent.md)                   | Gemini Flash | framework Angulara — sygnały / DI / control flow / wydajność (poza scaffoldingiem)              |
 | [`typescript`](.github/agents/typescript.agent.md)             | Gemini Flash | typy / generyki / modele / kontrakty (TS 6 strict); współpraca z `eslint`                       |
 | [`styles`](.github/agents/styles.agent.md)                     | Gemini Flash | SCSS komponentów / layout / RWD na tokenach `--mat-sys-*` (system tokenów → `material-wrapper`) |
 | [`html`](.github/agents/html.agent.md)                         | Gemini Flash | szablony — semantyka / a11y / control flow / `data-testid` / `a22T`                             |
 | [`seo-routing`](.github/agents/seo-routing.agent.md)           | Gemini Flash | routing / guardy / lazy + SEO (`Title`/`Meta`); SPA-aware                                       |
+| [`performance`](.github/agents/performance.agent.md)           | Gemini Flash | budżety bundla / lazy + `@defer` / koszt change-detection / CWV (SPA)                           |
+| [`i18n`](.github/agents/i18n.agent.md)                         | Gemini Flash | spójność map PL/EN / pokrycie `a22T` / brakujące + osierocone klucze                            |
 | [`material-wrapper`](.github/agents/material-wrapper.agent.md) | Gemini Flash | `libs/ui/material` — wrappery `FormValueControl`, theming `--mat-sys-*`, strażnik bramki        |
 | [`eslint`](.github/agents/eslint.agent.md)                     | Gemini Flash | lint — triage + fix, audyt configu, sync destylatu `code-quality.instructions`                  |
 | [`vitest`](.github/agents/vitest.agent.md)                     | Gemini Flash | testy jednostkowe libów (`@nx/vitest:test`), scenariusze z AC, determinizm                      |
 | [`playwright`](.github/agents/playwright.agent.md)             | Gemini Flash | suity e2e (`@nx/playwright:playwright`) + debug na żywej przeglądarce (MCP `playwright`)        |
 | [`ux-verifier`](.github/agents/ux-verifier.agent.md)           | Gemini Flash | audyt UX/UI na żywej apce — overflow, nakładki, RWD, kontrast, i18n (read-only)                 |
+| [`accessibility`](.github/agents/accessibility.agent.md)       | Gemini Flash | audyt WCAG 2.1 AA na poziomie kodu (read-only); runtime → `ux-verifier`                         |
 | [`reviewer`](.github/agents/reviewer.agent.md)                 | Gemini Flash | review diffu / go-no-go (read-only)                                                             |
 | [`security`](.github/agents/security.agent.md)                 | Gemini Flash | audyt web-security diffu/feature — XSS/embed `@angular/elements`/fetch/storage/deps (read-only) |
 | [`nx`](.github/agents/nx.agent.md)                             | GPT-5 mini   | serwer MCP `nx` — docs/generatory/graf zamiast zgadywania flag                                  |
@@ -29,11 +31,11 @@ Guard `pnpm ai:validate` wymusza 1 widocznego. Po zmianie agentów: **Reload Win
 
 ## Modele (token economy)
 
-| Tier            | Model              | Agenci                                                                                                                                                      | Po co                                            |
-| --------------- | ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
-| **orchestrate** | `Claude Opus 4.8`  | orchestrator                                                                                                                                                | plan + delegacja w dół + weryfikacja końcowa     |
-| **MCP**         | `GPT-5 mini`       | angular-cli · nx · context7                                                                                                                                 | wołanie serwerów MCP — mechanika                 |
-| **reszta**      | `Gemini 3.5 Flash` | angular-engineer · material-wrapper · eslint · vitest · playwright · ux-verifier · reviewer · security · angular · typescript · styles · html · seo-routing | kod / testy / e2e / review / audyt UX / security |
+| Tier            | Model              | Agenci                                                                                                                                                                                 | Po co                                            |
+| --------------- | ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
+| **orchestrate** | `Claude Opus 4.8`  | orchestrator                                                                                                                                                                           | plan + delegacja w dół + weryfikacja końcowa     |
+| **MCP**         | `GPT-5 mini`       | angular-cli · nx · context7                                                                                                                                                            | wołanie serwerów MCP — mechanika                 |
+| **reszta**      | `Gemini 3.5 Flash` | angular-engineer · material-wrapper · eslint · vitest · playwright · ux-verifier · reviewer · security · typescript · styles · html · seo-routing · accessibility · performance · i18n | kod / testy / e2e / review / audyt UX / security |
 
 Guard `pnpm ai:validate` wymusza: każdy agent ma `model:`, orchestrator prowadzi Opusem,
 dokładnie 1 agent widoczny. `model:` pinuje tylko model — 1M context / Thinking Effort

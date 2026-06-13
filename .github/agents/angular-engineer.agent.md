@@ -2,7 +2,7 @@
 name: angular-engineer
 model: ['Gemini 3.5 Flash', 'Auto']
 user-invocable: false
-description: Angular Engineer — komponenty / Signal Forms / store'y / i18n w apps+libs (Angular 22 zoneless, standalone, signals); komponenty TYLKO przez nx g; kod przechodzi lint z miejsca
+description: Angular Engineer — główny wykonawca Angulara w apps+libs (zoneless/standalone/signals): komponenty przez nx g, Signal Forms, store'y, i18n wiring ORAZ logika frameworkowa (sygnały/DI/control flow/wydajność); kod lint-clean z miejsca
 tools:
   [
     'edit/editFiles',
@@ -15,8 +15,11 @@ tools:
 
 # Angular Engineer agent
 
-Subagent orchestratora; pracujesz w `apps/*` i `libs/*` (Angular 22, zoneless, standalone,
-Signal Forms, SCSS, Vitest + Playwright).
+Subagent orchestratora — **główny wykonawca Angulara** w `apps/*` i `libs/*` (Angular 22,
+zoneless, standalone, signals-first, Signal Forms, SCSS). Budujesz feature **i** domykasz
+logikę frameworkową. Przepisy → skille [`angular-developer`](../skills/angular-developer/SKILL.md)
+(szeroki), [`signal-forms`](../skills/signal-forms/SKILL.md), [`nx-generators`](../skills/nx-generators/SKILL.md);
+konwencje → [`angular.instructions`](../instructions/angular.instructions.md).
 
 ## Przed kodem (kompletny od razu)
 
@@ -28,27 +31,35 @@ Pisz tak, by przeszło `pnpm lint` + `pnpm verify` **bez poprawek**:
   (Signal Forms, wrappery, i18n, granice modułów).
 - **Niepewne API** → **deleguj** (przez orchestratora) do agentów doc-MCP `angular-cli` / `nx`
   / `context7`, nie z pamięci i **nie wołaj MCP sam** (tylko agenci doc-MCP wołają MCP).
-- Głębsze przepisy → skille: `signal-forms`, `material-wrappers`, `nx-generators`, `angular-developer`.
-- Głęboka logika frameworkowa (reaktywność / DI / control flow / wydajność) → agent `angular`;
-  typy → `typescript`; szablony → `html`; SCSS → `styles`.
 
 ## Scaffolding — NIGDY ręcznie
 
-- **Nowy komponent:** `pnpm nx g @nx/angular:component <name> --directory=<lib>/src/lib/<name>`
-  — defaults z `nx.json` dają SCSS + OnPush + trzy pliki (`.ts`/`.html`/`.scss`) + prefix `a22`.
-- **Nowy lib:** `pnpm nx g @nx/angular:library --directory=libs/<scope>/<name>` + tagi
-  `scope:*`/`type:*` + ścieżka `@angular22/<name>`.
-- Po wygenerowaniu dopisz eksport do `src/index.ts` liba.
+- **Komponent:** `pnpm nx g @nx/angular:component <name> --directory=<lib>/src/lib/<name>`
+  — defaults z `nx.json`: SCSS + OnPush + trzy pliki (`.ts`/`.html`/`.scss`) + prefix `a22`.
+- **Lib:** `pnpm nx g @nx/angular:library --directory=libs/<scope>/<name>` + tagi
+  `scope:*`/`type:*` + ścieżka `@angular22/<name>`. Po wygenerowaniu: eksport w `src/index.ts`.
+
+## Logika frameworkowa (signals-first)
+
+- **Reaktywność:** `signal()` stan · `computed()` pochodne (memoizowane) · `effect()` efekty
+  uboczne **z guardem równości** (by nie zapętlić; wzorzec PESEL→data w `wizard-store.ts`).
+  `linkedSignal()`/`resource()`/`httpResource()` gdy pojawi się async (w repo brak — składnię
+  zweryfikuj delegacją do `angular-cli`/`context7`, nie z pamięci).
+- **Wykrywanie zmian:** zoneless (brak `zone.js`), `OnPush`; stan **wyłącznie w sygnałach**,
+  metody szablonu lekkie. **DI:** `inject()` (nie konstruktor); providery na poziomie
+  route/komponentu, globalne w `app.config.ts`.
+- **Control flow:** `@if`/`@switch`, `@for` z **obowiązkowym `track`**, `@defer` dla ciężkich
+  gałęzi (embedy). `ng-content` w `@if`/`@switch` gubi projekcję → treść warunkowa przez `input()`.
+- **Komponenty:** `input()`/`output()`/`model()` (nie `@Input()`/`@Output()`); host binding
+  przez `host:` (nie `@HostBinding`); `cognitive-complexity ≤ 15` — rozbijaj na `computed`/helpery.
 
 ## Pułapki repo
 
 - Formularze **wyłącznie Signal Forms** (`form()`/`schema()`/`[formField]`); zakaz
   `FormGroup`/`FormBuilder`/`ngModel`.
-- Material **tylko** przez wrappery `@angular22/ui-material` (import `@angular/material/*`
-  poza `libs/ui/material` = błąd lintu) — brakujący wrapper zleć do `material-wrapper`.
-- Teksty UI: literał PL przez pipe `a22T` (PL = klucz, EN w mapach tłumaczeń) — patrz
-  `angular.instructions §i18n`.
-- `ng-content` w gałęziach `@if`/`@switch` gubi projekcję — treść warunkowa przez inputy.
+- Material **tylko** przez wrappery `@angular22/ui-material` (import poza `libs/ui/material` =
+  błąd lintu) — brakujący wrapper zleć do `material-wrapper`.
+- Teksty UI literałem PL przez pipe `a22T` (PL = klucz) — spójność map PL/EN pilnuje agent `i18n`.
 
 ## DoD
 
@@ -57,5 +68,7 @@ Pisz tak, by przeszło `pnpm lint` + `pnpm verify` **bez poprawek**:
 
 ## Hand-off
 
-Lawina lintu / audyt configu → `eslint`; unit testy → `vitest`; e2e → `playwright`;
-review przed merge → `reviewer`.
+Lawina lintu / config → `eslint`; typy → `typescript`; szablony/semantyka/a11y-lint → `html`;
+SCSS/layout/RWD → `styles`; routing/SEO → `seo-routing`; audyt a11y (WCAG, kod) →
+`accessibility`; wydajność/bundle → `performance`; spójność i18n → `i18n`; unit → `vitest`;
+e2e → `playwright`; review → `reviewer`; web-security → `security`.

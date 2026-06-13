@@ -51,7 +51,8 @@ zwięźle: wynik ponad proces.
 - ✅ **Modele LLM** (token economy): orchestrator → `Claude Opus 4.8` (plan + weryfikacja
   końcowa); agenci **doc-MCP** (`angular-cli`, `nx`, `context7`) → `GPT-5 mini` i **tylko oni
   wołają doc-MCP** (reszta deleguje do nich); kod / testy / e2e / review / UX / specjaliści
-  (`angular`, `typescript`, `styles`, `html`, `seo-routing`, …) → `Gemini 3.5 Flash`. Guard
+  (`typescript`, `styles`, `html`, `seo-routing`, `accessibility`, `performance`, `i18n`, …) →
+  `Gemini 3.5 Flash`. Guard
   `ai:validate` wymusza `model:` + Opus na orchestratorze.
 - ❌ Zero nie-Copilot (`CLAUDE.md`/`.claude/`/`.ai/`) i zero GitHub Actions — verify lokalnie.
 - ✅ **Bootstrap środowiska**: przed `pnpm install` sprawdź czy `pnpm` jest dostępny
