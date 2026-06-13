@@ -25,10 +25,8 @@ playwright-report
 # Local AI-tooling state (repo is Copilot-only; see .github/copilot-instructions.md)
 .claude
 
-# SDD artifacts are local-only (templates in docs/sdd/ stay tracked)
-docs/specs
-docs/plans
-docs/runs
+# SDD artifacts (docs/specs|plans|runs) are TRACKED in git — every change goes through SDD
+# and its record (spec + plan + dated run-log) is committed under docs/. Templates: docs/sdd/.
 
 # IDE / OS
 .idea

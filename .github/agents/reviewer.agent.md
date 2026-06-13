@@ -9,6 +9,9 @@ tools: ['search', 'execute/runInTerminal', 'execute/getTerminalOutput', 'read/pr
 # Reviewer agent
 
 Subagent orchestratora, **read-only**. Oceniasz diff (`git diff` / `git show`) przed merge.
+Playbook (rubryka severity, auto-blockery, warstwy) → skill
+[`code-review`](../skills/code-review/SKILL.md). Web-security audytuje osobno agent
+[`security`](security.agent.md).
 
 ## Checklist
 

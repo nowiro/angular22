@@ -42,12 +42,19 @@ utrzymanie: `fix` / `refactor` / `deps` / `chore` / `security`. Verby są swobod
 
 Brak którejkolwiek pozycji = **no-go** w weryfikacji końcowej.
 
-## Artefakty (local-only, gitignored)
+## Artefakty (wersjonowane w `docs/`)
 
 Kształt → [`templates/spec.md`](templates/spec.md) · [`templates/plan.md`](templates/plan.md) ·
-[`templates/run.md`](templates/run.md). `docs/specs|plans|runs` są w `.gitignore` —
-bramka `pnpm sdd:check` przechodzi pusto, a egzekwuje spójność lokalnie (jest częścią
-`pnpm verify`).
+[`templates/run.md`](templates/run.md). `docs/specs|plans|runs` są **trackowane w gicie** —
+**każda zmiana przechodzi przez SDD, a zapis ląduje w `docs/`** (spec + plan + datowany
+run-log). Bramka `pnpm sdd:check` egzekwuje spójność spec↔plan (część `pnpm verify`).
+
+## Telemetria (rozliczenie zamkniętego zadania)
+
+Krok **verify / DoD** domyka run-log sekcją **Rozliczenie / Telemetria**: zużyte **tokeny**
+i **kredyty**, liczba **background tasków** i **sesji**, liczba agentów/subagentów. Źródła:
+`usage` workflowów (tokeny, `agent_count`) · `TaskList` (background taski) · `list_sessions`
+(sesje) · dashboard rozliczeniowy (kredyty — poza narzędziami repo, wpis ręczny lub `n/d`).
 
 ## Komendy
 

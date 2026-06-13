@@ -6,8 +6,8 @@ description: Konwencje Angular 22 dla angular22 — Signal Forms, wrappery Mater
 # Angular 22 — konwencje repo
 
 Auto-ładowane na `apps/**` i `libs/**`. Reguły lintu → `code-quality.instructions.md`
-(przeczytaj NAJPIERW). Głębsze przepisy → skille `signal-forms`, `material-wrappers`,
-`nx-generators`.
+(przeczytaj NAJPIERW). Głębsze przepisy → skille `angular-developer` (szeroki przewodnik),
+`signal-forms`, `material-wrappers`, `nx-generators`, `angular-new-app`, `frontend-design`.
 
 ## Komponenty
 

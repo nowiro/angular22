@@ -8,7 +8,7 @@ created: '{{date}}'
 
 # Spec: {{title}}
 
-> Lokalny artefakt SDD (`docs/specs/` jest gitignored). Kanon kształtu:
+> Artefakt SDD **wersjonowany** w `docs/specs/`. Kanon kształtu:
 > `mcp-workspace/docs/sdd/templates/spec.md`. Domknij `[?]` przez `/clarify` przed planem.
 
 ## Kontekst

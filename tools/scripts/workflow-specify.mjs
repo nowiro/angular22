@@ -8,8 +8,8 @@
  *   - docs/runs/<YYYY-MM-DD_HH-MM>_<slug>.md          (step-by-step iteration log)
  *
  * Each task is stamped YYYY-MM-DD_HH-MM_<name> (project convention). All three dirs are
- * gitignored (artifacts are local-only). Templates are the single source of the artifact
- * shape — see docs/sdd/methodology.md.
+ * tracked in git — every change is recorded in docs/. Templates are the single source of the
+ * artifact shape — see docs/sdd/methodology.md.
  *
  * Usage:
  *   pnpm workflow:specify -- --verb=feature --slug=orders-list --title="Orders list screen"

@@ -4,7 +4,9 @@
 > [`instructions/mcp-usage.instructions.md`](instructions/mcp-usage.instructions.md);
 > reguły lintu → `instructions/code-quality.instructions.md` (auto na `**/*.ts`);
 > konwencje Angular → `instructions/angular.instructions.md` (auto na `{apps,libs}/**`);
-> agenci → [`AGENTS.md`](../AGENTS.md); SDD → [`docs/sdd/methodology.md`](../docs/sdd/methodology.md).
+> agenci → [`AGENTS.md`](../AGENTS.md); SDD → [`docs/sdd/methodology.md`](../docs/sdd/methodology.md);
+> skille (`.github/skills/`): `angular-developer` · `angular-new-app` · `signal-forms` ·
+> `material-wrappers` · `nx-generators` · `frontend-design` · `code-review` · `security-guidance`.
 
 ## Tożsamość
 
@@ -58,7 +60,8 @@ zwięźle: wynik ponad proces.
 
 `pnpm verify` zielone (format:check + ai:validate + sdd:check + lint + typecheck + test +
 build) + dotknięte `e2e` zielone + UX z uruchomienia. **Weryfikacja końcowa orchestratora
-(Opus)** zapisana w run-logu. Po zmianie agentów / modeli: **Reload Window**.
+(Opus)** + **Rozliczenie / Telemetria** (tokeny, kredyty, background taski, sesje) zapisane
+w run-logu. Po zmianie agentów / modeli: **Reload Window**.
 
 ## Stack
 

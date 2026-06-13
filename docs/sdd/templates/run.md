@@ -9,9 +9,9 @@ title: '{{verb}} — {{slug}}'
 
 # Run-log: {{verb}} — {{slug}} · {{stamp}}
 
-> Lokalny artefakt SDD (`docs/runs/` jest gitignored). Krok-po-kroku zapis **jednej
+> Artefakt SDD **wersjonowany** w `docs/runs/`. Krok-po-kroku zapis **jednej
 > iteracji**: kto (agent), na czym (model), z jakim wynikiem. Orchestrator (Opus) domyka
-> sekcją „Weryfikacja końcowa".
+> sekcją „Weryfikacja końcowa" + **Telemetrią**.
 
 Powiązane: spec `docs/specs/{{slug}}/spec.md` · plan `docs/plans/{{stamp}}_{{verb}}-{{slug}}.md`.
 
@@ -41,3 +41,18 @@ Powiązane: spec `docs/specs/{{slug}}/spec.md` · plan `docs/plans/{{stamp}}_{{v
 - **UX z uruchomienia:** [?] werdykt ux-verifier (nie z czytania kodu)
 - **Rozjazdy / zawrócone do specjalisty:** [?]
 - **Werdykt:** [?] go / no-go + jedno zdanie uzasadnienia
+
+## Rozliczenie / Telemetria
+
+> Wypełnij na zamknięciu zadania (krok verify / DoD) — rozliczenie zużycia. Źródła: tokeny /
+> liczba agentów → `usage` workflowów (`subagent_tokens`, `agent_count`); background taski →
+> notyfikacje `<task-notification>` / `TaskList`; sesje → `list_sessions`; **kredyty** →
+> dashboard rozliczeniowy (Copilot premium requests / billing — poza narzędziami repo).
+
+| metryka                         | wartość |
+| ------------------------------- | ------- |
+| tokeny (wyjściowe, sumarycznie) | [?]     |
+| kredyty (premium requests)      | [?]     |
+| background taski (liczba)       | [?]     |
+| sesje (liczba)                  | [?]     |
+| agenci / subagenci              | [?]     |

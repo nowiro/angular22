@@ -27,6 +27,7 @@ agents:
     'playwright',
     'ux-verifier',
     'reviewer',
+    'security',
     'nx',
     'context7',
   ]
@@ -62,7 +63,8 @@ behaviour → pełna drabina:**
 (Ty/Opus — niżej) → **DoD** (`pnpm verify`).
 
 Każda iteracja → **datowany run-log** `docs/runs/YYYY-MM-DD_HH-MM_<slug>.md` (krok =
-agent + model + wynik). Artefakty `docs/specs|plans|runs` są local-only (gitignored).
+agent + model + wynik). Artefakty `docs/specs|plans|runs` są **wersjonowane w gicie**
+(każda zmiana przez SDD → zapis w `docs/`).
 
 **Testy obowiązkowe w każdym planie zmian** (trójka): **scenariusze testowe** (z AC) →
 **testy jednostkowe** (Vitest, `@nx/vitest:test`) → **testy e2e** (Playwright,
@@ -80,6 +82,8 @@ Zanim ogłosisz Done, sam przejrzyj pracę tańszych modeli:
 3. **Testy** — scenariusze pokrywają każde AC; Vitest + e2e zielone; brak `.skip`/`.only`.
 4. **UX z uruchomienia** — werdykt `ux-verifier` (nigdy z czytania kodu).
 5. **Run-log** — domknij sekcją „Weryfikacja końcowa"; rozjazd → zawróć do specjalisty.
+6. **Telemetria** — domknij run-log sekcją „Rozliczenie / Telemetria" (tokeny, kredyty,
+   background taski, sesje); źródła: `usage` workflowów · `TaskList` · `list_sessions`.
 
 ## Routing (→ subagent; pełne role w [`AGENTS.md`](../../AGENTS.md))
 
@@ -89,6 +93,8 @@ Zanim ogłosisz Done, sam przejrzyj pracę tańszych modeli:
 - lint / audyt configu eslint → `eslint`; testy jednostkowe → `vitest`;
   suity e2e → `playwright`; audyt UX/UI na żywej apce → `ux-verifier`.
 - ocena diffu / go-no-go przed merge → `reviewer`.
+- audyt web-security (verb `security` / zmiany w sanityzacji, embed `@angular/elements`,
+  fetch `config.json`, deep-linki, storage, deps) → `security`.
 - docs Nx / generatory / graf → `nx`; docs bibliotek (Angular/Signal Forms/Material/3rd-party) → `context7`.
 
 ## Bramki (DoD)

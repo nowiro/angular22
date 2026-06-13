@@ -9,7 +9,7 @@ agents: []
 
 # Plan: {{verb}} — {{slug}}
 
-> Lokalny artefakt SDD (`docs/plans/` jest gitignored). „Tasks" są **folded** w tabelę
+> Artefakt SDD **wersjonowany** w `docs/plans/`. „Tasks" są **folded** w tabelę
 > poniżej (bez osobnego `tasks.md`). Traceability: `id: plan.<verb>.<slug>` musi mieć
 > `docs/specs/<slug>/spec.md` (`sdd:check`).
 
