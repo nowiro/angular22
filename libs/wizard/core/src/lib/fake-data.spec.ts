@@ -67,6 +67,6 @@ describe('isLocalhost', () => {
 
   it('rejects deployed origins', () => {
     expect(isLocalhost('example.com')).toBe(false);
-    expect(isLocalhost('demo.nowiro.dev')).toBe(false);
+    expect(isLocalhost('demo.example.com')).toBe(false);
   });
 });

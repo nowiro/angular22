@@ -1,6 +1,6 @@
 {
   "$schema": "https://aka.ms/vscode-mcp.schema.json",
-  "comment": "MCP servers dla nowiro/angular22 (VS Code >= 1.121). Wszystkie serwery przez `cmd /c npx` (PATH-relative) — działa wymiennie z nvm-windows i standardową instalacją Node. macOS/Linux: zamień command: \"cmd\", args: [\"/c\", \"npx\", …] na command: \"npx\", args: [\"-y\", …]. BEZ `inputs`/promptów — opcje opisane w polu `comment` każdego serwera. context7 działa keyless; playwright wymaga jednorazowo `npx playwright install chromium`.",
+  "comment": "MCP servers dla angular22 (VS Code >= 1.121). Wszystkie serwery przez `cmd /c npx` (PATH-relative) — działa wymiennie z nvm-windows i standardową instalacją Node. macOS/Linux: zamień command: \"cmd\", args: [\"/c\", \"npx\", …] na command: \"npx\", args: [\"-y\", …]. BEZ `inputs`/promptów — opcje opisane w polu `comment` każdego serwera. context7 działa keyless; playwright wymaga jednorazowo `npx playwright install chromium`.",
   "servers": {
     "context7": {
       "comment": "Up-to-date docs bibliotek (Angular 22, Signal Forms, Nx, Material), keyless. Opcja: env CONTEXT7_API_KEY (klucz z context7.com) dla wyższych limitów.",

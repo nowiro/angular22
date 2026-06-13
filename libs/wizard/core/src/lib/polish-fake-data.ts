@@ -41,7 +41,7 @@ const COMPANIES = [
   'Aurora Software Sp. z o.o.',
   'Bursztyn Logistyka S.A.',
   'Granit Budownictwo Sp. z o.o.',
-  'Helios Med Sp. z o.o.',
+  'Cyprys Med Sp. z o.o.',
   'Kameleon Studio',
   'Sosna Meble Sp. j.',
 ];
@@ -54,11 +54,11 @@ const POSITIONS = [
   'DevOps Engineer',
 ];
 const UNIVERSITIES = [
-  'Politechnika Warszawska',
-  'AGH Akademia Górniczo-Hutnicza',
-  'Uniwersytet Jagielloński',
-  'Politechnika Wrocławska',
-  'Uniwersytet Warszawski',
+  'Uniwersytet Przykładowy',
+  'Politechnika Demonstracyjna',
+  'Akademia Testowa',
+  'Uniwersytet Modelowy',
+  'Politechnika Pokazowa',
 ];
 const THESIS_TOPICS = [
   'Wykrywanie anomalii w ruchu sieciowym z użyciem uczenia maszynowego',
@@ -219,8 +219,8 @@ export function generateValidNip(): string {
     if (check === 10) continue;
     return `${digits.join('')}${check}`;
   }
-  // Fallback: deterministic known-good NIP.
-  return '5270103391';
+  // Fallback: deterministic, checksum-valid synthetic NIP (π digits, not a real registration).
+  return '3141592659';
 }
 
 /** Builds a valid 9-digit REGON (GUS algorithm, 10-remainder retried). */

@@ -8,12 +8,12 @@ function keys(items: readonly { key: string }[]): string[] {
 }
 
 describe('consents catalog', () => {
-  it('PL citizen gets GDPR base + PL extension + KRD/BIK, no CCPA', () => {
+  it('PL citizen gets GDPR base + PL extension + credit-bureau, no CCPA', () => {
     const data = initialIndividualData();
     const items = keys(applicableConsents(data));
     expect(items).toContain('gdpr-base');
     expect(items).toContain('gdpr-extended-pl');
-    expect(items).toContain('krd-bik');
+    expect(items).toContain('credit-bureau');
     expect(items).not.toContain('ccpa-base');
   });
 
@@ -24,7 +24,7 @@ describe('consents catalog', () => {
     const items = keys(applicableConsents(data));
     expect(items).toContain('ccpa-base');
     expect(items).not.toContain('gdpr-extended-pl');
-    expect(items).not.toContain('krd-bik');
+    expect(items).not.toContain('credit-bureau');
   });
 
   it('employment consent appears only for employed/self-employed', () => {

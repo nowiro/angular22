@@ -88,9 +88,9 @@ export const CONSENTS_CATALOG: readonly ConsentDefinition[] = [
     appliesWhen: (ctx) => showsHigherEducation(ctx.educationLevel),
   },
   {
-    key: 'krd-bik',
-    label: 'Weryfikacja w biurach informacji kredytowej (KRD/BIK)',
-    description: 'Zgoda na sprawdzenie historii kredytowej w bazach KRD oraz BIK.',
+    key: 'credit-bureau',
+    label: 'Weryfikacja w biurach informacji kredytowej',
+    description: 'Zgoda na sprawdzenie historii kredytowej w bazach informacji kredytowej.',
     required: false,
     appliesWhen: (ctx) => ctx.citizenship === 'PL',
   },

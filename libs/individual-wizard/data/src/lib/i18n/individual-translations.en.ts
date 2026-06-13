@@ -108,9 +108,9 @@ export const INDIVIDUAL_WIZARD_EN: Readonly<Record<string, string>> = {
   'Weryfikacja danych w uczelni': 'Verification of data with the university',
   'Zgoda na weryfikację danych w uczelni wymienionej w ankiecie.':
     'Consent to verify data with the university listed in the survey.',
-  'Weryfikacja w biurach informacji kredytowej (KRD/BIK)': 'Credit bureau verification (KRD/BIK)',
-  'Zgoda na sprawdzenie historii kredytowej w bazach KRD oraz BIK.':
-    'Consent to check credit history in the KRD and BIK registers.',
+  'Weryfikacja w biurach informacji kredytowej': 'Credit bureau verification',
+  'Zgoda na sprawdzenie historii kredytowej w bazach informacji kredytowej.':
+    'Consent to check credit history in credit-information registers.',
   'Publikacja danych pracy doktorskiej': 'Publication of doctoral thesis data',
   'Zgoda na publikację tytułu pracy doktorskiej oraz powiązanych słów kluczowych w katalogu publicznym.':
     'Consent to publish the doctoral thesis title and related keywords in a public catalogue.',

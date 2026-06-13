@@ -37,13 +37,13 @@ describe('pesel', () => {
 
 describe('nip', () => {
   it('accepts valid NIPs (with separators)', () => {
-    expect(isValidNip('5270103391')).toBe(true);
-    expect(isValidNip('527-010-33-91')).toBe(true);
-    expect(normaliseNip('527 010 33 91')).toBe('5270103391');
+    expect(isValidNip('3141592659')).toBe(true);
+    expect(isValidNip('314-159-26-59')).toBe(true);
+    expect(normaliseNip('314 159 26 59')).toBe('3141592659');
   });
 
   it('rejects invalid NIPs', () => {
-    expect(isValidNip('5270103392')).toBe(false);
+    expect(isValidNip('3141592658')).toBe(false);
     expect(isValidNip('123')).toBe(false);
     expect(normaliseNip('123')).toBeNull();
   });
