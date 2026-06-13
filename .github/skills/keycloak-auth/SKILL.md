@@ -62,6 +62,9 @@ Rola bez uprawnień → redirect `/forbidden`; **deep-link odrzucony**. Trasa wr
 - **Rola z tokenu** — `rolesFromStrings(realm_access.roles)`; nigdy z inputu/URL/cudzego źródła
   (mock-switch przez `localStorage` to **wyłącznie** demo).
 - **PKCE `S256`**, `onLoad: 'check-sso'`; token w pamięci (nie `localStorage`) w trybie realnym.
+- **Klient = afordancja** — `roleGuard`/`*a22HasRole` to UX; **resource server MUSI** rewalidować
+  bearer token + realm roles przy każdym żądaniu. Wygaśnięcie tokenu obsługuje `withAutoRefreshToken`
+  (odświeża lub wylogowuje → czyści `AuthStore`), więc UI nie trzyma roli z wygasłego tokenu.
 
 ## Testy (per rola)
 

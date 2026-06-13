@@ -49,8 +49,8 @@ export class HomeComponent {
   protected readonly enabledTiles = computed(() => TILES.filter((tile) => this.flags.isEnabled(tile.id)));
   protected readonly username = this.auth.username;
   protected readonly roles = ROLES;
-  /** Highest role the user holds — drives the active state of the demo role switcher. */
-  protected readonly activeRole = computed<Role | null>(() => ROLES.find((role) => this.auth.hasRole(role)) ?? null);
+  /** Active demo role = the most-privileged role held (ordering owned by shared-auth). */
+  protected readonly activeRole = this.auth.effectiveRole;
 
   protected standaloneUrl(id: FeatureId): string {
     return this.flags.feature(id).standaloneUrl;

@@ -20,7 +20,12 @@ export interface AuthConfig {
  * app depends only on `AuthStore` and is unaffected by the choice.
  */
 export function provideAuth(config: AuthConfig): EnvironmentProviders {
-  if (config.mode === 'keycloak' && config.keycloak) {
+  if (config.mode === 'keycloak') {
+    // Fail loud: never silently fall back to the mock principal when a deployment
+    // asked for a real IdP but forgot/mistyped the keycloak block.
+    if (!config.keycloak) {
+      throw new Error('provideAuth: keycloak mode requires a `keycloak` config block (url/realm/clientId).');
+    }
     return provideKeycloakAuth(config.keycloak);
   }
   return provideMockAuth(config.initialRole);

@@ -47,4 +47,4 @@ export function setMockRole(role: Role): void {
   }
 }
 
-export { MOCK_USERS, STORAGE_KEY as MOCK_ROLE_STORAGE_KEY };
+export { MOCK_USERS };

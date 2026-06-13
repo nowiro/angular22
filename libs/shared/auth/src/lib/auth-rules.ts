@@ -15,3 +15,8 @@ export function isRole(value: unknown): value is Role {
 export function rolesFromStrings(values: readonly string[]): Role[] {
   return values.filter(isRole);
 }
+
+/** The highest-privileged role the user holds (`ROLES` is most → least), or `null`. */
+export function highestRole(granted: readonly Role[]): Role | null {
+  return ROLES.find((role) => granted.includes(role)) ?? null;
+}

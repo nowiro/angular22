@@ -6,7 +6,13 @@ import {
   provideEnvironmentInitializer,
 } from '@angular/core';
 
-import { KEYCLOAK_EVENT_SIGNAL, provideKeycloak } from 'keycloak-angular';
+import {
+  AutoRefreshTokenService,
+  KEYCLOAK_EVENT_SIGNAL,
+  provideKeycloak,
+  UserActivityService,
+  withAutoRefreshToken,
+} from 'keycloak-angular';
 import Keycloak from 'keycloak-js';
 
 import { rolesFromStrings } from './auth-rules';
@@ -19,39 +25,51 @@ export interface KeycloakServerConfig {
   readonly clientId: string;
 }
 
-/** Map the Keycloak session (realm roles + identity) into our `AuthUser`. */
+/**
+ * Map the Keycloak session (realm roles + identity) into our `AuthUser`. When the
+ * session is gone — logout, token expiry, refresh failure — the principal is
+ * cleared, so `AuthStore` never reports stale roles.
+ *
+ * SECURITY: this client-side role view is an **affordance** for UI/guards only.
+ * The resource server MUST re-validate the bearer token + realm roles on every
+ * request — a hidden button or a passed `roleGuard` is not a security boundary.
+ */
 function syncFromKeycloak(keycloak: Keycloak, store: AuthStore): void {
   if (!keycloak.authenticated) {
     store.setUser(null);
     return;
   }
   const token = keycloak.tokenParsed;
-  const realmRoles = token?.realm_access?.roles ?? [];
+  const claimedUsername: unknown = token?.['preferred_username'];
   store.setUser({
-    username: (token?.['preferred_username'] as string | undefined) ?? 'keycloak-user',
-    roles: rolesFromStrings(realmRoles),
+    username: typeof claimedUsername === 'string' ? claimedUsername : 'keycloak-user',
+    roles: rolesFromStrings(token?.realm_access?.roles ?? []),
   });
 }
 
 /**
- * Real-server auth: wires keycloak-angular's `provideKeycloak` and bridges the
- * Keycloak session into `AuthStore`, keeping it in sync on every Keycloak event
- * (login / logout / token refresh). Used when a Keycloak URL is configured; the
- * demo runs `provideMockAuth` instead.
+ * Real-server auth: wires keycloak-angular's `provideKeycloak` with **auto token
+ * refresh + inactivity logout** (`withAutoRefreshToken`) and bridges the Keycloak
+ * session into `AuthStore`, re-syncing on every Keycloak event (login / logout /
+ * token refresh / expiry). Used when a Keycloak URL is configured; the demo runs
+ * `provideMockAuth` instead.
  */
 export function provideKeycloakAuth(config: KeycloakServerConfig): EnvironmentProviders {
   return makeEnvironmentProviders([
     provideKeycloak({
       config: { url: config.url, realm: config.realm, clientId: config.clientId },
       initOptions: { onLoad: 'check-sso', pkceMethod: 'S256' },
+      features: [withAutoRefreshToken()],
+      providers: [AutoRefreshTokenService, UserActivityService],
     }),
     provideEnvironmentInitializer(() => {
       const keycloak = inject(Keycloak);
       const store = inject(AuthStore);
       const event = inject(KEYCLOAK_EVENT_SIGNAL);
-      syncFromKeycloak(keycloak, store);
+      // The effect runs once immediately (injection context) for the initial sync,
+      // then re-syncs on every Keycloak event — refresh / expiry / logout all flow
+      // through here, so AuthStore can never hold an expired token's roles.
       effect(() => {
-        // Re-read on every Keycloak event so AuthStore tracks token refresh / logout.
         event();
         syncFromKeycloak(keycloak, store);
       });

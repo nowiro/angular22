@@ -1,6 +1,6 @@
 import { computed, Injectable, signal } from '@angular/core';
 
-import { hasAnyRole } from './auth-rules';
+import { hasAnyRole, highestRole } from './auth-rules';
 import type { AuthUser, Role } from './auth.types';
 
 /**
@@ -16,6 +16,8 @@ export class AuthStore {
   readonly isAuthenticated = computed(() => this._user() !== null);
   readonly roles = computed<readonly Role[]>(() => this._user()?.roles ?? []);
   readonly username = computed(() => this._user()?.username ?? null);
+  /** Most-privileged role the user holds — the ROLES ordering is owned here, not by consumers. */
+  readonly effectiveRole = computed<Role | null>(() => highestRole(this.roles()));
 
   /** Replace the current principal (sign-in / sign-out / token refresh). */
   setUser(user: AuthUser | null): void {

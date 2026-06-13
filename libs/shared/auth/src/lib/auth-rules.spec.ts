@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { hasAnyRole, isRole, rolesFromStrings } from './auth-rules';
+import { hasAnyRole, highestRole, isRole, rolesFromStrings } from './auth-rules';
 
 describe('hasAnyRole', () => {
   it('is true when granted contains a required role', () => {
@@ -31,5 +31,14 @@ describe('isRole / rolesFromStrings', () => {
   it('keeps only known roles from an untrusted realm-role list', () => {
     expect(rolesFromStrings(['admin', 'offline_access', 'user', 'uma_authorization'])).toEqual(['admin', 'user']);
     expect(rolesFromStrings([])).toEqual([]);
+  });
+});
+
+describe('highestRole', () => {
+  it('returns the most-privileged granted role (or null)', () => {
+    expect(highestRole(['admin', 'user', 'guest'])).toBe('admin');
+    expect(highestRole(['user', 'guest'])).toBe('user');
+    expect(highestRole(['guest'])).toBe('guest');
+    expect(highestRole([])).toBeNull();
   });
 });

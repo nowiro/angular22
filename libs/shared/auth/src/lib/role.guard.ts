@@ -7,7 +7,7 @@ import type { Role } from './auth.types';
 /**
  * Route guard allowing the route only when the user holds one of `roles`. On
  * denial it redirects to `/forbidden` (a `UrlTree`), so a missing permission
- * blocks deep links — not just hidden UI. Use as `canMatch` / `canActivate`.
+ * blocks deep links — not just hidden UI. Returns a `CanMatchFn` (use as `canMatch`).
  */
 export function roleGuard(...roles: readonly Role[]): CanMatchFn {
   return () => {
