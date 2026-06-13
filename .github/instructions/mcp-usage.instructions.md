@@ -11,7 +11,8 @@ Angular 22 i wzorce z pamięci modelu bywają przestarzałe.
 
 **Kto woła MCP:** doc-MCP (`angular-cli`, `nx`, `context7`) wołają **wyłącznie** dedykowani
 agenci na `GPT-5 mini` o tych samych nazwach — pozostali agenci (`angular-engineer`,
-`material-wrapper`, `typescript`, `styles`, `html`, `seo-routing`, `performance`, `i18n`, …) **delegują**
+`material-wrapper`, `typescript`, `styles`, `html`, `seo-routing`, `performance`, `i18n`, `deps`,
+`nx-architect`, `migration`, `web-components`, `docs`, …) **delegują**
 do nich zapytania, **nie wołają MCP sami**. Serwer `playwright` (żywa przeglądarka) → agenci
 `playwright` / `ux-verifier` (runtime, nie doc-lookup).
 

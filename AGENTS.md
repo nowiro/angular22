@@ -25,17 +25,25 @@ Guard `pnpm ai:validate` wymusza 1 widocznego. Po zmianie agentów: **Reload Win
 | [`accessibility`](.github/agents/accessibility.agent.md)       | Gemini Flash | audyt WCAG 2.1 AA na poziomie kodu (read-only); runtime → `ux-verifier`                         |
 | [`reviewer`](.github/agents/reviewer.agent.md)                 | Gemini Flash | review diffu / go-no-go (read-only)                                                             |
 | [`security`](.github/agents/security.agent.md)                 | Gemini Flash | audyt web-security diffu/feature — XSS/embed `@angular/elements`/fetch/storage/deps (read-only) |
+| [`deps`](.github/agents/deps.agent.md)                         | Gemini Flash | higiena zależności — ncu / CVE / lockfile / licencje (verb `deps`)                              |
+| [`nx-architect`](.github/agents/nx-architect.agent.md)         | Gemini Flash | granice modułów / tagi `scope:*`/`type:*` / graf / public API                                   |
+| [`migration`](.github/agents/migration.agent.md)               | Gemini Flash | `ng update` / `nx migrate` / breaking changes / utrzymanie na najnowszym                        |
+| [`web-components`](.github/agents/web-components.agent.md)     | Gemini Flash | embedding `@angular/elements` — element.ts / loader / same-origin guard                         |
+| [`docs`](.github/agents/docs.agent.md)                         | Gemini Flash | README / JSDoc / sync AGENTS ↔ kod / changelog (DRY: wskazuje kanon)                            |
+| [`scm`](.github/agents/scm.agent.md)                           | Gemini Flash | conventional commits / opisy PR / higiena brancha                                               |
+| [`test-strategy`](.github/agents/test-strategy.agent.md)       | Gemini Flash | projekt scenariuszy z AC / luki pokrycia (read-only; exec → vitest/playwright)                  |
+| [`meta-reviewer`](.github/agents/meta-reviewer.agent.md)       | Gemini Flash | audyt jakości configu AI — DRY/SRP/house-style (read-only)                                      |
 | [`nx`](.github/agents/nx.agent.md)                             | GPT-5 mini   | serwer MCP `nx` — docs/generatory/graf zamiast zgadywania flag                                  |
 | [`context7`](.github/agents/context7.agent.md)                 | GPT-5 mini   | serwer MCP `context7` — up-to-date docs bibliotek                                               |
 | [`angular-cli`](.github/agents/angular-cli.agent.md)           | GPT-5 mini   | serwer MCP `angular-cli` — best-practices / przykłady Angular 22 / Material                     |
 
 ## Modele (token economy)
 
-| Tier            | Model              | Agenci                                                                                                                                                                                 | Po co                                            |
-| --------------- | ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
-| **orchestrate** | `Claude Opus 4.8`  | orchestrator                                                                                                                                                                           | plan + delegacja w dół + weryfikacja końcowa     |
-| **MCP**         | `GPT-5 mini`       | angular-cli · nx · context7                                                                                                                                                            | wołanie serwerów MCP — mechanika                 |
-| **reszta**      | `Gemini 3.5 Flash` | angular-engineer · material-wrapper · eslint · vitest · playwright · ux-verifier · reviewer · security · typescript · styles · html · seo-routing · accessibility · performance · i18n | kod / testy / e2e / review / audyt UX / security |
+| Tier            | Model              | Agenci                                                                                                                                                                                                                                                                                 | Po co                                            |
+| --------------- | ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
+| **orchestrate** | `Claude Opus 4.8`  | orchestrator                                                                                                                                                                                                                                                                           | plan + delegacja w dół + weryfikacja końcowa     |
+| **MCP**         | `GPT-5 mini`       | angular-cli · nx · context7                                                                                                                                                                                                                                                            | wołanie serwerów MCP — mechanika                 |
+| **reszta**      | `Gemini 3.5 Flash` | angular-engineer · material-wrapper · eslint · vitest · playwright · ux-verifier · reviewer · security · typescript · styles · html · seo-routing · accessibility · performance · i18n · deps · nx-architect · migration · web-components · docs · test-strategy · scm · meta-reviewer | kod / testy / e2e / review / audyt UX / security |
 
 Guard `pnpm ai:validate` wymusza: każdy agent ma `model:`, orchestrator prowadzi Opusem,
 dokładnie 1 agent widoczny. `model:` pinuje tylko model — 1M context / Thinking Effort
@@ -48,7 +56,7 @@ ustawiasz globalnie w pickerze VS Code.
   `.github/` (`copilot-instructions.md`, `agents/`, `instructions/` auto per `applyTo`,
   `prompts/`: `/clarify`, `/analyze`, `/brainstorming`, `/feature-dev`; `skills/`:
   `angular-developer`, `angular-new-app`, `signal-forms`, `material-wrappers`, `nx-generators`,
-  `frontend-design`, `code-review`, `security-guidance`).
+  `frontend-design`, `code-review`, `security-guidance`, `ai-config-quality`).
 - `docs/sdd/` — metodologia SDD (adaptacja spec-kit; kanon w `mcp-workspace`).
   Artefakty `docs/specs|plans|runs` — **wersjonowane w gicie** (każda zmiana przez SDD → zapis w `docs/`).
 - **Brak** `CLAUDE.md` / `.claude/` / `.ai/` / `.github/workflows/` — Copilot-only, zero Actions.

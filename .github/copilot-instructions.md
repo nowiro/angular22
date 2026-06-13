@@ -6,7 +6,8 @@
 > konwencje Angular → `instructions/angular.instructions.md` (auto na `{apps,libs}/**`);
 > agenci → [`AGENTS.md`](../AGENTS.md); SDD → [`docs/sdd/methodology.md`](../docs/sdd/methodology.md);
 > skille (`.github/skills/`): `angular-developer` · `angular-new-app` · `signal-forms` ·
-> `material-wrappers` · `nx-generators` · `frontend-design` · `code-review` · `security-guidance`.
+> `material-wrappers` · `nx-generators` · `frontend-design` · `code-review` · `security-guidance` ·
+> `ai-config-quality`.
 
 ## Tożsamość
 
@@ -51,8 +52,9 @@ zwięźle: wynik ponad proces.
 - ✅ **Modele LLM** (token economy): orchestrator → `Claude Opus 4.8` (plan + weryfikacja
   końcowa); agenci **doc-MCP** (`angular-cli`, `nx`, `context7`) → `GPT-5 mini` i **tylko oni
   wołają doc-MCP** (reszta deleguje do nich); kod / testy / e2e / review / UX / specjaliści
-  (`typescript`, `styles`, `html`, `seo-routing`, `accessibility`, `performance`, `i18n`, …) →
-  `Gemini 3.5 Flash`. Guard
+  (`typescript`, `styles`, `html`, `seo-routing`, `accessibility`, `performance`, `i18n`, `deps`,
+  `nx-architect`, `migration`, `web-components`, `docs`, `test-strategy`, `scm`, `meta-reviewer`, …)
+  → `Gemini 3.5 Flash`. Guard
   `ai:validate` wymusza `model:` + Opus na orchestratorze.
 - ❌ Zero nie-Copilot (`CLAUDE.md`/`.claude/`/`.ai/`) i zero GitHub Actions — verify lokalnie.
 - ✅ **Bootstrap środowiska**: przed `pnpm install` sprawdź czy `pnpm` jest dostępny

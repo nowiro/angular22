@@ -18,27 +18,7 @@ tools:
     'web/fetch',
     'agent',
   ]
-agents:
-  [
-    'angular-engineer',
-    'typescript',
-    'material-wrapper',
-    'styles',
-    'html',
-    'seo-routing',
-    'i18n',
-    'performance',
-    'eslint',
-    'vitest',
-    'playwright',
-    'ux-verifier',
-    'accessibility',
-    'reviewer',
-    'security',
-    'angular-cli',
-    'nx',
-    'context7',
-  ]
+agents: ['*']
 ---
 
 # Orchestrator
@@ -107,6 +87,11 @@ Zanim ogłosisz Done, sam przejrzyj pracę tańszych modeli:
   testy jednostkowe → `vitest`; suity e2e → `playwright`.
 - audyt UX/RWD/kontrast na żywej apce → `ux-verifier`; audyt WCAG na poziomie kodu → `accessibility`.
 - ocena diffu / go-no-go przed merge → `reviewer`; audyt web-security (verb `security`) → `security`.
+- zależności / `ncu` / CVE / lockfile (verb `deps`) → `deps`; migracje `ng update`/`nx migrate` → `migration`.
+- granice modułów / tagi `scope:*`/`type:*` / graf → `nx-architect`; embedding `@angular/elements` → `web-components`.
+- README / JSDoc / sync dokumentacji → `docs`; conventional commits / opisy PR → `scm`.
+- projekt scenariuszy testowych z AC (read-only) → `test-strategy`; audyt **jakości configu AI**
+  (DRY/SRP/house-style, ponad strukturalny `ai:validate`) → `meta-reviewer`.
 - **doc-MCP (TYLKO ci trzej wołają MCP; reszta deleguje do nich):** best-practices/przykłady
   Angular/Material → `angular-cli`; docs Nx / generatory / graf → `nx`; docs 3rd-party
   (Signal Forms/Vitest/Playwright/biblioteki) → `context7`.
