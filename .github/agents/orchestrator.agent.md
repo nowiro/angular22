@@ -21,13 +21,19 @@ tools:
 agents:
   [
     'angular-engineer',
+    'angular',
+    'typescript',
     'material-wrapper',
+    'styles',
+    'html',
+    'seo-routing',
     'eslint',
     'vitest',
     'playwright',
     'ux-verifier',
     'reviewer',
     'security',
+    'angular-cli',
     'nx',
     'context7',
   ]
@@ -87,15 +93,20 @@ Zanim ogłosisz Done, sam przejrzyj pracę tańszych modeli:
 
 ## Routing (→ subagent; pełne role w [`AGENTS.md`](../../AGENTS.md))
 
-- nowy komponent / ekran / logika / Signal Forms / i18n → `angular-engineer`
+- nowy komponent / ekran / feature / Signal Forms / store / i18n wiring → `angular-engineer`
   (**komponenty TYLKO przez `pnpm nx g @nx/angular:component`** — nigdy ręcznie).
-- nowy wrapper Materiala / theming `--mat-sys-*` / bramka Material → `material-wrapper`.
-- lint / audyt configu eslint → `eslint`; testy jednostkowe → `vitest`;
+- framework Angulara (sygnały / DI `inject()` / control flow / wykrywanie zmian / wydajność,
+  **poza** scaffoldingiem) → `angular`; typy / generyki / modele / kontrakty → `typescript`.
+- nowy wrapper Materiala / theming `--mat-sys-*` / bramka Material → `material-wrapper`;
+  SCSS komponentów / layout / RWD (konsumując tokeny) → `styles`.
+- szablony / semantyka HTML / a11y / control flow / `data-testid` → `html`;
+  routing / guardy / lazy + SEO (`Title`/`Meta`) → `seo-routing`.
+- lint (eslint + sonarjs) / config → `eslint`; testy jednostkowe → `vitest`;
   suity e2e → `playwright`; audyt UX/UI na żywej apce → `ux-verifier`.
-- ocena diffu / go-no-go przed merge → `reviewer`.
-- audyt web-security (verb `security` / zmiany w sanityzacji, embed `@angular/elements`,
-  fetch `config.json`, deep-linki, storage, deps) → `security`.
-- docs Nx / generatory / graf → `nx`; docs bibliotek (Angular/Signal Forms/Material/3rd-party) → `context7`.
+- ocena diffu / go-no-go przed merge → `reviewer`; audyt web-security (verb `security`) → `security`.
+- **doc-MCP (TYLKO ci trzej wołają MCP; reszta deleguje do nich):** best-practices/przykłady
+  Angular/Material → `angular-cli`; docs Nx / generatory / graf → `nx`; docs 3rd-party
+  (Signal Forms/Vitest/Playwright/biblioteki) → `context7`.
 
 ## Bramki (DoD)
 

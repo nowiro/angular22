@@ -26,9 +26,11 @@ Pisz tak, by przeszło `pnpm lint` + `pnpm verify` **bez poprawek**:
   ESLint zdestylowane (auto na `**/*.ts`); **przeczytaj zanim napiszesz pierwszą linię**.
 - [`angular.instructions.md`](../instructions/angular.instructions.md) — konwencje repo
   (Signal Forms, wrappery, i18n, granice modułów).
-- **Niepewne API** → MCP, nie z pamięci: `angular-cli` (`get_best_practices` /
-  `search_documentation` / `find_examples`), `nx` (`nx_docs`), `context7` (z `topic`).
-- Głębsze przepisy → skille: `signal-forms`, `material-wrappers`, `nx-generators`.
+- **Niepewne API** → **deleguj** (przez orchestratora) do agentów doc-MCP `angular-cli` / `nx`
+  / `context7`, nie z pamięci i **nie wołaj MCP sam** (tylko agenci doc-MCP wołają MCP).
+- Głębsze przepisy → skille: `signal-forms`, `material-wrappers`, `nx-generators`, `angular-developer`.
+- Głęboka logika frameworkowa (reaktywność / DI / control flow / wydajność) → agent `angular`;
+  typy → `typescript`; szablony → `html`; SCSS → `styles`.
 
 ## Scaffolding — NIGDY ręcznie
 

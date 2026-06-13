@@ -33,7 +33,8 @@ wolno importować `@angular/material/*` i `@angular/cdk/*` (bramka `no-restricte
 
 Wyłącznie tokeny **`--mat-sys-*`** / `--mat-*` + `mat.theme()` w `styles.scss` apki.
 **NIE** `--mdc-*` / `--sys-*` (cicho nie działają). Zakaz `::ng-deep` i hardkodowanych
-kolorów. Niepewne tokeny → MCP `angular-cli` / `context7` (Angular Material 22).
+kolorów. Niepewne tokeny → **deleguj** do agentów `angular-cli` / `context7` (Angular
+Material 22) — **nie wołaj MCP sam** (tylko agenci doc-MCP wołają MCP).
 
 ## NIE
 

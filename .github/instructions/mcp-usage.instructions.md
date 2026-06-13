@@ -9,6 +9,12 @@ Konfiguracja: [`.vscode/mcp.json`](../../.vscode/mcp.json) (bez `inputs`; opcje 
 `comment`). Zasada nadrzędna: **niepewne API → MCP, nie z pamięci** — repo jest na
 Angular 22 i wzorce z pamięci modelu bywają przestarzałe.
 
+**Kto woła MCP:** doc-MCP (`angular-cli`, `nx`, `context7`) wołają **wyłącznie** dedykowani
+agenci na `GPT-5 mini` o tych samych nazwach — pozostali agenci (`angular-engineer`,
+`material-wrapper`, `angular`, `typescript`, `styles`, `html`, `seo-routing`, …) **delegują**
+do nich zapytania, **nie wołają MCP sami**. Serwer `playwright` (żywa przeglądarka) → agenci
+`playwright` / `ux-verifier` (runtime, nie doc-lookup).
+
 | Serwer        | Narzędzia                                                           | Kiedy                                                                 |
 | ------------- | ------------------------------------------------------------------- | --------------------------------------------------------------------- |
 | `angular-cli` | `get_best_practices` · `search_documentation` · `find_examples`     | **przed** kodem dotykającym API Angular/Signal Forms; best practices  |

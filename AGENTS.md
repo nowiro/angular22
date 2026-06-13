@@ -11,6 +11,11 @@ Guard `pnpm ai:validate` wymusza 1 widocznego. Po zmianie agentów: **Reload Win
 | -------------------------------------------------------------- | ------------ | ----------------------------------------------------------------------------------------------- |
 | [`orchestrator`](.github/agents/orchestrator.agent.md)         | Opus 4.8     | **widoczny** — SDD (specify→…→verify), routing, delegacja, weryfikacja końcowa, bramka DoD      |
 | [`angular-engineer`](.github/agents/angular-engineer.agent.md) | Gemini Flash | komponenty (przez `nx g`) / Signal Forms / store'y / i18n; kod lint-clean z miejsca             |
+| [`angular`](.github/agents/angular.agent.md)                   | Gemini Flash | framework Angulara — sygnały / DI / control flow / wydajność (poza scaffoldingiem)              |
+| [`typescript`](.github/agents/typescript.agent.md)             | Gemini Flash | typy / generyki / modele / kontrakty (TS 6 strict); współpraca z `eslint`                       |
+| [`styles`](.github/agents/styles.agent.md)                     | Gemini Flash | SCSS komponentów / layout / RWD na tokenach `--mat-sys-*` (system tokenów → `material-wrapper`) |
+| [`html`](.github/agents/html.agent.md)                         | Gemini Flash | szablony — semantyka / a11y / control flow / `data-testid` / `a22T`                             |
+| [`seo-routing`](.github/agents/seo-routing.agent.md)           | Gemini Flash | routing / guardy / lazy + SEO (`Title`/`Meta`); SPA-aware                                       |
 | [`material-wrapper`](.github/agents/material-wrapper.agent.md) | Gemini Flash | `libs/ui/material` — wrappery `FormValueControl`, theming `--mat-sys-*`, strażnik bramki        |
 | [`eslint`](.github/agents/eslint.agent.md)                     | Gemini Flash | lint — triage + fix, audyt configu, sync destylatu `code-quality.instructions`                  |
 | [`vitest`](.github/agents/vitest.agent.md)                     | Gemini Flash | testy jednostkowe libów (`@nx/vitest:test`), scenariusze z AC, determinizm                      |
@@ -20,14 +25,15 @@ Guard `pnpm ai:validate` wymusza 1 widocznego. Po zmianie agentów: **Reload Win
 | [`security`](.github/agents/security.agent.md)                 | Gemini Flash | audyt web-security diffu/feature — XSS/embed `@angular/elements`/fetch/storage/deps (read-only) |
 | [`nx`](.github/agents/nx.agent.md)                             | GPT-5 mini   | serwer MCP `nx` — docs/generatory/graf zamiast zgadywania flag                                  |
 | [`context7`](.github/agents/context7.agent.md)                 | GPT-5 mini   | serwer MCP `context7` — up-to-date docs bibliotek                                               |
+| [`angular-cli`](.github/agents/angular-cli.agent.md)           | GPT-5 mini   | serwer MCP `angular-cli` — best-practices / przykłady Angular 22 / Material                     |
 
 ## Modele (token economy)
 
-| Tier            | Model              | Agenci                                                                                                 | Po co                                            |
-| --------------- | ------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------ |
-| **orchestrate** | `Claude Opus 4.8`  | orchestrator                                                                                           | plan + delegacja w dół + weryfikacja końcowa     |
-| **MCP**         | `GPT-5 mini`       | nx · context7                                                                                          | wołanie serwerów MCP — mechanika                 |
-| **reszta**      | `Gemini 3.5 Flash` | angular-engineer · material-wrapper · eslint · vitest · playwright · ux-verifier · reviewer · security | kod / testy / e2e / review / audyt UX / security |
+| Tier            | Model              | Agenci                                                                                                                                                      | Po co                                            |
+| --------------- | ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
+| **orchestrate** | `Claude Opus 4.8`  | orchestrator                                                                                                                                                | plan + delegacja w dół + weryfikacja końcowa     |
+| **MCP**         | `GPT-5 mini`       | angular-cli · nx · context7                                                                                                                                 | wołanie serwerów MCP — mechanika                 |
+| **reszta**      | `Gemini 3.5 Flash` | angular-engineer · material-wrapper · eslint · vitest · playwright · ux-verifier · reviewer · security · angular · typescript · styles · html · seo-routing | kod / testy / e2e / review / audyt UX / security |
 
 Guard `pnpm ai:validate` wymusza: każdy agent ma `model:`, orchestrator prowadzi Opusem,
 dokładnie 1 agent widoczny. `model:` pinuje tylko model — 1M context / Thinking Effort
