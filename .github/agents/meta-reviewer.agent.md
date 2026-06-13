@@ -35,7 +35,8 @@ Bliźniacy read-only: [`reviewer`](reviewer.agent.md) (diff kodu) i [`security`]
    bez `edit/editFiles`); skill: `name`+`description` (PL); zgodność z polityką modeli (token economy:
    kod/audyt → `Gemini 3.5 Flash`, doc-MCP → `GPT-5 mini`, orchestrator → Opus).
 7. **Reguła MCP** — tylko `context7`/`nx`/`angular-cli` wołają doc-MCP, `playwright` MCP tylko
-   `playwright`/`ux-verifier`; reszta **deleguje**. Łap bezpośrednie wywołania MCP poza tą trójką.
+   `playwright`/`ux-verifier`/`pixel-perfect`; reszta **deleguje**. Łap bezpośrednie wywołania MCP
+   poza tymi właścicielami (pełna lista → [`mcp-usage`](../instructions/mcp-usage.instructions.md)).
 
 ## Format
 

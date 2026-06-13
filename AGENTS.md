@@ -72,8 +72,8 @@ Przed pierwszą instalacją projektu:
 # 1. Sprawdź czy pnpm jest dostępny
 pnpm --version
 
-# 2. Jeśli brak — zainstaluj globalnie przez npm (pinowana wersja ze Stack)
-npm install -g pnpm@11.1.3
+# 2. Jeśli brak — zainstaluj globalnie przez npm (wersja = `packageManager` w package.json)
+npm install -g pnpm@11.6.0
 
 # 3. Zainstaluj zależności projektu
 pnpm install

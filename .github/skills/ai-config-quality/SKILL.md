@@ -34,7 +34,8 @@ overlap, house-style. Czerwony `ai:validate` = `no-go` od razu, bez analizy sema
 7. **Token economy** — gęsto, bez bloatu i powtórzeń; agent ~30-60 linii. Model wg tieru:
    kod / fix / review / audyt / UX → `Gemini 3.5 Flash`; doc-MCP → `GPT-5 mini`; orchestrator → Opus.
 8. **Reguła MCP** — doc-MCP (`context7` / `nx` / `angular-cli`) woła **tylko** ich dedykowany
-   agent GPT-5 mini; reszta **deleguje**. `playwright` MCP = tylko `playwright` / `ux-verifier`.
+   agent GPT-5 mini; reszta **deleguje**. `playwright` MCP = tylko `playwright` / `ux-verifier` /
+   `pixel-perfect` (kanon allowlisty → [`mcp-usage`](../../instructions/mcp-usage.instructions.md)).
    Bezpośrednie wołanie MCP poza właścicielem = **finding**.
 
 ## Severity

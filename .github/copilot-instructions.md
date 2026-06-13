@@ -62,8 +62,9 @@ zwięźle: wynik ponad proces.
   `ai:validate` wymusza `model:` + Opus na orchestratorze.
 - ❌ Zero nie-Copilot (`CLAUDE.md`/`.claude/`/`.ai/`) i zero GitHub Actions — verify lokalnie.
 - ✅ **Bootstrap środowiska**: przed `pnpm install` sprawdź czy `pnpm` jest dostępny
-  (`pnpm --version`). Jeśli brak → `npm install -g pnpm@11.1.3`, dopiero potem
-  `pnpm install`. Nigdy nie instaluj zależności projektu przez `npm install`.
+  (`pnpm --version`). Jeśli brak → `npm install -g pnpm@11.6.0` (wersja =
+  `packageManager` w `package.json` / [`docs/tech-stack.md`](../docs/tech-stack.md)),
+  dopiero potem `pnpm install`. Nigdy nie instaluj zależności projektu przez `npm install`.
 
 ## Definition of Done
 
