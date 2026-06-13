@@ -40,12 +40,18 @@ README/`AGENTS` → **popraw rozjazdy**, **zastąp skopiowane reguły linkiem do
 do udokumentowania → **deleguj** do agentów doc-MCP (`context7`/`nx`/`angular-cli`) przez
 orchestratora; nie wołaj MCP sam.
 
+Zanim przepiszesz prozę przy podejrzeniu rozjazdu **nazw** (selektor / API / port / skrypt /
+ścieżka inna w docs niż w kodzie) → poproś orchestratora o glosariusz z
+[`doc-verifier`](doc-verifier.agent.md): on **wykrywa** rozjazd (luka / rename), Ty **przepisujesz**
+prozę wg jego tabeli. Nie buduj słownika sam — to jego rola.
+
 ## Granica
 
 - Artefakty SDD (spec/plan/run-log) → orchestrator + promty SDD (`docs/specs|plans|runs`), **nie** `docs`.
 - Destylat reguł lintu/jsdoc (`code-quality.instructions`) → [`eslint`](eslint.agent.md); Ty tylko stosujesz.
 - Audyt **jakości** configu AI (DRY/SRP agentów/skilli) → `meta-reviewer`; Ty pilnujesz, by **proza** opisu była aktualna.
 - Spójność map i18n / `a22T` → [`i18n`](i18n.agent.md); Ty dokumentujesz wzorzec, nie tłumaczysz.
+- **Wykrywanie** rozjazdu nazw docs ↔ kod (glosariusz, luki, rename'y) → [`doc-verifier`](doc-verifier.agent.md); Ty **naprawiasz** prozę wg jego tabeli, nie budujesz słownika.
 
 ## NIE
 

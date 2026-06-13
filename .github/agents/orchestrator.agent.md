@@ -138,6 +138,8 @@ modeli (nie ufaj „zielone u wykonawcy"):
 - zgodność ze stackiem (off-stack tech / pinowanie / spójność wersji wg `docs/tech-stack.md`) → `stack-guardian`.
 - granice modułów / tagi `scope:*`/`type:*` / graf → `nx-architect`; embedding `@angular/elements` → `web-components`.
 - README / JSDoc / sync dokumentacji → `docs`; conventional commits / opisy PR → `scm`.
+- **spójność nazw docs ↔ kod** (słownikowy glosariusz terminów — luki, rename'y selektorów /
+  API / portów / skryptów) → `doc-verifier` (wykrywa rozjazd; fix prozy → `docs`, fix kodu → specjalista).
 - projekt scenariuszy testowych z AC (read-only) → `test-strategy`; audyt **jakości configu AI**
   (DRY/SRP/house-style, ponad strukturalny `ai:validate`) → `meta-reviewer`.
 - **doc-MCP (TYLKO ci trzej wołają MCP; reszta deleguje do nich):** best-practices/przykłady
