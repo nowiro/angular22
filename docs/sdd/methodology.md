@@ -8,15 +8,16 @@
 
 ## Cykl (mapowanie na spec-kit)
 
-| spec-kit                | tutaj                                        | artefakt / mechanizm                      |
-| ----------------------- | -------------------------------------------- | ----------------------------------------- |
-| `/speckit.constitution` | `copilot-instructions` + `instructions/*`    | istniejące reguły (nie duplikat)          |
-| `/speckit.specify`      | `pnpm workflow:specify -- --verb=… --slug=…` | `docs/specs/<slug>/spec.md` (z `[?]`)     |
-| `/speckit.clarify`      | `/clarify <slug>`                            | domyka `[?]`, `status: draft → clarified` |
-| `/speckit.plan`         | orchestrator (plan-first)                    | `docs/plans/<stamp>_<verb>-<slug>.md`     |
-| `/speckit.tasks`        | **folded** w tabelę planu                    | `id \| title \| agent \| done_when`       |
-| `/speckit.analyze`      | `/analyze`                                   | raport go/no-go (read-only)               |
-| `/speckit.implement`    | delegacja do specjalisty (subagenta)         | kod + testy                               |
+| spec-kit                | tutaj                                        | artefakt / mechanizm                                                                  |
+| ----------------------- | -------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `/speckit.constitution` | `copilot-instructions` + `instructions/*`    | istniejące reguły (nie duplikat)                                                      |
+| **(wejście)**           | **doc-review** → `doc-reviewer`              | dok. zadania ↔ docs/Confluence ↔ mockupy spójne; **STOP na niejasności** PRZED specem |
+| `/speckit.specify`      | `pnpm workflow:specify -- --verb=… --slug=…` | `docs/specs/<slug>/spec.md` (z `[?]`)                                                 |
+| `/speckit.clarify`      | `/clarify <slug>`                            | domyka `[?]`, `status: draft → clarified`                                             |
+| `/speckit.plan`         | orchestrator (plan-first)                    | `docs/plans/<stamp>_<verb>-<slug>.md`                                                 |
+| `/speckit.tasks`        | **folded** w tabelę planu                    | `id \| title \| agent \| done_when`                                                   |
+| `/speckit.analyze`      | `/analyze`                                   | raport go/no-go (read-only)                                                           |
+| `/speckit.implement`    | delegacja do specjalisty (subagenta)         | kod + testy                                                                           |
 
 Drabinę domyka krok **verify**: orchestrator (Opus) sam weryfikuje wynik tańszych modeli
 i zapisuje werdykt w run-logu (`docs/runs/<stamp>_<slug>.md`).
@@ -24,8 +25,22 @@ i zapisuje werdykt w run-logu (`docs/runs/<stamp>_<slug>.md`).
 ## Reguła progowa
 
 - **Pytanie / trywialna edycja in-file** → wprost, bez artefaktów SDD.
-- **≥2 plików lub zmiana behaviour** → pełna drabina specify → clarify → plan → analyze →
-  implement → verify → DoD (`pnpm verify`).
+- **≥2 plików lub zmiana behaviour** → **doc-review** → pełna drabina specify → clarify → plan →
+  analyze → implement → verify → DoD (`pnpm verify`).
+
+## STOP na niejasności (twarda bramka)
+
+Na **KAŻDYM** kroku drabiny: jeśli cokolwiek **niejasne / sprzeczne / niepełne** → **STOP**.
+**Nie zgaduj** — zapytaj użytkownika lub zostaw `[?]` i zatrzymaj drabinę. Niejasność =
+**blocker**. Szczególnie: **doc-review** (wejściowa dokumentacja zadania ↔ docs/Confluence ↔
+mockupy — PRZED specem) i **clarify** (`[?]` w specu).
+
+## Krok = oznacz w planie + commit
+
+Każdy ukończony krok drabiny: (1) oznacz w **tabeli planu** kolumnę `status` jako `done`,
+(2) zrób **commit** (conventional, przez `scm`) z odniesieniem do kroku / run-logu. **Jeden krok
+= jeden commit** — granularna, audytowalna historia. Kolumna `status` jest w `templates/plan.md`;
+plany sprzed reguły są grandfathered, `validate-sdd` jej nie wymusza.
 
 ## Verby angular22
 

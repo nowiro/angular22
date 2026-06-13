@@ -28,10 +28,14 @@ zwięźle: wynik ponad proces.
   wymusza 1) → plan → delegacja do subagenta → bramka DoD.
 - ✅ **SDD progowo** (kanon `docs/sdd/methodology.md`, adaptacja
   [github/spec-kit](https://github.com/github/spec-kit)): ≥2 plików **lub** zmiana
-  behaviour → drabina specify (`pnpm workflow:specify`) → `/clarify` → plan → `/analyze`
-  → implement → **verify (orchestrator/Opus)**; trywialne → wprost. Verb: `feature` ·
+  behaviour → drabina **doc-review** → specify (`pnpm workflow:specify`) → `/clarify` → plan →
+  `/analyze` → implement → **verify (orchestrator/Opus)**; trywialne → wprost. Verb: `feature` ·
   `component` · `fix` / `refactor` / `deps` / `chore` / `security`. Każda iteracja →
   **datowany run-log** `docs/runs/YYYY-MM-DD_HH-MM_<slug>.md` (krok = agent + model + wynik).
+- ✅ **doc-review + STOP na niejasności**: drabinę otwiera `doc-reviewer` (dokumentacja zadania ↔
+  docs/Confluence ↔ **mockupy** spójne + jednoznaczne) **PRZED** kodem; cokolwiek niejasne /
+  sprzeczne → **STOP, nie zgaduj, zapytaj**. Każdy krok: `status: done` w planie + **commit po
+  kroku** (`scm`).
 - ✅ **Testy w każdym planie** (trójka): **scenariusze testowe** (z AC) + **testy
   jednostkowe** (Vitest, `@nx/vitest:test`) + **testy e2e** (Playwright,
   `@nx/playwright:playwright`; debug przez serwer **MCP `playwright`**). Brak = **no-go**.

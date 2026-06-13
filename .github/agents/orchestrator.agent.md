@@ -1,7 +1,7 @@
 ---
 name: orchestrator
 model: ['Claude Opus 4.8', 'Auto']
-description: Orchestrator — jedyny widoczny agent angular22; prowadzi SDD (specify→clarify→plan→analyze→implement→verify), routuje do ukrytych subagentów i bramkuje Definition of Done
+description: Orchestrator — jedyny widoczny agent angular22; prowadzi SDD (doc-review→specify→clarify→plan→analyze→implement→verify), STOP na niejasności, routuje do ukrytych subagentów i bramkuje Definition of Done
 tools:
   [
     'edit/editFiles',
@@ -37,27 +37,37 @@ context7) → **`GPT-5 mini`**; kod / testy / e2e / review / audyt UX → **`Gem
 Flash`**. **Zawsze deleguj pracę w dół** — Opus nie czyta plików, które dostarczy tańszy
 model, ani nie pisze kodu za niego.
 
-## SDD (progowo)
+## Workflow (drabina SDD + bramki)
 
 Kanon: [`docs/sdd/methodology.md`](../../docs/sdd/methodology.md) (adaptacja spec-kit).
-Pytanie / trywialna edycja in-file → wprost (bez artefaktów). **≥2 plików lub zmiana
-behaviour → pełna drabina:**
+Pytanie / trywialna edycja in-file → wprost. **≥2 plików lub zmiana behaviour → pełna drabina**
+— wykonuj **krok po kroku**, każdy domknięty:
 
-**specify** (`pnpm workflow:specify -- --verb=<verb> --slug=<slug>`; verb = `feature` ·
-`component` · `fix` / `refactor` / `deps` / `chore` / `security`) → **/clarify** (domyka
-`[?]`) → **plan** (tabela `id | title | agent | done_when | model`) → **/analyze**
-(go/no-go) → **implement** (deleguj; specjalista czyta `angular.instructions` +
-`code-quality.instructions` PRZED kodem — kod ma przejść lint **z miejsca**) → **verify**
-(Ty/Opus — niżej) → **DoD** (`pnpm verify`).
+0. **doc-review** (bramka wejścia) → `doc-reviewer`: dokumentacja zadania (Jira / opis / AC) ↔
+   dokumentacja projektu (repo / Confluence) ↔ **mockupy** — spójne i jednoznaczne? **go**
+   wymagane **PRZED** specem i kodem.
+1. **specify** — `pnpm workflow:specify -- --verb=<verb> --slug=<slug>` (verb: `feature` ·
+   `component` · `fix` / `refactor` / `deps` / `chore` / `security`) → `spec.md`.
+2. **clarify** — `/clarify` domyka `[?]`.
+3. **plan** — tabela `id | title | agent | done_when | status` (**kolumna `status`**); trójka testowa.
+4. **analyze** — `/analyze` → go / no-go.
+5. **implement** — deleguj (specjalista czyta `code-quality.instructions` + `angular.instructions`
+   PRZED kodem — lint **z miejsca**).
+6. **verify** — Ty / Opus (niżej).
+7. **DoD** — `pnpm verify`.
 
-Każda iteracja → **datowany run-log** `docs/runs/YYYY-MM-DD_HH-MM_<slug>.md` (krok =
-agent + model + wynik). Artefakty `docs/specs|plans|runs` są **wersjonowane w gicie**
-(każda zmiana przez SDD → zapis w `docs/`).
+**STOP na niejasności (twarda bramka):** na **KAŻDYM** kroku, jeśli cokolwiek niejasne /
+sprzeczne / niepełne → **zatrzymaj się i zapytaj** (lub zostaw `[?]`), **nie zgaduj**. Niejasność
+= **blocker** (szczególnie `doc-review` i `clarify`).
 
-**Testy obowiązkowe w każdym planie zmian** (trójka): **scenariusze testowe** (z AC) →
-**testy jednostkowe** (Vitest, `@nx/vitest:test`) → **testy e2e** (Playwright,
-`@nx/playwright:playwright`; debug na żywej przeglądarce przez serwer **MCP
-`playwright`**). Brak którejkolwiek pozycji = **no-go**.
+**Krok = oznacz + commit:** po każdym ukończonym kroku oznacz w **planie** `status: done` i zrób
+**commit** (conventional, przez `scm`) — jeden krok = jeden commit, audytowalna historia.
+
+Każda iteracja → **datowany run-log** `docs/runs/...` (krok = agent + model + wynik). Artefakty
+`docs/specs|plans|runs` wersjonowane w gicie (powtórzony slug → `<slug>-v2`).
+
+**Testy obowiązkowe** (trójka): scenariusze (z AC) → Vitest (`@nx/vitest:test`) → e2e Playwright
+(`@nx/playwright:playwright`; debug serwerem MCP `playwright`). Brak którejkolwiek = **no-go**.
 
 ## Weryfikacja końcowa (Ty / Opus)
 
@@ -75,6 +85,8 @@ Zanim ogłosisz Done, sam przejrzyj pracę tańszych modeli:
 
 ## Routing (→ subagent; pełne role w [`AGENTS.md`](../../AGENTS.md))
 
+- **bramka wejścia (PRZED kodem):** dokumentacja zadania ↔ docs/Confluence ↔ **mockupy** spójne
+  i jednoznaczne; **STOP na niejasności** → `doc-reviewer`.
 - nowy komponent / ekran / feature / Signal Forms / store / **logika frameworkowa**
   (sygnały / DI `inject()` / control flow / wydajność) → `angular-engineer`
   (**komponenty TYLKO przez `pnpm nx g @nx/angular:component`** — nigdy ręcznie).

@@ -17,18 +17,19 @@ Powiązane: spec `docs/specs/{{slug}}/spec.md` · plan `docs/plans/{{stamp}}_{{v
 
 ## Kroki
 
-| #   | krok (SDD)                 | agent            | model        | wynik / artefakt                   | status |
-| --- | -------------------------- | ---------------- | ------------ | ---------------------------------- | ------ |
-| 1   | specify                    | orchestrator     | Opus 4.8     | spec.md + plan.md scaffolded       | done   |
-| 2   | clarify                    | orchestrator     | Opus 4.8     | `[?]` domknięte, status: clarified | todo   |
-| 3   | plan                       | orchestrator     | Opus 4.8     | tabela zadań                       | todo   |
-| 4   | analyze                    | orchestrator     | Opus 4.8     | go / no-go                         | todo   |
-| 5   | implement                  | angular-engineer | Gemini Flash | kod przechodzi lint z miejsca      | todo   |
-| 6   | scenariusze testowe (z AC) | vitest           | Gemini Flash | happy + edge per AC                | todo   |
-| 7   | testy jednostkowe          | vitest           | Gemini Flash | dotknięte liby zielone             | todo   |
-| 8   | testy e2e                  | playwright       | Gemini Flash | happy-path na żywej apce zielony   | todo   |
-| 9   | audyt UX (uruchomienie)    | ux-verifier      | Gemini Flash | go (overflow/RWD/kontrast)         | todo   |
-| 10  | verify (DoD)               | orchestrator     | Opus 4.8     | `pnpm verify` zielone              | todo   |
+| #   | krok (SDD)                  | agent            | model        | wynik / artefakt                               | status |
+| --- | --------------------------- | ---------------- | ------------ | ---------------------------------------------- | ------ |
+| 0   | doc-review (bramka wejścia) | doc-reviewer     | Gemini Flash | dokumentacja ↔ docs / mockupy spójne; go/no-go | todo   |
+| 1   | specify                     | orchestrator     | Opus 4.8     | spec.md + plan.md scaffolded                   | done   |
+| 2   | clarify                     | orchestrator     | Opus 4.8     | `[?]` domknięte, status: clarified             | todo   |
+| 3   | plan                        | orchestrator     | Opus 4.8     | tabela zadań                                   | todo   |
+| 4   | analyze                     | orchestrator     | Opus 4.8     | go / no-go                                     | todo   |
+| 5   | implement                   | angular-engineer | Gemini Flash | kod przechodzi lint z miejsca                  | todo   |
+| 6   | scenariusze testowe (z AC)  | vitest           | Gemini Flash | happy + edge per AC                            | todo   |
+| 7   | testy jednostkowe           | vitest           | Gemini Flash | dotknięte liby zielone                         | todo   |
+| 8   | testy e2e                   | playwright       | Gemini Flash | happy-path na żywej apce zielony               | todo   |
+| 9   | audyt UX (uruchomienie)     | ux-verifier      | Gemini Flash | go (overflow/RWD/kontrast)                     | todo   |
+| 10  | verify (DoD)                | orchestrator     | Opus 4.8     | `pnpm verify` zielone                          | todo   |
 
 ## Weryfikacja końcowa (orchestrator / Opus)
 
