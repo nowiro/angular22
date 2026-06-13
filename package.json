@@ -40,6 +40,8 @@
     "deps:update": "ncu -u && pnpm install",
     "deps:update:minor": "ncu -u --target minor && pnpm install",
     "deps:update:patch": "ncu -u --target patch && pnpm install",
+    "watchdog": "node tools/scripts/watchdog.mjs",
+    "watchdog:check": "node tools/scripts/watchdog.mjs --check",
     "preinstall": "npx only-allow pnpm",
     "prepare": "husky"
   },

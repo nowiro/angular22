@@ -17,6 +17,7 @@
 | `/speckit.plan`         | orchestrator (plan-first)                    | `docs/plans/<stamp>_<verb>-<slug>.md`                                                 |
 | `/speckit.tasks`        | **folded** w tabelę planu                    | `id \| title \| agent \| done_when \| status \| model \| blocked_by`                  |
 | `/speckit.analyze`      | `/analyze`                                   | raport go/no-go (read-only)                                                           |
+| `/speckit.checklist`    | `/checklist`                                 | checklista jakości — bramka gotowości PRZED kodem (read-only)                         |
 | `/speckit.implement`    | delegacja do specjalisty (subagenta)         | kod + testy                                                                           |
 
 Drabinę domyka krok **verify** = **re-weryfikacja** (orchestrator/Opus, drugi przebieg **po**
@@ -28,7 +29,7 @@ per rola** (admin/user/guest) → werdykt + raport błędów + telemetria w run-
 
 - **Pytanie / trywialna edycja in-file** → wprost, bez artefaktów SDD.
 - **≥2 plików lub zmiana behaviour** → **doc-review** → pełna drabina specify → clarify → plan →
-  analyze → implement → verify → DoD (`pnpm verify`).
+  analyze → **checklist** (bramka jakości PRZED kodem) → implement → verify → DoD (`pnpm verify`).
 
 ## STOP na niejasności (twarda bramka)
 

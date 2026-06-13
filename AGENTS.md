@@ -58,7 +58,7 @@ ustawiasz globalnie w pickerze VS Code.
 - `apps/*` + `libs/*` (mapa → [`README.md`](README.md)) · `.vscode/mcp.json` (4 serwery
   MCP — tabela w [`mcp-usage`](.github/instructions/mcp-usage.instructions.md)) ·
   `.github/` (`copilot-instructions.md`, `agents/`, `instructions/` auto per `applyTo`,
-  `prompts/`: `/clarify`, `/analyze`, `/brainstorming`, `/feature-dev`; `skills/`:
+  `prompts/`: `/clarify`, `/analyze`, `/checklist`, `/brainstorming`, `/feature-dev`; `skills/`:
   `angular-developer`, `angular-new-app`, `signal-forms`, `material-wrappers`, `nx-generators`,
   `frontend-design`, `code-review`, `security-guidance`, `ai-config-quality`, `keycloak-auth`).
 - `docs/sdd/` — metodologia SDD (adaptacja spec-kit; kanon: [`docs/sdd/methodology.md`](docs/sdd/methodology.md)).
@@ -94,3 +94,4 @@ pnpm install
 | `pnpm e2e`                                           | Wszystkie suity Playwright (`--parallel=1`)                                                                                 |
 | `pnpm start` / `start:individual` / `start:business` | Serve apek (portal 4200 / individual 4201 / business 4202)                                                                  |
 | `pnpm nx g @nx/angular:component <name>`             | Nowy komponent (SCSS + OnPush + 3 pliki + prefix `a22`)                                                                     |
+| `pnpm watchdog` / `watchdog:check`                   | Monitoring upstreamów (npm/spec-kit/Copilot) → propozycje przez SDD (`docs/watchdog.md`)                                    |

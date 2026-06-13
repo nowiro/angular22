@@ -29,7 +29,8 @@ zwięźle: wynik ponad proces.
 - ✅ **SDD progowo** (kanon `docs/sdd/methodology.md`, adaptacja
   [github/spec-kit](https://github.com/github/spec-kit)): ≥2 plików **lub** zmiana
   behaviour → drabina **doc-review** → specify (`pnpm workflow:specify`) → `/clarify` → plan →
-  `/analyze` → implement → **verify (orchestrator/Opus)**; trywialne → wprost. Verb: `feature` ·
+  `/analyze` → `/checklist` (bramka jakości) → implement → **verify (orchestrator/Opus)**; trywialne
+  → wprost. Verb: `feature` ·
   `component` · `fix` / `refactor` / `deps` / `chore` / `security`. Każda iteracja →
   **datowany run-log** `docs/runs/YYYY-MM-DD_HH-MM_<slug>.md` (krok = agent + model + wynik).
 - ✅ **doc-review + STOP na niejasności**: drabinę otwiera `doc-reviewer` (dokumentacja zadania ↔
@@ -89,4 +90,5 @@ Nx 22 · TypeScript 6 · Vitest + Playwright · ESLint flat + Prettier · **pnpm
 
 `pnpm verify` (pełna bramka) · `pnpm e2e` (`--parallel=1`) · `pnpm start:individual` /
 `start:business` / `start` · `pnpm workflow:specify -- --verb=<v> --slug=<s>` ·
-`pnpm ai:validate` · `pnpm sdd:check` · `pnpm nx g @nx/angular:component <name>`.
+`pnpm ai:validate` · `pnpm sdd:check` · `pnpm nx g @nx/angular:component <name>` ·
+`pnpm watchdog` (monitoring upstreamów → [`docs/watchdog.md`](../docs/watchdog.md)).
