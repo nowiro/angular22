@@ -28,6 +28,10 @@ MCP `playwright`): `pnpm start:individual` (4201) / `start:business` (4202) / `s
    niewidoczny w źródle), focus-visible, stany disabled/error, brak skoków layoutu.
 5. **i18n** — przełącznik języka: po zmianie PL↔EN teksty się zmieniają, brak ucięć
    dłuższych stringów EN, `document.documentElement.lang` zaktualizowany.
+6. **Elementy interaktywne (sweep per rola)** — **każdy** button/link/input/textarea/select/
+   dropdown/filtr jest **osiągalny i reaguje** (klik/fill na żywej apce); stany
+   hover/focus/active/disabled poprawne. **Per rola** (admin/user/guest): elementy bez uprawnień
+   **ukryte/disabled** realnie (nie tylko wizualnie) — potwierdź, że nie da się ich użyć.
 
 ## Techniki
 

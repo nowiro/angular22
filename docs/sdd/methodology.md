@@ -19,8 +19,10 @@
 | `/speckit.analyze`      | `/analyze`                                   | raport go/no-go (read-only)                                                           |
 | `/speckit.implement`    | delegacja do specjalisty (subagenta)         | kod + testy                                                                           |
 
-Drabinę domyka krok **verify**: orchestrator (Opus) sam weryfikuje wynik tańszych modeli
-i zapisuje werdykt w run-logu (`docs/runs/<stamp>_<slug>.md`).
+Drabinę domyka krok **verify** = **re-weryfikacja** (orchestrator/Opus, drugi przebieg **po**
+testach): DoD + **każde AC** + e2e + testy integracyjne (gdy API) + **sweep elementów interaktywnych
+per rola** (admin/user/guest) → werdykt + raport błędów + telemetria w run-logu
+(`docs/runs/<stamp>_<slug>.md`).
 
 ## Reguła progowa
 
@@ -68,12 +70,14 @@ run-log). Bramka `pnpm sdd:check` egzekwuje spójność spec↔plan (część `p
 **nie nadpisuje** — tworzy kolejną wersję `<slug>-v2` / `-v3` / … (nowa iteracja tego samego
 zadania ma własny spec/plan/run-log). Historia poprzednich wersji zostaje w `docs/`.
 
-## Telemetria (rozliczenie zamkniętego zadania)
+## Telemetria + raport błędów (rozliczenie zamkniętego zadania)
 
-Krok **verify / DoD** domyka run-log sekcją **Rozliczenie / Telemetria**: zużyte **tokeny**
-i **kredyty**, liczba **background tasków** i **sesji**, liczba agentów/subagentów. Źródła:
-`usage` workflowów (tokeny, `agent_count`) · `TaskList` (background taski) · `list_sessions`
-(sesje) · dashboard rozliczeniowy (kredyty — poza narzędziami repo, wpis ręczny lub `n/d`).
+Krok **verify / DoD** domyka run-log **dwiema** sekcjami: **Raport błędów / napotkane problemy**
+(krok · błąd · przyczyna · naprawa · status — pełny ślad, nie tylko sukcesy) **oraz** **Rozliczenie
+/ Telemetria**: **model per krok**, zużyte **tokeny** i **kredyty Copilot**, liczba **background
+tasków** i **sesji**, liczba agentów/subagentów. Źródła: `usage` workflowów (tokeny, `agent_count`)
+· `TaskList` (background taski) · `list_sessions` (sesje) · dashboard rozliczeniowy (kredyty Copilot
+— poza narzędziami repo, wpis ręczny lub `n/d`).
 
 ## Komendy
 

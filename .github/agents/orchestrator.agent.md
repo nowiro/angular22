@@ -67,21 +67,31 @@ sprzeczne / niepełne → **zatrzymaj się i zapytaj** (lub zostaw `[?]`), **nie
 Każda iteracja → **datowany run-log** `docs/runs/...` (krok = agent + model + wynik). Artefakty
 `docs/specs|plans|runs` wersjonowane w gicie (powtórzony slug → `<slug>-v2`).
 
-**Testy obowiązkowe** (trójka): scenariusze (z AC) → Vitest (`@nx/vitest:test`) → e2e Playwright
-(`@nx/playwright:playwright`; debug serwerem MCP `playwright`). Brak którejkolwiek = **no-go**.
+**Testy obowiązkowe** (trójka): scenariusze (z AC, **per rola** — `test-strategy`) → Vitest
+(`@nx/vitest:test`) → e2e Playwright (`@nx/playwright:playwright`; **przeklika wszystkie elementy
+interaktywne per rola**; debug serwerem MCP `playwright`). **Testy integracyjne — gdy API dostępne**.
+Brak którejkolwiek = **no-go**.
 
-## Weryfikacja końcowa (Ty / Opus)
+## Weryfikacja końcowa (Ty / Opus — re-weryfikacja po testach)
 
-Zanim ogłosisz Done, sam przejrzyj pracę tańszych modeli:
+Zanim ogłosisz Done, **przejdź jeszcze raz całość** — drugi przebieg Opusa nad pracą tańszych
+modeli (nie ufaj „zielone u wykonawcy"):
 
-1. **Diff** — realizuje spec/AC, bez regresji i scope-creep (opinia `reviewer` pomocnicza,
-   werdykt Twój).
-2. **Bramka** — `pnpm verify` zielone (pełna bramka; skład → [`AGENTS.md`](../../AGENTS.md#komendy)).
-3. **Testy** — scenariusze pokrywają każde AC; Vitest + e2e zielone; brak `.skip`/`.only`.
-4. **UX z uruchomienia** — werdykt `ux-verifier` (nigdy z czytania kodu).
-5. **Run-log** — domknij sekcją „Weryfikacja końcowa"; rozjazd → zawróć do specjalisty.
-6. **Telemetria** — domknij run-log sekcją „Rozliczenie / Telemetria" (tokeny, kredyty,
-   background taski, sesje); źródła: `usage` workflowów · `TaskList` · `list_sessions`.
+1. **Diff vs spec/AC** — każde **AC odhaczone** pojedynczo (checklist), bez regresji i scope-creep
+   (opinia `reviewer` pomocnicza, werdykt Twój).
+2. **Bramka DoD** — `pnpm verify` zielone (skład → [`AGENTS.md`](../../AGENTS.md#komendy)).
+3. **Testy** — scenariusze pokrywają każde AC (z `test-strategy`); **Vitest + e2e zielone**; **testy
+   integracyjne uruchomione gdy API dostępne** (inaczej jawne `n/d` w run-logu); brak `.skip`/`.only`.
+4. **Sweep elementów interaktywnych** — **wszystkie** kliknięcia/wpisy (button/link/input/textarea/
+   select/dropdown/filtr) przeklikane **per rola** (admin/user/guest): widoczność/aktywność/zabroniony
+   wg uprawnień — e2e (`playwright`) + potwierdzenie runtime (`ux-verifier`).
+5. **UX z uruchomienia** — werdykt `ux-verifier` (nigdy z czytania kodu); wizualnie vs mockup →
+   `pixel-perfect` (gdy mockupy).
+6. **Działa po testach?** — potwierdź, że zaimplementowane **realnie działa** end-to-end (nie tylko
+   że testy są zielone). Rozjazd → **zawróć do specjalisty**, nie łataj sam.
+7. **Run-log** — domknij sekcjami **Weryfikacja końcowa** + **Raport błędów** (napotkane problemy ·
+   przyczyna · naprawa) + **Rozliczenie / Telemetria** (model per krok · tokeny · **kredyty Copilot** ·
+   background taski · sesje); źródła: `usage` workflowów · `TaskList` · `list_sessions`.
 
 ## Routing (→ subagent; pełne role w [`AGENTS.md`](../../AGENTS.md))
 

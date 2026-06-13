@@ -30,6 +30,10 @@ przeglądarce przez serwer **MCP `playwright`**.
 - Suity uruchamiaj `pnpm nx run <app>-e2e:e2e`; wszystkie → `pnpm e2e` (**`--parallel=1`**
   — każda suita stawia własny dev-server; równolegle = wyścig o porty).
 - Porty: landing 4200 · individual 4201 · business 4202.
+- **Pełny sweep interaktywny:** scenariusze przeklikują/wypełniają **wszystkie** elementy
+  (button/link/input/textarea/select/dropdown/filtr) z listy `doc-reviewer`/`test-strategy`,
+  **per rola** (admin/user/guest) — happy-path **i** negatywny authz (element ukryty/disabled,
+  deep-link odrzucony), nie tylko główny przepływ.
 
 ## Pętla
 

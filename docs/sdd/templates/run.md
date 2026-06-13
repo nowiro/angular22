@@ -39,9 +39,22 @@ Powiązane: spec `docs/specs/{{slug}}/spec.md` · plan `docs/plans/{{stamp}}_{{v
 - **`pnpm verify`:** [?] wynik (pełna bramka; skład → `AGENTS.md` §Komendy)
 - **Pokrycie spec ↔ kod:** [?] każde AC ma odzwierciedlenie w kodzie/testach
 - **Testy:** [?] scenariusze pokrywają każde AC · Vitest + e2e zielone · brak `.skip`/`.only`
+- **Testy integracyjne:** [?] uruchomione gdy API dostępne (inaczej `n/d`)
+- **Sweep elementów interaktywnych:** [?] wszystkie button/link/input/textarea/select/dropdown/filtr
+  przeklikane **per rola** (admin/user/guest) · negatywny authz (ukryty/disabled/deep-link odrzucony)
+- **Działa po testach (end-to-end):** [?] realnie działa, nie tylko testy zielone
 - **UX z uruchomienia:** [?] werdykt ux-verifier (nie z czytania kodu)
 - **Rozjazdy / zawrócone do specjalisty:** [?]
 - **Werdykt:** [?] go / no-go + jedno zdanie uzasadnienia
+
+## Raport błędów / napotkane problemy
+
+> Pełny ślad problemów napotkanych w zadaniu (build / lint / test / runtime / integracja) i ich
+> naprawy — **obowiązkowy**, obok telemetrii. Brak problemów → jeden wiersz „brak".
+
+| #   | krok | błąd / problem | przyczyna | jak naprawiono | status |
+| --- | ---- | -------------- | --------- | -------------- | ------ |
+| 1   | [?]  | [?]            | [?]       | [?]            | [?]    |
 
 ## Rozliczenie / Telemetria
 

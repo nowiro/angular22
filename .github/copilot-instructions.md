@@ -36,9 +36,11 @@ zwięźle: wynik ponad proces.
   docs/Confluence ↔ **mockupy** spójne + jednoznaczne) **PRZED** kodem; cokolwiek niejasne /
   sprzeczne → **STOP, nie zgaduj, zapytaj**. Każdy krok: `status: done` w planie + **commit po
   kroku** (`scm`).
-- ✅ **Testy w każdym planie** (trójka): **scenariusze testowe** (z AC) + **testy
-  jednostkowe** (Vitest, `@nx/vitest:test`) + **testy e2e** (Playwright,
-  `@nx/playwright:playwright`; debug przez serwer **MCP `playwright`**). Brak = **no-go**.
+- ✅ **Testy w każdym planie** (trójka): **scenariusze testowe** (z AC, **per rola**
+  admin/user/guest — `test-strategy`) + **testy jednostkowe** (Vitest, `@nx/vitest:test`) +
+  **testy e2e** (Playwright, `@nx/playwright:playwright`; **przeklikują wszystkie elementy
+  interaktywne per rola**; debug przez serwer **MCP `playwright`**) + **integracyjne gdy API**.
+  Brak = **no-go**.
 - ✅ **Lint PRZED kodem**: przeczytaj `code-quality.instructions.md` zanim napiszesz
   pierwszą linię — kod ma przejść `pnpm lint` **z miejsca**, bez rundy poprawek.
 - ✅ **Komponenty TYLKO przez generator**: `pnpm nx g @nx/angular:component`
@@ -69,9 +71,11 @@ zwięźle: wynik ponad proces.
 ## Definition of Done
 
 `pnpm verify` zielone (pełna bramka; skład → [`AGENTS.md`](../AGENTS.md#komendy) / skrypt
-`verify` w `package.json`) + dotknięte `e2e` zielone + UX z uruchomienia. **Weryfikacja końcowa orchestratora
-(Opus)** + **Rozliczenie / Telemetria** (tokeny, kredyty, background taski, sesje) zapisane
-w run-logu. Po zmianie agentów / modeli: **Reload Window**.
+`verify` w `package.json`) + dotknięte `e2e` zielone + UX z uruchomienia. **Weryfikacja końcowa =
+re-weryfikacja orchestratora (Opus) po testach**: każde AC + e2e + testy integracyjne (gdy API) +
+**sweep elementów interaktywnych per rola** (admin/user/guest). Run-log domknięty sekcjami **Raport
+błędów** + **Rozliczenie / Telemetria** (model per krok, tokeny, kredyty Copilot, background taski,
+sesje). Po zmianie agentów / modeli: **Reload Window**.
 
 ## Stack
 
