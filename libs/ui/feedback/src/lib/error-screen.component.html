@@ -1,0 +1,43 @@
+<div
+  class="error-screen"
+  [attr.data-testid]="descriptor().testId"
+  [attr.data-tone]="descriptor().tone"
+>
+  <span class="error-screen__icon">
+    <a22-icon [name]="descriptor().icon" />
+  </span>
+
+  @if (descriptor().httpStatus !== undefined) {
+    <p
+      class="error-screen__code"
+      data-testid="error-code"
+    >
+      {{ descriptor().httpStatus }}
+    </p>
+  }
+
+  <h1 class="error-screen__title">{{ resolvedTitle() | a22T }}</h1>
+  <p class="error-screen__lead">{{ resolvedMessage() | a22T }}</p>
+
+  <div class="error-screen__actions">
+    <a
+      class="action action--primary"
+      [routerLink]="resolvedHomeLink()"
+      data-testid="error-home"
+    >
+      <a22-icon name="home" />
+      {{ resolvedHomeLabel() | a22T }}
+    </a>
+    @if (canRetry()) {
+      <button
+        class="action action--secondary"
+        type="button"
+        (click)="reload()"
+        data-testid="error-reload"
+      >
+        <a22-icon name="refresh" />
+        {{ 'Odśwież stronę' | a22T }}
+      </button>
+    }
+  </div>
+</div>

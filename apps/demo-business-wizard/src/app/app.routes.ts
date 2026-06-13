@@ -2,9 +2,11 @@ import type { Routes } from '@angular/router';
 
 import { WizardPath } from '@angular22/business-wizard-data';
 import { featureEnabledGuard } from '@angular22/shared-config';
+import { A22ErrorKind, A22ErrorScreenComponent } from '@angular22/ui-feedback';
 
 /**
  * `/disabled`      → feature-flag notice (always reachable)
+ * `/error`         → shared "something went wrong" screen (global handler target)
  * `/`              → dashboard (6 tiles) — gated by the `business-wizard` flag
  * `/wizard[/:step]`→ stepper — gated by the same flag
  * `**`             → redirect (dashboard when enabled, /disabled otherwise)
@@ -12,7 +14,13 @@ import { featureEnabledGuard } from '@angular22/shared-config';
 export const appRoutes: Routes = [
   {
     path: 'disabled',
-    loadComponent: () => import('@angular22/wizard-ui').then((m) => m.A22AppDisabledComponent),
+    component: A22ErrorScreenComponent,
+    data: { kind: A22ErrorKind.FeatureDisabled },
+  },
+  {
+    path: 'error',
+    component: A22ErrorScreenComponent,
+    data: { kind: A22ErrorKind.Unexpected },
   },
   {
     path: '',

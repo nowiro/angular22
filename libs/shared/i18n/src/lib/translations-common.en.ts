@@ -124,6 +124,65 @@ export const COMMON_EN: Readonly<Record<string, string>> = {
   'Ta aplikacja jest obecnie wyłączona w tym środowisku. Skontaktuj się z administratorem.':
     'This application is currently disabled in this environment. Contact your administrator.',
 
+  // ── Error screens (ui-feedback) — actions ───────────────────────────────
+  'Wróć do strony głównej': 'Back to home',
+  'Odśwież stronę': 'Reload page',
+
+  // ── Error screens — client (4xx) ────────────────────────────────────────
+  'Nieprawidłowe żądanie': 'Bad request',
+  'Serwer nie mógł przetworzyć tego żądania. Sprawdź dane i spróbuj ponownie.':
+    'The server could not process this request. Check the data and try again.',
+  'Wymagane logowanie': 'Sign-in required',
+  'Aby zobaczyć tę stronę, musisz się najpierw zalogować.': 'You must sign in first to view this page.',
+  'Brak dostępu': 'Access denied',
+  'Nie masz uprawnień, aby wyświetlić tę stronę.': 'You do not have permission to view this page.',
+  'Nie znaleziono strony': 'Page not found',
+  'Strona, której szukasz, nie istnieje lub została przeniesiona.':
+    'The page you are looking for does not exist or has moved.',
+  'Przekroczono czas żądania': 'Request timed out',
+  'Żądanie trwało zbyt długo. Spróbuj ponownie.': 'The request took too long. Please try again.',
+  'Zasób niedostępny': 'Resource gone',
+  'Ten zasób został trwale usunięty.': 'This resource has been permanently removed.',
+  'Dane są zbyt duże': 'Payload too large',
+  'Przesłane dane przekraczają dozwolony rozmiar.': 'The submitted data exceeds the allowed size.',
+  'Zbyt wiele żądań': 'Too many requests',
+  'Wysłano zbyt wiele żądań. Odczekaj chwilę i spróbuj ponownie.':
+    'Too many requests were sent. Wait a moment and try again.',
+
+  // ── Error screens — server (5xx) ────────────────────────────────────────
+  'Błąd serwera': 'Server error',
+  'Po naszej stronie wystąpił nieoczekiwany błąd. Pracujemy nad rozwiązaniem.':
+    'An unexpected error occurred on our side. We are working on it.',
+  'Funkcja niedostępna': 'Not implemented',
+  'Ta funkcja nie jest jeszcze obsługiwana.': 'This feature is not supported yet.',
+  'Błąd bramy': 'Bad gateway',
+  'Serwer pośredniczący otrzymał nieprawidłową odpowiedź. Spróbuj ponownie później.':
+    'The upstream server returned an invalid response. Try again later.',
+  'Usługa niedostępna': 'Service unavailable',
+  'Usługa jest chwilowo niedostępna. Spróbuj ponownie za kilka minut.':
+    'The service is temporarily unavailable. Try again in a few minutes.',
+  'Przekroczono czas bramy': 'Gateway timeout',
+  'Serwer pośredniczący nie odpowiedział na czas. Spróbuj ponownie później.':
+    'The upstream server did not respond in time. Try again later.',
+
+  // ── Error screens — network ─────────────────────────────────────────────
+  'Brak połączenia': 'No connection',
+  'Wygląda na to, że jesteś offline. Sprawdź połączenie z internetem.':
+    'You appear to be offline. Check your internet connection.',
+  'Utracono połączenie': 'Connection lost',
+  'Połączenie z serwerem zostało przerwane. Spróbuj ponownie.':
+    'The connection to the server was interrupted. Please try again.',
+  'Nie udało się wczytać konfiguracji': 'Could not load configuration',
+  'Nie można było pobrać konfiguracji aplikacji. Odśwież stronę.':
+    'The application configuration could not be fetched. Reload the page.',
+
+  // ── Error screens — application ─────────────────────────────────────────
+  'Trwa konserwacja': 'Under maintenance',
+  'Aplikacja jest w trybie konserwacji. Wróć za chwilę.': 'The application is under maintenance. Check back soon.',
+  'Coś poszło nie tak': 'Something went wrong',
+  'Wystąpił nieoczekiwany błąd. Odśwież stronę lub spróbuj ponownie.':
+    'An unexpected error occurred. Reload the page or try again.',
+
   // ── Summary commons ─────────────────────────────────────────────────────
   Podsumowanie: 'Summary',
   Zgody: 'Consents',

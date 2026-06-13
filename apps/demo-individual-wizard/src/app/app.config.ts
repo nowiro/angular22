@@ -5,6 +5,7 @@ import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { INDIVIDUAL_WIZARD_EN, IndividualWizardStore } from '@angular22/individual-wizard-data';
 import { provideFeatureFlags } from '@angular22/shared-config';
 import { provideEnTranslations } from '@angular22/shared-i18n';
+import { provideA22GlobalErrorHandler } from '@angular22/ui-feedback';
 import { WIZARD_FILL_PRESETS } from '@angular22/wizard-core';
 
 import { appRoutes } from './app.routes';
@@ -16,6 +17,7 @@ import { appRoutes } from './app.routes';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
+    provideA22GlobalErrorHandler(),
     provideFeatureFlags(),
     provideRouter(appRoutes, withComponentInputBinding()),
     provideEnTranslations(INDIVIDUAL_WIZARD_EN),

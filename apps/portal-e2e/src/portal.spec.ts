@@ -89,6 +89,28 @@ test.describe('Portal — smoke', () => {
     await expect(page.getByTestId('portal-tiles')).toBeVisible();
   });
 
+  test('an unknown route shows the shared 404 error screen', async ({ page }) => {
+    await page.goto('/this/route/does-not-exist');
+
+    const screen = page.getByTestId('error-not-found');
+    await expect(screen).toBeVisible();
+    await expect(screen.getByTestId('error-code')).toHaveText('404');
+    // URL is preserved (no silent redirect) so the 404 is honest.
+    await expect(page).toHaveURL(/does-not-exist$/);
+
+    // The home action returns to the tile list.
+    await screen.getByTestId('error-home').click();
+    await expect(page).toHaveURL(/\/$/);
+    await expect(page.getByTestId('portal-tiles')).toBeVisible();
+  });
+
+  test('/error renders the unexpected-error screen with a reload action', async ({ page }) => {
+    await page.goto('/error');
+    const screen = page.getByTestId('error-unexpected');
+    await expect(screen).toBeVisible();
+    await expect(screen.getByTestId('error-reload')).toBeVisible();
+  });
+
   test('all flags off shows the empty state', async ({ page }) => {
     await page.route('**/config.json', (route) =>
       route.fulfill({

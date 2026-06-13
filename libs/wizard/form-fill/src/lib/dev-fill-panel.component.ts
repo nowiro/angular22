@@ -4,11 +4,13 @@ import { FeatureFlagsStore } from '@angular22/shared-config';
 import { A22TranslatePipe } from '@angular22/shared-i18n';
 import { A22ButtonComponent, A22IconComponent } from '@angular22/ui-material';
 import type { FillMode } from '@angular22/wizard-core';
-import { WIZARD_FILL_PRESETS } from '@angular22/wizard-core';
+import { isLocalhost, WIZARD_FILL_PRESETS } from '@angular22/wizard-core';
 
 /**
  * Floating dev-tools panel anchored to the right edge of the viewport.
- * Visibility is controlled by the 'dev-tools' feature flag from config.json.
+ * Visibility is gated by BOTH the 'dev-tools' feature flag from config.json
+ * AND a local-host check — the panel auto-fills forms with fake PII, so it must
+ * never surface on a deployed origin even if a config.json ships the flag on.
  * It delegates the three fill actions to the wizard-provided `WIZARD_FILL_PRESETS`.
  */
 @Component({
@@ -22,7 +24,7 @@ export class A22DevFillPanelComponent {
   private readonly presets = inject(WIZARD_FILL_PRESETS);
   private readonly flags = inject(FeatureFlagsStore);
 
-  protected readonly visible = this.flags.isEnabled('dev-tools');
+  protected readonly visible = this.flags.isEnabled('dev-tools') && isLocalhost();
   protected readonly expanded = signal(false);
   protected readonly lastAction = signal('');
 

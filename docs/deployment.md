@@ -39,9 +39,12 @@ Uwagi:
   `--base-href /individual/` przy buildzie (`pnpm nx build demo-individual-wizard --base-href /individual/`).
   Alternatywa: osobne subdomeny (`individual.demo.example.com`) — wtedy bez zmian.
 - **SPA fallback** (nginx): `try_files $uri $uri/ /index.html;` per aplikacja.
-- **Inny origin dla elementów** (np. CDN) jest wspierany — `element.scriptUrl` w
-  `config.json` przyjmuje absolutny URL; wymaga wtedy poprawnego CORS i poszerzenia
-  `script-src` w CSP portalu.
+- **`element.scriptUrl` MUSI być ścieżką same-origin** zaczynającą się od pojedynczego
+  `/` (nie `//`, nie absolutny URL). `ElementLoader` celowo blokuje każdy inny origin
+  (`libs/shared/config/src/lib/element-loader.ts`) jako ochronę przed wstrzyknięciem
+  obcego skryptu przez podmieniony `config.json` — cross-origin/CDN jest świadomie
+  **niewspierany**. Dopuszczenie CDN wymagałoby zmiany w kodzie (allowlista originów)
+  **oraz** poszerzenia `script-src` w CSP **i** dodania SRI — patrz §5.
 
 ## 3. `config.json` — feature flags per środowisko
 
@@ -116,7 +119,9 @@ kafelek + embed + dostęp bezpośredni gasną natychmiast po odświeżeniu stron
   kosmetyczna, zaakceptowana.
 - **Język**: portal pcha aktywny język do elementu atrybutem `lang` (oba runtime'y
   współdzielą też `localStorage.a22.lang`).
-- **CSP portalu**: `script-src 'self'` wystarcza dla elementów same-origin; CDN wymaga
-  jawnego wpisu.
+- **CSP portalu**: `script-src 'self'` jest właściwą i wystarczającą polityką — elementy
+  są ładowane wyłącznie same-origin (wymuszone w `ElementLoader`). Cross-origin/CDN jest
+  celowo niewspierany; gdyby kiedyś go dopuścić, trzeba poszerzyć `script-src` o ten origin,
+  dodać SRI i rozluźnić bramkę w kodzie.
 - **Stan kroku w embed** żyje w pamięci (bez URL) — nawigacja wstecz przeglądarki wraca
   do kafelków, nie do poprzedniego kroku.

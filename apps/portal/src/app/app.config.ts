@@ -4,6 +4,7 @@ import { provideRouter, withComponentInputBinding } from '@angular/router';
 
 import { provideFeatureFlags } from '@angular22/shared-config';
 import { provideEnTranslations } from '@angular22/shared-i18n';
+import { provideA22GlobalErrorHandler } from '@angular22/ui-feedback';
 
 import { appRoutes } from './app.routes';
 import { PORTAL_EN } from './portal-translations.en';
@@ -16,6 +17,7 @@ import { PORTAL_EN } from './portal-translations.en';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
+    provideA22GlobalErrorHandler(),
     provideFeatureFlags(),
     provideRouter(appRoutes, withComponentInputBinding()),
     provideEnTranslations(PORTAL_EN),

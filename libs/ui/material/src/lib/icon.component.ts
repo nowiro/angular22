@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 
-/** `<a22-icon name="badge" />` — Material icon wrapper (Material Symbols font). */
+/** `<a22-icon name="badge" />` — Material icon wrapper (Material Icons font). */
 @Component({
   selector: 'a22-icon',
   changeDetection: ChangeDetectionStrategy.OnPush,

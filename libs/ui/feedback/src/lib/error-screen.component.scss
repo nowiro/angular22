@@ -1,0 +1,89 @@
+:host {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  padding: 2rem 1rem;
+}
+
+.error-screen {
+  max-width: 32rem;
+  text-align: center;
+  background: var(--mat-sys-surface);
+  border: 1px solid var(--mat-sys-outline-variant);
+  border-radius: var(--mat-sys-corner-large);
+  box-shadow: var(--mat-sys-level1);
+  padding: 2.5rem 2rem;
+}
+
+.error-screen__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 9999px;
+  // Default tone = error; warning/info override below.
+  background: var(--mat-sys-error-container);
+  color: var(--mat-sys-on-error-container);
+  margin-bottom: 1rem;
+}
+
+.error-screen[data-tone='warning'] .error-screen__icon {
+  background: var(--mat-sys-tertiary-container);
+  color: var(--mat-sys-on-tertiary-container);
+}
+
+.error-screen[data-tone='info'] .error-screen__icon {
+  background: var(--mat-sys-secondary-container);
+  color: var(--mat-sys-on-secondary-container);
+}
+
+.error-screen__code {
+  font: var(--mat-sys-display-small);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  margin: 0 0 0.25rem;
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.error-screen__title {
+  font: var(--mat-sys-headline-small);
+  margin: 0 0 0.5rem;
+  color: var(--mat-sys-on-surface);
+}
+
+.error-screen__lead {
+  font: var(--mat-sys-body-medium);
+  color: var(--mat-sys-on-surface-variant);
+  margin: 0 0 1.5rem;
+}
+
+.error-screen__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  border-radius: var(--mat-sys-corner-full);
+  font: var(--mat-sys-label-large);
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.action--primary {
+  background: var(--mat-sys-primary);
+  color: var(--mat-sys-on-primary);
+}
+
+.action--secondary {
+  background: transparent;
+  color: var(--mat-sys-primary);
+  border-color: var(--mat-sys-outline);
+}

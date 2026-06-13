@@ -1,0 +1,26 @@
+{
+  "name": "ui-feedback",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/ui/feedback/src",
+  "prefix": "a22",
+  "projectType": "library",
+  "tags": ["scope:shared", "type:ui"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "tsc -p libs/ui/feedback/tsconfig.lib.json --noEmit"
+      }
+    },
+    "test": {
+      "executor": "@nx/vitest:test",
+      "outputs": ["{workspaceRoot}/coverage/libs/ui/feedback"],
+      "options": {
+        "configFile": "libs/ui/feedback/vitest.config.ts"
+      }
+    }
+  }
+}
