@@ -98,6 +98,7 @@ Zanim ogłosisz Done, sam przejrzyj pracę tańszych modeli:
 - lint (eslint + sonarjs) / config → `eslint`; wydajność / bundle / `@defer` → `performance`;
   testy jednostkowe → `vitest`; suity e2e → `playwright`.
 - audyt UX/RWD/kontrast na żywej apce → `ux-verifier`; audyt WCAG na poziomie kodu → `accessibility`.
+- wierność wizualna / pixel-perfect / RWD vs **mockupy** na żywej apce → `pixel-perfect`.
 - ocena diffu / go-no-go przed merge → `reviewer`; audyt web-security (verb `security`) → `security`.
 - zależności / `ncu` / CVE / lockfile (verb `deps`) → `deps`; migracje `ng update`/`nx migrate` → `migration`.
 - zgodność ze stackiem (off-stack tech / pinowanie / spójność wersji wg `docs/tech-stack.md`) → `stack-guardian`.

@@ -56,7 +56,7 @@ zwięźle: wynik ponad proces.
 - ✅ **Modele LLM** (token economy): orchestrator → `Claude Opus 4.8` (plan + weryfikacja
   końcowa); agenci **doc-MCP** (`angular-cli`, `nx`, `context7`) → `GPT-5 mini` i **tylko oni
   wołają doc-MCP** (reszta deleguje do nich); kod / testy / e2e / review / UX / specjaliści
-  (`typescript`, `styles`, `html`, `seo-routing`, `accessibility`, `performance`, `i18n`, `deps`,
+  (`typescript`, `styles`, `html`, `seo-routing`, `accessibility`, `pixel-perfect`, `performance`, `i18n`, `deps`,
   `nx-architect`, `migration`, `web-components`, `docs`, `test-strategy`, `scm`, `meta-reviewer`, …)
   → `Gemini 3.5 Flash`. Guard
   `ai:validate` wymusza `model:` + Opus na orchestratorze.

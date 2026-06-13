@@ -14,14 +14,14 @@ agenci na `GPT-5 mini` o tych samych nazwach — pozostali agenci (`angular-engi
 `material-wrapper`, `typescript`, `styles`, `html`, `seo-routing`, `performance`, `i18n`, `deps`,
 `nx-architect`, `migration`, `web-components`, `docs`, …) **delegują**
 do nich zapytania, **nie wołają MCP sami**. Serwer `playwright` (żywa przeglądarka) → agenci
-`playwright` / `ux-verifier` (runtime, nie doc-lookup).
+`playwright` / `ux-verifier` / `pixel-perfect` (runtime, nie doc-lookup).
 
-| Serwer        | Narzędzia                                                           | Kiedy                                                                 |
-| ------------- | ------------------------------------------------------------------- | --------------------------------------------------------------------- |
-| `angular-cli` | `get_best_practices` · `search_documentation` · `find_examples`     | **przed** kodem dotykającym API Angular/Signal Forms; best practices  |
-| `nx`          | `nx_docs` · `nx_workspace` · `nx_generators` · `nx_project_details` | flagi generatorów/executorów, graf, tagi — zamiast zgadywania         |
-| `context7`    | `resolve-library-id` → `query-docs`                                 | docs dowolnej biblioteki (Material 22, Playwright, Vitest, 3rd-party) |
-| `playwright`  | browser\_\* (żywa przeglądarka, headed)                             | debug e2e, audyt UX (`ux-verifier`), weryfikacja runtime              |
+| Serwer        | Narzędzia                                                           | Kiedy                                                                                                    |
+| ------------- | ------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| `angular-cli` | `get_best_practices` · `search_documentation` · `find_examples`     | **przed** kodem dotykającym API Angular/Signal Forms; best practices                                     |
+| `nx`          | `nx_docs` · `nx_workspace` · `nx_generators` · `nx_project_details` | flagi generatorów/executorów, graf, tagi — zamiast zgadywania                                            |
+| `context7`    | `resolve-library-id` → `query-docs`                                 | docs dowolnej biblioteki (Material 22, Playwright, Vitest, 3rd-party)                                    |
+| `playwright`  | browser\_\* (żywa przeglądarka, headed)                             | debug e2e, audyt UX (`ux-verifier`) + wierność wizualna vs mockup (`pixel-perfect`), weryfikacja runtime |
 
 ## Drabina docs
 
