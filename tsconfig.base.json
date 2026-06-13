@@ -44,7 +44,8 @@
       "@angular22/business-wizard-feature": ["./libs/business-wizard/feature/src/index.ts"],
       "@angular22/shared-i18n": ["./libs/shared/i18n/src/index.ts"],
       "@angular22/shared-config": ["./libs/shared/config/src/index.ts"],
-      "@angular22/shared-auth": ["./libs/shared/auth/src/index.ts"]
+      "@angular22/shared-auth": ["./libs/shared/auth/src/index.ts"],
+      "@angular22/app-platform": ["./libs/shared/app-platform/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp", "dist", "coverage", "**/*.spec.ts", "**/*.test.ts"]

@@ -14,7 +14,7 @@
 **angular22** — demo monorepo **tylko dla GitHub Copilot** (VS Code ≥ 1.121): Angular 22
 (zoneless, standalone, signals, **Signal Forms**) + Nx 22 + Angular Material 22. Trzy apki:
 `portal` (:4200 — kafelki + embed wizardów jako web components, feature flags z config.json) · `demo-individual-wizard` (:4201) · `demo-business-wizard`
-(:4202) + 13 libów. Serwery MCP: `context7` · `nx` · `angular-cli` · `playwright`.
+(:4202) + liby w `libs/*` (shared/ui/wizard/…). Serwery MCP: `context7` · `nx` · `angular-cli` · `playwright`.
 
 ## Język
 

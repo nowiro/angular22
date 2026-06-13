@@ -1,0 +1,26 @@
+{
+  "name": "app-platform",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/shared/app-platform/src",
+  "prefix": "a22",
+  "projectType": "library",
+  "tags": ["scope:shared", "type:feature"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "tsc -p libs/shared/app-platform/tsconfig.lib.json --noEmit"
+      }
+    },
+    "test": {
+      "executor": "@nx/vitest:test",
+      "outputs": ["{workspaceRoot}/coverage/libs/shared/app-platform"],
+      "options": {
+        "configFile": "libs/shared/app-platform/vitest.config.ts"
+      }
+    }
+  }
+}
