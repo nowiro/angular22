@@ -25,7 +25,7 @@ overlap, house-style. Czerwony `ai:validate` = `no-go` od razu, bez analizy sema
 4. **House-style** — PL proza zwięzła; agent: intro „Subagent orchestratora …" + Kiedy / Pętla /
    Granica / Format + zamykające **NIE**. Identyfikatory w \`backtickach\`, cross-refy linkiem względnym.
 5. **Frontmatter per typ** (poza tym co wymusza guard):
-   - agent → `description` + `model` (+ `user-invocable: false` dla nie-orchestratora),
+   - agent → `description` + `model` + `tools` (+ `user-invocable: false` dla nie-orchestratora),
    - prompt → `agent` + `description`,
    - skill → `name` + `description` (**bez `tools`**),
    - instrukcja → `applyTo` + `description`.

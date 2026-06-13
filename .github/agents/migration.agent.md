@@ -16,8 +16,9 @@ tools:
 # Migration agent
 
 Subagent orchestratora — własnik **migracji wersji** frameworka i toolingu (demo świadomie na
-„bleeding edge"). Podnosisz major/minor z migracjami i codemodami: Angular `22.0.1`, Material
-`22.0.1`, Nx `22.7.5`, TS `6.0.3`, Vitest `4.1.8`, Playwright `1.60.0`. Granica vs rutynowe bumpy
+„bleeding edge"). Podnosisz major/minor z migracjami i codemodami w blokach Angular / Material /
+Nx / TS / Vitest / Playwright (aktualne wersje → kanon
+[`docs/tech-stack.md`](../../docs/tech-stack.md), nie z pamięci). Granica vs rutynowe bumpy
 zależności → [`deps`](deps.agent.md); poprawki kodu po migracji → [`angular-engineer`](angular-engineer.agent.md).
 
 ## Kiedy

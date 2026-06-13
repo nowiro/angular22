@@ -17,16 +17,16 @@ Powiązane: spec `docs/specs/genericize-demo/spec.md` · plan `docs/plans/2026-0
 
 ## Kroki
 
-| #   | krok (SDD)                       | agent                                         | model    | wynik / artefakt                                                                         | status |
-| --- | -------------------------------- | --------------------------------------------- | -------- | ---------------------------------------------------------------------------------------- | ------ |
-| 1   | audyt (wejście)                  | workflow `generic-demo-name-audit` (5 subag.) | Opus 4.8 | raport: 1 high (uczelnie) + medium (KRD/BIK, Helios, nowiro, angular22) + low (NIP, geo) | done   |
-| 2   | specify + AC (zakres zatwierdz.) | orchestrator                                  | Opus 4.8 | spec.md + plan.md (chore/genericize-demo)                                                | done   |
-| 3   | implement: pule danych           | orchestrator                                  | Opus 4.8 | `UNIVERSITIES`→zmyślone, `Helios Med`→`Cyprys Med`, NIP→`3141592659`                     | done   |
-| 4   | implement: consent + i18n        | orchestrator                                  | Opus 4.8 | `credit-bureau` (klucz/label/opis) + sync mapy EN                                        | done   |
-| 5   | implement: branding + nowiro     | orchestrator                                  | Opus 4.8 | 3× `<title>` + nagłówek portalu + EN bez `angular22`; `nowiro`→`example.com`/`angular22` | done   |
-| 6   | testy jednostkowe                | vitest (`run-many`)                           | —        | wizard-core + wizard-validators + individual-wizard-data zielone                         | done   |
-| 7   | bramki                           | reviewer                                      | —        | lint+typecheck (6 proj + 8 dep) zielone; grep realnych nazw = **0**                      | done   |
-| 8   | verify (DoD)                     | orchestrator                                  | Opus 4.8 | prettier + `ai:validate` + `sdd:check` zielone; commit                                   | done   |
+| #   | krok (SDD)                       | agent                                         | model        | wynik / artefakt                                                                         | status |
+| --- | -------------------------------- | --------------------------------------------- | ------------ | ---------------------------------------------------------------------------------------- | ------ |
+| 1   | audyt (wejście)                  | workflow `generic-demo-name-audit` (5 subag.) | Opus 4.8     | raport: 1 high (uczelnie) + medium (KRD/BIK, Helios, nowiro, angular22) + low (NIP, geo) | done   |
+| 2   | specify + AC (zakres zatwierdz.) | orchestrator                                  | Opus 4.8     | spec.md + plan.md (chore/genericize-demo)                                                | done   |
+| 3   | implement: pule danych           | orchestrator                                  | Opus 4.8     | `UNIVERSITIES`→zmyślone, `Helios Med`→`Cyprys Med`, NIP→`3141592659`                     | done   |
+| 4   | implement: consent + i18n        | orchestrator                                  | Opus 4.8     | `credit-bureau` (klucz/label/opis) + sync mapy EN                                        | done   |
+| 5   | implement: branding + nowiro     | orchestrator                                  | Opus 4.8     | 3× `<title>` + nagłówek portalu + EN bez `angular22`; `nowiro`→`example.com`/`angular22` | done   |
+| 6   | testy jednostkowe                | vitest (`run-many`)                           | —            | wizard-core + wizard-validators + individual-wizard-data zielone                         | done   |
+| 7   | bramki                           | reviewer                                      | Gemini Flash | lint+typecheck (6 proj + 8 dep) zielone; grep realnych nazw = **0**                      | done   |
+| 8   | verify (DoD)                     | orchestrator                                  | Opus 4.8     | prettier + `ai:validate` + `sdd:check` zielone; commit                                   | done   |
 
 ## Weryfikacja końcowa (orchestrator / Opus)
 

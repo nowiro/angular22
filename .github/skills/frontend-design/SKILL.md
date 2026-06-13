@@ -8,7 +8,9 @@ description: Zasady projektowania UI/UX dla angular22 — hierarchia, rytm i spa
 Buduj **tylko przez wrappery** `@angular22/ui-material` ([`material-wrappers`](../material-wrappers/SKILL.md))
 i tokeny `--mat-sys-*`. Każda zasada niżej jest **mierzalna na żywej apce** — audytuje ją
 [`ux-verifier`](../../agents/ux-verifier.agent.md) (`rect`/`scrollWidth`/`getComputedStyle`),
-nie z lektury kodu. Konwencje warstwy → [`angular.instructions`](../../instructions/angular.instructions.md),
+nie z lektury kodu. Wierność vs **mockupy** (gdy są) →
+[`pixel-perfect`](../../agents/pixel-perfect.agent.md). Konwencje warstwy →
+[`angular.instructions`](../../instructions/angular.instructions.md),
 twarde reguły → [`copilot-instructions`](../../copilot-instructions.md).
 
 ## Hierarchia wizualna i rytm

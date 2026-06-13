@@ -32,8 +32,8 @@ Reguły/stack/język → [`copilot-instructions.md`](../copilot-instructions.md)
 
 Pracujesz na **`Claude Opus 4.8`** — najdroższy tier, rezerwuj go na **planowanie** i
 **weryfikację końcową**, nie na wykonawkę. Subagenci mają tańsze modele w swoich
-`*.agent.md` (mapa → [`AGENTS.md`](../../AGENTS.md) §Modele): wołający **MCP** (nx ·
-context7) → **`GPT-5 mini`**; kod / testy / e2e / review / audyt UX → **`Gemini 3.5
+`*.agent.md` (mapa → [`AGENTS.md`](../../AGENTS.md) §Modele): wołający **MCP** (angular-cli ·
+nx · context7) → **`GPT-5 mini`**; kod / testy / e2e / review / audyt UX → **`Gemini 3.5
 Flash`**. **Zawsze deleguj pracę w dół** — Opus nie czyta plików, które dostarczy tańszy
 model, ani nie pisze kodu za niego.
 

@@ -17,13 +17,13 @@ Powiązane: spec `docs/specs/agent-bench-extend/spec.md` · plan `docs/plans/202
 
 ## Kroki
 
-| #   | krok (SDD)       | agent                                          | model    | wynik / artefakt                                                                                                            | status |
-| --- | ---------------- | ---------------------------------------------- | -------- | --------------------------------------------------------------------------------------------------------------------------- | ------ |
-| 1   | specify + AC     | orchestrator                                   | Opus 4.8 | spec.md + plan.md (feature/agent-bench-extend)                                                                              | done   |
-| 2   | draft 8+1        | workflow `agent-bench-extend-draft` (9 subag.) | Opus 4.8 | `deps`/`nx-architect`/`migration`/`web-components`/`docs`/`test-strategy`/`scm`/`meta-reviewer` + skill `ai-config-quality` | done   |
-| 3   | wire shared docs | orchestrator                                   | Opus 4.8 | orchestrator routing, AGENTS (tabela+tier+skille), copilot-instructions, mcp-usage                                          | done   |
-| 4   | bramki           | reviewer                                       | —        | `ai:validate` (1 widoczny · 27 agentów · 9 skilli) + `sdd:check` (5/5) + `prettier` ✓                                       | done   |
-| 5   | verify (DoD)     | orchestrator                                   | Opus 4.8 | bramki green + telemetria; commit                                                                                           | done   |
+| #   | krok (SDD)       | agent                                          | model        | wynik / artefakt                                                                                                            | status |
+| --- | ---------------- | ---------------------------------------------- | ------------ | --------------------------------------------------------------------------------------------------------------------------- | ------ |
+| 1   | specify + AC     | orchestrator                                   | Opus 4.8     | spec.md + plan.md (feature/agent-bench-extend)                                                                              | done   |
+| 2   | draft 8+1        | workflow `agent-bench-extend-draft` (9 subag.) | Opus 4.8     | `deps`/`nx-architect`/`migration`/`web-components`/`docs`/`test-strategy`/`scm`/`meta-reviewer` + skill `ai-config-quality` | done   |
+| 3   | wire shared docs | orchestrator                                   | Opus 4.8     | orchestrator routing, AGENTS (tabela+tier+skille), copilot-instructions, mcp-usage                                          | done   |
+| 4   | bramki           | reviewer                                       | Gemini Flash | `ai:validate` (1 widoczny · 27 agentów · 9 skilli) + `sdd:check` (5/5) + `prettier` ✓                                       | done   |
+| 5   | verify (DoD)     | orchestrator                                   | Opus 4.8     | bramki green + telemetria; commit                                                                                           | done   |
 
 ## Weryfikacja końcowa (orchestrator / Opus)
 

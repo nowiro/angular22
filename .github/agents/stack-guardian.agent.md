@@ -26,15 +26,14 @@ diff bez dotknięcia zależności i toolingu = pomijasz.
 1. **Off-stack** — każda nowa zależność spoza kanonu `docs/tech-stack.md` = finding. Wskaż,
    czy to pozycja **banned**, czy brak odpowiednika — i podaj on-stack zamiennik (np. `fetch`
    zamiast `axios`, natywne API / sygnały zamiast `lodash`, `Intl`/`Temporal` zamiast `moment`).
-2. **Wersje pinowane + spójne** — exact tam, gdzie repo pinuje (`@angular/*` `22.0.1`,
-   `@nx/*`+`nx` `22.7.5`, `typescript` `6.0.3`, `vitest`/`@vitest/coverage-v8` `4.1.8`,
-   `@playwright/test` `1.60.0`). Spójność osi: **`@angular/core` = `@angular/cdk` =
-   `@angular/material` = `@angular/build`/`@angular/cli`** (jeden major.minor.patch);
-   **`@nx/*` = `nx`**; **`angular-eslint` major = Angular major** (`22` ↔ `22`);
-   `typescript-eslint`/`@typescript-eslint/utils` spójne (`8.61.0`). Caret tam, gdzie repo
-   pinuje exact = finding.
-3. **pnpm-only** — `preinstall: npx only-allow pnpm` obecny, `packageManager: pnpm@11.6.0`
-   zapięty, `engines` (`node >=24.15.0`, `pnpm >=11.0.0`) zgodne z kanonem, `pnpm-lock.yaml`
+2. **Wersje pinowane + spójne** — exact tam, gdzie repo pinuje; **konkretne wartości czytaj
+   z kanonu** [`docs/tech-stack.md`](../../docs/tech-stack.md), nie z pamięci. Spójność osi:
+   **`@angular/core` = `@angular/cdk` = `@angular/material` = `@angular/build`/`@angular/cli`**
+   (jeden major.minor.patch); **`@nx/*` = `nx`**; **`angular-eslint` major = Angular major**;
+   `typescript-eslint`/`@typescript-eslint/utils` spójne. Caret tam, gdzie repo pinuje exact =
+   finding.
+3. **pnpm-only** — `preinstall: npx only-allow pnpm` obecny, `packageManager` (pnpm, wersja
+   z kanonu) zapięty, `engines` (`node`/`pnpm`) zgodne z kanonem, `pnpm-lock.yaml`
    spójny z `package.json` (brak rozjazdu, brak `package-lock.json`/`yarn.lock`).
 4. **Banned tech** — wystąpienie któregokolwiek = finding: `zone.js`/`zone.js/testing`
    (repo **zoneless**); `npm`/`yarn` jako manager; `jest`/`karma`/`cypress`/`jasmine`

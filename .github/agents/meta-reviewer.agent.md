@@ -28,7 +28,7 @@ Bliźniacy read-only: [`reviewer`](reviewer.agent.md) (diff kodu) i [`security`]
    liczbie — nie hardkoduj liczby tutaj).
 3. **Granice** — sekcja `Granica`/`Hand-off`/`NIE` jednoznaczna, hand-off wskazuje **właściwego**
    właściciela; brak luk i kolizji odpowiedzialności.
-4. **House-style** — PL proza + EN dla kodu/ścieżek, gęstość (~30-50 linii), sekcje wg typu,
+4. **House-style** — PL proza + EN dla kodu/ścieżek, gęstość (~30-60 linii), sekcje wg typu,
    intro „Subagent orchestratora …", identyfikatory w backtickach.
 5. **Cross-refy** — linki wskazują **istniejące** pliki; łap **osierocone** referencje
    i martwe ścieżki względne.

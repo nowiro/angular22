@@ -17,14 +17,14 @@ Powiązane: spec `docs/specs/specialist-agents/spec.md` · plan `docs/plans/2026
 
 ## Kroki
 
-| #   | krok (SDD)             | agent                                         | model    | wynik / artefakt                                                               | status |
-| --- | ---------------------- | --------------------------------------------- | -------- | ------------------------------------------------------------------------------ | ------ |
-| 1   | specify + AC           | orchestrator                                  | Opus 4.8 | spec.md + plan.md (feature/specialist-agents)                                  | done   |
-| 2   | draft 6 agentów        | workflow `specialist-agents-draft` (6 subag.) | Opus 4.8 | `angular-cli` (MCP) + `angular`/`typescript`/`styles`/`html`/`seo-routing`     | done   |
-| 3   | reguła MCP (delegacja) | orchestrator                                  | Opus 4.8 | `angular-engineer` + `material-wrapper` delegują doc-MCP (nie wołają sami)     | done   |
-| 4   | wire shared docs       | orchestrator                                  | Opus 4.8 | orchestrator (agents+routing), AGENTS (tabela+tiery), copilot-instr, mcp-usage | done   |
-| 5   | bramki                 | reviewer                                      | —        | `ai:validate` (1 widoczny · 17 agentów) + `sdd:check` (3/3) + `prettier` ✓     | done   |
-| 6   | verify (DoD)           | orchestrator                                  | Opus 4.8 | bramki green + telemetria; commit                                              | done   |
+| #   | krok (SDD)             | agent                                         | model        | wynik / artefakt                                                               | status |
+| --- | ---------------------- | --------------------------------------------- | ------------ | ------------------------------------------------------------------------------ | ------ |
+| 1   | specify + AC           | orchestrator                                  | Opus 4.8     | spec.md + plan.md (feature/specialist-agents)                                  | done   |
+| 2   | draft 6 agentów        | workflow `specialist-agents-draft` (6 subag.) | Opus 4.8     | `angular-cli` (MCP) + `angular`/`typescript`/`styles`/`html`/`seo-routing`     | done   |
+| 3   | reguła MCP (delegacja) | orchestrator                                  | Opus 4.8     | `angular-engineer` + `material-wrapper` delegują doc-MCP (nie wołają sami)     | done   |
+| 4   | wire shared docs       | orchestrator                                  | Opus 4.8     | orchestrator (agents+routing), AGENTS (tabela+tiery), copilot-instr, mcp-usage | done   |
+| 5   | bramki                 | reviewer                                      | Gemini Flash | `ai:validate` (1 widoczny · 17 agentów) + `sdd:check` (3/3) + `prettier` ✓     | done   |
+| 6   | verify (DoD)           | orchestrator                                  | Opus 4.8     | bramki green + telemetria; commit                                              | done   |
 
 ## Weryfikacja końcowa (orchestrator / Opus)
 

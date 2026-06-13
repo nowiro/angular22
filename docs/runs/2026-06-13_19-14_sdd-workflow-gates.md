@@ -17,15 +17,15 @@ Powiązane: spec `docs/specs/sdd-workflow-gates/spec.md` · plan `docs/plans/202
 
 ## Kroki
 
-| #   | krok (SDD)             | agent                                  | model    | wynik / artefakt                                                                            | status |
-| --- | ---------------------- | -------------------------------------- | -------- | ------------------------------------------------------------------------------------------- | ------ |
-| 1   | specify + AC           | orchestrator                           | Opus 4.8 | spec.md + plan.md (chore/sdd-workflow-gates)                                                | done   |
-| 2   | draft agenta           | workflow `doc-reviewer-draft` (1 sub.) | Opus 4.8 | `doc-reviewer.agent.md` (read-only bramka wejścia, STOP na niejasności)                     | done   |
-| 3   | workflow orchestratora | orchestrator                           | Opus 4.8 | jawna drabina: `0. doc-review` + STOP-bramka + commit-per-krok + routing                    | done   |
-| 4   | kanon + szablony       | orchestrator                           | Opus 4.8 | methodology (doc-review/STOP/commit) + `plan.md` (kol. `status` + T000) + `run.md` (krok 0) | done   |
-| 5   | reguły + wiring        | orchestrator                           | Opus 4.8 | copilot-instructions (twarda reguła) + AGENTS (wiersz + tier)                               | done   |
-| 6   | bramki                 | reviewer                               | —        | `ai:validate` (1 widoczny · 29 agentów) + `sdd:check` (7/7) + `prettier` ✓                  | done   |
-| 7   | verify (DoD)           | orchestrator                           | Opus 4.8 | bramki green + telemetria; commit                                                           | done   |
+| #   | krok (SDD)             | agent                                  | model        | wynik / artefakt                                                                            | status |
+| --- | ---------------------- | -------------------------------------- | ------------ | ------------------------------------------------------------------------------------------- | ------ |
+| 1   | specify + AC           | orchestrator                           | Opus 4.8     | spec.md + plan.md (chore/sdd-workflow-gates)                                                | done   |
+| 2   | draft agenta           | workflow `doc-reviewer-draft` (1 sub.) | Opus 4.8     | `doc-reviewer.agent.md` (read-only bramka wejścia, STOP na niejasności)                     | done   |
+| 3   | workflow orchestratora | orchestrator                           | Opus 4.8     | jawna drabina: `0. doc-review` + STOP-bramka + commit-per-krok + routing                    | done   |
+| 4   | kanon + szablony       | orchestrator                           | Opus 4.8     | methodology (doc-review/STOP/commit) + `plan.md` (kol. `status` + T000) + `run.md` (krok 0) | done   |
+| 5   | reguły + wiring        | orchestrator                           | Opus 4.8     | copilot-instructions (twarda reguła) + AGENTS (wiersz + tier)                               | done   |
+| 6   | bramki                 | reviewer                               | Gemini Flash | `ai:validate` (1 widoczny · 29 agentów) + `sdd:check` (7/7) + `prettier` ✓                  | done   |
+| 7   | verify (DoD)           | orchestrator                           | Opus 4.8     | bramki green + telemetria; commit                                                           | done   |
 
 ## Weryfikacja końcowa (orchestrator / Opus)
 

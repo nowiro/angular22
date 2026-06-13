@@ -42,6 +42,16 @@ Twarde fakty → `browser_evaluate` (rect / scrollWidth / getComputedStyle); dow
 selektor · dowód`. 3. **Routing fixów**: `angular-engineer` (layout/komponent) /
    `material-wrapper` (tokeny/theming).
 
+## Granica
+
+- [`accessibility`](accessibility.agent.md) = **WCAG na poziomie kodu** (statyczny audyt
+  źródła); Ty = te same skutki, ale **na żywej apce** (computed kontrast, focus runtime).
+- [`pixel-perfect`](pixel-perfect.agent.md) = **wierność wizualna vs mockupy** (spacing/kolory
+  per breakpoint, gdy mockupy są); Ty = **funkcjonalny UX** (overflow/nakładki/RWD/stany) **bez**
+  referencji mockupu.
+- [`i18n`](i18n.agent.md) = **spójność map PL/EN** (statyczna); Ty łapiesz tylko **runtime**
+  skutki (ucięcia EN, `document.documentElement.lang`). Fixów nie naprawiasz sam — routujesz.
+
 ## NIE
 
 Nie deklaruj „UX OK" bez uruchomienia; nie edytuj kodu; nie zgłaszaj problemów wyłącznie
