@@ -5,6 +5,8 @@ Signal Forms**, with every Angular Material component consumed through Nx wrappe
 
 ## Stack
 
+> Pełny **kanon** (pinowane wersje, dozwolone/zakazane, reguły spójności) → [`docs/tech-stack.md`](docs/tech-stack.md) · pilnuje agent `stack-guardian`.
+
 | Layer       | Choice                                                                 |
 | ----------- | ---------------------------------------------------------------------- |
 | Framework   | Angular 22 (zoneless, standalone, signals, Signal Forms)               |

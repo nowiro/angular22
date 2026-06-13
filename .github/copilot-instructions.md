@@ -70,12 +70,10 @@ w run-logu. Po zmianie agentów / modeli: **Reload Window**.
 
 ## Stack
 
-- **Runtime:** Node `>=24.15.0` (`.nvmrc` `24.16.0`) · `pnpm@11.1.3`
-- **Angular:** `22.0.0` (zoneless, Signal Forms stabilne) · **Material:** `22.0.0` ·
-  **Nx:** `22.7.5` · **TypeScript:** `6.0.3`
-- **Testy:** Vitest `4.1.8` (unit, liby) · Playwright `1.60.0` (e2e, chromium)
-- **Lint/format:** ESLint `10` flat (angular-eslint 22 + typescript-eslint 8 type-aware +
-  sonarjs + unicorn + import-x + jsdoc) + Prettier (sort importów)
+**Kanon** (pinowane wersje · dozwolone/ZAKAZANE · reguły spójności) →
+[`docs/tech-stack.md`](../docs/tech-stack.md); pilnuje agent `stack-guardian`. W skrócie:
+Angular 22 (zoneless, Signal Forms) · Material 22 (tylko wrappery `@angular22/ui-material`) ·
+Nx 22 · TypeScript 6 · Vitest + Playwright · ESLint flat + Prettier · **pnpm** (tylko).
 
 ## Komendy
 

@@ -88,6 +88,7 @@ Zanim ogłosisz Done, sam przejrzyj pracę tańszych modeli:
 - audyt UX/RWD/kontrast na żywej apce → `ux-verifier`; audyt WCAG na poziomie kodu → `accessibility`.
 - ocena diffu / go-no-go przed merge → `reviewer`; audyt web-security (verb `security`) → `security`.
 - zależności / `ncu` / CVE / lockfile (verb `deps`) → `deps`; migracje `ng update`/`nx migrate` → `migration`.
+- zgodność ze stackiem (off-stack tech / pinowanie / spójność wersji wg `docs/tech-stack.md`) → `stack-guardian`.
 - granice modułów / tagi `scope:*`/`type:*` / graf → `nx-architect`; embedding `@angular/elements` → `web-components`.
 - README / JSDoc / sync dokumentacji → `docs`; conventional commits / opisy PR → `scm`.
 - projekt scenariuszy testowych z AC (read-only) → `test-strategy`; audyt **jakości configu AI**
