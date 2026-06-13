@@ -7,7 +7,7 @@
 > agenci → [`AGENTS.md`](../AGENTS.md); SDD → [`docs/sdd/methodology.md`](../docs/sdd/methodology.md);
 > skille (`.github/skills/`): `angular-developer` · `angular-new-app` · `signal-forms` ·
 > `material-wrappers` · `nx-generators` · `frontend-design` · `code-review` · `security-guidance` ·
-> `ai-config-quality`.
+> `ai-config-quality` · `keycloak-auth`.
 
 ## Tożsamość
 
@@ -59,7 +59,8 @@ zwięźle: wynik ponad proces.
   końcowa); agenci **doc-MCP** (`angular-cli`, `nx`, `context7`) → `GPT-5 mini` i **tylko oni
   wołają doc-MCP** (reszta deleguje do nich); kod / testy / e2e / review / UX / specjaliści
   (`typescript`, `styles`, `html`, `seo-routing`, `accessibility`, `pixel-perfect`, `performance`, `i18n`, `deps`,
-  `nx-architect`, `migration`, `web-components`, `docs`, `test-strategy`, `scm`, `meta-reviewer`, …)
+  `nx-architect`, `migration`, `web-components`, `docs`, `test-strategy`, `scm`, `meta-reviewer`,
+  `keycloak`, …)
   → `Gemini 3.5 Flash`. Guard
   `ai:validate` wymusza `model:` + Opus na orchestratorze.
 - ❌ Zero nie-Copilot (`CLAUDE.md`/`.claude/`/`.ai/`) i zero GitHub Actions — verify lokalnie.
