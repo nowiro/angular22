@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
+import { AuthStore, HasRoleDirective, type Role, ROLES, setMockRole } from '@angular22/shared-auth';
 import type { FeatureId } from '@angular22/shared-config';
 import { FeatureFlagsStore } from '@angular22/shared-config';
 import { A22TranslatePipe } from '@angular22/shared-i18n';
@@ -33,18 +34,23 @@ const TILES: readonly PortalTile[] = [
   },
 ];
 
-/** Portal home — one tile per ENABLED feature, with new-tab + in-portal actions. */
+/** Portal home — one tile per ENABLED feature, plus a demo RBAC bar (role switcher + admin link). */
 @Component({
   selector: 'a22-home',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [A22IconComponent, A22TranslatePipe, RouterLink],
+  imports: [A22IconComponent, A22TranslatePipe, HasRoleDirective, RouterLink],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
 export class HomeComponent {
   private readonly flags = inject(FeatureFlagsStore);
+  private readonly auth = inject(AuthStore);
 
   protected readonly enabledTiles = computed(() => TILES.filter((tile) => this.flags.isEnabled(tile.id)));
+  protected readonly username = this.auth.username;
+  protected readonly roles = ROLES;
+  /** Highest role the user holds — drives the active state of the demo role switcher. */
+  protected readonly activeRole = computed<Role | null>(() => ROLES.find((role) => this.auth.hasRole(role)) ?? null);
 
   protected standaloneUrl(id: FeatureId): string {
     return this.flags.feature(id).standaloneUrl;
@@ -52,5 +58,11 @@ export class HomeComponent {
 
   protected canEmbed(id: FeatureId): boolean {
     return this.flags.feature(id).element !== undefined;
+  }
+
+  /** Demo-only: persist the selected mock role and reload so `AuthStore` re-seeds. */
+  protected switchRole(role: Role): void {
+    setMockRole(role);
+    location.reload();
   }
 }

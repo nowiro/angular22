@@ -1,0 +1,15 @@
+<main
+  class="page"
+  data-testid="admin-panel"
+>
+  <h1>{{ 'Panel administratora' | a22T }}</h1>
+  <p>{{ 'Ta strona jest dostępna wyłącznie dla roli administratora.' | a22T }} ({{ username() }})</p>
+  <a
+    [routerLink]="['/']"
+    data-testid="admin-back"
+    class="action"
+  >
+    <a22-icon name="arrow_back" />
+    {{ 'Wróć do listy aplikacji' | a22T }}
+  </a>
+</main>

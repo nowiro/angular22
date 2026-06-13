@@ -2,6 +2,7 @@ import type { ApplicationConfig } from '@angular/core';
 import { provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
 
+import { provideAuth } from '@angular22/shared-auth';
 import { provideFeatureFlags } from '@angular22/shared-config';
 import { provideEnTranslations } from '@angular22/shared-i18n';
 import { provideA22GlobalErrorHandler } from '@angular22/ui-feedback';
@@ -19,6 +20,7 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideA22GlobalErrorHandler(),
     provideFeatureFlags(),
+    provideAuth({ mode: 'mock', initialRole: 'user' }),
     provideRouter(appRoutes, withComponentInputBinding()),
     provideEnTranslations(PORTAL_EN),
   ],

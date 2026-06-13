@@ -12,6 +12,43 @@
     </p>
   </header>
 
+  <section
+    class="rolebar"
+    data-testid="auth-bar"
+  >
+    <span class="rolebar__id">
+      {{ 'Zalogowano jako' | a22T }}:
+      <strong data-testid="auth-user">{{ username() }}</strong>
+      (
+      <span data-testid="auth-role">{{ activeRole() }}</span>
+      )
+    </span>
+    <span class="rolebar__switch">
+      {{ 'Przełącz rolę (demo)' | a22T }}:
+      @for (role of roles; track role) {
+        <button
+          type="button"
+          class="rolebar__btn"
+          [class.rolebar__btn--active]="role === activeRole()"
+          [attr.aria-pressed]="role === activeRole()"
+          [attr.data-testid]="'role-switch-' + role"
+          (click)="switchRole(role)"
+        >
+          {{ role }}
+        </button>
+      }
+    </span>
+    <a
+      *a22HasRole="'admin'"
+      [routerLink]="['/admin']"
+      class="action action--secondary"
+      data-testid="admin-link"
+    >
+      <a22-icon name="admin_panel_settings" />
+      {{ 'Panel administratora' | a22T }}
+    </a>
+  </section>
+
   @if (enabledTiles().length === 0) {
     <p
       class="empty"

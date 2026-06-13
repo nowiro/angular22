@@ -17,4 +17,9 @@ export const PORTAL_EN: Readonly<Record<string, string>> = {
   'Nie udało się załadować aplikacji. Odśwież stronę lub spróbuj później.':
     'Failed to load the application. Refresh the page or try again later.',
   'Wróć do listy aplikacji': 'Back to the application list',
+  'Zalogowano jako': 'Signed in as',
+  'Przełącz rolę (demo)': 'Switch role (demo)',
+  'Panel administratora': 'Admin panel',
+  'Ta strona jest dostępna wyłącznie dla roli administratora.':
+    'This page is available to the administrator role only.',
 };

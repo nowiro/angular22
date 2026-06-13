@@ -1,5 +1,6 @@
 import type { Routes } from '@angular/router';
 
+import { roleGuard } from '@angular22/shared-auth';
 import { featureEnabledGuard } from '@angular22/shared-config';
 import { A22ErrorKind, A22ErrorScreenComponent } from '@angular22/ui-feedback';
 
@@ -36,6 +37,16 @@ export const appRoutes: Routes = [
     data: { featureId: 'business-wizard' },
   },
   { path: 'apps/business', redirectTo: '' },
+  {
+    path: 'admin',
+    canMatch: [roleGuard('admin')],
+    loadComponent: () => import('./admin/admin.component').then((m) => m.AdminComponent),
+  },
+  {
+    path: 'forbidden',
+    component: A22ErrorScreenComponent,
+    data: { kind: A22ErrorKind.Forbidden },
+  },
   {
     path: 'error',
     component: A22ErrorScreenComponent,
