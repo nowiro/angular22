@@ -42,26 +42,36 @@ for (const [k, v] of [
   if (!/^[a-z][a-z0-9-]*$/.test(v)) fail(`--${k} must be kebab-case (got "${v}")`);
 }
 
+// SDD versioning: never overwrite an existing task — if docs/specs/<slug>/ already exists,
+// append -v2, -v3, ... so a new iteration of the same task gets its own versioned slug.
+let effectiveSlug = slug;
+if (existsSync(resolve(ROOT, `docs/specs/${slug}`))) {
+  let v = 2;
+  while (existsSync(resolve(ROOT, `docs/specs/${slug}-v${v}`))) v++;
+  effectiveSlug = `${slug}-v${v}`;
+  process.stdout.write(`  ↳ slug "${slug}" już istnieje → wersjonuję jako "${effectiveSlug}"\n`);
+}
+
 const specTpl = readTemplate('docs/sdd/templates/spec.md');
 const planTpl = readTemplate('docs/sdd/templates/plan.md');
 const runTpl = readTemplate('docs/sdd/templates/run.md');
 
 const fill = (s) =>
   s
-    .replaceAll('{{slug}}', slug)
+    .replaceAll('{{slug}}', effectiveSlug)
     .replaceAll('{{verb}}', verb)
     .replaceAll('{{title}}', title)
     .replaceAll('{{date}}', TODAY)
     .replaceAll('{{stamp}}', STAMP);
 
-writeNew(`docs/specs/${slug}/spec.md`, fill(specTpl));
-writeNew(`docs/plans/${STAMP}_${verb}-${slug}.md`, fill(planTpl));
-writeNew(`docs/runs/${STAMP}_${slug}.md`, fill(runTpl));
+writeNew(`docs/specs/${effectiveSlug}/spec.md`, fill(specTpl));
+writeNew(`docs/plans/${STAMP}_${verb}-${effectiveSlug}.md`, fill(planTpl));
+writeNew(`docs/runs/${STAMP}_${effectiveSlug}.md`, fill(runTpl));
 
 process.stdout.write(
-  `\nTask: ${STAMP}_${slug}\n` +
-    `Next: /clarify ${slug}  →  /analyze  →  implement (delegate)  →  orchestrator verify (Opus)  →  pnpm verify\n` +
-    `Log every step (agent + model + outcome) into docs/runs/${STAMP}_${slug}.md\n`,
+  `\nTask: ${STAMP}_${effectiveSlug}\n` +
+    `Next: /clarify ${effectiveSlug}  →  /analyze  →  implement (delegate)  →  orchestrator verify (Opus)  →  pnpm verify\n` +
+    `Log every step (agent + model + outcome) into docs/runs/${STAMP}_${effectiveSlug}.md\n`,
 );
 process.exit(0);
 

@@ -49,6 +49,10 @@ Kształt → [`templates/spec.md`](templates/spec.md) · [`templates/plan.md`](t
 **każda zmiana przechodzi przez SDD, a zapis ląduje w `docs/`** (spec + plan + datowany
 run-log). Bramka `pnpm sdd:check` egzekwuje spójność spec↔plan (część `pnpm verify`).
 
+**Wersjonowanie zadań:** jeśli slug już istnieje (`docs/specs/<slug>/`), `pnpm workflow:specify`
+**nie nadpisuje** — tworzy kolejną wersję `<slug>-v2` / `-v3` / … (nowa iteracja tego samego
+zadania ma własny spec/plan/run-log). Historia poprzednich wersji zostaje w `docs/`.
+
 ## Telemetria (rozliczenie zamkniętego zadania)
 
 Krok **verify / DoD** domyka run-log sekcją **Rozliczenie / Telemetria**: zużyte **tokeny**
