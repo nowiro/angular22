@@ -19,7 +19,7 @@ Powiązane: spec `docs/specs/galileo-observability/spec.md` · plan `docs/plans/
 
 | #   | krok (SDD)                              | agent                     | model        | wynik / artefakt                                                | status |
 | --- | --------------------------------------- | ------------------------- | ------------ | --------------------------------------------------------------- | ------ |
-| 0   | doc-review (bramka wejścia)             | doc-reviewer              | Opus 4.8     | spec ↔ realia repo (Copilot-only, VS Code 1.119 OTel) spójne    | done   |
+| 0   | doc-review (bramka wejścia)             | doc-reviewer              | Gemini Flash | spec ↔ realia repo (Copilot-only, VS Code 1.121 OTel) spójne    | done   |
 | 1   | specify                                 | orchestrator              | Opus 4.8     | spec.md + plan.md + run.md scaffolded i wypełnione              | done   |
 | 2   | clarify (open questions `[?]`)          | orchestrator              | Opus 4.8     | backend / kolektor / env / zakres scoringu — do rozstrzygnięcia | todo   |
 | 3   | plan                                    | orchestrator              | Opus 4.8     | tabela zadań T000–T008 (config/docs, nie app-code)              | done   |
@@ -47,6 +47,12 @@ Powiązane: spec `docs/specs/galileo-observability/spec.md` · plan `docs/plans/
 - **UX z uruchomienia:** N/D (brak zmian w apce)
 - **Rozjazdy / zawrócone do specjalisty:** [?]
 - **Werdykt:** [?] go / no-go + jedno zdanie uzasadnienia
+
+## Raport błędów / napotkane problemy
+
+| #   | krok | błąd / problem | przyczyna | jak naprawiono | status |
+| --- | ---- | -------------- | --------- | -------------- | ------ |
+| 1   | [?]  | [?]            | [?]       | [?]            | [?]    |
 
 ## Rozliczenie / Telemetria
 

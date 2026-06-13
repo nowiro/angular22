@@ -88,6 +88,7 @@ export const COMMON_EN: Readonly<Record<string, string>> = {
   'Wypełniono wymagane': 'Filled required',
   'Wypełniono wszystkie': 'Filled all',
   'Otwórz panel narzędzi deweloperskich': 'Open developer tools panel',
+  'Narzędzia deweloperskie': 'Dev tools',
 
   // ── Validation — wrapper fallbacks (error-message.ts) ───────────────────
   'To pole jest wymagane.': 'This field is required.',

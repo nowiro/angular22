@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component, effect, inject, input } from '@angular/core';
 
 // The element entry (element.ts) is a SEPARATE bundle from main.ts; the feature lib is
-// lazy only in the standalone app's routes, while the element bundles the shell eagerly.
-// eslint-disable-next-line @nx/enforce-module-boundaries -- separate bundle entry, see above
+// lazy-loaded in the standalone app's routes but bundled eagerly into the element, so the
+// static import legitimately trips @nx/enforce-module-boundaries' lazy-load rule.
+// eslint-disable-next-line @nx/enforce-module-boundaries -- separate eager element bundle, see above
 import { WizardShellComponent } from '@angular22/business-wizard-feature';
 import { I18nStore } from '@angular22/shared-i18n';
 import { A22DevFillPanelComponent } from '@angular22/wizard-form-fill';

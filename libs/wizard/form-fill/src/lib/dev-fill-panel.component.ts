@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 
 import { FeatureFlagsStore } from '@angular22/shared-config';
 import { A22TranslatePipe } from '@angular22/shared-i18n';
@@ -24,7 +24,7 @@ export class A22DevFillPanelComponent {
   private readonly presets = inject(WIZARD_FILL_PRESETS);
   private readonly flags = inject(FeatureFlagsStore);
 
-  protected readonly visible = this.flags.isEnabled('dev-tools') && isLocalhost();
+  protected readonly visible = computed(() => this.flags.isEnabled('dev-tools') && isLocalhost());
   protected readonly expanded = signal(false);
   protected readonly lastAction = signal('');
 

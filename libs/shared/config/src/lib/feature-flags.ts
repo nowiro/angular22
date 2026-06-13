@@ -59,6 +59,20 @@ export const DEFAULT_APP_CONFIG: AppConfig = {
   },
 };
 
+/**
+ * A config-supplied `element` is only honored when COMPLETE (both `scriptUrl`
+ * and `tagName` strings) — a partial would otherwise replace the default and
+ * leave `tagName: undefined`, which `ElementLoader` can never resolve.
+ */
+function isCompleteElement(value: unknown): value is ElementConfig {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    typeof (value as ElementConfig).scriptUrl === 'string' &&
+    typeof (value as ElementConfig).tagName === 'string'
+  );
+}
+
 /** Deep-merges a partial `config.json` payload over the defaults. */
 export function mergeAppConfig(raw: unknown): AppConfig {
   if (raw === null || typeof raw !== 'object') return DEFAULT_APP_CONFIG;
@@ -73,7 +87,7 @@ export function mergeAppConfig(raw: unknown): AppConfig {
     merged[id] = {
       enabled: partial.enabled ?? base.enabled,
       standaloneUrl: partial.standaloneUrl ?? base.standaloneUrl,
-      element: partial.element ?? base.element,
+      element: isCompleteElement(partial.element) ? partial.element : base.element,
     };
   }
   return { features: merged as Record<FeatureId, FeatureConfig> };

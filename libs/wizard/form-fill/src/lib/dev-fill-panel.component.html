@@ -1,4 +1,4 @@
-@if (visible) {
+@if (visible()) {
   <div
     class="panel"
     data-testid="dev-fab"
@@ -13,7 +13,7 @@
     >
       <a22-icon [name]="expanded() ? 'expand_more' : 'auto_fix_high'" />
       @if (expanded()) {
-        <span>Dev tools</span>
+        <span>{{ 'Narzędzia deweloperskie' | a22T }}</span>
       }
     </button>
 

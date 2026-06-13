@@ -19,7 +19,7 @@ Orkiestracja multi-agent (orchestrator Opus 4.8 → ~30 ukrytych subagentów →
 krok verify) — wpisywana z palca, bez trace per krok, bez scoringu jakości wyboru narzędzia,
 bez kosztu/latencji per delegacja.
 
-Co to odblokowuje **teraz**: od **VS Code 1.119** (maj 2026) Copilot agent mode (łącznie z
+Co to odblokowuje **teraz**: od **VS Code 1.121** (baseline repo) Copilot agent mode (łącznie z
 agentem Claude) emituje **trace OpenTelemetry** wg GenAI semantic conventions — root
 `invoke_agent` z zagnieżdżonymi spanami `chat` / `execute_tool` / `execute_hook` (czyli nasze
 delegacje do subagentów i wywołania MCP stają się spanami, z tokenami i latencją). Włączane przez
@@ -38,7 +38,7 @@ była zasilana **realnymi danymi**, a regresje jakości/kosztu były widoczne za
 
 > Given / When / Then. Bądź konkretny — to jedyna **egzekwowana** sekcja (`sdd:check`).
 
-- **AC1 (trace per krok):** Given VS Code ≥ 1.119 z `github.copilot.chat.otel.enabled: true`
+- **AC1 (trace per krok):** Given VS Code ≥ 1.121 z `github.copilot.chat.otel.enabled: true`
   wskazującym kolektor, When przebiega drabina SDD (specify→…→verify), Then każdy request tworzy
   root span `invoke_agent` z zagnieżdżonymi `chat` / `execute_tool` widocznymi w backendzie.
 - **AC2 (koszt + latencja):** Given trace z AC1, When otwieram span kroku, Then widzę tokeny

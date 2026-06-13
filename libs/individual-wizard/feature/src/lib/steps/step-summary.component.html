@@ -9,7 +9,7 @@
     <p class="banner__title">{{ 'Formularz zawiera braki:' | a22T }}</p>
     <ul>
       @for (message of blockers(); track message) {
-        <li>{{ message }}</li>
+        <li>{{ message | a22T }}</li>
       }
     </ul>
   </div>
@@ -91,7 +91,7 @@
   @for (item of data().consents.items; track item.key) {
     <a22-summary-row
       [value]="(item.granted ? '✓ udzielona' : '✗ brak') | a22T"
-      [label]="item.label"
+      [label]="item.label | a22T"
     />
   }
 </section>

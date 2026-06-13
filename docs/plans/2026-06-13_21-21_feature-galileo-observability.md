@@ -28,7 +28,7 @@ agents: [orchestrator, doc-reviewer, docs, stack-guardian, security, reviewer]
 
 | id   | title                                       | agent        | done_when                                                                                                    | status | model        | blocked_by |
 | ---- | ------------------------------------------- | ------------ | ------------------------------------------------------------------------------------------------------------ | ------ | ------------ | ---------- |
-| T000 | doc-review (bramka wejścia)                 | doc-reviewer | spec ↔ realia repo (Copilot-only, VS Code 1.119 OTel) spójne; STOP na niejasności                            | done   | Gemini Flash | —          |
+| T000 | doc-review (bramka wejścia)                 | doc-reviewer | spec ↔ realia repo (Copilot-only, VS Code 1.121 OTel) spójne; STOP na niejasności                            | done   | Gemini Flash | —          |
 | T001 | Spec — outcome + AC                         | orchestrator | spec.md istnieje; AC1–AC6 konkretne                                                                          | done   | Opus 4.8     | T000       |
 | T002 | clarify — domknij open questions (`[?]`)    | orchestrator | backend (Galileo cloud vs spike OTel), kolektor, nazwa env, zakres scoringu rozstrzygnięte                   | todo   | Opus 4.8     | T001       |
 | T003 | Spike: włącz `copilot.chat.otel` → kolektor | orchestrator | 1 przebieg SDD → spany `invoke_agent`/`chat`/`execute_tool` widoczne (AC1, AC2)                              | todo   | Opus 4.8     | T002       |
@@ -44,7 +44,7 @@ agents: [orchestrator, doc-reviewer, docs, stack-guardian, security, reviewer]
   dotyka `apps/*` / `libs/*` — stąd brak Vitest/Playwright (patrz uwaga nad tabelą). „Testem" jest
   smoke trace (T007) + `pnpm verify` (T008).
 - **Inwariant repo:** Copilot-only, zero `.github/workflows/`. Galileo wpinamy przez OTel-export
-  Copilota (VS Code 1.119), **nie** przez Actions ani kod apki. Klucz/endpoint **tylko env**.
+  Copilota (VS Code 1.121), **nie** przez Actions ani kod apki. Klucz/endpoint **tylko env**.
 - **Ryzyko / odwracalność:** wybór Galileo cloud (płatny eval) vs spike OTel-only (Langfuse/Phoenix,
   free, ten sam endpoint) — **odwracalny** dzięki standardowi OTel: backend można podmienić bez
   zmiany instrumentacji. Rekomendacja: spike OTel-only → potem decyzja o płatnej warstwie eval (T002).

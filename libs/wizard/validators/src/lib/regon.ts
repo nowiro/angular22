@@ -6,7 +6,7 @@
  */
 
 export function isValidRegon(value: string): boolean {
-  const digits = value.replaceAll(/\s+/g, '');
+  const digits = value.replaceAll(/[\s-]/g, '');
   if (digits.length !== 9 && digits.length !== 14) return false;
   if (!/^\d+$/.test(digits)) return false;
 
