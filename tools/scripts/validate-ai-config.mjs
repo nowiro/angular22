@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Validates the GitHub Copilot configuration surface for angular22.
- * Adapted from the canonical mcp-workspace/tools/scripts/validate-ai-config.mjs.
+ * Repo-local gate for the GitHub Copilot config (agents/skills/prompts/instructions + mcp.json).
  *
  *   - .vscode/mcp.json conforms to the expected shape (servers with command + args)
  *   - .github/copilot-instructions.md exists

@@ -9,7 +9,7 @@ created: '2026-06-13'
 # Spec: Genericyzacja danych demo — usunięcie realnych nazw
 
 > Artefakt SDD **wersjonowany** w `docs/specs/`. Kanon kształtu:
-> `mcp-workspace/docs/sdd/templates/spec.md`.
+> `docs/sdd/templates/spec.md`.
 
 ## Kontekst
 

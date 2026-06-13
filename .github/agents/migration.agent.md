@@ -32,8 +32,8 @@ Verb SDD `deps` z **breaking change** / przeskokiem majora frameworka, **lub** g
 2. **Angular:** `pnpm ng update @angular/core @angular/cli` (+ `@angular/material` razem) — wersje
    Angular ↔ Material **muszą być spójne**; stosuj zaproponowane schematics/codemody.
 3. **Lockfile:** `pnpm install` (nigdy `npm`; `preinstall: only-allow pnpm`).
-4. **Bramka:** `pnpm verify` (format:check + ai:validate + sdd:check + lint + typecheck + test +
-   build) musi być **zielona** + dotknięte `pnpm e2e` zielone. Rozjazd frameworkowy po migracji →
+4. **Bramka:** `pnpm verify` (pełna bramka; skład → [`AGENTS.md`](../../AGENTS.md#komendy)) musi
+   być **zielona** + dotknięte `pnpm e2e` zielone. Rozjazd frameworkowy po migracji →
    fix tutaj albo **deleguj** do `angular-engineer`.
 
 ## Delegacja (nie zgadujesz)

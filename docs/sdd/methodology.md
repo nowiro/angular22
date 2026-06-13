@@ -1,10 +1,10 @@
 # SDD (Spec-Driven Development) — angular22
 
-> **Kanon metodologii** żyje w `mcp-workspace/docs/sdd/methodology.md` (inspiracja:
-> [github/spec-kit](https://github.com/github/spec-kit)). Ten plik to repo-lokalna
-> adaptacja: verby, agenci, bramki i komendy specyficzne dla angular22. Warstwa
-> wykonywalna (`validate-sdd.mjs`, `workflow-specify.mjs`, prompty `/clarify` +
-> `/analyze`) jest kopią kanonu — synchronizuj stamtąd.
+> **Kanon metodologii** SDD dla angular22 — **ten plik** (inspiracja:
+> [github/spec-kit](https://github.com/github/spec-kit)). Repo-lokalna adaptacja: verby,
+> agenci, bramki i komendy specyficzne dla angular22. Warstwa wykonywalna żyje w repo:
+> `tools/scripts/validate-sdd.mjs` + `tools/scripts/workflow-specify.mjs`, prompty `/clarify` +
+> `/analyze` w `.github/prompts/`.
 
 ## Cykl (mapowanie na spec-kit)
 
@@ -15,7 +15,7 @@
 | `/speckit.specify`      | `pnpm workflow:specify -- --verb=… --slug=…` | `docs/specs/<slug>/spec.md` (z `[?]`)                                                 |
 | `/speckit.clarify`      | `/clarify <slug>`                            | domyka `[?]`, `status: draft → clarified`                                             |
 | `/speckit.plan`         | orchestrator (plan-first)                    | `docs/plans/<stamp>_<verb>-<slug>.md`                                                 |
-| `/speckit.tasks`        | **folded** w tabelę planu                    | `id \| title \| agent \| done_when`                                                   |
+| `/speckit.tasks`        | **folded** w tabelę planu                    | `id \| title \| agent \| done_when \| status \| model \| blocked_by`                  |
 | `/speckit.analyze`      | `/analyze`                                   | raport go/no-go (read-only)                                                           |
 | `/speckit.implement`    | delegacja do specjalisty (subagenta)         | kod + testy                                                                           |
 

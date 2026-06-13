@@ -20,7 +20,7 @@ Zakres ≥2 plików / zmiana behaviour → pełna drabina (inaczej: edycja in-fi
 1. **specify** — `pnpm workflow:specify -- --verb=feature --slug=<slug>`; scaffold
    `spec.md` (z `[?]`) + `plan.md` + datowany `run.md`.
 2. **clarify** — [`/clarify`](./clarify.prompt.md) domyka każde `[?]`; bez tego plan stoi.
-3. **plan** — tabela `id | title | agent | done_when | model` z **obowiązkową trójką
+3. **plan** — tabela `id | title | agent | done_when | status | model | blocked_by` z **obowiązkową trójką
    testową**: scenariusze (z AC) + **Vitest** (`@nx/vitest:test`) + **Playwright**
    (`@nx/playwright:playwright`). Brak którejkolwiek pozycji = **no-go**.
 4. **analyze** — [`/analyze`](./analyze.prompt.md) → jednoznaczne **go / no-go**.

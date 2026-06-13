@@ -22,9 +22,9 @@ agents: [orchestrator, pixel-perfect]
 | T000 | doc-review (bramka wejścia)                                                                               | doc-reviewer        | **n/d** — zmiana tooling AI, brak ticketu/mockupów | done   | Gemini Flash | —          |
 | T001 | Spec + AC                                                                                                 | orchestrator        | spec.md bez `[?]`                                  | done   | Opus 4.8     | T000       |
 | T002 | Draft + land agent `pixel-perfect`                                                                        | workflow (1 subag.) | `pixel-perfect.agent.md` grounded                  | done   | Opus 4.8     | T001       |
-| T003 | Wire: orchestrator routing + `AGENTS.md` (wiersz + tier) + copilot-instructions + mcp-usage (browser-MCP) | orchestrator        | `pixel-perfect` wpięty                             | todo   | Opus 4.8     | T002       |
-| T004 | Bramki: `ai:validate` (30) + `sdd:check` + `prettier`                                                     | reviewer            | wszystkie green                                    | todo   | Gemini Flash | T003       |
-| T005 | Verify + run-log + telemetria                                                                             | orchestrator        | go + commit                                        | todo   | Opus 4.8     | T004       |
+| T003 | Wire: orchestrator routing + `AGENTS.md` (wiersz + tier) + copilot-instructions + mcp-usage (browser-MCP) | orchestrator        | `pixel-perfect` wpięty                             | done   | Opus 4.8     | T002       |
+| T004 | Bramki: `ai:validate` (30) + `sdd:check` + `prettier`                                                     | reviewer            | wszystkie green                                    | done   | Gemini Flash | T003       |
+| T005 | Verify + run-log + telemetria                                                                             | orchestrator        | go + commit                                        | done   | Opus 4.8     | T004       |
 
 ## Notatki
 

@@ -49,7 +49,8 @@ Pytanie / trywialna edycja in-file → wprost. **≥2 plików lub zmiana behavio
 1. **specify** — `pnpm workflow:specify -- --verb=<verb> --slug=<slug>` (verb: `feature` ·
    `component` · `fix` / `refactor` / `deps` / `chore` / `security`) → `spec.md`.
 2. **clarify** — `/clarify` domyka `[?]`.
-3. **plan** — tabela `id | title | agent | done_when | status` (**kolumna `status`**); trójka testowa.
+3. **plan** — tabela `id | title | agent | done_when | status | model | blocked_by` (schemat →
+   [`templates/plan.md`](../../docs/sdd/templates/plan.md)); trójka testowa.
 4. **analyze** — `/analyze` → go / no-go.
 5. **implement** — deleguj (specjalista czyta `code-quality.instructions` + `angular.instructions`
    PRZED kodem — lint **z miejsca**).
@@ -75,8 +76,7 @@ Zanim ogłosisz Done, sam przejrzyj pracę tańszych modeli:
 
 1. **Diff** — realizuje spec/AC, bez regresji i scope-creep (opinia `reviewer` pomocnicza,
    werdykt Twój).
-2. **Bramka** — `pnpm verify` zielone (format:check + ai:validate + sdd:check + lint +
-   typecheck + test + build).
+2. **Bramka** — `pnpm verify` zielone (pełna bramka; skład → [`AGENTS.md`](../../AGENTS.md#komendy)).
 3. **Testy** — scenariusze pokrywają każde AC; Vitest + e2e zielone; brak `.skip`/`.only`.
 4. **UX z uruchomienia** — werdykt `ux-verifier` (nigdy z czytania kodu).
 5. **Run-log** — domknij sekcją „Weryfikacja końcowa"; rozjazd → zawróć do specjalisty.

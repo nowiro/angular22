@@ -60,7 +60,7 @@ ustawiasz globalnie w pickerze VS Code.
   `prompts/`: `/clarify`, `/analyze`, `/brainstorming`, `/feature-dev`; `skills/`:
   `angular-developer`, `angular-new-app`, `signal-forms`, `material-wrappers`, `nx-generators`,
   `frontend-design`, `code-review`, `security-guidance`, `ai-config-quality`).
-- `docs/sdd/` — metodologia SDD (adaptacja spec-kit; kanon w `mcp-workspace`).
+- `docs/sdd/` — metodologia SDD (adaptacja spec-kit; kanon: [`docs/sdd/methodology.md`](docs/sdd/methodology.md)).
   Artefakty `docs/specs|plans|runs` — **wersjonowane w gicie** (każda zmiana przez SDD → zapis w `docs/`).
 - **Brak** `CLAUDE.md` / `.claude/` / `.ai/` / `.github/workflows/` — Copilot-only, zero Actions.
 
@@ -84,12 +84,12 @@ pnpm install
 
 ## Komendy
 
-| Komenda                                              | Co robi                                                                                |
-| ---------------------------------------------------- | -------------------------------------------------------------------------------------- |
-| `pnpm verify`                                        | Pełna bramka: format:check + ai:validate + sdd:check + lint + typecheck + test + build |
-| `pnpm ai:validate`                                   | Config Copilot (1 widoczny agent, frontmattery, mcp.json)                              |
-| `pnpm sdd:check`                                     | Bramka SDD (spec↔plan, traceability)                                                   |
-| `pnpm workflow:specify -- --verb=<v> --slug=<s>`     | Scaffold spec + plan + datowany run-log                                                |
-| `pnpm e2e`                                           | Wszystkie suity Playwright (`--parallel=1`)                                            |
-| `pnpm start` / `start:individual` / `start:business` | Serve apek (portal 4200 / individual 4201 / business 4202)                             |
-| `pnpm nx g @nx/angular:component <name>`             | Nowy komponent (SCSS + OnPush + 3 pliki + prefix `a22`)                                |
+| Komenda                                              | Co robi                                                                                                                     |
+| ---------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `pnpm verify`                                        | Pełna bramka (= skrypt `verify` w `package.json`): format:check + ai:validate + sdd:check + lint + typecheck + test + build |
+| `pnpm ai:validate`                                   | Config Copilot (1 widoczny agent, frontmattery, mcp.json)                                                                   |
+| `pnpm sdd:check`                                     | Bramka SDD (spec↔plan, traceability)                                                                                        |
+| `pnpm workflow:specify -- --verb=<v> --slug=<s>`     | Scaffold spec + plan + datowany run-log                                                                                     |
+| `pnpm e2e`                                           | Wszystkie suity Playwright (`--parallel=1`)                                                                                 |
+| `pnpm start` / `start:individual` / `start:business` | Serve apek (portal 4200 / individual 4201 / business 4202)                                                                  |
+| `pnpm nx g @nx/angular:component <name>`             | Nowy komponent (SCSS + OnPush + 3 pliki + prefix `a22`)                                                                     |

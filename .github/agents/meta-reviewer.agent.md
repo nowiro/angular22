@@ -24,7 +24,8 @@ Bliźniacy read-only: [`reviewer`](reviewer.agent.md) (diff kodu) i [`security`]
    (filozofia repo: „inne pliki tu wskazują"). Łap zduplikowaną prozę między `copilot-instructions`,
    `AGENTS.md` i frontmatterami agentów — kanon zostaje, reszta linkuje.
 2. **Single-responsibility** — każdy agent **jedna jasna rola**; szukaj overlapu/duplikatów
-   zakresu względem 19-osobowego rosteru w [`AGENTS.md`](../../AGENTS.md).
+   zakresu względem rosteru w [`AGENTS.md`](../../AGENTS.md) (źródło prawdy o agentach i ich
+   liczbie — nie hardkoduj liczby tutaj).
 3. **Granice** — sekcja `Granica`/`Hand-off`/`NIE` jednoznaczna, hand-off wskazuje **właściwego**
    właściciela; brak luk i kolizji odpowiedzialności.
 4. **House-style** — PL proza + EN dla kodu/ścieżek, gęstość (~30-50 linii), sekcje wg typu,

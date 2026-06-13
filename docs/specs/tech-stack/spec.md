@@ -9,7 +9,7 @@ created: '2026-06-13'
 # Spec: Kanon tech-stack + agent `stack-guardian`
 
 > Artefakt SDD **wersjonowany** w `docs/specs/`. Kanon kształtu:
-> `mcp-workspace/docs/sdd/templates/spec.md`.
+> `docs/sdd/templates/spec.md`.
 
 ## Kontekst
 

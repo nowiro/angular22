@@ -68,8 +68,8 @@ zwięźle: wynik ponad proces.
 
 ## Definition of Done
 
-`pnpm verify` zielone (format:check + ai:validate + sdd:check + lint + typecheck + test +
-build) + dotknięte `e2e` zielone + UX z uruchomienia. **Weryfikacja końcowa orchestratora
+`pnpm verify` zielone (pełna bramka; skład → [`AGENTS.md`](../AGENTS.md#komendy) / skrypt
+`verify` w `package.json`) + dotknięte `e2e` zielone + UX z uruchomienia. **Weryfikacja końcowa orchestratora
 (Opus)** + **Rozliczenie / Telemetria** (tokeny, kredyty, background taski, sesje) zapisane
 w run-logu. Po zmianie agentów / modeli: **Reload Window**.
 

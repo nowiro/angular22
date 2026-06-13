@@ -9,7 +9,7 @@ created: '{{date}}'
 # Spec: {{title}}
 
 > Artefakt SDD **wersjonowany** w `docs/specs/`. Kanon kształtu:
-> `mcp-workspace/docs/sdd/templates/spec.md`. Domknij `[?]` przez `/clarify` przed planem.
+> `docs/sdd/templates/spec.md`. Domknij `[?]` przez `/clarify` przed planem.
 
 ## Kontekst
 

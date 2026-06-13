@@ -9,7 +9,7 @@ created: '2026-06-13'
 # Spec: Agent `pixel-perfect` — wierność wizualna i RWD vs mockupy
 
 > Artefakt SDD **wersjonowany** w `docs/specs/`. Kanon kształtu:
-> `mcp-workspace/docs/sdd/templates/spec.md`.
+> `docs/sdd/templates/spec.md`.
 
 ## Kontekst
 

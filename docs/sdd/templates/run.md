@@ -36,7 +36,7 @@ Powiązane: spec `docs/specs/{{slug}}/spec.md` · plan `docs/plans/{{stamp}}_{{v
 > Wypełnij **na samym końcu**, na Opusie — ostatnia bramka jakości nad pracą tańszych modeli.
 
 - **Diff vs spec/AC:** [?] czy zmiana realizuje Acceptance criteria, bez regresji i scope-creep
-- **`pnpm verify`:** [?] wynik (format:check + lint + typecheck + test + build + ai:validate + sdd:check)
+- **`pnpm verify`:** [?] wynik (pełna bramka; skład → `AGENTS.md` §Komendy)
 - **Pokrycie spec ↔ kod:** [?] każde AC ma odzwierciedlenie w kodzie/testach
 - **Testy:** [?] scenariusze pokrywają każde AC · Vitest + e2e zielone · brak `.skip`/`.only`
 - **UX z uruchomienia:** [?] werdykt ux-verifier (nie z czytania kodu)

@@ -94,8 +94,8 @@ Zmiana stacku (nowa zależność, bump majora, wymiana technologii) **nigdy** ad
    (wersja exact + wpis w odpowiedniej warstwie/tabeli powyżej). Przy bumpie bloku — cały blok.
 4. **`stack-guardian`** weryfikuje zgodność: reguły spójności wersji + brak off-stack + tabela ==
    `package.json` ([`.github/agents/stack-guardian.agent.md`](../.github/agents/stack-guardian.agent.md)).
-5. **`pnpm verify`** zielone (format:check + ai:validate + sdd:check + lint + typecheck + test +
-   build) + datowany run-log w `docs/runs/`.
+5. **`pnpm verify`** zielone (pełna bramka; skład → [`AGENTS.md`](../AGENTS.md#komendy)) +
+   datowany run-log w `docs/runs/`.
 
 Rozjazd tabela ↔ `package.json` = **bug** (DoD nie spełnione). Ten plik jest kanonem — przy
 sprzeczności wygrywa `package.json`, a plik natychmiast się wyrównuje.

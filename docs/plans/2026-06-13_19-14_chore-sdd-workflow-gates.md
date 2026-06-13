@@ -24,9 +24,9 @@ agents: [orchestrator, doc-reviewer, scm]
 | T002 | Draft + land agent `doc-reviewer`                                          | workflow (1 subag.) | `doc-reviewer.agent.md` grounded | done   | Opus 4.8     | T001       |
 | T003 | Sformalizuj workflow orchestratora (0. doc-review, STOP, commit per krok)  | orchestrator        | jawna drabina + bramki           | done   | Opus 4.8     | T001       |
 | T004 | Kanon + szablony: methodology + `plan.md` (status) + `run.md` (doc-review) | orchestrator        | spójne                           | done   | Opus 4.8     | T003       |
-| T005 | Twarde reguły `copilot-instructions`; wire `AGENTS.md` (wiersz + tier)     | orchestrator        | `doc-reviewer` wpięty            | todo   | Opus 4.8     | T002, T003 |
-| T006 | Bramki: `ai:validate` (29) + `sdd:check` + `prettier`                      | reviewer            | wszystkie green                  | todo   | Gemini Flash | T004, T005 |
-| T007 | Verify + run-log + telemetria                                              | orchestrator        | go + commit                      | todo   | Opus 4.8     | T006       |
+| T005 | Twarde reguły `copilot-instructions`; wire `AGENTS.md` (wiersz + tier)     | orchestrator        | `doc-reviewer` wpięty            | done   | Opus 4.8     | T002, T003 |
+| T006 | Bramki: `ai:validate` (29) + `sdd:check` + `prettier`                      | reviewer            | wszystkie green                  | done   | Gemini Flash | T004, T005 |
+| T007 | Verify + run-log + telemetria                                              | orchestrator        | go + commit                      | done   | Opus 4.8     | T006       |
 
 ## Notatki
 

@@ -2,7 +2,7 @@
 /**
  * validate-sdd.mjs — cross-artifact Spec-Driven-Development consistency gate.
  *
- * CANONICAL SOURCE: mcp-workspace/tools/scripts/validate-sdd.mjs — sync from there. Repo-local SDD notes: docs/sdd/methodology.md.
+ * Repo-local SDD gate. Methodology, verbs and ladder: docs/sdd/methodology.md.
  *
  * Deterministic STRUCTURAL checks over docs/specs/ + docs/plans/ (the artifacts the
  * SDD specify step emits). The SEMANTIC layer — does the plan actually cover the

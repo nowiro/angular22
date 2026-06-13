@@ -87,8 +87,9 @@ to each app/feature (`*-translations.en.ts`); a missing entry falls back to Poli
 The repo follows an SDD ladder adapted from [github/spec-kit](https://github.com/github/spec-kit)
 (`docs/sdd/methodology.md`): `pnpm workflow:specify` → `/clarify` → plan → `/analyze` →
 implement → orchestrator verify → `pnpm verify`. GitHub Copilot is configured with **one
-visible agent** (`orchestrator`, Opus-class) and 9 hidden specialists ([`AGENTS.md`](AGENTS.md)),
-plus skills (`signal-forms`, `material-wrappers`, `nx-generators`) and auto-applied
+visible agent** (`orchestrator`, Opus-class) and a bench of hidden specialists (full roster +
+models → [`AGENTS.md`](AGENTS.md)), plus skills (`.github/skills/`, listed in
+[`copilot-instructions`](.github/copilot-instructions.md)) and auto-applied
 instructions that make generated code pass ESLint on the first try. Gates: `pnpm ai:validate`
 (exactly 1 visible agent, frontmatter, mcp.json) and `pnpm sdd:check` (spec↔plan traceability).
 

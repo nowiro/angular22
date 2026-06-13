@@ -9,7 +9,7 @@ created: '2026-06-13'
 # Spec: Copilot AI tooling: agenci, skille, prompty + SDD-tracked docs i telemetria
 
 > Artefakt SDD **wersjonowany** w `docs/specs/`. Kanon kształtu:
-> `mcp-workspace/docs/sdd/templates/spec.md`.
+> `docs/sdd/templates/spec.md`.
 
 ## Kontekst
 

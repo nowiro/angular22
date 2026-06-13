@@ -9,7 +9,7 @@ created: '2026-06-13'
 # Spec: Konsolidacja agentów `angular` + nowi agenci `accessibility` / `performance` / `i18n`
 
 > Artefakt SDD **wersjonowany** w `docs/specs/`. Kanon kształtu:
-> `mcp-workspace/docs/sdd/templates/spec.md`.
+> `docs/sdd/templates/spec.md`.
 
 ## Kontekst
 
