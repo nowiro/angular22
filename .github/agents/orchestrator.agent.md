@@ -52,10 +52,12 @@ Pytanie / trywialna edycja in-file → wprost. **≥2 plików lub zmiana behavio
 3. **plan** — tabela `id | title | agent | done_when | status | model | blocked_by` (schemat →
    [`templates/plan.md`](../../docs/sdd/templates/plan.md)); trójka testowa.
 4. **analyze** — `/analyze` → go / no-go.
-5. **implement** — deleguj (specjalista czyta `code-quality.instructions` + `angular.instructions`
+5. **checklist** — `/checklist`: bramka jakości **PRZED kodem** (wymagania / testy per rola / DRY-SOLID /
+   a11y / security / DoD); krytyczna pozycja niezaznaczona = **no-go**.
+6. **implement** — deleguj (specjalista czyta `code-quality.instructions` + `angular.instructions`
    PRZED kodem — lint **z miejsca**).
-6. **verify** — Ty / Opus (niżej).
-7. **DoD** — `pnpm verify`.
+7. **verify** — Ty / Opus (niżej).
+8. **DoD** — `pnpm verify`.
 
 **STOP na niejasności (twarda bramka):** na **KAŻDYM** kroku, jeśli cokolwiek niejasne /
 sprzeczne / niepełne → **zatrzymaj się i zapytaj** (lub zostaw `[?]`), **nie zgaduj**. Niejasność
@@ -71,6 +73,27 @@ Każda iteracja → **datowany run-log** `docs/runs/...` (krok = agent + model +
 (`@nx/vitest:test`) → e2e Playwright (`@nx/playwright:playwright`; **przeklika wszystkie elementy
 interaktywne per rola**; debug serwerem MCP `playwright`). **Testy integracyjne — gdy API dostępne**.
 Brak którejkolwiek = **no-go**.
+
+## Nowe aplikacje i liby (najwyższa jakość)
+
+Tworzenie/modyfikacja apki lub liba idzie **pełną drabiną** (wyżej) + reguły strukturalne — **zawsze
+przez generator Nx**, nigdy ręcznie:
+
+- **Lib:** `pnpm nx g @nx/angular:library` (lub mirror sąsiedniego liba) → tag **`scope:*` + `type:*`**
+  wg granic (`type:util`→tylko util; `feature`→ui/util/data-access/feature — egzekwuje
+  `@nx/enforce-module-boundaries`); publiczne API **tylko** `src/index.ts` (reszta `no-barrel-files`);
+  alias `@angular22/<lib>` w `tsconfig.base.json`; plumbing (`project.json`/`tsconfig*`/`vitest.config`/
+  `eslint.config`) jak w sąsiednim libie. **Współdzielony bootstrap → `@angular22/app-platform`** (nie
+  duplikuj providerów w `app.config`).
+- **Komponent:** `pnpm nx g @nx/angular:component --path=… --type=component --skipTests` (a22 + OnPush +
+  SCSS, 3 pliki); styl współdzielony → **globalne `styles.scss`** (nie kopiuj do enkapsulowanego komponentu).
+- **Testy:** logika domenowa = **unit pure** (Vitest, **bez TestBed** — repo jest TestBed-free);
+  kompozycja providerów / komponenty / RBAC = **e2e** (Playwright, **per rola**). Brak logiki do
+  unit-testu → `passWithNoTests` + pokrycie e2e (odnotuj w run-logu).
+- **Stack:** nowa zależność jest **off-stack** dopóki nie przejdzie przez SDD (`deps`) + wpis w
+  `docs/tech-stack.md` + akceptację `stack-guardian`; pinuj **exact**.
+- **Bramka jakości:** `/checklist` PRZED kodem; DoD = `pnpm verify` + dotknięte `e2e` zielone + UX z
+  uruchomienia + re-weryfikacja (niżej).
 
 ## Weryfikacja końcowa (Ty / Opus — re-weryfikacja po testach)
 
