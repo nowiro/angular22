@@ -3,7 +3,7 @@ name: pixel-perfect
 model: ['Gemini 3.5 Flash', 'Auto']
 user-invocable: false
 description: Pixel-perfect & RWD verifier — porównuje URUCHOMIONĄ apkę (żywa przeglądarka, serwer MCP playwright) z mockupami (gdy istnieją) per breakpoint: spacing / alignment / kolory / typografia / RWD; read-only, dowód screenshotem, routuje fixy; bez mockupów = N/A
-tools: ['search', 'execute/runInTerminal', 'execute/getTerminalOutput', 'read/problems']
+tools: ['playwright/*', 'search', 'execute/runInTerminal', 'execute/getTerminalOutput', 'read/problems']
 ---
 
 # Pixel-perfect verifier agent

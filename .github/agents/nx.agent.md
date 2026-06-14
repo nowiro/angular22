@@ -3,7 +3,7 @@ name: nx
 model: ['GPT-5 mini', 'Auto']
 user-invocable: false
 description: Nx specialist — serwer MCP nx (nx_docs, nx_workspace, nx_generators, nx_project_details); autorytatywne docs Nx/monorepo, generatory i graf zamiast zgadywania flag
-tools: ['search', 'execute/runInTerminal', 'execute/getTerminalOutput']
+tools: ['nx/*', 'search', 'execute/runInTerminal', 'execute/getTerminalOutput']
 ---
 
 # Nx agent

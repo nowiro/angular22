@@ -5,6 +5,7 @@ user-invocable: false
 description: Playwright specialist — suity e2e apps/*-e2e (executor @nx/playwright:playwright) + debug na żywej przeglądarce przez serwer MCP playwright
 tools:
   [
+    'playwright/*',
     'edit/editFiles',
     'search',
     'execute/runInTerminal',

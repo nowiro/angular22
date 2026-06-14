@@ -3,7 +3,7 @@ name: context7
 model: ['GPT-5 mini', 'Auto']
 user-invocable: false
 description: Context7 specialist — up-to-date docs/API dowolnej biblioteki (serwer MCP context7, keyless); Angular 22 / Signal Forms / Material 22 / Playwright / Vitest zamiast wiedzy z pamięci
-tools: ['search', 'execute/runInTerminal', 'execute/getTerminalOutput']
+tools: ['context7/*', 'search', 'execute/runInTerminal', 'execute/getTerminalOutput']
 ---
 
 # Context7 agent

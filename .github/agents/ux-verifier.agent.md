@@ -3,7 +3,8 @@ name: ux-verifier
 model: ['Gemini 3.5 Flash', 'Auto']
 user-invocable: false
 description: UX/UI verifier — audytuje URUCHOMIONĄ apkę na żywej przeglądarce (serwer MCP playwright), nie z kodu; overflow, nakładki, RWD per breakpoint, kontrast/focus/stany; read-only, routuje fixy
-tools: ['search', 'execute/runInTerminal', 'execute/getTerminalOutput', 'read/problems']
+tools:
+  ['playwright/*', 'search', 'execute/runInTerminal', 'execute/getTerminalOutput', 'read/problems']
 ---
 
 # UX/UI verifier agent

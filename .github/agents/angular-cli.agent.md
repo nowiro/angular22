@@ -3,7 +3,7 @@ name: angular-cli
 model: ['GPT-5 mini', 'Auto']
 user-invocable: false
 description: Angular CLI specialist — serwer MCP `angular-cli` (get_best_practices / search_documentation / find_examples / list_projects); autorytatywne best-practices Angular 22 / Signal Forms / Material zamiast wiedzy z pamięci
-tools: ['search', 'execute/runInTerminal', 'execute/getTerminalOutput']
+tools: ['angular-cli/*', 'search', 'execute/runInTerminal', 'execute/getTerminalOutput']
 ---
 
 # Angular CLI agent
