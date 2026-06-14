@@ -33,7 +33,7 @@ SDD verb `deps` with a **breaking change** / framework major jump, **or** when `
 2. **Angular:** `pnpm ng update @angular/core @angular/cli` (+ `@angular/material` together) — Angular ↔
    Material versions **must be consistent**; apply the proposed schematics/codemods.
 3. **Lockfile:** `pnpm install` (never `npm`; `preinstall: only-allow pnpm`).
-4. **Gate:** `pnpm verify` (full gate; composition → [`AGENTS.md`](../../AGENTS.md#komendy)) must
+4. **Gate:** `pnpm verify` (full gate; composition → [`AGENTS.md`](../../AGENTS.md#commands)) must
    be **green** + touched `pnpm e2e` green. Framework drift after a migration →
    fix here or **delegate** to `angular-engineer`.
 

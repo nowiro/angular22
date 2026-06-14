@@ -1,48 +1,48 @@
 ---
 type: template
 for: test-strategy
-description: Kształt odpowiedzi agenta test-strategy — scenariusze z AC + macierz RBAC + luki pokrycia
+description: Shape of the test-strategy agent response — scenarios from AC + RBAC matrix + coverage gaps
 ---
 
-# Szablon: scenariusze testowe (z Acceptance criteria)
+# Template: test scenarios (from Acceptance criteria)
 
-> Kanon kształtu odpowiedzi [`test-strategy`](../../../.github/agents/test-strategy.agent.md).
-> Wejście: sekcja `## Acceptance criteria` specu (`docs/specs/<slug>/spec.md`). Wyjście: **trójka
-> testowa** ([`../methodology.md`](../methodology.md) §Trójka testowa) jako wejście do planu.
-> Read-only — wykonanie: `vitest` (unit) / `playwright` (e2e).
+> Canonical response shape for [`test-strategy`](../../../.github/agents/test-strategy.agent.md).
+> Input: the spec's `## Acceptance criteria` section (`docs/specs/<slug>/spec.md`). Output: the **test
+> triple** ([`../methodology.md`](../methodology.md) §Test triple) as input to the plan.
+> Read-only — execution: `vitest` (unit) / `playwright` (e2e).
 
-## Scenariusze (technika per AC)
+## Scenarios (technique per AC)
 
-> Techniki: happy-path · equivalence partitioning + boundary value analysis · decision table ·
-> state transition · error/negatywne. Każde AC ma ≥1 happy + edge.
+> Techniques: happy-path · equivalence partitioning + boundary value analysis · decision table ·
+> state transition · error/negative. Every AC has ≥1 happy + edge.
 
-| AC  | scenariusz | technika | typ (unit/e2e) | rola | element / `data-testid` | oczekiwanie |
-| --- | ---------- | -------- | -------------- | ---- | ----------------------- | ----------- |
-| AC1 | [?]        | [?]      | [?]            | [?]  | [?]                     | [?]         |
+| AC  | scenario | technique | type (unit/e2e) | role | element / `data-testid` | expectation |
+| --- | -------- | --------- | --------------- | ---- | ----------------------- | ----------- |
+| AC1 | [?]      | [?]       | [?]             | [?]  | [?]                     | [?]         |
 
-## Macierz RBAC (gdy zadanie dotyka uprawnień)
+## RBAC matrix (when the task touches permissions)
 
-> Dla **każdej** roli: pozytywny (z uprawnieniem) **i** negatywny authz (bez — ukryty/disabled +
-> deep-link/wywołanie odrzucone, nie tylko ukrycie w UI).
+> For **every** role: positive (with permission) **and** negative authz (without — hidden/disabled +
+> deep-link/call rejected, not just hidden in the UI).
 
-| rola  | element / akcja | widoczny | aktywny | ukryty | disabled | zabroniony (guard/deep-link) |
-| ----- | --------------- | -------- | ------- | ------ | -------- | ---------------------------- |
-| admin | [?]             | [?]      | [?]     | [?]    | [?]      | [?]                          |
-| user  | [?]             | [?]      | [?]     | [?]    | [?]      | [?]                          |
-| guest | [?]             | [?]      | [?]     | [?]    | [?]      | [?]                          |
+| role  | element / action | visible | active | hidden | disabled | forbidden (guard/deep-link) |
+| ----- | ---------------- | ------- | ------ | ------ | -------- | --------------------------- |
+| admin | [?]              | [?]     | [?]    | [?]    | [?]      | [?]                         |
+| user  | [?]              | [?]     | [?]    | [?]    | [?]      | [?]                         |
+| guest | [?]              | [?]     | [?]    | [?]    | [?]      | [?]                         |
 
-## Podział unit ↔ e2e
+## unit ↔ e2e split
 
-- **unit (Vitest):** [?] logika domenowa / pure functions / store / guard / `hasRole`.
-- **e2e (Playwright):** [?] przepływ przez komponenty / stepper / widoczność per rola / deep-link authz.
+- **unit (Vitest):** [?] domain logic / pure functions / store / guard / `hasRole`.
+- **e2e (Playwright):** [?] flow through components / stepper / per-role visibility / deep-link authz.
 
-## Luki pokrycia
+## Coverage gaps
 
-> **AC bez scenariusza** = niedopokrycie (blocker planu). **scenariusz bez AC** = scope creep.
-> Element interaktywny bez `data-testid` = luka (sygnalizuj).
+> **AC without a scenario** = under-coverage (plan blocker). **scenario without an AC** = scope creep.
+> Interactive element without `data-testid` = gap (flag it).
 
-- [?] luka / brak `data-testid` / AC niepokryte — lub „brak".
+- [?] gap / missing `data-testid` / AC uncovered — or "none".
 
-## Werdykt
+## Verdict
 
-**go / no-go** (trójka kompletna?) + jedno zdanie. Werdykt końcowy → orchestrator (Opus).
+**go / no-go** (is the triple complete?) + one sentence. Final verdict → orchestrator (Opus).

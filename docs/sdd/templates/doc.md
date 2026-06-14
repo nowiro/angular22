@@ -1,37 +1,37 @@
 ---
 type: template
 for: docs
-description: Kształt strony kanonu w docs/ — DRY (wskazuje źródło prawdy, nie kopiuje reguł)
+description: Shape of a docs/ canon page — DRY (points to the source of truth, does not copy rules)
 ---
 
-# Szablon: strona dokumentacji (`docs/<temat>.md`)
+# Template: documentation page (`docs/<topic>.md`)
 
-> Kanon kształtu strony produkowanej przez [`docs`](../../../.github/agents/docs.agent.md).
-> **DRY nadrzędne:** strona **wskazuje** kanon ([`copilot-instructions`](../../../.github/copilot-instructions.md),
-> [`AGENTS.md`](../../../AGENTS.md), [`../methodology.md`](../methodology.md)) — **nie kopiuje** reguł.
-> Token economy: gęsto, link zamiast kopii. Fakty muszą zgadzać się z kodem (`apps/*`, `libs/*`,
+> Canonical shape of a page produced by [`docs`](../../../.github/agents/docs.agent.md).
+> **DRY first:** the page **points to** the canon ([`copilot-instructions`](../../../.github/copilot-instructions.md),
+> [`AGENTS.md`](../../../AGENTS.md), [`../methodology.md`](../methodology.md)) — it does **not** copy rules.
+> Token economy: dense, link instead of copy. Facts must match the code (`apps/*`, `libs/*`,
 > `package.json`, `*.agent.md`).
 
 ---
 
-# <Tytuł tematu>
+# <Topic title>
 
-> [?] Jednozdaniowy cel strony + (jeśli to derywat) **wskaźnik do źródła prawdy**: „Kanon X żyje
-> w `<plik>` — ta strona tylko <rola>".
+> [?] One-sentence page goal + (if a derivative) **pointer to the source of truth**: "The canon for X
+> lives in `<file>` — this page only <role>".
 
-## Po co (kontekst)
+## Why (context)
 
-[?] Jaki problem / decyzję strona dokumentuje i kiedy po nią sięgnąć.
+[?] What problem / decision the page documents and when to reach for it.
 
-## Treść
+## Content
 
-[?] Sedno — mapa / kroki / tabela. Linkuj kanon zamiast przepisywać reguły. Nazwy (selektor /
-API / port / skrypt / ścieżka) **dokładnie** jak w kodzie (rozjazd nazw → glosariusz `doc-verifier`).
+[?] The core — map / steps / table. Link the canon instead of rewriting rules. Names (selector /
+API / port / script / path) **exactly** as in the code (name mismatch → `doc-verifier` glossary).
 
-## Granica / czego tu nie ma
+## Boundary / what is not here
 
-[?] Co świadomie żyje gdzie indziej (link), żeby nie powielać.
+[?] What deliberately lives elsewhere (link) to avoid duplication.
 
-## Linki
+## Links
 
-[?] Powiązane strony kanonu i pliki kodu.
+[?] Related canon pages and code files.

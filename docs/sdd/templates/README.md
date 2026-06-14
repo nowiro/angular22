@@ -1,36 +1,36 @@
-# Szablony SDD + odpowiedzi agentów — angular22
+# SDD templates + agent responses — angular22
 
-> **Kanon kształtu** artefaktów SDD oraz **odpowiedzi agentów/skilli**. Jedno źródło prawdy
-> dla _formy_ — agent **wskazuje** szablon (DRY), nie powiela opisu formatu u siebie. Reguły
-> drabiny i bramek: [`../methodology.md`](../methodology.md).
+> **Shape canon** for SDD artifacts and **agent/skill responses**. Single source of truth
+> for _form_ — an agent **points to** a template (DRY), it does not duplicate the format
+> description locally. Ladder and gate rules: [`../methodology.md`](../methodology.md).
 
-## Grupa 1 — artefakty SDD (wersjonowane w `docs/specs|plans|runs`)
+## Group 1 — SDD artifacts (versioned in `docs/specs|plans|runs`)
 
-| szablon              | krok SDD | producent    | wynik                                 |
+| template             | SDD step | producer     | output                                |
 | -------------------- | -------- | ------------ | ------------------------------------- |
 | [`spec.md`](spec.md) | specify  | orchestrator | `docs/specs/<slug>/spec.md`           |
 | [`plan.md`](plan.md) | plan     | orchestrator | `docs/plans/<stamp>_<verb>-<slug>.md` |
 | [`run.md`](run.md)   | verify   | orchestrator | `docs/runs/<stamp>_<slug>.md`         |
 
-## Grupa 2 — szablony odpowiedzi agentów/skilli (kształt wyniku w czacie / PR)
+## Group 2 — agent/skill response templates (result shape in chat / PR)
 
-> Odpowiedzi te **nie są** wersjonowane jako pliki — to **kształt** tego, co agent zwraca
-> orchestratorowi. Werdykt końcowy (go/no-go) zawsze należy do **orchestratora (Opus)**.
+> These responses are **not** versioned as files — they are the **shape** of what an agent returns
+> to the orchestrator. The final verdict (go/no-go) always belongs to the **orchestrator (Opus)**.
 
-| szablon                                  | krok SDD     | producent (agent / skill)                                                                                               | kształt                                              |
-| ---------------------------------------- | ------------ | ----------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- |
-| [`doc-review.md`](doc-review.md)         | doc-review   | [`doc-reviewer`](../../../.github/agents/doc-reviewer.agent.md)                                                         | Definition of Ready + macierz traceability           |
-| [`test-scenarios.md`](test-scenarios.md) | scenariusze  | [`test-strategy`](../../../.github/agents/test-strategy.agent.md)                                                       | scenariusze z AC + macierz RBAC + luki               |
-| [`analyze.md`](analyze.md)               | analyze      | orchestrator ([`/analyze`](../../../.github/prompts/analyze.prompt.md))                                                 | spójność spec↔plan↔kod → go/no-go                    |
-| [`review.md`](review.md)                 | implement    | [`reviewer`](../../../.github/agents/reviewer.agent.md) + [`code-review`](../../../.github/skills/code-review/SKILL.md) | findingi diffu + severity                            |
-| [`audit.md`](audit.md)                   | implement    | `security` · `accessibility` · `ux-verifier` · `stack-guardian` · `performance` · `meta-reviewer`                       | audyt read-only per wymiar                           |
-| [`doc.md`](doc.md)                       | (utrzymanie) | [`docs`](../../../.github/agents/docs.agent.md)                                                                         | strona kanonu w `docs/` (DRY: wskazuje, nie kopiuje) |
+| template                                 | SDD step      | producer (agent / skill)                                                                                                | shape                                              |
+| ---------------------------------------- | ------------- | ----------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- |
+| [`doc-review.md`](doc-review.md)         | doc-review    | [`doc-reviewer`](../../../.github/agents/doc-reviewer.agent.md)                                                         | Definition of Ready + traceability matrix          |
+| [`test-scenarios.md`](test-scenarios.md) | scenarios     | [`test-strategy`](../../../.github/agents/test-strategy.agent.md)                                                       | scenarios from AC + RBAC matrix + gaps             |
+| [`analyze.md`](analyze.md)               | analyze       | orchestrator ([`/analyze`](../../../.github/prompts/analyze.prompt.md))                                                 | spec↔plan↔code consistency → go/no-go              |
+| [`review.md`](review.md)                 | implement     | [`reviewer`](../../../.github/agents/reviewer.agent.md) + [`code-review`](../../../.github/skills/code-review/SKILL.md) | diff findings + severity                           |
+| [`audit.md`](audit.md)                   | implement     | `security` · `accessibility` · `ux-verifier` · `stack-guardian` · `performance` · `meta-reviewer`                       | read-only audit per dimension                      |
+| [`doc.md`](doc.md)                       | (maintenance) | [`docs`](../../../.github/agents/docs.agent.md)                                                                         | canon page in `docs/` (DRY: points, does not copy) |
 
-## Zasady
+## Rules
 
-- **DRY:** opis formatu w `*.agent.md` (`## Format`) **wskazuje** odpowiedni szablon — nie
-  duplikuje go. Zmiana kształtu = edycja szablonu, nie 31 agentów.
-- **Placeholdery:** `[?]` = do uzupełnienia (jak w `spec.md`); `{{token}}` = wstrzykiwane przez
+- **DRY:** the format description in `*.agent.md` (`## Format`) **points to** the right template — it
+  does not duplicate it. Changing the shape = editing the template, not 31 agents.
+- **Placeholders:** `[?]` = to be filled in (as in `spec.md`); `{{token}}` = injected by
   `pnpm workflow:specify`.
-- **Severity** (wspólna rubryka): `blocker` (łamie bramkę/kontrakt → no-go) · `major` (dług/realne
-  ryzyko) · `minor` (kosmetyka).
+- **Severity** (shared rubric): `blocker` (breaks a gate/contract → no-go) · `major` (debt/real
+  risk) · `minor` (cosmetic).

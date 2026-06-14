@@ -1,40 +1,40 @@
 ---
 type: doc
 id: 'doc.watchdog'
-title: 'Watchdog — monitoring upstreamów'
+title: 'Watchdog — upstream monitoring'
 ---
 
-# Watchdog — monitoring upstreamów
+# Watchdog — upstream monitoring
 
-Narzędzie (`tools/scripts/watchdog.mjs`) pilnuje źródeł, które mają znaczenie dla repo, i
-raportuje **co się zmieniło** od ostatniego uruchomienia — żeby drift stacku oraz nowe praktyki
-Copilot / spec-kit / Angular trafiały do propozycji przez **SDD** (`deps` / `chore`). Lokalne
-narzędzie dev (wymaga sieci) — repo jest **Copilot-only**, bez GitHub Actions.
+The tool (`tools/scripts/watchdog.mjs`) watches sources that matter to the repo and
+reports **what changed** since the last run — so stack drift and new Copilot / spec-kit /
+Angular practices flow into proposals via **SDD** (`deps` / `chore`). A local dev
+tool (requires network) — the repo is **Copilot-only**, with no GitHub Actions.
 
-## Użycie
+## Usage
 
 ```sh
-pnpm watchdog        # pobierz, zaraportuj, zaktualizuj snapshot
-pnpm watchdog:check  # tylko raport (snapshot bez zmian; exit ≠ 0 gdy coś nowego)
+pnpm watchdog        # fetch, report, update snapshot
+pnpm watchdog:check  # report only (snapshot unchanged; exit ≠ 0 when something is new)
 ```
 
-Każdy watcher rozwiązuje jeden **marker** (wersja albo id ostatniego wpisu) i porównuje go ze
-snapshotem `tools/watchdog/state.json` (lokalny, **gitignore** — każdy ma własny baseline).
-`NEW` = marker zmienił się od ostatniego uruchomienia; przy paczkach npm pokazywany jest też pin
-z `package.json` (drift latest ↔ pinned).
+Each watcher resolves one **marker** (a version or the id of the latest entry) and compares it
+against the `tools/watchdog/state.json` snapshot (local, **gitignore** — everyone has their own baseline).
+`NEW` = the marker changed since the last run; for npm packages the pin from
+`package.json` is also shown (latest ↔ pinned drift).
 
-## Co monitoruje
+## What it monitors
 
 - **Stack (npm latest vs pinned):** `@angular/core` · `@angular/material` · `nx` · `typescript` ·
   `@playwright/test` · `vitest` · `eslint` · `keycloak-angular` · `keycloak-js`.
-- **Metodyka i Copilot:** [`github/spec-kit`](https://github.com/github/spec-kit) (release —
-  fazy SDD, np. `checklist`), [`angular/angular`](https://github.com/angular/angular) i
-  [`nrwl/nx`](https://github.com/nrwl/nx) (release), [changelog GitHub Copilot](https://github.blog/changelog/label/copilot/)
-  (data ostatniego wpisu).
+- **Methodology and Copilot:** [`github/spec-kit`](https://github.com/github/spec-kit) (release —
+  SDD phases, e.g. `checklist`), [`angular/angular`](https://github.com/angular/angular) and
+  [`nrwl/nx`](https://github.com/nrwl/nx) (release), [GitHub Copilot changelog](https://github.blog/changelog/label/copilot/)
+  (date of the latest entry).
 
-## Rozszerzanie
+## Extending
 
-Dodaj wpis do tablicy `WATCHERS` w `tools/scripts/watchdog.mjs` — helpery: `npm(name)`,
-`ghRelease(repo, label)`, `page(id, label, url, regex)`. Każde `NEW` rozważ jako wejście do SDD:
-bump przez `deps`/`migration` (kanon → [`tech-stack.md`](tech-stack.md)) albo adaptacja praktyki
-(np. nowa faza spec-kit) przez `chore`.
+Add an entry to the `WATCHERS` array in `tools/scripts/watchdog.mjs` — helpers: `npm(name)`,
+`ghRelease(repo, label)`, `page(id, label, url, regex)`. Treat each `NEW` as a candidate for SDD:
+a bump via `deps`/`migration` (canon → [`tech-stack.md`](tech-stack.md)) or adopting a practice
+(e.g. a new spec-kit phase) via `chore`.

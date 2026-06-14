@@ -1,113 +1,113 @@
 ---
 type: doc
 id: 'doc.tech-stack'
-title: 'Kanon stacku — angular22'
+title: 'Stack canon — angular22'
 ---
 
 # Tech stack — angular22
 
-**Kanon stacku** projektu angular22 · **single source of truth**. Wszystkie wersje tu pochodzą
-**dokładnie** z [`package.json`](../package.json) (`engines` · `packageManager` · `dependencies` ·
-`devDependencies`) — nic nie zgadujemy, nic nie powielamy.
+**Stack canon** for the angular22 project · **single source of truth**. Every version here comes
+**exactly** from [`package.json`](../package.json) (`engines` · `packageManager` · `dependencies` ·
+`devDependencies`) — nothing is guessed, nothing is duplicated.
 
-Sekcje **Stack** w [`.github/copilot-instructions.md`](../.github/copilot-instructions.md) i
-[`README.md`](../README.md) **wskazują TUTAJ** (DRY — nie duplikują wersji). Każda zmiana stacku
-idzie przez **SDD** (verb `deps` / `chore`) i aktualizuje **ten plik + `package.json` razem
-(jeden commit)**; zgodność pilnuje agent **`stack-guardian`**
+The **Stack** sections in [`.github/copilot-instructions.md`](../.github/copilot-instructions.md) and
+[`README.md`](../README.md) **point HERE** (DRY — they don't duplicate versions). Every stack change
+goes through **SDD** (verb `deps` / `chore`) and updates **this file + `package.json` together
+(one commit)**; consistency is enforced by the **`stack-guardian`** agent
 ([`.github/agents/stack-guardian.agent.md`](../.github/agents/stack-guardian.agent.md)).
 
-Motto: **wynik ponad proces**. Stack jest celowo wąski — jedna technologia na rolę, reszta
-**off-stack** (patrz [Zakazane](#dozwolone--zakazane-off-stack)).
+Motto: **outcome over process**. The stack is deliberately narrow — one technology per role, the rest
+**off-stack** (see [Banned](#allowed--banned-off-stack)).
 
-## Warstwy i pinowane wersje
+## Layers and pinned versions
 
-Wszystkie wersje produkcyjnie pinowane **exact** (bez `^`/`~`) — wyjątki z `^` to narzędzia
-dev/CLI (oznaczone). Źródło: `package.json`.
+All production versions are pinned **exact** (no `^`/`~`) — `^` exceptions are dev/CLI tools
+(marked). Source: `package.json`.
 
-| Warstwa               | Technologia                                                                                                                                   | Wersja                                                                                                                                                                                                       | Uwagi                                                                                                                                                                                             |
-| --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Runtime**           | Node.js                                                                                                                                       | `>=24.15.0`                                                                                                                                                                                                  | `engines.node`; `.nvmrc` pinuje `24.16.0` (lokalna wersja deweloperska)                                                                                                                           |
-| **Runtime**           | pnpm                                                                                                                                          | `11.6.0`                                                                                                                                                                                                     | `packageManager` (Corepack pin) · `engines.pnpm` `>=11.0.0`; **jedyny** menedżer — `preinstall: npx only-allow pnpm`                                                                              |
-| **Framework**         | `@angular/core` · `common` · `compiler` · `forms` · `router` · `platform-browser` · `elements`                                                | `22.0.1`                                                                                                                                                                                                     | **wszystkie ta sama wersja**; zoneless, standalone, signals; `@angular/elements` = web components dla portalu                                                                                     |
-| **UI**                | `@angular/material`                                                                                                                           | `22.0.1`                                                                                                                                                                                                     | = wersja Angulara (`= @angular/cdk` = `@angular/core`); konsumpcja **tylko** przez wrappery `@angular22/ui-material`; theming **wyłącznie** `--mat-sys-*` + `mat.theme()`                         |
-| **UI / CDK**          | `@angular/cdk`                                                                                                                                | `22.0.1`                                                                                                                                                                                                     | jw.; raw import dozwolony **tylko** w `libs/ui/material` (lint error wszędzie indziej)                                                                                                            |
-| **Workspace / build** | `nx` + `@nx/angular` · `devkit` · `eslint` · `eslint-plugin` · `js` · `playwright` · `vitest` · `web` · `workspace`                           | `22.7.5`                                                                                                                                                                                                     | **wszystkie `@nx/*` = `nx`**; cache + module boundaries + inference plugins                                                                                                                       |
-| **Build**             | `@angular/build` (application builder) · `@angular/cli`                                                                                       | `22.0.1`                                                                                                                                                                                                     | esbuild-based application builder (nie webpack); `build-element` per wizard                                                                                                                       |
-| **Build**             | `@angular-devkit/core` · `@angular-devkit/schematics` · `@schematics/angular` · `@angular/compiler-cli` · `@angular/language-service`         | `22.0.1`                                                                                                                                                                                                     | = wersja Angulara (devkit/schematics sprzężone z frameworkiem)                                                                                                                                    |
-| **Język**             | `typescript`                                                                                                                                  | `6.0.3`                                                                                                                                                                                                      | `strict`; type-aware lint (Project Service)                                                                                                                                                       |
-| **Reaktywność**       | signals (core) + RxJS                                                                                                                         | `rxjs` `7.8.2` · `tslib` `2.8.1`                                                                                                                                                                             | signals = domyślny model stanu; RxJS interop tylko gdzie konieczny                                                                                                                                |
-| **Formularze**        | **Signal Forms** — `@angular/forms/signals`                                                                                                   | `22.0.1` (`@angular/forms`)                                                                                                                                                                                  | `form()` / `schema()` / `[formField]`; **zakaz** `FormGroup` / `FormBuilder` / `ngModel` (lint-enforced ≥ 22)                                                                                     |
-| **Testy (unit)**      | `vitest` + `@vitest/coverage-v8` + `@nx/vitest`                                                                                               | `vitest` `4.1.8` · coverage `4.1.8` · `@nx/vitest` `22.7.5`                                                                                                                                                  | runner `@nx/vitest:test`; `vite` `8.0.16`, `jsdom` `29.1.1`                                                                                                                                       |
-| **Testy (e2e)**       | `@playwright/test` + `@nx/playwright`                                                                                                         | `1.60.0` · `@nx/playwright` `22.7.5`                                                                                                                                                                         | runner `@nx/playwright:playwright`; chromium; debug przez MCP `playwright`                                                                                                                        |
-| **Lint**              | `eslint` (flat) + `@eslint/js` + `typescript-eslint` + `angular-eslint`                                                                       | `eslint` `10.5.0` · `@eslint/js` `10.0.1` · `typescript-eslint` `8.61.0` · `angular-eslint` `22.0.0`                                                                                                         | flat config (`eslint.config.mjs`); type-aware; `angular-eslint` major = Angular major                                                                                                             |
-| **Lint (pluginy)**    | `sonarjs` · `unicorn` · `import-x` · `jsdoc` · `no-barrel-files` · `n` · `rxjs-x` · `rxjs-angular-x` · `@vitest/eslint-plugin` · `playwright` | sonarjs `4.0.3` · unicorn `65.0.1` · import-x `4.16.2` · jsdoc `63.0.2` · no-barrel-files `^1.3.1` · n `^18.1.0` · rxjs-x `^1.0.2` · rxjs-angular-x `^1.0.1` · vitest-plugin `^1.6.20` · playwright `2.10.4` | zestaw z `eslint.config.mjs`; `@typescript-eslint/utils` `8.61.0`, `globals` `17.6.0`                                                                                                             |
-| **Format**            | `prettier` + `@trivago/prettier-plugin-sort-imports` + `eslint-config-prettier`                                                               | prettier `3.8.4` · sort-imports `6.0.2` · config-prettier `10.1.8`                                                                                                                                           | sortowanie importów delegowane do Prettiera (`import/order: off`)                                                                                                                                 |
-| **i18n**              | custom `@angular22/shared-i18n`                                                                                                               | (lib wewnętrzna)                                                                                                                                                                                             | signal-based runtime i18n; pipe `a22T`; PL = klucz, EN w mapach; **bez** zewnętrznej biblioteki i18n                                                                                              |
-| **Auth / RBAC**       | `keycloak-angular` · `keycloak-js`                                                                                                            | keycloak-angular `21.0.0` · keycloak-js `26.2.4`                                                                                                                                                             | RBAC w `@angular22/shared-auth`; demo = **mock** (bez serwera), realny IdP przez `provideKeycloak`; role admin/user/guest; peer `^21` na Angular 22 tolerowany (`strict-peer-dependencies=false`) |
-| **Tooling**           | `husky` · `jiti` · `npm-check-updates` · `@types/node`                                                                                        | husky `^9.1.7` · jiti `2.7.0` · ncu `^22.2.3` · `@types/node` `25.9.3`                                                                                                                                       | husky = git hooks (`prepare`); ncu = `pnpm deps:check` / `deps:update`                                                                                                                            |
+| Layer                 | Technology                                                                                                                                    | Version                                                                                                                                                                                                      | Notes                                                                                                                                                                                        |
+| --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Runtime**           | Node.js                                                                                                                                       | `>=24.15.0`                                                                                                                                                                                                  | `engines.node`; `.nvmrc` pins `24.16.0` (local dev version)                                                                                                                                  |
+| **Runtime**           | pnpm                                                                                                                                          | `11.6.0`                                                                                                                                                                                                     | `packageManager` (Corepack pin) · `engines.pnpm` `>=11.0.0`; the **only** manager — `preinstall: npx only-allow pnpm`                                                                        |
+| **Framework**         | `@angular/core` · `common` · `compiler` · `forms` · `router` · `platform-browser` · `elements`                                                | `22.0.1`                                                                                                                                                                                                     | **all the same version**; zoneless, standalone, signals; `@angular/elements` = web components for the portal                                                                                 |
+| **UI**                | `@angular/material`                                                                                                                           | `22.0.1`                                                                                                                                                                                                     | = Angular version (`= @angular/cdk` = `@angular/core`); consumed **only** via the `@angular22/ui-material` wrappers; theming **exclusively** `--mat-sys-*` + `mat.theme()`                   |
+| **UI / CDK**          | `@angular/cdk`                                                                                                                                | `22.0.1`                                                                                                                                                                                                     | as above; raw import allowed **only** in `libs/ui/material` (lint error everywhere else)                                                                                                     |
+| **Workspace / build** | `nx` + `@nx/angular` · `devkit` · `eslint` · `eslint-plugin` · `js` · `playwright` · `vitest` · `web` · `workspace`                           | `22.7.5`                                                                                                                                                                                                     | **all `@nx/*` = `nx`**; cache + module boundaries + inference plugins                                                                                                                        |
+| **Build**             | `@angular/build` (application builder) · `@angular/cli`                                                                                       | `22.0.1`                                                                                                                                                                                                     | esbuild-based application builder (not webpack); `build-element` per wizard                                                                                                                  |
+| **Build**             | `@angular-devkit/core` · `@angular-devkit/schematics` · `@schematics/angular` · `@angular/compiler-cli` · `@angular/language-service`         | `22.0.1`                                                                                                                                                                                                     | = Angular version (devkit/schematics coupled to the framework)                                                                                                                               |
+| **Language**          | `typescript`                                                                                                                                  | `6.0.3`                                                                                                                                                                                                      | `strict`; type-aware lint (Project Service)                                                                                                                                                  |
+| **Reactivity**        | signals (core) + RxJS                                                                                                                         | `rxjs` `7.8.2` · `tslib` `2.8.1`                                                                                                                                                                             | signals = default state model; RxJS interop only where necessary                                                                                                                             |
+| **Forms**             | **Signal Forms** — `@angular/forms/signals`                                                                                                   | `22.0.1` (`@angular/forms`)                                                                                                                                                                                  | `form()` / `schema()` / `[formField]`; **banned** `FormGroup` / `FormBuilder` / `ngModel` (lint-enforced ≥ 22)                                                                               |
+| **Tests (unit)**      | `vitest` + `@vitest/coverage-v8` + `@nx/vitest`                                                                                               | `vitest` `4.1.8` · coverage `4.1.8` · `@nx/vitest` `22.7.5`                                                                                                                                                  | runner `@nx/vitest:test`; `vite` `8.0.16`, `jsdom` `29.1.1`                                                                                                                                  |
+| **Tests (e2e)**       | `@playwright/test` + `@nx/playwright`                                                                                                         | `1.60.0` · `@nx/playwright` `22.7.5`                                                                                                                                                                         | runner `@nx/playwright:playwright`; chromium; debug via MCP `playwright`                                                                                                                     |
+| **Lint**              | `eslint` (flat) + `@eslint/js` + `typescript-eslint` + `angular-eslint`                                                                       | `eslint` `10.5.0` · `@eslint/js` `10.0.1` · `typescript-eslint` `8.61.0` · `angular-eslint` `22.0.0`                                                                                                         | flat config (`eslint.config.mjs`); type-aware; `angular-eslint` major = Angular major                                                                                                        |
+| **Lint (plugins)**    | `sonarjs` · `unicorn` · `import-x` · `jsdoc` · `no-barrel-files` · `n` · `rxjs-x` · `rxjs-angular-x` · `@vitest/eslint-plugin` · `playwright` | sonarjs `4.0.3` · unicorn `65.0.1` · import-x `4.16.2` · jsdoc `63.0.2` · no-barrel-files `^1.3.1` · n `^18.1.0` · rxjs-x `^1.0.2` · rxjs-angular-x `^1.0.1` · vitest-plugin `^1.6.20` · playwright `2.10.4` | set from `eslint.config.mjs`; `@typescript-eslint/utils` `8.61.0`, `globals` `17.6.0`                                                                                                        |
+| **Format**            | `prettier` + `@trivago/prettier-plugin-sort-imports` + `eslint-config-prettier`                                                               | prettier `3.8.4` · sort-imports `6.0.2` · config-prettier `10.1.8`                                                                                                                                           | import sorting delegated to Prettier (`import/order: off`)                                                                                                                                   |
+| **i18n**              | custom `@angular22/shared-i18n`                                                                                                               | (internal lib)                                                                                                                                                                                               | signal-based runtime i18n; pipe `a22T`; PL = key, EN in maps; **no** external i18n library                                                                                                   |
+| **Auth / RBAC**       | `keycloak-angular` · `keycloak-js`                                                                                                            | keycloak-angular `21.0.0` · keycloak-js `26.2.4`                                                                                                                                                             | RBAC in `@angular22/shared-auth`; demo = **mock** (no server), real IdP via `provideKeycloak`; admin/user/guest roles; peer `^21` on Angular 22 tolerated (`strict-peer-dependencies=false`) |
+| **Tooling**           | `husky` · `jiti` · `npm-check-updates` · `@types/node`                                                                                        | husky `^9.1.7` · jiti `2.7.0` · ncu `^22.2.3` · `@types/node` `25.9.3`                                                                                                                                       | husky = git hooks (`prepare`); ncu = `pnpm deps:check` / `deps:update`                                                                                                                       |
 
-## Reguły spójności wersji
+## Version consistency rules
 
-Egzekwowane przez `stack-guardian` (i ręcznie przy każdym `deps`/`chore`):
+Enforced by `stack-guardian` (and manually on every `deps`/`chore`):
 
-- **Angular jako blok** — wszystkie `@angular/*` + `@angular-devkit/*` + `@schematics/angular` =
-  **ta sama wersja** (`22.0.1`). Aktualizacja Angulara aktualizuje cały blok atomowo.
+- **Angular as a block** — all `@angular/*` + `@angular-devkit/*` + `@schematics/angular` =
+  **the same version** (`22.0.1`). An Angular update bumps the whole block atomically.
 - **Material = CDK = core** — `@angular/material` = `@angular/cdk` = `@angular/core`. Material
-  nigdy nie wyprzedza ani nie zostaje za rdzeniem.
-- **Nx jako blok** — wszystkie `@nx/*` = `nx` (`22.7.5`). Żaden plugin Nx nie odstaje wersją.
-- **angular-eslint ↔ Angular** — major `angular-eslint` = major Angulara (`22` ↔ `22`).
-- **TypeScript ↔ typescript-eslint** — TS bumpowany razem z `typescript-eslint`/`@typescript-eslint/utils`
-  (kompatybilność parsera type-aware).
-- **keycloak-angular ↔ Angular** — keycloak-angular `21.x` celowo **o major za** Angularem (brak
-  releasu na 22 w rejestrze); peer `^21` tolerowany przez `strict-peer-dependencies=false`; demo
-  działa w trybie **mock** (bez serwera), więc niezgodność peera jest nieszkodliwa.
-- **Exact pins** — runtime + framework + UI + Nx + testy pinowane **exact**; `^` tylko dla
-  narzędzi dev nie wpływających na build artefaktu.
+  never gets ahead of or behind the core.
+- **Nx as a block** — all `@nx/*` = `nx` (`22.7.5`). No Nx plugin lags in version.
+- **angular-eslint ↔ Angular** — `angular-eslint` major = Angular major (`22` ↔ `22`).
+- **TypeScript ↔ typescript-eslint** — TS bumped together with `typescript-eslint`/`@typescript-eslint/utils`
+  (type-aware parser compatibility).
+- **keycloak-angular ↔ Angular** — keycloak-angular `21.x` is deliberately **one major behind**
+  Angular (no 22 release in the registry); peer `^21` tolerated via `strict-peer-dependencies=false`; the demo
+  runs in **mock** mode (no server), so the peer mismatch is harmless.
+- **Exact pins** — runtime + framework + UI + Nx + tests pinned **exact**; `^` only for
+  dev tools that don't affect the build artifact.
 
-## Dozwolone / ZAKAZANE (off-stack)
+## Allowed / BANNED (off-stack)
 
-Stack jest **zamknięty**. Poniższe są **banned** — nie wolno ich dodawać (lint / review /
-`stack-guardian` to wyłapią). Każdy zakaz ma kanoniczny zamiennik **na stacku**:
+The stack is **closed**. The following are **banned** — they must not be added (lint / review /
+`stack-guardian` will catch them). Every ban has a canonical **on-stack** replacement:
 
-| Zakazane (off-stack)                            | Powód                                                 | Zamiennik (na stacku)                                                 |
-| ----------------------------------------------- | ----------------------------------------------------- | --------------------------------------------------------------------- |
-| `zone.js`                                       | aplikacja jest **zoneless**                           | signals + `provideZonelessChangeDetection`                            |
-| `npm` · `yarn`                                  | tylko pnpm (`preinstall: only-allow pnpm`)            | **pnpm**                                                              |
-| Jest · Karma · Jasmine · Cypress                | jeden runner unit + jeden e2e                         | **Vitest** (unit) + **Playwright** (e2e)                              |
-| webpack                                         | builder oparty na esbuild                             | **`@angular/build`** application builder                              |
-| Tailwind · Bootstrap · inne CSS-frameworki      | jeden system theming                                  | **`--mat-sys-*`** + `mat.theme()` + wrappery `@angular22/ui-material` |
-| ngrx · ngxs · akita · inne store libs           | stan trzymamy w signals                               | **signals** + (gdy trzeba) sygnałowy store                            |
-| `FormGroup` · `FormBuilder` · `ngModel`         | reactive/template zastąpione · **lint-enforced ≥ 22** | **Signal Forms** (`@angular/forms/signals`)                           |
-| ngx-translate · transloco · `@angular/localize` | i18n jest własne, runtime, signal-based               | **`@angular22/shared-i18n`** + pipe `a22T`                            |
-| `axios` · inne klienty HTTP                     | natywne API / `HttpClient`                            | **`fetch`** / `@angular/common/http`                                  |
-| `lodash` · `moment` · `date-fns`                | bez ciężkich utility libs                             | **native JS** + `Date`                                                |
-| inne biblioteki UI / komponentów                | jedyne źródło UI to Material przez wrappery           | **`@angular22/ui-material`**                                          |
+| Banned (off-stack)                              | Reason                                              | Replacement (on-stack)                                                |
+| ----------------------------------------------- | --------------------------------------------------- | --------------------------------------------------------------------- |
+| `zone.js`                                       | the app is **zoneless**                             | signals + `provideZonelessChangeDetection`                            |
+| `npm` · `yarn`                                  | pnpm only (`preinstall: only-allow pnpm`)           | **pnpm**                                                              |
+| Jest · Karma · Jasmine · Cypress                | one unit runner + one e2e                           | **Vitest** (unit) + **Playwright** (e2e)                              |
+| webpack                                         | esbuild-based builder                               | **`@angular/build`** application builder                              |
+| Tailwind · Bootstrap · other CSS frameworks     | one theming system                                  | **`--mat-sys-*`** + `mat.theme()` + `@angular22/ui-material` wrappers |
+| ngrx · ngxs · akita · other store libs          | state is kept in signals                            | **signals** + (when needed) a signal store                            |
+| `FormGroup` · `FormBuilder` · `ngModel`         | reactive/template replaced · **lint-enforced ≥ 22** | **Signal Forms** (`@angular/forms/signals`)                           |
+| ngx-translate · transloco · `@angular/localize` | i18n is in-house, runtime, signal-based             | **`@angular22/shared-i18n`** + pipe `a22T`                            |
+| `axios` · other HTTP clients                    | native API / `HttpClient`                           | **`fetch`** / `@angular/common/http`                                  |
+| `lodash` · `moment` · `date-fns`                | no heavy utility libs                               | **native JS** + `Date`                                                |
+| other UI / component libraries                  | the only UI source is Material via wrappers         | **`@angular22/ui-material`**                                          |
 
-Raw `@angular/material` / `@angular/cdk` poza `libs/ui/material` = **lint error**
-(`no-restricted-imports` w `eslint.config.mjs`).
+Raw `@angular/material` / `@angular/cdk` outside `libs/ui/material` = **lint error**
+(`no-restricted-imports` in `eslint.config.mjs`).
 
-Import gołego `@angular/forms` (klasyczny `FormGroup`/`FormBuilder`/`ngModel`) oraz mostka
-`@angular/forms/signals/compat` = **lint error** (`no-restricted-syntax` w `eslint.config.mjs`,
-egzekwowane przez `nx lint`) — łapie static import, re-export, dynamiczny `import()` i
-`import = require()`. Brama jest **wersjonowana**: aktywna od Angulara ≥ 22 (major z
-zainstalowanego `@angular/core`, fallback do `package.json`), na starszych majorach wyłączona,
-więc klasyczne formularze pozostają wspierane w trakcie migracji. Dozwolone wyłącznie czyste
-`@angular/forms/signals`.
+Importing bare `@angular/forms` (classic `FormGroup`/`FormBuilder`/`ngModel`) or the
+`@angular/forms/signals/compat` bridge = **lint error** (`no-restricted-syntax` in `eslint.config.mjs`,
+enforced by `nx lint`) — it catches static import, re-export, dynamic `import()`, and
+`import = require()`. The gate is **versioned**: active from Angular ≥ 22 (major from the
+installed `@angular/core`, falling back to `package.json`), disabled on older majors,
+so classic forms stay supported during migration. Only pure
+`@angular/forms/signals` is allowed.
 
-## Proces zmiany stacku
+## Stack change process
 
-Zmiana stacku (nowa zależność, bump majora, wymiana technologii) **nigdy** ad-hoc:
+A stack change (new dependency, major bump, technology swap) is **never** ad-hoc:
 
-1. **Potrzeba + uzasadnienie** — dlaczego stack nie pokrywa przypadku; czemu zamiennik na stacku
-   nie wystarcza.
-2. **SDD** — drabina `pnpm workflow:specify -- --verb=deps` (lub `--verb=chore`); spec → plan →
-   `/analyze` (kanon: [`docs/sdd/methodology.md`](sdd/methodology.md)).
-3. **Aktualizacja razem** — `docs/tech-stack.md` **i** `package.json` w **jednym commicie**
-   (wersja exact + wpis w odpowiedniej warstwie/tabeli powyżej). Przy bumpie bloku — cały blok.
-4. **`stack-guardian`** weryfikuje zgodność: reguły spójności wersji + brak off-stack + tabela ==
+1. **Need + justification** — why the stack doesn't cover the case; why an on-stack replacement
+   isn't enough.
+2. **SDD** — ladder `pnpm workflow:specify -- --verb=deps` (or `--verb=chore`); spec → plan →
+   `/analyze` (canon: [`docs/sdd/methodology.md`](sdd/methodology.md)).
+3. **Update together** — `docs/tech-stack.md` **and** `package.json` in **one commit**
+   (exact version + entry in the right layer/table above). On a block bump — the whole block.
+4. **`stack-guardian`** verifies consistency: version consistency rules + no off-stack + table ==
    `package.json` ([`.github/agents/stack-guardian.agent.md`](../.github/agents/stack-guardian.agent.md)).
-5. **`pnpm verify`** zielone (pełna bramka; skład → [`AGENTS.md`](../AGENTS.md#komendy)) +
-   datowany run-log w `docs/runs/`.
+5. **`pnpm verify`** green (full gate; composition → [`AGENTS.md`](../AGENTS.md#commands)) +
+   a dated run-log in `docs/runs/`.
 
-Rozjazd tabela ↔ `package.json` = **bug** (DoD nie spełnione). Ten plik jest kanonem — przy
-sprzeczności wygrywa `package.json`, a plik natychmiast się wyrównuje.
+A table ↔ `package.json` drift = **bug** (DoD not met). This file is the canon — on a
+conflict `package.json` wins, and the file is realigned immediately.

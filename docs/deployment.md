@@ -1,63 +1,63 @@
-# Plan wdrożenia — portal + wizardy + web components + feature flags
+# Deployment plan — portal + wizards + web components + feature flags
 
-> Architektura: **portal** (`:4200` w dev) hostuje kafelki i osadza wizardy jako **web
-> components** na trasach `/apps/individual` i `/apps/business`; te same wizardy działają
-> równolegle jako **samodzielne aplikacje** (nowa karta, z nagłówkiem). Dostępnością
-> każdej aplikacji steruje **`config.json`** czytany w runtime — per środowisko, bez
-> rebuilda i bez zdejmowania czegokolwiek z hostingu.
+> Architecture: the **portal** (`:4200` in dev) hosts the tiles and embeds the wizards as **web
+> components** on the `/apps/individual` and `/apps/business` routes; the same wizards also run
+> in parallel as **standalone applications** (new tab, with a header). Each application's
+> availability is controlled by a **`config.json`** read at runtime — per environment, with no
+> rebuild and without removing anything from hosting.
 
-## 1. Artefakty buildu
+## 1. Build artifacts
 
-| Komenda                                            | Wynik                                      | Zawartość                                                      |
-| -------------------------------------------------- | ------------------------------------------ | -------------------------------------------------------------- |
-| `pnpm nx build portal`                             | `dist/apps/portal/browser`                 | portal SPA (buduje też oba elementy — `dependsOn`)             |
-| `pnpm nx build demo-individual-wizard`             | `dist/apps/demo-individual-wizard/browser` | wizard standalone (nagłówek, router, gating flagą)             |
-| `pnpm nx build demo-business-wizard`               | `dist/apps/demo-business-wizard/browser`   | wizard standalone                                              |
-| `pnpm nx run demo-individual-wizard:build-element` | `dist/elements/demo-individual-wizard`     | `main.js` — ESM rejestrujący `<a22-individual-wizard-element>` |
-| `pnpm nx run demo-business-wizard:build-element`   | `dist/elements/demo-business-wizard`       | `main.js` — ESM rejestrujący `<a22-business-wizard-element>`   |
+| Command                                            | Result                                     | Contents                                                      |
+| -------------------------------------------------- | ------------------------------------------ | ------------------------------------------------------------- |
+| `pnpm nx build portal`                             | `dist/apps/portal/browser`                 | portal SPA (also builds both elements — `dependsOn`)          |
+| `pnpm nx build demo-individual-wizard`             | `dist/apps/demo-individual-wizard/browser` | standalone wizard (header, router, flag gating)               |
+| `pnpm nx build demo-business-wizard`               | `dist/apps/demo-business-wizard/browser`   | standalone wizard                                             |
+| `pnpm nx run demo-individual-wizard:build-element` | `dist/elements/demo-individual-wizard`     | `main.js` — ESM registering `<a22-individual-wizard-element>` |
+| `pnpm nx run demo-business-wizard:build-element`   | `dist/elements/demo-business-wizard`       | `main.js` — ESM registering `<a22-business-wizard-element>`   |
 
-Pełny zestaw: `pnpm build` (wszystkie apki; elementy budują się jako zależność portalu).
-Build portalu **kopiuje `dist/elements/**` do assets** (`/elements/...`), więc artefakt
-portalu jest samowystarczalny.
+Full set: `pnpm build` (all apps; elements build as a dependency of the portal).
+The portal build **copies `dist/elements/**` into assets** (`/elements/...`), so the portal
+artifact is self-contained.
 
-## 2. Layout hostingu (rekomendowany: jeden origin)
+## 2. Hosting layout (recommended: single origin)
 
 ```
 https://demo.example.com/
 ├── /                  → dist/apps/portal/browser          (SPA fallback → index.html)
-│   ├── /config.json   →   konfiguracja ŚRODOWISKA (podmienialna bez deployu)
-│   └── /elements/**   →   bundle web-componentów (już w artefakcie portalu)
+│   ├── /config.json   →   ENVIRONMENT configuration (swappable without a deploy)
+│   └── /elements/**   →   web-component bundle (already in the portal artifact)
 ├── /individual/       → dist/apps/demo-individual-wizard/browser  (SPA fallback)
 │   └── /individual/config.json
 └── /business/         → dist/apps/demo-business-wizard/browser    (SPA fallback)
     └── /business/config.json
 ```
 
-Uwagi:
+Notes:
 
-- **`<base href>`**: standalone wizardy serwowane pod pod-ścieżką wymagają
-  `--base-href /individual/` przy buildzie (`pnpm nx build demo-individual-wizard --base-href /individual/`).
-  Alternatywa: osobne subdomeny (`individual.demo.example.com`) — wtedy bez zmian.
-- **SPA fallback** (nginx): `try_files $uri $uri/ /index.html;` per aplikacja.
-- **`element.scriptUrl` MUSI być ścieżką same-origin** zaczynającą się od pojedynczego
-  `/` (nie `//`, nie absolutny URL). `ElementLoader` celowo blokuje każdy inny origin
-  (`libs/shared/config/src/lib/element-loader.ts`) jako ochronę przed wstrzyknięciem
-  obcego skryptu przez podmieniony `config.json` — cross-origin/CDN jest świadomie
-  **niewspierany**. Dopuszczenie CDN wymagałoby zmiany w kodzie (allowlista originów)
-  **oraz** poszerzenia `script-src` w CSP **i** dodania SRI — patrz §5.
+- **`<base href>`**: standalone wizards served under a sub-path require
+  `--base-href /individual/` at build time (`pnpm nx build demo-individual-wizard --base-href /individual/`).
+  Alternative: separate subdomains (`individual.demo.example.com`) — then no changes needed.
+- **SPA fallback** (nginx): `try_files $uri $uri/ /index.html;` per application.
+- **`element.scriptUrl` MUST be a same-origin path** starting with a single
+  `/` (not `//`, not an absolute URL). `ElementLoader` deliberately blocks any other origin
+  (`libs/shared/config/src/lib/element-loader.ts`) as protection against injecting a
+  foreign script via a tampered `config.json` — cross-origin/CDN is intentionally
+  **unsupported**. Allowing a CDN would require a code change (origin allowlist)
+  **and** widening `script-src` in the CSP **and** adding SRI — see §5.
 
-## 3. `config.json` — feature flags per środowisko
+## 3. `config.json` — feature flags per environment
 
-Plik leży OBOK `index.html` każdej aplikacji i jest czytany **przed bootstrapem**
-(`provideFeatureFlags()` → `FeatureFlagsStore`). Zmiana = podmiana jednego pliku na
-hostingu (lub w ConfigMap/wolumenie), **bez rebuilda**.
+The file sits NEXT TO each application's `index.html` and is read **before bootstrap**
+(`provideFeatureFlags()` → `FeatureFlagsStore`). A change = swapping a single file on
+hosting (or in a ConfigMap/volume), **with no rebuild**.
 
 ```jsonc
 // portal: /config.json
 {
   "features": {
     "individual-wizard": {
-      "enabled": true, // false → znika kafelek + trasa /apps/individual nie matchuje
+      "enabled": true, // false → tile disappears + the /apps/individual route does not match
       "standaloneUrl": "https://demo.example.com/individual/",
       "element": {
         "scriptUrl": "/elements/demo-individual-wizard/main.js",
@@ -65,7 +65,7 @@ hostingu (lub w ConfigMap/wolumenie), **bez rebuilda**.
       },
     },
     "business-wizard": {
-      "enabled": false, // przykład: wyłączone na tym środowisku
+      "enabled": false, // example: disabled on this environment
       "standaloneUrl": "https://demo.example.com/business/",
       "element": {
         "scriptUrl": "/elements/demo-business-wizard/main.js",
@@ -77,51 +77,51 @@ hostingu (lub w ConfigMap/wolumenie), **bez rebuilda**.
 ```
 
 ```jsonc
-// standalone wizard: /individual/config.json — gate dostępu bezpośredniego
+// standalone wizard: /individual/config.json — gates direct access
 { "features": { "individual-wizard": { "enabled": true } } }
 ```
 
-Semantyka:
+Semantics:
 
-- **Portal**: `enabled: false` → kafelek znika, trasa embed nie matchuje (deep-link →
-  `/`). Pominięcie `element` → kafelek ma tylko akcję „nowa karta".
-- **Wizard standalone**: `enabled: false` → wszystkie trasy przekierowują na stronę
-  `/disabled` („Aplikacja jest wyłączona…"); pliki zostają na hostingu.
-- **Fallback**: brak/uszkodzony `config.json` → bezpieczne defaulty „wszystko włączone"
-  (dev-friendly). Środowiska produkcyjne POWINNY zawsze wystawiać jawny plik.
-- Serwuj z `Cache-Control: no-store` (klient i tak fetchuje `cache: 'no-store'`).
+- **Portal**: `enabled: false` → tile disappears, embed route does not match (deep-link →
+  `/`). Omitting `element` → the tile only has the "new tab" action.
+- **Standalone wizard**: `enabled: false` → all routes redirect to the
+  `/disabled` page ("The application is disabled…"); the files stay on hosting.
+- **Fallback**: missing/corrupt `config.json` → safe defaults of "everything enabled"
+  (dev-friendly). Production environments SHOULD always expose an explicit file.
+- Serve with `Cache-Control: no-store` (the client fetches with `cache: 'no-store'` anyway).
 
-## 4. Procedura wdrożenia (release)
+## 4. Deployment procedure (release)
 
-1. `pnpm verify` + `pnpm e2e` — pełna lokalna bramka (zero GitHub Actions — polityka repo).
-2. `pnpm build` (+ `--base-href` dla wizardów przy hostingu pod pod-ścieżką).
-3. Wgraj trzy katalogi `browser/` zgodnie z layoutem §2.
-4. Wgraj/zoweryfikuj `config.json` per aplikacja (NIE kopiuj dev-owego z `public/` na prod
-   bez przeglądu — zawiera URL-e localhost).
-5. Smoke: portal `/` (kafelki wg flag), `/apps/individual` (embed bez nagłówka),
-   `standaloneUrl` w nowej karcie (z nagłówkiem), przełącznik PL/EN.
+1. `pnpm verify` + `pnpm e2e` — full local gate (zero GitHub Actions — repo policy).
+2. `pnpm build` (+ `--base-href` for wizards when hosting under a sub-path).
+3. Upload the three `browser/` directories per the §2 layout.
+4. Upload/verify `config.json` per application (do NOT copy the dev one from `public/` to prod
+   without review — it contains localhost URLs).
+5. Smoke: portal `/` (tiles per flags), `/apps/individual` (embed without header),
+   `standaloneUrl` in a new tab (with header), the PL/EN switcher.
 
-### Wyłączenie aplikacji na środowisku (bez deployu)
+### Disabling an application on an environment (without a deploy)
 
-Edytuj `config.json` portalu (`enabled: false`) **i** `config.json` tej aplikacji —
-kafelek + embed + dostęp bezpośredni gasną natychmiast po odświeżeniu strony.
+Edit the portal's `config.json` (`enabled: false`) **and** that application's `config.json` —
+the tile + embed + direct access go dark immediately after a page refresh.
 
-## 5. Decyzje i ograniczenia (świadome)
+## 5. Decisions and constraints (deliberate)
 
-- **Element = pełny bundle Angulara** (~940 kB raw, ~195 kB transfer): portal i element
-  to OSOBNE runtime'y. Prostota > współdzielenie; przy większej liczbie remote'ów rozważ
-  Native Federation (poza zakresem tej rundy).
-- **`outputHashing: none` dla elementów** — stały URL `main.js`. Cache-bustuj wersją w
-  ścieżce (np. `/elements/v2026.06.12/...` + wpis w `config.json`) albo krótkim
+- **Element = full Angular bundle** (~940 kB raw, ~195 kB transfer): the portal and the element
+  are SEPARATE runtimes. Simplicity > sharing; with more remotes, consider
+  Native Federation (out of scope for this round).
+- **`outputHashing: none` for elements** — fixed `main.js` URL. Cache-bust with a version in
+  the path (e.g. `/elements/v2026.06.12/...` + an entry in `config.json`) or a short
   `Cache-Control`.
-- **Overlaye Materiala** (panele selectów, datepicker) montują się w `<body>` portalu —
-  dziedziczą motyw PORTALU (azure), nie motyw elementu (violet dla business). Różnica
-  kosmetyczna, zaakceptowana.
-- **Język**: portal pcha aktywny język do elementu atrybutem `lang` (oba runtime'y
-  współdzielą też `localStorage.a22.lang`).
-- **CSP portalu**: `script-src 'self'` jest właściwą i wystarczającą polityką — elementy
-  są ładowane wyłącznie same-origin (wymuszone w `ElementLoader`). Cross-origin/CDN jest
-  celowo niewspierany; gdyby kiedyś go dopuścić, trzeba poszerzyć `script-src` o ten origin,
-  dodać SRI i rozluźnić bramkę w kodzie.
-- **Stan kroku w embed** żyje w pamięci (bez URL) — nawigacja wstecz przeglądarki wraca
-  do kafelków, nie do poprzedniego kroku.
+- **Material overlays** (select panels, datepicker) mount in the portal's `<body>` —
+  they inherit the PORTAL theme (azure), not the element's theme (violet for business). A
+  cosmetic difference, accepted.
+- **Language**: the portal pushes the active language to the element via the `lang` attribute
+  (both runtimes also share `localStorage.a22.lang`).
+- **Portal CSP**: `script-src 'self'` is the correct and sufficient policy — elements
+  are loaded same-origin only (enforced in `ElementLoader`). Cross-origin/CDN is
+  intentionally unsupported; were it ever allowed, you'd have to widen `script-src` with that origin,
+  add SRI, and relax the gate in code.
+- **Step state in embed** lives in memory (no URL) — browser back navigation returns
+  to the tiles, not to the previous step.

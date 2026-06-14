@@ -1,33 +1,33 @@
 ---
 type: template
 for: orchestrator
-description: Kształt raportu /analyze — spójność spec↔plan↔kod (read-only, go/no-go PRZED kodem)
+description: Shape of the /analyze report — spec↔plan↔code consistency (read-only, go/no-go BEFORE code)
 ---
 
-# Szablon: analyze (spójność spec ↔ plan ↔ kod)
+# Template: analyze (spec ↔ plan ↔ code consistency)
 
-> Kanon kształtu kroku **analyze** ([`/analyze`](../../../.github/prompts/analyze.prompt.md),
-> [`../methodology.md`](../methodology.md)). Read-only raport go/no-go **przed** `implement`.
-> Warstwa strukturalna = `pnpm sdd:check`; warstwa semantyczna (pokrycie AC, sprzeczności, drift) = tutaj.
+> Shape canon for the **analyze** step ([`/analyze`](../../../.github/prompts/analyze.prompt.md),
+> [`../methodology.md`](../methodology.md)). Read-only go/no-go report **before** `implement`.
+> Structural layer = `pnpm sdd:check`; semantic layer (AC coverage, contradictions, drift) = here.
 
-## Bramka strukturalna
+## Structural gate
 
-- **`pnpm sdd:check`:** [?] wynik (spec↔plan traceability, nagłówek tabeli, brak `[?]` poza draft).
+- **`pnpm sdd:check`:** [?] result (spec↔plan traceability, table header, no `[?]` outside draft).
 
-## Pokrycie AC przez plan
+## AC coverage by the plan
 
-> **AC bez zadania** = niedopokrycie (no-go). **Zadanie bez AC** = scope creep (usuń lub dopisz AC).
+> **AC with no task** = under-coverage (no-go). **Task with no AC** = scope creep (remove it or add an AC).
 
-| AC  | zadanie w planie (Txxx) | pokryte? | luka / sprzeczność / drift |
-| --- | ----------------------- | -------- | -------------------------- |
-| AC1 | [?]                     | [?]      | [?]                        |
+| AC  | plan task (Txxx) | covered? | gap / contradiction / drift |
+| --- | ---------------- | -------- | --------------------------- |
+| AC1 | [?]              | [?]      | [?]                         |
 
-## Spójność i drift
+## Consistency and drift
 
-- **Sprzeczności spec ↔ plan:** [?] (lub „brak").
-- **Drift kodu:** [?] istniejący kod sprzeczny ze specem / nieaktualne założenia (lub „brak").
-- **Trójka testowa:** [?] scenariusze + Vitest + e2e obecne w planie (brak = no-go).
+- **spec ↔ plan contradictions:** [?] (or "none").
+- **Code drift:** [?] existing code that conflicts with the spec / stale assumptions (or "none").
+- **Test triad:** [?] scenarios + Vitest + e2e present in the plan (missing = no-go).
 
-## Werdykt
+## Verdict
 
-**go / no-go** + jedno zdanie. no-go → zawróć do `specify`/`clarify`/`plan`. Werdykt: orchestrator (Opus).
+**go / no-go** + one sentence. no-go → back to `specify`/`clarify`/`plan`. Verdict: orchestrator (Opus).

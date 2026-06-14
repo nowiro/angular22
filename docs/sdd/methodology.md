@@ -1,92 +1,92 @@
 # SDD (Spec-Driven Development) — angular22
 
-> **Kanon metodologii** SDD dla angular22 — **ten plik** (inspiracja:
-> [github/spec-kit](https://github.com/github/spec-kit)). Repo-lokalna adaptacja: verby,
-> agenci, bramki i komendy specyficzne dla angular22. Warstwa wykonywalna żyje w repo:
-> `tools/scripts/validate-sdd.mjs` + `tools/scripts/workflow-specify.mjs`, prompty `/clarify` +
-> `/analyze` w `.github/prompts/`.
+> **SDD methodology canon** for angular22 — **this file** (inspired by:
+> [github/spec-kit](https://github.com/github/spec-kit)). Repo-local adaptation: verbs,
+> agents, gates and commands specific to angular22. The executable layer lives in the repo:
+> `tools/scripts/validate-sdd.mjs` + `tools/scripts/workflow-specify.mjs`, prompts `/clarify` +
+> `/analyze` in `.github/prompts/`.
 
-## Cykl (mapowanie na spec-kit)
+## Cycle (mapping to spec-kit)
 
-| spec-kit                | tutaj                                        | artefakt / mechanizm                                                                  |
-| ----------------------- | -------------------------------------------- | ------------------------------------------------------------------------------------- |
-| `/speckit.constitution` | `copilot-instructions` + `instructions/*`    | istniejące reguły (nie duplikat)                                                      |
-| **(wejście)**           | **doc-review** → `doc-reviewer`              | dok. zadania ↔ docs/Confluence ↔ mockupy spójne; **STOP na niejasności** PRZED specem |
-| `/speckit.specify`      | `pnpm workflow:specify -- --verb=… --slug=…` | `docs/specs/<slug>/spec.md` (z `[?]`)                                                 |
-| `/speckit.clarify`      | `/clarify <slug>`                            | domyka `[?]`, `status: draft → clarified`                                             |
-| `/speckit.plan`         | orchestrator (plan-first)                    | `docs/plans/<stamp>_<verb>-<slug>.md`                                                 |
-| `/speckit.tasks`        | **folded** w tabelę planu                    | `id \| title \| agent \| done_when \| status \| model \| blocked_by`                  |
-| `/speckit.analyze`      | `/analyze`                                   | raport go/no-go (read-only)                                                           |
-| `/speckit.checklist`    | `/checklist`                                 | checklista jakości — bramka gotowości PRZED kodem (read-only)                         |
-| `/speckit.implement`    | delegacja do specjalisty (subagenta)         | kod + testy                                                                           |
+| spec-kit                | here                                         | artifact / mechanism                                                                   |
+| ----------------------- | -------------------------------------------- | -------------------------------------------------------------------------------------- |
+| `/speckit.constitution` | `copilot-instructions` + `instructions/*`    | existing rules (not a duplicate)                                                       |
+| **(input)**             | **doc-review** → `doc-reviewer`              | task doc ↔ docs/Confluence ↔ mockups consistent; **STOP on ambiguity** BEFORE the spec |
+| `/speckit.specify`      | `pnpm workflow:specify -- --verb=… --slug=…` | `docs/specs/<slug>/spec.md` (with `[?]`)                                               |
+| `/speckit.clarify`      | `/clarify <slug>`                            | closes `[?]`, `status: draft → clarified`                                              |
+| `/speckit.plan`         | orchestrator (plan-first)                    | `docs/plans/<stamp>_<verb>-<slug>.md`                                                  |
+| `/speckit.tasks`        | **folded** into the plan table               | `id \| title \| agent \| done_when \| status \| model \| blocked_by`                   |
+| `/speckit.analyze`      | `/analyze`                                   | go/no-go report (read-only)                                                            |
+| `/speckit.checklist`    | `/checklist`                                 | quality checklist — readiness gate BEFORE code (read-only)                             |
+| `/speckit.implement`    | delegation to a specialist (subagent)        | code + tests                                                                           |
 
-Drabinę domyka krok **verify** = **re-weryfikacja** (orchestrator/Opus, drugi przebieg **po**
-testach): DoD + **każde AC** + e2e + testy integracyjne (gdy API) + **sweep elementów interaktywnych
-per rola** (admin/user/guest) → werdykt + raport błędów + telemetria w run-logu
+The ladder is closed by the **verify** step = **re-verification** (orchestrator/Opus, a second pass **after**
+tests): DoD + **every AC** + e2e + integration tests (when API) + **interactive-element sweep
+per role** (admin/user/guest) → verdict + bug report + telemetry in the run-log
 (`docs/runs/<stamp>_<slug>.md`).
 
-## Reguła progowa
+## Threshold rule
 
-- **Pytanie / trywialna edycja in-file** → wprost, bez artefaktów SDD.
-- **≥2 plików lub zmiana behaviour** → **doc-review** → pełna drabina specify → clarify → plan →
-  analyze → **checklist** (bramka jakości PRZED kodem) → implement → verify → DoD (`pnpm verify`).
+- **Question / trivial in-file edit** → directly, without SDD artifacts.
+- **≥2 files or a behaviour change** → **doc-review** → full ladder specify → clarify → plan →
+  analyze → **checklist** (quality gate BEFORE code) → implement → verify → DoD (`pnpm verify`).
 
-## STOP na niejasności (twarda bramka)
+## STOP on ambiguity (hard gate)
 
-Na **KAŻDYM** kroku drabiny: jeśli cokolwiek **niejasne / sprzeczne / niepełne** → **STOP**.
-**Nie zgaduj** — zapytaj użytkownika lub zostaw `[?]` i zatrzymaj drabinę. Niejasność =
-**blocker**. Szczególnie: **doc-review** (wejściowa dokumentacja zadania ↔ docs/Confluence ↔
-mockupy — PRZED specem) i **clarify** (`[?]` w specu).
+At **EVERY** step of the ladder: if anything is **ambiguous / contradictory / incomplete** → **STOP**.
+**Don't guess** — ask the user or leave `[?]` and halt the ladder. Ambiguity =
+**blocker**. Especially: **doc-review** (input task documentation ↔ docs/Confluence ↔
+mockups — BEFORE the spec) and **clarify** (`[?]` in the spec).
 
-## Krok = oznacz w planie + commit
+## Step = mark in plan + commit
 
-Każdy ukończony krok drabiny: (1) oznacz w **tabeli planu** kolumnę `status` jako `done`,
-(2) zrób **commit** (conventional, przez `scm`) z odniesieniem do kroku / run-logu. **Jeden krok
-= jeden commit** — granularna, audytowalna historia. Kolumna `status` jest w `templates/plan.md`;
-plany sprzed reguły są grandfathered, `validate-sdd` jej nie wymusza.
+Each completed ladder step: (1) mark the `status` column in the **plan table** as `done`,
+(2) make a **commit** (conventional, via `scm`) referencing the step / run-log. **One step
+= one commit** — granular, auditable history. The `status` column is in `templates/plan.md`;
+plans predating the rule are grandfathered, `validate-sdd` does not enforce it.
 
-## Verby angular22
+## angular22 verbs
 
-`feature` (nowa funkcja) · `component` (nowy komponent/wrapper przez generator) ·
-utrzymanie: `fix` / `refactor` / `deps` / `chore` / `security`. Verby są swobodne
-(`[a-z0-9-]+`) — `validate-sdd` ich nie hardkoduje.
+`feature` (new function) · `component` (new component/wrapper via generator) ·
+maintenance: `fix` / `refactor` / `deps` / `chore` / `security`. Verbs are free-form
+(`[a-z0-9-]+`) — `validate-sdd` does not hardcode them.
 
-## Trójka testowa (obowiązkowa w każdym planie zmian)
+## Test triad (mandatory in every change plan)
 
-1. **Scenariusze testowe** wyprowadzone z Acceptance criteria (happy + edge per AC),
-2. **testy jednostkowe** — Vitest (`pnpm nx run <lib>:test`, executor `@nx/vitest:test`),
-3. **testy e2e** — Playwright (`pnpm nx run <app>-e2e:e2e`, executor
-   `@nx/playwright:playwright`) i/lub żywa przeglądarka przez serwer **MCP `playwright`**.
+1. **Test scenarios** derived from Acceptance criteria (happy + edge per AC),
+2. **unit tests** — Vitest (`pnpm nx run <lib>:test`, executor `@nx/vitest:test`),
+3. **e2e tests** — Playwright (`pnpm nx run <app>-e2e:e2e`, executor
+   `@nx/playwright:playwright`) and/or a live browser via the **MCP `playwright`** server.
 
-Brak którejkolwiek pozycji = **no-go** w weryfikacji końcowej.
+Any missing item = **no-go** in final verification.
 
-## Artefakty (wersjonowane w `docs/`)
+## Artifacts (versioned in `docs/`)
 
-Kształt → [`templates/spec.md`](templates/spec.md) · [`templates/plan.md`](templates/plan.md) ·
-[`templates/run.md`](templates/run.md); **kształt odpowiedzi agentów** (doc-review · scenariusze ·
-analyze · review · audyt · dokumentacja) → [`templates/README.md`](templates/README.md).
-`docs/specs|plans|runs` są **trackowane w gicie** —
-**każda zmiana przechodzi przez SDD, a zapis ląduje w `docs/`** (spec + plan + datowany
-run-log). Bramka `pnpm sdd:check` egzekwuje spójność spec↔plan (część `pnpm verify`).
+Shape → [`templates/spec.md`](templates/spec.md) · [`templates/plan.md`](templates/plan.md) ·
+[`templates/run.md`](templates/run.md); **agent-response shape** (doc-review · scenarios ·
+analyze · review · audit · documentation) → [`templates/README.md`](templates/README.md).
+`docs/specs|plans|runs` are **tracked in git** —
+**every change goes through SDD, and the record lands in `docs/`** (spec + plan + dated
+run-log). The `pnpm sdd:check` gate enforces spec↔plan consistency (part of `pnpm verify`).
 
-**Wersjonowanie zadań:** jeśli slug już istnieje (`docs/specs/<slug>/`), `pnpm workflow:specify`
-**nie nadpisuje** — tworzy kolejną wersję `<slug>-v2` / `-v3` / … (nowa iteracja tego samego
-zadania ma własny spec/plan/run-log). Historia poprzednich wersji zostaje w `docs/`.
+**Task versioning:** if the slug already exists (`docs/specs/<slug>/`), `pnpm workflow:specify`
+**does not overwrite** — it creates the next version `<slug>-v2` / `-v3` / … (a new iteration of the same
+task has its own spec/plan/run-log). The history of previous versions stays in `docs/`.
 
-## Telemetria + raport błędów (rozliczenie zamkniętego zadania)
+## Telemetry + bug report (accounting for a closed task)
 
-Krok **verify / DoD** domyka run-log **dwiema** sekcjami: **Raport błędów / napotkane problemy**
-(krok · błąd · przyczyna · naprawa · status — pełny ślad, nie tylko sukcesy) **oraz** **Rozliczenie
-/ Telemetria**: **model per krok**, zużyte **tokeny** i **kredyty Copilot**, liczba **background
-tasków** i **sesji**, liczba agentów/subagentów. Źródła: `usage` workflowów (tokeny, `agent_count`)
-· `TaskList` (background taski) · `list_sessions` (sesje) · dashboard rozliczeniowy (kredyty Copilot
-— poza narzędziami repo, wpis ręczny lub `n/d`).
+The **verify / DoD** step closes the run-log with **two** sections: **Bug report / problems encountered**
+(step · bug · cause · fix · status — the full trace, not just successes) **and** **Accounting
+/ Telemetry**: **model per step**, **tokens** consumed and **Copilot credits**, number of **background
+tasks** and **sessions**, number of agents/subagents. Sources: workflow `usage` (tokens, `agent_count`)
+· `TaskList` (background tasks) · `list_sessions` (sessions) · billing dashboard (Copilot credits
+— outside repo tooling, manual entry or `n/a`).
 
-## Komendy
+## Commands
 
-| Komenda                                          | Krok SDD | Efekt                                              |
-| ------------------------------------------------ | -------- | -------------------------------------------------- |
-| `pnpm workflow:specify -- --verb=<v> --slug=<s>` | specify  | scaffold `spec.md` + `plan.md` + datowany `run.md` |
-| `/clarify <slug>`                                | clarify  | domyka `[?]`, flip `status: clarified`             |
-| `/analyze`                                       | analyze  | `sdd:check` + spójność spec↔plan↔kod → go/no-go    |
-| `pnpm sdd:check`                                 | gate     | warstwa strukturalna (część `verify`)              |
+| Command                                          | SDD step | Effect                                              |
+| ------------------------------------------------ | -------- | --------------------------------------------------- |
+| `pnpm workflow:specify -- --verb=<v> --slug=<s>` | specify  | scaffold `spec.md` + `plan.md` + dated `run.md`     |
+| `/clarify <slug>`                                | clarify  | closes `[?]`, flips `status: clarified`             |
+| `/analyze`                                       | analyze  | `sdd:check` + spec↔plan↔code consistency → go/no-go |
+| `pnpm sdd:check`                                 | gate     | structural layer (part of `verify`)                 |

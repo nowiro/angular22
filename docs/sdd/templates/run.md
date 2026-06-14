@@ -9,66 +9,66 @@ title: '{{verb}} — {{slug}}'
 
 # Run-log: {{verb}} — {{slug}} · {{stamp}}
 
-> Artefakt SDD **wersjonowany** w `docs/runs/`. Krok-po-kroku zapis **jednej
-> iteracji**: kto (agent), na czym (model), z jakim wynikiem. Orchestrator (Opus) domyka
-> sekcją „Weryfikacja końcowa" + **Telemetrią**.
+> SDD artifact **versioned** in `docs/runs/`. Step-by-step record of **one
+> iteration**: who (agent), on what (model), with what result. The orchestrator (Opus) closes it
+> with a "Final verification" section + **Telemetry**.
 
-Powiązane: spec `docs/specs/{{slug}}/spec.md` · plan `docs/plans/{{stamp}}_{{verb}}-{{slug}}.md`.
+Related: spec `docs/specs/{{slug}}/spec.md` · plan `docs/plans/{{stamp}}_{{verb}}-{{slug}}.md`.
 
-## Kroki
+## Steps
 
-| #   | krok (SDD)                  | agent            | model        | wynik / artefakt                               | status |
-| --- | --------------------------- | ---------------- | ------------ | ---------------------------------------------- | ------ |
-| 0   | doc-review (bramka wejścia) | doc-reviewer     | Gemini Flash | dokumentacja ↔ docs / mockupy spójne; go/no-go | todo   |
-| 1   | specify                     | orchestrator     | Opus 4.8     | spec.md + plan.md scaffolded                   | done   |
-| 2   | clarify                     | orchestrator     | Opus 4.8     | `[?]` domknięte, status: clarified             | todo   |
-| 3   | plan                        | orchestrator     | Opus 4.8     | tabela zadań                                   | todo   |
-| 4   | analyze                     | orchestrator     | Opus 4.8     | go / no-go                                     | todo   |
-| 5   | implement                   | angular-engineer | Gemini Flash | kod przechodzi lint z miejsca                  | todo   |
-| 6   | scenariusze testowe (z AC)  | vitest           | Gemini Flash | happy + edge per AC                            | todo   |
-| 7   | testy jednostkowe           | vitest           | Gemini Flash | dotknięte liby zielone                         | todo   |
-| 8   | testy e2e                   | playwright       | Gemini Flash | happy-path na żywej apce zielony               | todo   |
-| 9   | audyt UX (uruchomienie)     | ux-verifier      | Gemini Flash | go (overflow/RWD/kontrast)                     | todo   |
-| 10  | verify (DoD)                | orchestrator     | Opus 4.8     | `pnpm verify` zielone                          | todo   |
+| #   | step (SDD)               | agent            | model        | result / artifact                                   | status |
+| --- | ------------------------ | ---------------- | ------------ | --------------------------------------------------- | ------ |
+| 0   | doc-review (input gate)  | doc-reviewer     | Gemini Flash | documentation ↔ docs / mockups consistent; go/no-go | todo   |
+| 1   | specify                  | orchestrator     | Opus 4.8     | spec.md + plan.md scaffolded                        | done   |
+| 2   | clarify                  | orchestrator     | Opus 4.8     | `[?]` closed, status: clarified                     | todo   |
+| 3   | plan                     | orchestrator     | Opus 4.8     | task table                                          | todo   |
+| 4   | analyze                  | orchestrator     | Opus 4.8     | go / no-go                                          | todo   |
+| 5   | implement                | angular-engineer | Gemini Flash | code passes lint as-is                              | todo   |
+| 6   | test scenarios (from AC) | vitest           | Gemini Flash | happy + edge per AC                                 | todo   |
+| 7   | unit tests               | vitest           | Gemini Flash | touched libs green                                  | todo   |
+| 8   | e2e tests                | playwright       | Gemini Flash | happy-path green on the live app                    | todo   |
+| 9   | UX audit (running)       | ux-verifier      | Gemini Flash | go (overflow/RWD/contrast)                          | todo   |
+| 10  | verify (DoD)             | orchestrator     | Opus 4.8     | `pnpm verify` green                                 | todo   |
 
-## Weryfikacja końcowa (orchestrator / Opus)
+## Final verification (orchestrator / Opus)
 
-> Wypełnij **na samym końcu**, na Opusie — ostatnia bramka jakości nad pracą tańszych modeli.
+> Fill in **at the very end**, on Opus — the last quality gate over the work of cheaper models.
 
-- **Diff vs spec/AC:** [?] czy zmiana realizuje Acceptance criteria, bez regresji i scope-creep
-- **`pnpm verify`:** [?] wynik (pełna bramka; skład → `AGENTS.md` §Komendy)
-- **Pokrycie spec ↔ kod:** [?] każde AC ma odzwierciedlenie w kodzie/testach
-- **Testy:** [?] scenariusze pokrywają każde AC · Vitest + e2e zielone · brak `.skip`/`.only`
-- **Testy integracyjne:** [?] uruchomione gdy API dostępne (inaczej `n/d`)
-- **Sweep elementów interaktywnych:** [?] wszystkie button/link/input/textarea/select/dropdown/filtr
-  przeklikane **per rola** (admin/user/guest) · negatywny authz (ukryty/disabled/deep-link odrzucony)
-- **Działa po testach (end-to-end):** [?] realnie działa, nie tylko testy zielone
-- **UX z uruchomienia:** [?] werdykt ux-verifier (nie z czytania kodu)
-- **Rozjazdy / zawrócone do specjalisty:** [?]
-- **Werdykt:** [?] go / no-go + jedno zdanie uzasadnienia
+- **Diff vs spec/AC:** [?] does the change deliver the Acceptance criteria, without regressions or scope-creep
+- **`pnpm verify`:** [?] result (full gate; composition → `AGENTS.md` §Commands)
+- **Spec ↔ code coverage:** [?] every AC is reflected in code/tests
+- **Tests:** [?] scenarios cover every AC · Vitest + e2e green · no `.skip`/`.only`
+- **Integration tests:** [?] run when API available (otherwise `n/a`)
+- **Interactive-element sweep:** [?] all button/link/input/textarea/select/dropdown/filter
+  clicked through **per role** (admin/user/guest) · negative authz (hidden/disabled/deep-link rejected)
+- **Works after tests (end-to-end):** [?] actually works, not just green tests
+- **UX from running:** [?] ux-verifier verdict (not from reading code)
+- **Discrepancies / sent back to specialist:** [?]
+- **Verdict:** [?] go / no-go + one sentence of rationale
 
-## Raport błędów / napotkane problemy
+## Bug report / problems encountered
 
-> Pełny ślad problemów napotkanych w zadaniu (build / lint / test / runtime / integracja) i ich
-> naprawy — **obowiązkowy**, obok telemetrii. Brak problemów → jeden wiersz „brak".
+> Full trace of problems encountered in the task (build / lint / test / runtime / integration) and their
+> fixes — **mandatory**, alongside telemetry. No problems → a single "none" row.
 
-| #   | krok | błąd / problem | przyczyna | jak naprawiono | status |
-| --- | ---- | -------------- | --------- | -------------- | ------ |
-| 1   | [?]  | [?]            | [?]       | [?]            | [?]    |
+| #   | step | bug / problem | cause | how fixed | status |
+| --- | ---- | ------------- | ----- | --------- | ------ |
+| 1   | [?]  | [?]           | [?]   | [?]       | [?]    |
 
-## Rozliczenie / Telemetria
+## Accounting / Telemetry
 
-> Wypełnij na zamknięciu zadania (krok verify / DoD) — rozliczenie zużycia. **Źródło automatyczne
-> (gdy OTel-export włączony):** trace Copilota → backend (Galileo / OTel) — tokeny i latencja per
-> span; mapa span→krok i włączenie → [`docs/observability.md`](../../observability.md). Fallback
-> ręczny: tokeny / liczba agentów → `usage` workflowów (`subagent_tokens`, `agent_count`);
-> background taski → notyfikacje `<task-notification>` / `TaskList`; sesje → `list_sessions`;
-> **kredyty** → dashboard rozliczeniowy (Copilot premium requests / billing — poza narzędziami repo).
+> Fill in at task close (verify / DoD step) — usage accounting. **Automatic source
+> (when OTel-export is enabled):** Copilot trace → backend (Galileo / OTel) — tokens and latency per
+> span; span→step map and how to enable → [`docs/observability.md`](../../observability.md). Manual
+> fallback: tokens / agent count → workflow `usage` (`subagent_tokens`, `agent_count`);
+> background tasks → `<task-notification>` notifications / `TaskList`; sessions → `list_sessions`;
+> **credits** → billing dashboard (Copilot premium requests / billing — outside repo tooling).
 
-| metryka                         | wartość |
-| ------------------------------- | ------- |
-| tokeny (wyjściowe, sumarycznie) | [?]     |
-| kredyty (premium requests)      | [?]     |
-| background taski (liczba)       | [?]     |
-| sesje (liczba)                  | [?]     |
-| agenci / subagenci              | [?]     |
+| metric                     | value |
+| -------------------------- | ----- |
+| tokens (output, total)     | [?]   |
+| credits (premium requests) | [?]   |
+| background tasks (count)   | [?]   |
+| sessions (count)           | [?]   |
+| agents / subagents         | [?]   |

@@ -1,46 +1,46 @@
 ---
 type: template
 for: doc-reviewer
-description: Kształt odpowiedzi doc-reviewer — Definition of Ready (bramka PRZED wytwarzaniem)
+description: Shape of the doc-reviewer response — Definition of Ready (gate BEFORE producing)
 ---
 
-# Szablon: doc-review (Definition of Ready)
+# Template: doc-review (Definition of Ready)
 
-> Kanon kształtu odpowiedzi [`doc-reviewer`](../../../.github/agents/doc-reviewer.agent.md) —
-> **PIERWSZA bramka drabiny SDD**, PRZED `specify`/`implement`. Pytanie: **czy zadanie jest READY**
-> ([`../methodology.md`](../methodology.md))? Read-only. **STOP na niejasności = no-go** — nie zgadujesz,
-> luka = pytanie.
+> Shape canon for the [`doc-reviewer`](../../../.github/agents/doc-reviewer.agent.md) response —
+> the **FIRST gate of the SDD ladder**, BEFORE `specify`/`implement`. Question: **is the task READY**
+> ([`../methodology.md`](../methodology.md))? Read-only. **STOP on ambiguity = no-go** — you do not guess,
+> a gap = a question.
 
-## Werdykt
+## Verdict
 
-**go (READY) / no-go** — jedno zdanie. no-go = drabina zatrzymana do rozstrzygnięcia pytań.
+**go (READY) / no-go** — one sentence. no-go = ladder halted until the questions are resolved.
 
-## Rozbieżności / luki / niejasności
+## Discrepancies / gaps / ambiguities
 
-> Taksonomia: **luka** (brak pokrycia) · **sprzeczność** (źródła się wykluczają) · **dwuznaczność**
-> (≥2 interpretacje) · **mockup ≠ docs**.
+> Taxonomy: **gap** (no coverage) · **contradiction** (sources conflict) · **ambiguity**
+> (≥2 interpretations) · **mockup ≠ docs**.
 
-| źródło (ticket / repo / mockup) | rozbieżność / luka / niejasność | severity (blocker/major/minor) | pytanie / sugestia |
-| ------------------------------- | ------------------------------- | ------------------------------ | ------------------ |
-| [?]                             | [?]                             | [?]                            | [?]                |
+| source (ticket / repo / mockup) | discrepancy / gap / ambiguity | severity (blocker/major/minor) | question / suggestion |
+| ------------------------------- | ----------------------------- | ------------------------------ | --------------------- |
+| [?]                             | [?]                           | [?]                            | [?]                   |
 
-## Macierz traceability
+## Traceability matrix
 
-> Wiersz bez pokrycia w którejkolwiek kolumnie = luka = pytanie.
+> A row with no coverage in any column = gap = question.
 
-| wymaganie | AC  | element (mockup) | rola (admin/user/guest) |
-| --------- | --- | ---------------- | ----------------------- |
-| [?]       | [?] | [?]              | [?]                     |
+| requirement | AC  | element (mockup) | role (admin/user/guest) |
+| ----------- | --- | ---------------- | ----------------------- |
+| [?]         | [?] | [?]              | [?]                     |
 
-## Elementy interaktywne (enumeracja → cele dla e2e / runtime)
+## Interactive elements (enumeration → targets for e2e / runtime)
 
-> Każdy element, który user kliknie/wypełni: button · link · input · textarea · select/dropdown ·
-> filtr · checkbox · radio · stepper.
+> Every element the user clicks/fills: button · link · input · textarea · select/dropdown ·
+> filter · checkbox · radio · stepper.
 
-| element | typ | `data-testid` | oczekiwane zachowanie | rola z dostępem | ukryty/disabled dla |
-| ------- | --- | ------------- | --------------------- | --------------- | ------------------- |
-| [?]     | [?] | [?]           | [?]                   | [?]             | [?]                 |
+| element | type | `data-testid` | expected behavior | role with access | hidden/disabled for |
+| ------- | ---- | ------------- | ----------------- | ---------------- | ------------------- |
+| [?]     | [?]  | [?]           | [?]               | [?]              | [?]                 |
 
-## Pytania otwarte
+## Open questions
 
-[?] Lista do rozstrzygnięcia PRZED specem (lub „brak — READY"). Werdykt końcowy → orchestrator (Opus).
+[?] List to resolve BEFORE the spec (or "none — READY"). Final verdict → orchestrator (Opus).

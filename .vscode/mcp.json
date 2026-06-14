@@ -1,27 +1,27 @@
 {
   "$schema": "https://aka.ms/vscode-mcp.schema.json",
-  "comment": "MCP servers dla angular22 (VS Code >= 1.121). Wszystkie serwery przez `cmd /c npx` (PATH-relative) — działa wymiennie z nvm-windows i standardową instalacją Node. macOS/Linux: zamień command: \"cmd\", args: [\"/c\", \"npx\", …] na command: \"npx\", args: [\"-y\", …]. BEZ `inputs`/promptów — opcje opisane w polu `comment` każdego serwera. context7 działa keyless; playwright wymaga jednorazowo `npx playwright install chromium`.",
+  "comment": "MCP servers for angular22 (VS Code >= 1.121). All servers run via `cmd /c npx` (PATH-relative) — works interchangeably with nvm-windows and a standard Node install. macOS/Linux: replace command: \"cmd\", args: [\"/c\", \"npx\", …] with command: \"npx\", args: [\"-y\", …]. NO `inputs`/prompts — options are documented in each server's `comment` field. context7 works keyless; playwright requires a one-time `npx playwright install chromium`.",
   "servers": {
     "context7": {
-      "comment": "Up-to-date docs bibliotek (Angular 22, Signal Forms, Nx, Material), keyless. Opcja: env CONTEXT7_API_KEY (klucz z context7.com) dla wyższych limitów.",
+      "comment": "Up-to-date library docs (Angular 22, Signal Forms, Nx, Material), keyless. Option: env CONTEXT7_API_KEY (key from context7.com) for higher limits.",
       "type": "stdio",
       "command": "cmd",
       "args": ["/c", "npx", "-y", "@upstash/context7-mcp"]
     },
     "nx": {
-      "comment": "Nx-aware MCP — standalone `nx-mcp` wycelowany w ten workspace: nx_workspace, nx_project_details, nx_generators, nx_docs. Pozycyjny arg = workspace root.",
+      "comment": "Nx-aware MCP — standalone `nx-mcp` pointed at this workspace: nx_workspace, nx_project_details, nx_generators, nx_docs. Positional arg = workspace root.",
       "type": "stdio",
       "command": "cmd",
       "args": ["/c", "npx", "-y", "nx-mcp@latest", "${workspaceFolder}"]
     },
     "angular-cli": {
-      "comment": "Angular-aware MCP (`@angular/cli mcp`): get_best_practices / search_documentation / find_examples / list_projects. Brak env/opcji.",
+      "comment": "Angular-aware MCP (`@angular/cli mcp`): get_best_practices / search_documentation / find_examples / list_projects. No env/options.",
       "type": "stdio",
       "command": "cmd",
       "args": ["/c", "npx", "-y", "@angular/cli", "mcp"]
     },
     "playwright": {
-      "comment": "Browser e2e w trybie UI (widoczna przeglądarka, headed = domyślnie). Opcje w args: \"--headless\" by ukryć okno · \"--browser\" chrome|chromium|firefox|webkit · \"--viewport-size\" \"1280,720\" · \"--isolated\" (czysty profil).",
+      "comment": "Browser e2e in UI mode (visible browser, headed = default). Options in args: \"--headless\" to hide the window · \"--browser\" chrome|chromium|firefox|webkit · \"--viewport-size\" \"1280,720\" · \"--isolated\" (clean profile).",
       "type": "stdio",
       "command": "cmd",
       "args": ["/c", "npx", "-y", "@playwright/mcp@latest", "--browser", "chrome"]

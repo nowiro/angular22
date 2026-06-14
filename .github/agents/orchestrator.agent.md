@@ -102,7 +102,7 @@ models' work (don't trust "green on the executor's side"):
 
 1. **Diff vs spec/AC** — every **AC ticked off** individually (checklist), no regressions or scope-creep
    (`reviewer`'s opinion is advisory, the verdict is yours).
-2. **DoD gate** — `pnpm verify` green (composition → [`AGENTS.md`](../../AGENTS.md#komendy)).
+2. **DoD gate** — `pnpm verify` green (composition → [`AGENTS.md`](../../AGENTS.md#commands)).
 3. **Tests** — scenarios cover every AC (from `test-strategy`); **Vitest + e2e green**; **integration
    tests run when the API is available** (otherwise an explicit `n/a` in the run-log); no `.skip`/`.only`.
 4. **Interactive-element sweep** — **all** clicks/inputs (button/link/input/textarea/

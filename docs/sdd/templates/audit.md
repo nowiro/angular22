@@ -1,31 +1,31 @@
 ---
 type: template
 for: security, accessibility, ux-verifier, stack-guardian, performance, meta-reviewer
-description: Wspólny kształt audytu read-only — zakres + findingi per wymiar + severity + go/no-go
+description: Shared read-only audit shape — scope + findings per dimension + severity + go/no-go
 ---
 
-# Szablon: audyt read-only (per wymiar)
+# Template: read-only audit (per dimension)
 
-> Wspólny kanon kształtu dla audytorów **read-only**. Wymiar zależy od producenta:
+> Shared shape canon for **read-only** auditors. The dimension depends on the producer:
 >
-> - [`security`](../../../.github/agents/security.agent.md) — web-security (XSS/sinki/CSP/sekrety), rubryka [`security-guidance`](../../../.github/skills/security-guidance/SKILL.md)
-> - [`accessibility`](../../../.github/agents/accessibility.agent.md) — WCAG 2.1 AA na poziomie kodu (runtime a11y → `ux-verifier`)
-> - [`ux-verifier`](../../../.github/agents/ux-verifier.agent.md) — runtime: overflow / RWD / kontrast / focus na **uruchomionej** apce
-> - [`stack-guardian`](../../../.github/agents/stack-guardian.agent.md) — zgodność z [`../../tech-stack.md`](../../tech-stack.md) (off-stack / pinning / drift)
-> - [`performance`](../../../.github/agents/performance.agent.md) — bundle budget / change detection / zbędne re-renders
-> - [`meta-reviewer`](../../../.github/agents/meta-reviewer.agent.md) — jakość configu AI (DRY/SRP agentów/skilli), rubryka [`ai-config-quality`](../../../.github/skills/ai-config-quality/SKILL.md)
+> - [`security`](../../../.github/agents/security.agent.md) — web-security (XSS/sinks/CSP/secrets), rubric [`security-guidance`](../../../.github/skills/security-guidance/SKILL.md)
+> - [`accessibility`](../../../.github/agents/accessibility.agent.md) — WCAG 2.1 AA at the code level (runtime a11y → `ux-verifier`)
+> - [`ux-verifier`](../../../.github/agents/ux-verifier.agent.md) — runtime: overflow / RWD / contrast / focus on the **running** app
+> - [`stack-guardian`](../../../.github/agents/stack-guardian.agent.md) — compliance with [`../../tech-stack.md`](../../tech-stack.md) (off-stack / pinning / drift)
+> - [`performance`](../../../.github/agents/performance.agent.md) — bundle budget / change detection / unnecessary re-renders
+> - [`meta-reviewer`](../../../.github/agents/meta-reviewer.agent.md) — AI config quality (DRY/SRP of agents/skills), rubric [`ai-config-quality`](../../../.github/skills/ai-config-quality/SKILL.md)
 
-## Zakres
+## Scope
 
-[?] Co audytowano (powierzchnia diffu / pliki / trasy / runtime) i wg jakiego wymiaru/rubryki.
+[?] What was audited (diff surface / files / routes / runtime) and against which dimension/rubric.
 
-## Findingi
+## Findings
 
-| obszar / ścieżka:linia | finding | severity (blocker/major/minor) | rekomendacja |
-| ---------------------- | ------- | ------------------------------ | ------------ |
-| [?]                    | [?]     | [?]                            | [?]          |
+| area / path:line | finding | severity (blocker/major/minor) | recommendation |
+| ---------------- | ------- | ------------------------------ | -------------- |
+| [?]              | [?]     | [?]                            | [?]            |
 
-## Werdykt
+## Verdict
 
-**go / no-go** + jedno zdanie. Werdykt końcowy → orchestrator (Opus). Read-only — naprawę wykonuje
-właściwy specjalista edycyjny, nie audytor.
+**go / no-go** + one sentence. Final verdict → orchestrator (Opus). Read-only — the fix is done by the
+appropriate editing specialist, not the auditor.

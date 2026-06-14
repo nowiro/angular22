@@ -72,7 +72,7 @@ concisely: outcome over process.
 
 ## Definition of Done
 
-`pnpm verify` green (full gate; composition → [`AGENTS.md`](../AGENTS.md#komendy) / the
+`pnpm verify` green (full gate; composition → [`AGENTS.md`](../AGENTS.md#commands) / the
 `verify` script in `package.json`) + touched `e2e` green + UX from a run. **Final verification =
 orchestrator re-verification (Opus) after tests**: every AC + e2e + integration tests (when API) +
 **sweep of interactive elements per role** (admin/user/guest). Run-log closed out with **Bug

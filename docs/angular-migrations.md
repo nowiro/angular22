@@ -1,60 +1,60 @@
-# Migracje Angular (standalone → zoneless) — kanon angular22
+# Angular migrations (standalone → zoneless) — angular22 canon
 
-> **Kanon** ścieżki modernizacji Angulara dla angular22 (wsparcie **v19 → v20 → v21 → v22**,
-> meta aż do **zoneless**). Repo jest już na **22 + zoneless**; ta mapa służy do (1) utrzymania
-> demo na najnowszym i (2) prowadzenia checkoutu na 19/20/21 **w trakcie migracji** bez fałszywych
-> błędów (brama lintu **wersjonowana** — patrz niżej). Wykonawca: agent
+> **Canon** of the Angular modernization path for angular22 (support for **v19 → v20 → v21 → v22**,
+> meta all the way to **zoneless**). The repo is already on **22 + zoneless**; this map serves to (1) keep
+> the demo on the latest and (2) drive a 19/20/21 checkout **mid-migration** without false
+> errors (the lint gate is **versioned** — see below). Executor: agent
 > [`migration`](../.github/agents/migration.agent.md) + playbook
-> [`angular-migrations`](../.github/skills/angular-migrations/SKILL.md). Wersje frameworka →
-> [`tech-stack.md`](tech-stack.md) (single source of truth), **nie** z pamięci.
+> [`angular-migrations`](../.github/skills/angular-migrations/SKILL.md). Framework versions →
+> [`tech-stack.md`](tech-stack.md) (single source of truth), **not** from memory.
 
-## Drabina migracji (kolejność zalecana)
+## Migration ladder (recommended order)
 
-Każda migracja to oficjalny schematic `@angular/core`, **idempotentny** (bezpieczny do ponownego
-uruchomienia). Komenda bazowa: `pnpm ng generate @angular/core:<id>` (alias `pnpm ng g …`).
+Each migration is an official `@angular/core` schematic, **idempotent** (safe to re-run).
+Base command: `pnpm ng generate @angular/core:<id>` (alias `pnpm ng g …`).
 
-| #   | Migracja                  | Komenda (`pnpm ng generate …`)                  | Co robi                                                                                 |
-| --- | ------------------------- | ----------------------------------------------- | --------------------------------------------------------------------------------------- |
-| 1   | Standalone                | `@angular/core:standalone`                      | Komponenty/dyrektywy/pipe’y → standalone; usuwa zbędne `NgModule`; bootstrap standalone |
-| 2   | CommonModule → Standalone | `@angular/core:common-to-standalone`            | `CommonModule` → pojedyncze importy dyrektyw/pipe’ów                                    |
-| 3   | Control Flow Syntax       | `@angular/core:control-flow`                    | `*ngIf`/`*ngFor`/`*ngSwitch` → `@if`/`@for`/`@switch`                                   |
-| 4   | Clean up unused imports   | `@angular/core:cleanup-unused-imports`          | Usuwa nieużywane importy standalone (po 1–3)                                            |
-| 5   | inject() Function         | `@angular/core:inject`                          | DI przez konstruktor → `inject()`                                                       |
-| 6   | Lazy-loaded routes        | `@angular/core:route-lazy-loading`              | Trasy eager → `loadComponent`/`loadChildren` (code-splitting)                           |
-| 7   | Signal inputs             | `@angular/core:signal-input-migration`          | `@Input()` → `input()` / `input.required()`                                             |
-| 8   | Outputs                   | `@angular/core:output-migration`                | `@Output() … EventEmitter` → `output()`                                                 |
-| 9   | Signal queries            | `@angular/core:signal-queries-migration`        | `@ViewChild`/`@ContentChild(ren)` → `viewChild()`/`contentChild()` …                    |
-| 10  | Self-closing tags         | `@angular/core:self-closing-tag`                | `<cmp></cmp>` → `<cmp />` tam, gdzie to bezpieczne                                      |
-| 11  | NgClass → Class           | `@angular/core:ngclass-to-class`                | `[ngClass]` → `[class]` (flaga `--migrate-space-separated-key`)                         |
-| 12  | NgStyle → Style           | `@angular/core:ngstyle-to-style`                | `[ngStyle]` → `[style]` (flaga `--best-effort-mode`)                                    |
-| 13  | Router Testing Module     | `@angular/core:router-testing-module-migration` | `RouterTestingModule` → `RouterModule` + `provideLocationMocks()`                       |
+| #   | Migracja                  | Komenda (`pnpm ng generate …`)                  | Co robi                                                                                      |
+| --- | ------------------------- | ----------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| 1   | Standalone                | `@angular/core:standalone`                      | Components/directives/pipes → standalone; removes redundant `NgModule`; standalone bootstrap |
+| 2   | CommonModule → Standalone | `@angular/core:common-to-standalone`            | `CommonModule` → individual directive/pipe imports                                           |
+| 3   | Control Flow Syntax       | `@angular/core:control-flow`                    | `*ngIf`/`*ngFor`/`*ngSwitch` → `@if`/`@for`/`@switch`                                        |
+| 4   | Clean up unused imports   | `@angular/core:cleanup-unused-imports`          | Removes unused standalone imports (after 1–3)                                                |
+| 5   | inject() Function         | `@angular/core:inject`                          | Constructor DI → `inject()`                                                                  |
+| 6   | Lazy-loaded routes        | `@angular/core:route-lazy-loading`              | Eager routes → `loadComponent`/`loadChildren` (code-splitting)                               |
+| 7   | Signal inputs             | `@angular/core:signal-input-migration`          | `@Input()` → `input()` / `input.required()`                                                  |
+| 8   | Outputs                   | `@angular/core:output-migration`                | `@Output() … EventEmitter` → `output()`                                                      |
+| 9   | Signal queries            | `@angular/core:signal-queries-migration`        | `@ViewChild`/`@ContentChild(ren)` → `viewChild()`/`contentChild()` …                         |
+| 10  | Self-closing tags         | `@angular/core:self-closing-tag`                | `<cmp></cmp>` → `<cmp />` where it is safe                                                   |
+| 11  | NgClass → Class           | `@angular/core:ngclass-to-class`                | `[ngClass]` → `[class]` (flag `--migrate-space-separated-key`)                               |
+| 12  | NgStyle → Style           | `@angular/core:ngstyle-to-style`                | `[ngStyle]` → `[style]` (flag `--best-effort-mode`)                                          |
+| 13  | Router Testing Module     | `@angular/core:router-testing-module-migration` | `RouterTestingModule` → `RouterModule` + `provideLocationMocks()`                            |
 
-## Meta: zoneless (stan końcowy)
+## Meta: zoneless (end state)
 
-**Brak codemodu** — zoneless to zmiana konfiguracji, nie schematic:
+**No codemod** — zoneless is a config change, not a schematic:
 
-- `provideZonelessChangeDetection()` w bootstrapie (zamiast `provideZoneChangeDetection`),
-- usunięcie `zone.js` z polyfilli i zależności.
+- `provideZonelessChangeDetection()` in the bootstrap (instead of `provideZoneChangeDetection`),
+- removing `zone.js` from polyfills and dependencies.
 
-W tym repo jest **już osiągnięty** i egzekwowany: `zone.js` jest **off-stack** (lint / `stack-guardian`,
-[`tech-stack.md`](tech-stack.md)). Warunek wejścia: kod działa na sygnałach (migracje 7–9) i nie
-polega na automatycznym CD Zone.js.
+In this repo it is **already achieved** and enforced: `zone.js` is **off-stack** (lint / `stack-guardian`,
+[`tech-stack.md`](tech-stack.md)). Entry condition: the code runs on signals (migrations 7–9) and does not
+rely on Zone.js automatic CD.
 
-## Brama wersjonowana (Signal Forms ≥ 22)
+## Versioned gate (Signal Forms ≥ 22)
 
-Zgodność z wielowersyjnością pilnuje [`eslint.config.mjs`](../eslint.config.mjs): major czytany z
-`@angular/core` (fallback `package.json`). Od **≥ 22** import gołego `@angular/forms`
-(`FormGroup`/`FormBuilder`/`ngModel` + bridge `…/signals/compat`) = **błąd lintu**
-(`no-restricted-syntax`); na **< 22** reguła jest **wyłączona**, więc checkout sprzed migracji na
-Signal Forms nie produkuje fałszywych błędów. Detale → [`angular.instructions.md`](../.github/instructions/angular.instructions.md).
+Multi-version compatibility is enforced by [`eslint.config.mjs`](../eslint.config.mjs): the major is read from
+`@angular/core` (fallback `package.json`). From **≥ 22**, importing bare `@angular/forms`
+(`FormGroup`/`FormBuilder`/`ngModel` + the `…/signals/compat` bridge) = **lint error**
+(`no-restricted-syntax`); on **< 22** the rule is **disabled**, so a checkout from before the Signal Forms
+migration does not produce false errors. Details → [`angular.instructions.md`](../.github/instructions/angular.instructions.md).
 
-## Reguły wykonania
+## Execution rules
 
-- **Jedna migracja = jeden commit** (verb SDD `chore`/`deps`, przez `scm`) — nie mieszaj z feature.
-- **Po każdej migracji `pnpm verify`** (pełna bramka) + dotknięte `pnpm e2e` zielone; rozjazd kodu
-  po codemodzie → `angular-engineer`, lawina lintu → `eslint`, typy → `typescript`.
-- **Dokładne flagi / dostępność per major** potwierdzaj przez doc-MCP `angular-cli`
-  (`ng generate --help`) — **nie zgaduj** ([`mcp-usage`](../.github/instructions/mcp-usage.instructions.md)).
-- Migracje są **idempotentne** — ponowne uruchomienie nie psuje już-zmigrowanego kodu.
-- Bump majora frameworka (`nx migrate` / `ng update`) → [`migration`](../.github/agents/migration.agent.md)
-  §Pętla; te schematics to **modernizacja kodu wewnątrz** wersji, nie bump.
+- **One migration = one commit** (SDD verb `chore`/`deps`, via `scm`) — don't mix with a feature.
+- **`pnpm verify` after every migration** (full gate) + affected `pnpm e2e` green; code drift
+  after a codemod → `angular-engineer`, a lint avalanche → `eslint`, types → `typescript`.
+- **Confirm exact flags / availability per major** via the `angular-cli` doc-MCP
+  (`ng generate --help`) — **don't guess** ([`mcp-usage`](../.github/instructions/mcp-usage.instructions.md)).
+- Migrations are **idempotent** — re-running does not break already-migrated code.
+- A framework major bump (`nx migrate` / `ng update`) → [`migration`](../.github/agents/migration.agent.md)
+  §Loop; these schematics are **code modernization within** a version, not a bump.

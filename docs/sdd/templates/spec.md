@@ -8,29 +8,29 @@ created: '{{date}}'
 
 # Spec: {{title}}
 
-> Artefakt SDD **wersjonowany** w `docs/specs/`. Kanon kształtu:
-> `docs/sdd/templates/spec.md`. Domknij `[?]` przez `/clarify` przed planem.
+> SDD artifact **versioned** in `docs/specs/`. Shape canon:
+> `docs/sdd/templates/spec.md`. Close `[?]` via `/clarify` before the plan.
 
-## Kontekst
+## Context
 
-[?] Jaki problem / potrzebę to adresuje i dlaczego teraz?
+[?] What problem / need does this address and why now?
 
 ## User story
 
-[?] Jako <persona> chcę <zdolność>, aby <wynik>.
+[?] As a <persona> I want <capability>, so that <outcome>.
 
 ## Acceptance criteria
 
-[?] Given / When / Then. Bądź konkretny — to jedyna **egzekwowana** sekcja (`sdd:check`).
+[?] Given / When / Then. Be specific — this is the only **enforced** section (`sdd:check`).
 
 ## Success metrics
 
-[?] Liczby, nie hasła: bundle budget, coverage dotkniętych libów, liczba testów e2e.
+[?] Numbers, not slogans: bundle budget, coverage of touched libs, number of e2e tests.
 
 ## Non-goals
 
-[?] Co explicite jest poza zakresem tej rundy.
+[?] What is explicitly out of scope for this round.
 
 ## Open questions
 
-[?] Wszystko, co wymaga decyzji przed implementacją. `/clarify` to domyka.
+[?] Anything requiring a decision before implementation. `/clarify` closes these.

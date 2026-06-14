@@ -5,7 +5,7 @@ Signal Forms**, with every Angular Material component consumed through Nx wrappe
 
 ## Stack
 
-> Pełny **kanon** (pinowane wersje, dozwolone/zakazane, reguły spójności) → [`docs/tech-stack.md`](docs/tech-stack.md) · pilnuje agent `stack-guardian`.
+> Full **canon** (pinned versions, allowed/forbidden, consistency rules) → [`docs/tech-stack.md`](docs/tech-stack.md) · enforced by the `stack-guardian` agent.
 
 | Layer       | Choice                                                                 |
 | ----------- | ---------------------------------------------------------------------- |
