@@ -22,11 +22,6 @@ import { isValidPlPostalCode } from './postal-code';
 import { isValidRegon } from './regon';
 import { isValidWebsiteUrl } from './url';
 
-export interface FieldError {
-  readonly kind: string;
-  readonly message: string;
-}
-
 export const ERROR_PESEL = 'pesel';
 export const ERROR_NIP = 'nip';
 export const ERROR_REGON = 'regon';

@@ -40,6 +40,9 @@ Signal Forms**, with every Angular Material component consumed through Nx wrappe
 | `@angular22/individual-wizard-feature` | feature     | Step components + wizard shell                                                                     |
 | `@angular22/business-wizard-data`      | data-access | Model, dictionaries, Signal Forms schema, fill preset                                              |
 | `@angular22/business-wizard-feature`   | feature     | Step components + wizard shell                                                                     |
+| `@angular22/shared-auth`               | util        | Signal-based RBAC: `provideAuth` (mock or Keycloak), `AuthStore`, `*a22HasRole`, `roleGuard`       |
+| `@angular22/ui-feedback`               | ui          | Shared full-page error screens + error catalogue + global error handler                            |
+| `@angular22/app-platform`              | feature     | Shared app bootstrap spine (`provideAppPlatform`)                                                  |
 
 ## Quickstart
 

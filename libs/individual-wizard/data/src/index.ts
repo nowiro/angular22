@@ -3,8 +3,7 @@
  *
  * @packageDocumentation
  */
-export { applicableConsents, consentContextOf, consentDescription, CONSENTS_CATALOG } from './lib/consents-catalog';
-export type { ConsentContext, ConsentDefinition } from './lib/consents-catalog';
+export { applicableConsents, consentDescription } from './lib/consents-catalog';
 export {
   ADDRESS_PURPOSES,
   CONTRACT_TYPES,
@@ -49,13 +48,6 @@ export type {
   SurveyValue,
   ThesisValue,
 } from './lib/models';
-export {
-  relevanceOf,
-  showsEmploymentDetails,
-  showsHigherEducation,
-  showsSpecialisation,
-  showsThesis,
-} from './lib/relevance';
 export { INDIVIDUAL_WIZARD_STEP_COUNT, WizardNav, WizardPath } from './lib/routes';
 export type { IndividualWizardStepIndex } from './lib/routes';
 export { IndividualWizardStore } from './lib/wizard-store';

@@ -61,7 +61,7 @@ cost/latency aggregates per run. Initial scope (clarify decision): **tool-select
 | `execute_tool`    | call to an MCP server (`context7` / `nx` / `angular-cli` / `playwright`) or a tool |
 | `execute_hook`    | hook (e.g. pre-commit `verify`)                                                    |
 
-Span attributes (tokens in/out, model, latency) → feed the **"Billing / Telemetry"** section of the
+Span attributes (tokens in/out, model, latency) → feed the **"Accounting / Telemetry"** section of the
 run-log ([`docs/sdd/templates/run.md`](sdd/templates/run.md)) automatically instead of a manual entry.
 
 ## Security / boundaries

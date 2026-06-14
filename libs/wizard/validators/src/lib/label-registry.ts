@@ -12,7 +12,7 @@ export interface ValidationLabel {
   readonly label: string;
 }
 
-/** Standard Signal-Forms error shape (structurally equal to `FieldError`). */
+/** Standard Signal-Forms error shape. */
 type ErrorResult = { readonly kind: string; readonly message: string } | null;
 
 const REGISTRY = new Map<string, string>();

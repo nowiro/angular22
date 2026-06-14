@@ -22,7 +22,7 @@ overlap, house-style. Red `ai:validate` = `no-go` immediately, no semantic analy
 3. **Boundaries / hand-off** — each agent has a delineating section pointing to its neighbors
    (`accessibility` code ⇄ `ux-verifier` runtime; `styles` SCSS ⇄ `material-wrapper` tokens).
    Missing boundary = routing-collision risk = finding.
-4. **House-style** — concise PL prose; agent: intro "Orchestrator subagent …" + When / Loop /
+4. **House-style** — concise EN prose; agent: intro "Orchestrator subagent …" + When / Loop /
    Boundary / Format + closing **NO**. Identifiers in \`backticks\`, cross-refs via relative link.
 5. **Frontmatter per type** (beyond what the guard enforces):
    - agent → `description` + `model` + `tools` (+ `user-invocable: false` for non-orchestrator),

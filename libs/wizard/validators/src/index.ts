@@ -23,7 +23,6 @@ export {
   regonError,
   websiteUrlError,
 } from './lib/field-errors';
-export type { FieldError } from './lib/field-errors';
 export { isValidKrs } from './lib/krs';
 export {
   defineValidator,

@@ -13,7 +13,7 @@
 Each migration is an official `@angular/core` schematic, **idempotent** (safe to re-run).
 Base command: `pnpm ng generate @angular/core:<id>` (alias `pnpm ng g …`).
 
-| #   | Migracja                  | Komenda (`pnpm ng generate …`)                  | Co robi                                                                                      |
+| #   | Migration                 | Command (`pnpm ng generate …`)                  | What it does                                                                                 |
 | --- | ------------------------- | ----------------------------------------------- | -------------------------------------------------------------------------------------------- |
 | 1   | Standalone                | `@angular/core:standalone`                      | Components/directives/pipes → standalone; removes redundant `NgModule`; standalone bootstrap |
 | 2   | CommonModule → Standalone | `@angular/core:common-to-standalone`            | `CommonModule` → individual directive/pipe imports                                           |
