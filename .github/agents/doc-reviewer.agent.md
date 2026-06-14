@@ -46,6 +46,8 @@ brakujących wymagań — **luka = pytanie, nie domysł**.
 
 ## Format
 
+> Kanon kształtu: [`templates/doc-review.md`](../../docs/sdd/templates/doc-review.md).
+
 **go (READY) / no-go** + tabela `źródło | rozbieżność/luka/niejasność | severity (blocker/major/minor)
 | pytanie/sugestia` + **macierz traceability** (wymaganie ↔ AC ↔ element ↔ rola) + **lista pytań
 otwartych**. Werdykt końcowy należy do orchestratora (Opus).

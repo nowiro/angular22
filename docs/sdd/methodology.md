@@ -63,7 +63,9 @@ Brak którejkolwiek pozycji = **no-go** w weryfikacji końcowej.
 ## Artefakty (wersjonowane w `docs/`)
 
 Kształt → [`templates/spec.md`](templates/spec.md) · [`templates/plan.md`](templates/plan.md) ·
-[`templates/run.md`](templates/run.md). `docs/specs|plans|runs` są **trackowane w gicie** —
+[`templates/run.md`](templates/run.md); **kształt odpowiedzi agentów** (doc-review · scenariusze ·
+analyze · review · audyt · dokumentacja) → [`templates/README.md`](templates/README.md).
+`docs/specs|plans|runs` są **trackowane w gicie** —
 **każda zmiana przechodzi przez SDD, a zapis ląduje w `docs/`** (spec + plan + datowany
 run-log). Bramka `pnpm sdd:check` egzekwuje spójność spec↔plan (część `pnpm verify`).
 

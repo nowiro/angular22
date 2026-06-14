@@ -51,6 +51,8 @@ i [`copilot-instructions`](../../copilot-instructions.md), nie „drobiazgi".
 
 ## Format findingów
 
+> Kanon kształtu: [`templates/review.md`](../../../docs/sdd/templates/review.md).
+
 Tabela + werdykt cząstkowy:
 
 ```

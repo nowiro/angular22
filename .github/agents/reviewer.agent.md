@@ -27,6 +27,8 @@ Playbook (rubryka severity, auto-blockery, warstwy) → skill
 
 ## Format
 
+> Kanon kształtu: [`templates/review.md`](../../docs/sdd/templates/review.md).
+
 Tabela `plik:linia | finding | severity (blocker/major/minor) | sugestia` + **go / no-go**
 z jednym zdaniem uzasadnienia. Werdykt końcowy należy do orchestratora (Opus).
 

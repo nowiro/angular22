@@ -46,6 +46,8 @@ ma scenariusz **klik/fill** per właściwa rola, z **`data-testid`** (`getByTest
 
 ## Format
 
+> Kanon kształtu: [`templates/test-scenarios.md`](../../docs/sdd/templates/test-scenarios.md).
+
 Tabela `AC | scenariusz | technika | typ (unit/e2e) | rola | element/`data-testid` | oczekiwanie`
 
 - **macierz RBAC** + lista **luk pokrycia** + podział unit↔e2e. Werdykt go/no-go → orchestrator (Opus).

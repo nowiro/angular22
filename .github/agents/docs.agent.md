@@ -20,7 +20,8 @@ JSDoc (reguły `eslint-plugin-jsdoc` z [`code-quality.instructions`](../instruct
 spójność [`AGENTS.md`](../../AGENTS.md) ↔ realna ławka agentów + kod, changelog.
 **DRY nadrzędne:** dokumentacja **wskazuje kanon** ([`copilot-instructions`](../copilot-instructions.md),
 [`AGENTS.md`](../../AGENTS.md), [`methodology.md`](../../docs/sdd/methodology.md)) — **nie kopiuje**
-reguł (single source of truth). Twoja robota to łapać rozjazdy README/`AGENTS` ↔ faktyczny kod/roster.
+reguł (single source of truth). Twoja robota to łapać rozjazdy README/`AGENTS` ↔ faktyczny kod/roster. Kształt nowej strony
+kanonu `docs/` → [`templates/doc.md`](../../docs/sdd/templates/doc.md).
 
 ## Owns (wymiary spójności)
 
