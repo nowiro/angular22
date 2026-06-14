@@ -28,7 +28,7 @@ agents: [orchestrator, keycloak, angular-engineer, vitest, playwright, reviewer]
 | T005 | Wire 3 apki (provideAuth) + portal RBAC demo (admin/guard/switcher/i18n) | angular-engineer | typecheck+build zielone                          | done   | Gemini Flash | T003       |
 | T006 | E2e RBAC per rola + negatywny authz (portal-e2e)                         | playwright       | 6 scenariuszy zielonych                          | done   | Gemini Flash | T005       |
 | T007 | Agent `keycloak` + skill `keycloak-auth` + wiring                        | orchestrator     | ai:validate 31/10/1                              | done   | Opus 4.8     | T003       |
-| T008 | Verify + run-log + telemetria                                            | orchestrator     | `pnpm verify` + e2e go + commit                  | todo   | Opus 4.8     | T004–T007  |
+| T008 | Verify + run-log + telemetria                                            | orchestrator     | `pnpm verify` + e2e go + commit                  | done   | Opus 4.8     | T004–T007  |
 
 ## Notatki
 

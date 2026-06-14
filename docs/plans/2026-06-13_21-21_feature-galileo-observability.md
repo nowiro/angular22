@@ -1,7 +1,7 @@
 ---
 type: plan
 id: 'plan.feature.galileo-observability'
-status: draft
+status: clarified
 date: '2026-06-13'
 title: 'feature — galileo-observability'
 agents: [orchestrator, doc-reviewer, docs, stack-guardian, security, reviewer]

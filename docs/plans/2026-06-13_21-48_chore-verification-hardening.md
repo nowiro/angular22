@@ -25,8 +25,8 @@ agents: [orchestrator, doc-reviewer, test-strategy, ux-verifier, playwright, rev
 | T003 | Redesign `test-strategy` (RBAC matrix, boundary/decision/state, neg. authz)    | orchestrator | scenariusze per rola + element-availability           | done   | Opus 4.8     | T001       |
 | T004 | Re-weryfikacja w `orchestrator` + sweep elementów w `ux-verifier`/`playwright` | orchestrator | DoD+AC+e2e+integr.(gdy API)+klik wszystkich elementów | done   | Opus 4.8     | T001       |
 | T005 | `run.md` + `methodology`: raport błędów + telemetria (model/tokeny/kredyty)    | orchestrator | sekcja raportu błędów + telemetria spójne             | done   | Opus 4.8     | T001       |
-| T006 | Bramki: `ai:validate` (30) + `sdd:check` + `prettier`                          | reviewer     | wszystkie green                                       | todo   | Gemini Flash | T002–T005  |
-| T007 | Verify + run-log + telemetria                                                  | orchestrator | go + commit                                           | todo   | Opus 4.8     | T006       |
+| T006 | Bramki: `ai:validate` (30) + `sdd:check` + `prettier`                          | reviewer     | wszystkie green                                       | done   | Gemini Flash | T002–T005  |
+| T007 | Verify + run-log + telemetria                                                  | orchestrator | go + commit                                           | done   | Opus 4.8     | T006       |
 
 ## Notatki
 
