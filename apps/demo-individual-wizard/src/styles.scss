@@ -1,28 +1,15 @@
 @use '@angular/material' as mat;
+@use '../../../styles/app-shell';
 
 /* ──────────────────────────────────────────────────────────────────────────
  * demo-individual-wizard — global styles
  *
  * Theme: Material 3 (Azure primary, Rose tertiary), pinned to light scheme.
- * Density -1 keeps the 5-step wizard compact on a laptop.
+ * Density -1 keeps the 5-step wizard compact on a laptop. Shared reset /
+ * stepper-polish / scrollbar live in `styles/_app-shell.scss`.
  * ────────────────────────────────────────────────────────────────────────── */
 
-html,
-body {
-  height: 100%;
-  margin: 0;
-  font-family: 'Roboto', system-ui, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
 html {
-  // Pin light scheme so Material surface tokens stay consistent regardless
-  // of the OS dark-mode setting.
-  color-scheme: light;
-  color: var(--mat-sys-on-surface);
-  background: var(--mat-sys-surface-container);
-
   @include mat.theme(
     (
       color: (
@@ -33,33 +20,4 @@ html {
       density: -1,
     )
   );
-}
-
-body {
-  background: var(--mat-sys-surface-container);
-}
-
-/* Native date pickers stay light to match the pinned scheme. */
-input[type='date'],
-input[type='datetime-local'] {
-  color-scheme: light;
-}
-
-/* Mat-stepper polish — content padding + wrappable labels. */
-.mat-horizontal-content-container {
-  padding: 1.5rem 0 0 0 !important;
-}
-
-.mat-vertical-content {
-  padding: 0 1rem 1rem 1.5rem !important;
-}
-
-.mat-step-label {
-  white-space: pre-line !important;
-}
-
-/* Slim themed scrollbar. */
-* {
-  scrollbar-width: thin;
-  scrollbar-color: var(--mat-sys-outline-variant) transparent;
 }

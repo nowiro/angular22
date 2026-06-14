@@ -1,0 +1,56 @@
+/* ──────────────────────────────────────────────────────────────────────────
+ * Shared global app-shell styles — `@use`-d by every app's `styles.scss`.
+ *
+ * Palette-independent globals that were previously triplicated across the
+ * portal + both demo apps: html/body reset + font, pinned light scheme, native
+ * date-picker fix, mat-stepper polish, slim themed scrollbar. The per-app
+ * `mat.theme()` palette/density block (and portal-only `.action` pills) stay in
+ * each app's own `styles.scss`. All colors reference runtime `--mat-sys-*`
+ * tokens, so this file needs no SCSS dependency on `@angular/material`.
+ * ────────────────────────────────────────────────────────────────────────── */
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-family: 'Roboto', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  // Pin light scheme so Material surface tokens stay consistent regardless of
+  // the OS dark-mode setting. (Palette + density live in each app's mat.theme().)
+  color-scheme: light;
+  color: var(--mat-sys-on-surface);
+  background: var(--mat-sys-surface-container);
+}
+
+body {
+  background: var(--mat-sys-surface-container);
+}
+
+/* Native date pickers stay light to match the pinned scheme. */
+input[type='date'],
+input[type='datetime-local'] {
+  color-scheme: light;
+}
+
+/* Mat-stepper polish — content padding + wrappable labels. */
+.mat-horizontal-content-container {
+  padding: 1.5rem 0 0 0 !important;
+}
+
+.mat-vertical-content {
+  padding: 0 1rem 1rem 1.5rem !important;
+}
+
+.mat-step-label {
+  white-space: pre-line !important;
+}
+
+/* Slim themed scrollbar. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--mat-sys-outline-variant) transparent;
+}

@@ -1,24 +1,13 @@
 @use '@angular/material' as mat;
+@use '../../../styles/app-shell';
 
 /* Portal — global styles (Material 3, Azure/Cyan, light scheme). The html-level
  * theme also feeds Material overlays (select panels, datepicker) opened by
  * EMBEDDED wizard web components — overlays attach to <body>, outside the
- * element host, so they inherit these tokens. */
-
-html,
-body {
-  height: 100%;
-  margin: 0;
-  font-family: 'Roboto', system-ui, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+ * element host, so they inherit these tokens. Shared reset / stepper-polish /
+ * scrollbar live in `styles/_app-shell.scss`. */
 
 html {
-  color-scheme: light;
-  color: var(--mat-sys-on-surface);
-  background: var(--mat-sys-surface-container);
-
   @include mat.theme(
     (
       color: (
@@ -29,24 +18,6 @@ html {
       density: 0,
     )
   );
-}
-
-body {
-  background: var(--mat-sys-surface-container);
-}
-
-/* Embedded wizards bring their own mat-stepper — same cosmetic tweaks as in
- * the standalone apps (component styles can't reach Material internals). */
-.mat-horizontal-content-container {
-  padding: 1.5rem 0 0 0 !important;
-}
-
-.mat-vertical-content {
-  padding: 0 1rem 1rem 1.5rem !important;
-}
-
-.mat-step-label {
-  white-space: pre-line !important;
 }
 
 /* Shared pill action (links/buttons) — global so any component (home, admin, …)
