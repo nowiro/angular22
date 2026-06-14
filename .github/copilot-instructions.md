@@ -7,7 +7,7 @@
 > agents → [`AGENTS.md`](../AGENTS.md); SDD → [`docs/sdd/methodology.md`](../docs/sdd/methodology.md);
 > skills (`.github/skills/`): `angular-developer` · `angular-new-app` · `signal-forms` ·
 > `material-wrappers` · `nx-generators` · `frontend-design` · `code-review` · `security-guidance` ·
-> `ai-config-quality` · `keycloak-auth` · `angular-migrations`.
+> `ai-config-quality` · `keycloak-auth` · `angular-migrations` · `app-import`.
 
 ## Identity
 
@@ -37,6 +37,11 @@ concisely: outcome over process.
   docs/Confluence ↔ **mockups** consistent + unambiguous) **BEFORE** code; anything unclear /
   contradictory → **STOP, don't guess, ask**. Each step: `status: done` in the plan + **commit per
   step** (`scm`).
+- ✅ **Intake gate (docs + source)**: a task needs **documentation/AC** — none provided → **STOP,
+  ask** (don't invent a brief). For **import/rewrite** of an external app the **source repo/path/code**
+  must be provided → **STOP, ask unless the task targets THIS repo**. Modes: **create**
+  (`/feature-dev`) · **modify** (this repo) · **import** (`/import-app` + skill `app-import` → rewrite
+  to the **latest Angular**, feature parity).
 - ✅ **Tests in every plan** (trio): **test scenarios** (from AC, **per role**
   admin/user/guest — `test-strategy`) + **unit tests** (Vitest, `@nx/vitest:test`) +
   **e2e tests** (Playwright, `@nx/playwright:playwright`; **click through all interactive

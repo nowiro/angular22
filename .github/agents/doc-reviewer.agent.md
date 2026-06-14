@@ -26,6 +26,11 @@ You catch mismatches **before** the spec and code exist.
 
 ## Definition of Ready (go/no-go checklist)
 
+- **Documentation present** — task docs / AC actually provided. An empty brief = no-go: **ask**, don't
+  proceed on guesses.
+- **Source repository (import / external task)** — for a task touching an **external** app/codebase
+  (import/rewrite), the **source** repo/path/code is provided. Missing → no-go, **ask** — **unless the
+  task targets THIS repo** (the source is then the workspace).
 - **Traceability matrix** — every requirement ↔ **AC** ↔ **mockup element**. A row without coverage
   in any column = gap = **question**.
 - **Interactive elements** — enumerate **every** element the user clicks/fills (button,

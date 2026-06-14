@@ -31,6 +31,17 @@ per role** (admin/user/guest) → verdict + bug report + telemetry in the run-lo
 - **≥2 files or a behaviour change** → **doc-review** → full ladder specify → clarify → plan →
   analyze → **checklist** (quality gate BEFORE code) → implement → verify → DoD (`pnpm verify`).
 
+## Task modes + intake gate
+
+- **create** — new feature/app → `/feature-dev` + skill `angular-new-app`.
+- **modify** — change to code **in this repo** → the default ladder.
+- **import** — rewrite an **external** app (any framework, or legacy Angular) onto the stack →
+  `/import-app` + skill `app-import` + agent `legacy-analyst`; target the **latest Angular**, AC =
+  **feature parity**.
+
+**Intake (at doc-review):** the task needs **documentation/AC** — missing → STOP, ask. An **import /
+external** task needs the **source repo/path/code** — missing → STOP, ask, **unless it targets this repo**.
+
 ## STOP on ambiguity (hard gate)
 
 At **EVERY** step of the ladder: if anything is **ambiguous / contradictory / incomplete** → **STOP**.
