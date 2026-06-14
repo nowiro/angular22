@@ -81,6 +81,9 @@ export function mergeAppConfig(raw: unknown): AppConfig {
 
   const merged: Record<string, FeatureConfig> = { ...DEFAULT_APP_CONFIG.features };
   for (const [id, value] of Object.entries(features as Record<string, unknown>)) {
+    // Only merge declared features — an unknown id would poison the typed
+    // `Record<FeatureId, …>` cast below with a key outside the union.
+    if (!(id in DEFAULT_APP_CONFIG.features)) continue;
     const base = merged[id] ?? { enabled: false, standaloneUrl: '' };
     if (value === null || typeof value !== 'object') continue;
     const partial = value as Partial<FeatureConfig>;

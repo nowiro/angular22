@@ -17,21 +17,23 @@ export interface PeselInfo {
 
 /** Returns true iff `value` is 11 digits and the checksum matches. */
 export function isValidPeselChecksum(value: string): boolean {
-  if (!DIGITS_ONLY.test(value)) return false;
+  const normalised = value.replaceAll(/[\s-]/g, '');
+  if (!DIGITS_ONLY.test(normalised)) return false;
   let sum = 0;
   for (let i = 0; i < 10; i++) {
-    sum += Number(value[i]) * PESEL_WEIGHTS[i];
+    sum += Number(normalised[i]) * PESEL_WEIGHTS[i];
   }
   const check = (10 - (sum % 10)) % 10;
-  return check === Number(value[10]);
+  return check === Number(normalised[10]);
 }
 
 /** Extracts the encoded birth date and gender. Returns `null` if PESEL is invalid. */
 export function parsePesel(value: string): PeselInfo | null {
-  if (!isValidPeselChecksum(value)) return null;
-  const yy = Number(value.slice(0, 2));
-  const mmEncoded = Number(value.slice(2, 4));
-  const dd = Number(value.slice(4, 6));
+  const normalised = value.replaceAll(/[\s-]/g, '');
+  if (!isValidPeselChecksum(normalised)) return null;
+  const yy = Number(normalised.slice(0, 2));
+  const mmEncoded = Number(normalised.slice(2, 4));
+  const dd = Number(normalised.slice(4, 6));
 
   const { century, month } = decodeCenturyAndMonth(mmEncoded);
   if (month === null) return null;
@@ -42,7 +44,7 @@ export function parsePesel(value: string): PeselInfo | null {
     return null;
   }
 
-  const genderDigit = Number(value[9]);
+  const genderDigit = Number(normalised[9]);
   return { birthDate, gender: genderDigit % 2 === 0 ? 'female' : 'male' };
 }
 

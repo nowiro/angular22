@@ -3,8 +3,7 @@
  *
  * @packageDocumentation
  */
-export { applicableConsents, consentContextOf, CONSENTS_CATALOG } from './lib/consents-catalog';
-export type { ConsentContext, ConsentDefinition } from './lib/consents-catalog';
+export { applicableConsents } from './lib/consents-catalog';
 export {
   ADDRESS_PURPOSES,
   CUSTOMER_SEGMENTS,

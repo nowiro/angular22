@@ -29,6 +29,9 @@ export const COMMON_EN: Readonly<Record<string, string>> = {
   'W trakcie': 'In progress',
   'Nie rozpoczęte': 'Not started',
 
+  // ── Auth / roles ────────────────────────────────────────────────────────
+  'brak roli': 'no role',
+
   // ── Shared form labels (wizard-ui) ──────────────────────────────────────
   Przeznaczenie: 'Purpose',
   Typ: 'Type',

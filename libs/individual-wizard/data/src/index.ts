@@ -26,7 +26,7 @@ export {
   ERROR_TERMS_NOT_ACCEPTED,
   individualWizardSchema,
 } from './lib/form-schema';
-export { emptyContract, emptyEmploymentDetails, emptyHigherEducation, initialIndividualData } from './lib/models';
+export { emptyContract, initialIndividualData } from './lib/models';
 export type {
   AddressPurpose,
   BasicDataValue,

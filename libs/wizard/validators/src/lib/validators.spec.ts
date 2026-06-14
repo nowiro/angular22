@@ -15,6 +15,12 @@ describe('pesel', () => {
     expect(isValidPeselChecksum('44051401359')).toBe(true);
   });
 
+  it('tolerates separators / spaces (like NIP, REGON, phone)', () => {
+    expect(isValidPeselChecksum('44-05-14-013-59')).toBe(true);
+    expect(isValidPeselChecksum('44 05 14 013 59')).toBe(true);
+    expect(parsePesel('44 05 14 013 59')?.gender).toBe('male');
+  });
+
   it('rejects an invalid checksum / shape', () => {
     expect(isValidPeselChecksum('44051401358')).toBe(false);
     expect(isValidPeselChecksum('1234')).toBe(false);

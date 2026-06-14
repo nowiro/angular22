@@ -20,7 +20,7 @@
       {{ 'Zalogowano jako' | a22T }}:
       <strong data-testid="auth-user">{{ username() }}</strong>
       (
-      <span data-testid="auth-role">{{ activeRole() }}</span>
+      <span data-testid="auth-role">{{ activeRole() ?? ('brak roli' | a22T) }}</span>
       )
     </span>
     <span class="rolebar__switch">
