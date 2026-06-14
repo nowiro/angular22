@@ -9,7 +9,7 @@
  */
 import { applyEach, email, max, maxLength, min, pattern, required, schema, validate } from '@angular/forms/signals';
 
-import { addressSchema, phoneSchema } from '@angular22/wizard-core';
+import { addressSchema, applyFinalChecks, phoneSchema } from '@angular22/wizard-core';
 import { krsError, nipError, plPhoneError, regonError, websiteUrlError } from '@angular22/wizard-validators';
 
 import { KRS_REQUIRED_FORMS } from './dictionaries';
@@ -63,11 +63,6 @@ export const businessWizardSchema = schema<BusinessData>((path) => {
 
   applyEach(path.contact.phones, phoneSchema);
   applyEach(path.contact.addresses, addressSchema);
-  validate(path.contact.addresses, ({ value }) =>
-    value().some((address) => address.purpose === 'headquarters')
-      ? null
-      : { kind: ERROR_MISSING_HEADQUARTERS, message: 'Wymagany jest co najmniej jeden adres siedziby.' },
-  );
 
   // ── Step 3: profile ───────────────────────────────────────────────────
   required(path.profile.industry, { message: 'Branża jest wymagana.' });
@@ -94,17 +89,25 @@ export const businessWizardSchema = schema<BusinessData>((path) => {
     validate(representative.phone, ({ value }) => plPhoneError(value()));
   });
 
-  // ── Step 5: consents ──────────────────────────────────────────────────
-  applyEach(path.consents.items, (item) => {
-    validate(item.granted, ({ value, valueOf }) =>
-      valueOf(item.required) && !value()
-        ? { kind: ERROR_REQUIRED_CONSENT_NOT_GRANTED, message: 'Ta zgoda jest wymagana.' }
-        : null,
-    );
+  // ── Steps 5–6: final shared checks (group + array level) ──────────────
+  // Consents (array), headquarters address (array) and terms (group) run
+  // through the wizard-agnostic `applyFinalChecks`; only kinds/messages local.
+  applyFinalChecks({
+    acceptTerms: {
+      path: path.meta.acceptTerms,
+      kind: ERROR_TERMS_NOT_ACCEPTED,
+      message: 'Musisz zaakceptować regulamin.',
+    },
+    consents: {
+      path: path.consents.items,
+      kind: ERROR_REQUIRED_CONSENT_NOT_GRANTED,
+      message: 'Ta zgoda jest wymagana.',
+    },
+    requiredAddress: {
+      path: path.contact.addresses,
+      purpose: 'headquarters',
+      kind: ERROR_MISSING_HEADQUARTERS,
+      message: 'Wymagany jest co najmniej jeden adres siedziby.',
+    },
   });
-
-  // ── Step 6: summary / meta ────────────────────────────────────────────
-  validate(path.meta.acceptTerms, ({ value }) =>
-    value() ? null : { kind: ERROR_TERMS_NOT_ACCEPTED, message: 'Musisz zaakceptować regulamin.' },
-  );
 });

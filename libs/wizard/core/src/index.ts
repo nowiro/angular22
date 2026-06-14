@@ -7,6 +7,8 @@
  */
 export { WIZARD_FILL_PRESETS } from './lib/fill-presets';
 export type { FillMode, WizardFillPresets } from './lib/fill-presets';
+export { applyFinalChecks } from './lib/final-validators';
+export type { FinalCheckError, FinalChecksConfig } from './lib/final-validators';
 export { isLocalhost } from './lib/localhost';
 export { optionLabel } from './lib/option';
 export type { Option } from './lib/option';

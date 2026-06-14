@@ -22,7 +22,7 @@ import {
   validate,
 } from '@angular/forms/signals';
 
-import { addressSchema, phoneSchema } from '@angular22/wizard-core';
+import { addressSchema, applyFinalChecks, phoneSchema } from '@angular22/wizard-core';
 import { adultAgeError, nipError, parsePesel, peselError } from '@angular22/wizard-validators';
 
 import type { IndividualData } from './models';
@@ -98,11 +98,6 @@ export const individualWizardSchema = schema<IndividualData>((path) => {
 
   applyEach(path.contact.phones, phoneSchema);
   applyEach(path.contact.addresses, addressSchema);
-  validate(path.contact.addresses, ({ value }) =>
-    value().some((address) => address.purpose === 'residence')
-      ? null
-      : { kind: ERROR_MISSING_RESIDENCE, message: 'Wymagany jest co najmniej jeden adres zamieszkania.' },
-  );
 
   // ── Step 3: survey (conditional branches) ─────────────────────────────
   hidden(path.survey.higherEducation, {
@@ -183,17 +178,25 @@ export const individualWizardSchema = schema<IndividualData>((path) => {
     value().length > 0 ? null : { kind: 'required', message: 'Dodaj co najmniej jeden język.' },
   );
 
-  // ── Step 4: consents ──────────────────────────────────────────────────
-  applyEach(path.consents.items, (item) => {
-    validate(item.granted, ({ value, valueOf }) =>
-      valueOf(item.required) && !value()
-        ? { kind: ERROR_REQUIRED_CONSENT_NOT_GRANTED, message: 'Ta zgoda jest wymagana.' }
-        : null,
-    );
+  // ── Steps 4–5: final shared checks (group + array level) ──────────────
+  // Consents (array), residence address (array) and terms (group) run through
+  // the wizard-agnostic `applyFinalChecks`; only the kinds/messages are local.
+  applyFinalChecks({
+    acceptTerms: {
+      path: path.meta.acceptTerms,
+      kind: ERROR_TERMS_NOT_ACCEPTED,
+      message: 'Musisz zaakceptować regulamin.',
+    },
+    consents: {
+      path: path.consents.items,
+      kind: ERROR_REQUIRED_CONSENT_NOT_GRANTED,
+      message: 'Ta zgoda jest wymagana.',
+    },
+    requiredAddress: {
+      path: path.contact.addresses,
+      purpose: 'residence',
+      kind: ERROR_MISSING_RESIDENCE,
+      message: 'Wymagany jest co najmniej jeden adres zamieszkania.',
+    },
   });
-
-  // ── Step 5: summary / meta ────────────────────────────────────────────
-  validate(path.meta.acceptTerms, ({ value }) =>
-    value() ? null : { kind: ERROR_TERMS_NOT_ACCEPTED, message: 'Musisz zaakceptować regulamin.' },
-  );
 });
