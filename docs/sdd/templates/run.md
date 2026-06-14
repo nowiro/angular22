@@ -58,10 +58,12 @@ Powiązane: spec `docs/specs/{{slug}}/spec.md` · plan `docs/plans/{{stamp}}_{{v
 
 ## Rozliczenie / Telemetria
 
-> Wypełnij na zamknięciu zadania (krok verify / DoD) — rozliczenie zużycia. Źródła: tokeny /
-> liczba agentów → `usage` workflowów (`subagent_tokens`, `agent_count`); background taski →
-> notyfikacje `<task-notification>` / `TaskList`; sesje → `list_sessions`; **kredyty** →
-> dashboard rozliczeniowy (Copilot premium requests / billing — poza narzędziami repo).
+> Wypełnij na zamknięciu zadania (krok verify / DoD) — rozliczenie zużycia. **Źródło automatyczne
+> (gdy OTel-export włączony):** trace Copilota → backend (Galileo / OTel) — tokeny i latencja per
+> span; mapa span→krok i włączenie → [`docs/observability.md`](../../observability.md). Fallback
+> ręczny: tokeny / liczba agentów → `usage` workflowów (`subagent_tokens`, `agent_count`);
+> background taski → notyfikacje `<task-notification>` / `TaskList`; sesje → `list_sessions`;
+> **kredyty** → dashboard rozliczeniowy (Copilot premium requests / billing — poza narzędziami repo).
 
 | metryka                         | wartość |
 | ------------------------------- | ------- |
