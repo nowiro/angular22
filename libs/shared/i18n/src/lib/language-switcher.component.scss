@@ -18,16 +18,15 @@
   min-height: 2.75rem;
   padding: 0.25rem 0.75rem;
   cursor: pointer;
-  opacity: 0.75;
 }
 
 .lang:hover {
-  opacity: 1;
   background: color-mix(in srgb, currentcolor 12%, transparent);
 }
 
+/* Selected language is signalled by a stronger background, not reduced opacity —
+ * dimming the inactive label lowered white-on-primary contrast below AA. */
 .lang.active {
-  opacity: 1;
   background: color-mix(in srgb, currentcolor 22%, transparent);
 }
 

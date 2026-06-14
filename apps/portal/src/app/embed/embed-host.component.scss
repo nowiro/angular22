@@ -23,12 +23,18 @@
   color: var(--mat-sys-primary);
   text-decoration: none;
   font: var(--mat-sys-label-large);
+  min-height: 2.75rem;
   padding: 0.375rem 0.75rem;
   border-radius: var(--mat-sys-corner-small);
 }
 
 .back:hover {
   background: color-mix(in srgb, var(--mat-sys-primary) 12%, transparent);
+}
+
+.back:focus-visible {
+  outline: 2px solid var(--mat-sys-primary);
+  outline-offset: 2px;
 }
 
 .status {
