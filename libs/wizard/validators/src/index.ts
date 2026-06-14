@@ -25,6 +25,14 @@ export {
 } from './lib/field-errors';
 export type { FieldError } from './lib/field-errors';
 export { isValidKrs } from './lib/krs';
+export {
+  defineValidator,
+  registerValidationLabel,
+  registerValidationLabels,
+  validationLabel,
+  validationLabels,
+} from './lib/label-registry';
+export type { ValidationLabel } from './lib/label-registry';
 export { isValidNip, normaliseNip } from './lib/nip';
 export { isValidPeselChecksum, parsePesel } from './lib/pesel';
 export type { PeselInfo } from './lib/pesel';

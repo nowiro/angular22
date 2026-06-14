@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { ageInYears, isAdult } from './age';
 import { adultAgeError, krsError, nipError, peselError, regonError } from './field-errors';
 import { isValidKrs } from './krs';
+import { defineValidator, registerValidationLabel, validationLabel } from './label-registry';
 import { isValidNip, normaliseNip } from './nip';
 import { isValidPeselChecksum, parsePesel } from './pesel';
 import { isValidPlPhone } from './phone';
@@ -144,5 +145,29 @@ describe('field-errors', () => {
     expect(nipError('123')).toMatchObject({ kind: 'nip' });
     expect(regonError('123')).toMatchObject({ kind: 'regon' });
     expect(krsError('123')).toMatchObject({ kind: 'krs' });
+  });
+});
+
+describe('label registry / defineValidator', () => {
+  it('seeds built-in field-error labels in the {key,label} dictionary', () => {
+    expect(validationLabel('pesel')).toBe('Nieprawidłowy numer PESEL.');
+    expect(validationLabel('nip')).toBe('Nieprawidłowy numer NIP.');
+    expect(validationLabel('underage')).toBe('Wymagane ukończone 18 lat.');
+  });
+
+  it('registers a custom label and resolves it by key', () => {
+    registerValidationLabel({ key: 'demo.rule', label: 'Reguła demo.' });
+    expect(validationLabel('demo.rule')).toBe('Reguła demo.');
+    expect(validationLabel('demo.unknown')).toBeUndefined();
+  });
+
+  it('builds a custom validator that draws its message from the dictionary', () => {
+    const evenError = defineValidator(
+      { key: 'demo.even', label: 'Liczba musi być parzysta.' },
+      (n: number) => n % 2 === 0,
+    );
+    expect(evenError(4)).toBeNull();
+    expect(evenError(3)).toEqual({ kind: 'demo.even', message: 'Liczba musi być parzysta.' });
+    expect(validationLabel('demo.even')).toBe('Liczba musi być parzysta.');
   });
 });
