@@ -1,50 +1,50 @@
 ---
 name: signal-forms
-description: Przepisy Signal Forms (Angular 22 stabilne) dla angular22 — model w signal(), schema() z applyWhen/applyEach/hidden/disabled, store per wizard, FieldTree w komponentach, gotchas repo. Użyj przy każdej pracy nad formularzami.
+description: Signal Forms recipes (Angular 22 stable) for angular22 — model in signal(), schema() with applyWhen/applyEach/hidden/disabled, per-wizard store, FieldTree in components, repo gotchas. Use for any work on forms.
 ---
 
-# Signal Forms — przepisy repo
+# Signal Forms — repo recipes
 
-## Architektura (wzorzec obu wizardów)
+## Architecture (the pattern of both wizards)
 
-1. **Model** = czysty interfejs + `initial<X>Data()` w `libs/<wizard>/data/src/lib/models.ts`.
-   Gałęzie warunkowe ZAWSZE obecne w modelu; opcjonalne stringi `''` (nie `null`).
-2. **Schemat** = `schema<T>((path) => { … })` w `form-schema.ts` — jedyne źródło walidacji.
-   Komunikaty **po polsku** (UI tłumaczy je przez i18n po stronie wrappera).
-3. **Store** (root `@Injectable`) — `form = form(this.model, schema)`; helpery tablic =
-   immutable `model.update`; efekty (np. PESEL → data urodzenia, rebuild zgód) z guardem
-   równości, by nie zapętlić.
-4. **Komponent** — `[formField]="form.basicData.firstName"` na wrapperze z
-   `@angular22/ui-material`; indeks tablicy przez metodę
+1. **Model** = plain interface + `initial<X>Data()` in `libs/<wizard>/data/src/lib/models.ts`.
+   Conditional branches are ALWAYS present in the model; optional strings are `''` (not `null`).
+2. **Schema** = `schema<T>((path) => { … })` in `form-schema.ts` — the single source of validation.
+   Messages are **in Polish** (the UI translates them via i18n on the wrapper side).
+3. **Store** (root `@Injectable`) — `form = form(this.model, schema)`; array helpers =
+   immutable `model.update`; effects (e.g. PESEL → birth date, consent rebuild) with an
+   equality guard so they don't loop.
+4. **Component** — `[formField]="form.basicData.firstName"` on a wrapper from
+   `@angular22/ui-material`; array index via a method
    `phoneField(i): FieldTree<PhoneValue> { return this.form.contact.phones[i]; }`.
 
-## API (zweryfikowane na v22.0.0)
+## API (verified on v22.0.0)
 
 `form` · `schema` · `apply` / `applyEach` / `applyWhen` / `applyWhenValue` · `validate` /
 `validateTree` · `required` / `email` / `pattern` / `min` / `max` / `minLength` /
-`maxLength` (opcje `{ message, when }`) · logika `hidden` / `disabled` / `readonly`
-(`{ when }`) · typy `FieldTree` / `FieldState` / `FormValueControl` / `FormCheckboxControl`.
-Dyrektywa **`FormField`**, selektor `[formField]`.
+`maxLength` (options `{ message, when }`) · `hidden` / `disabled` / `readonly` logic
+(`{ when }`) · types `FieldTree` / `FieldState` / `FormValueControl` / `FormCheckboxControl`.
+The **`FormField`** directive, selector `[formField]`.
 
-## Warunki (kanoniczny wzorzec)
+## Conditions (canonical pattern)
 
-Predykat w PURE funkcji (`relevance.ts`) używany **podwójnie**: w schemacie
+A predicate in a PURE function (`relevance.ts`) used **twice**: in the schema
 (`applyWhen(path.x, ({ valueOf }) => shows…(valueOf(path.y)), subschema)` +
-`hidden(path.x, { when: … })`) i w szablonie (`@if (relevance().x)`). Walidacja i render
-nigdy się nie rozjeżdżają.
+`hidden(path.x, { when: … })`) and in the template (`@if (relevance().x)`). Validation and
+render never drift apart.
 
-## Gotchas (kosztowały debugging — nie powtarzaj)
+## Gotchas (cost us debugging — don't repeat)
 
-- Destrukturyzacja `({ value, valueOf })` z FieldContext → `unbound-method`; plikowy
-  `eslint-disable` z uzasadnieniem (wzorzec na górze `form-schema.ts`).
-- `required(path, { when })` — warunkowy required (PESEL dla PL, KRS dla form z KRS).
-- Pola disabled NIE blokują zapisu do **modelu** (store może aktualizować) — blokują UI.
-- Testy importujące barrel z `@angular/forms/signals` → `test-setup.ts` z
+- Destructuring `({ value, valueOf })` from FieldContext → `unbound-method`; file-level
+  `eslint-disable` with rationale (pattern at the top of `form-schema.ts`).
+- `required(path, { when })` — conditional required (PESEL for PL, KRS for forms with KRS).
+- Disabled fields do NOT block writing to the **model** (the store can update) — they block the UI.
+- Tests importing the barrel from `@angular/forms/signals` → `test-setup.ts` with
   `import '@angular/compiler'`.
-- Błędy custom: zwracaj `{ kind, message }` lub `null`; fabryki w
-  `@angular22/wizard-validators` (`peselError`, `nipError`, …) — empty-pass, łącz z `required`.
+- Custom errors: return `{ kind, message }` or `null`; factories in
+  `@angular22/wizard-validators` (`peselError`, `nipError`, …) — empty-pass, combine with `required`.
 
 ## Dev-fill
 
-Preset = kompletny obiekt modelu (`buildXPreset(mode)`) → `model.set(preset)` +
-`form().markAsTouched()`. Identyfikatory checksum-valid z `@angular22/wizard-core`.
+Preset = a complete model object (`buildXPreset(mode)`) → `model.set(preset)` +
+`form().markAsTouched()`. Checksum-valid identifiers from `@angular22/wizard-core`.

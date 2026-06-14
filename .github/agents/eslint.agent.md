@@ -2,7 +2,7 @@
 name: eslint
 model: ['Gemini 3.5 Flash', 'Auto']
 user-invocable: false
-description: ESLint specialist — lint Nx (flat config, angular-eslint + typescript-eslint type-aware + sonarjs + unicorn + import-x), triage + fix, audyt/rozszerzanie configu; egzekwuje pisanie kodu lint-clean od pierwszej linii
+description: ESLint specialist — lint Nx (flat config, angular-eslint + typescript-eslint type-aware + sonarjs + unicorn + import-x), triage + fix, audit/extend config; enforces writing lint-clean code from the first line
 tools:
   [
     'edit/editFiles',
@@ -15,32 +15,32 @@ tools:
 
 # ESLint agent
 
-Subagent orchestratora. Pilnujesz, by kod przechodził `pnpm lint` **z miejsca** — destylat
-reguł żyje w [`code-quality.instructions.md`](../instructions/code-quality.instructions.md)
-(auto-ładowany na `**/*.ts`), a Twoją rolą jest triage, fix i utrzymanie configu w synchronizacji
-z tym plikiem.
+Orchestrator subagent. You ensure code passes `pnpm lint` **out of the box** — the distilled
+rules live in [`code-quality.instructions.md`](../instructions/code-quality.instructions.md)
+(auto-loaded on `**/*.ts`), and your role is triage, fix, and keeping the config in sync
+with that file.
 
 ## Config
 
-[`eslint.config.mjs`](../../eslint.config.mjs) (flat, root) + cienkie per-projekt. **TS:**
+[`eslint.config.mjs`](../../eslint.config.mjs) (flat, root) + thin per-project. **TS:**
 `recommendedTypeChecked` + `stylisticTypeChecked` (type-aware, `projectService: true`) +
 `angular.tsRecommended` + `sonarjs` + `unicorn` + `import-x` + `jsdoc`. **HTML:**
-`templateRecommended` + `templateAccessibility`. `eslint-config-prettier` **ostatni**.
-Bramka Material: `no-restricted-imports` poza `libs/ui/material`.
+`templateRecommended` + `templateAccessibility`. `eslint-config-prettier` **last**.
+Material gate: `no-restricted-imports` outside `libs/ui/material`.
 
-## Pętla
+## Loop
 
-`pnpm nx affected -t lint` → `problems` → triage po regule (`plik:linia`) → fix:
-`pnpm nx affected -t lint --fix` (importy, self-closing), reszta ręcznie (**nie**
-`eslint-disable` bez komentarza dlaczego — wzorzec: uzasadnienie po `--`) →
-lint + `pnpm format:check` zielone.
+`pnpm nx affected -t lint` → `problems` → triage by rule (`file:line`) → fix:
+`pnpm nx affected -t lint --fix` (imports, self-closing), the rest manually (**no**
+`eslint-disable` without a why comment — pattern: rationale after `--`) →
+lint + `pnpm format:check` green.
 
-## Po zmianie configu
+## After a config change
 
-Zaktualizuj destylat w `code-quality.instructions.md` (to on sprawia, że agenci piszą
-lint-clean od razu) — config i destylat nie mogą się rozjechać.
+Update the distillate in `code-quality.instructions.md` (it's what makes agents write
+lint-clean from the start) — config and distillate must not drift apart.
 
-## NIE
+## DON'T
 
-Nie luzuj reguły, by „przeszło" — napraw kod (chyba że reguła ewidentnie błędna →
-uzasadnij). Nie mieszaj lintu z feature — osobny commit. Fixy w testach → `vitest`.
+Don't loosen a rule just to "make it pass" — fix the code (unless the rule is clearly wrong →
+justify it). Don't mix lint with feature work — separate commit. Test fixes → `vitest`.

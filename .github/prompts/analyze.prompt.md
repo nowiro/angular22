@@ -3,36 +3,36 @@ agent: agent
 description: Cross-artifact SDD consistency check — verify spec ↔ plan ↔ code agree before implementing. Runs the deterministic gate (pnpm sdd:check), then reasons over semantic gaps. Read-only. Use after /clarify and before delegating implementation.
 ---
 
-# /analyze — spójność spec ↔ plan ↔ kod
+# /analyze — spec ↔ plan ↔ code consistency
 
-Sprawdza spójność artefaktów SDD **zanim** ruszy implementacja. Read-only — niczego nie
-zmienia. Kanon: `docs/sdd/methodology.md`.
+Checks SDD artifact consistency **before** implementation starts. Read-only — changes
+nothing. Canon: `docs/sdd/methodology.md`.
 
-## Krok 1 — Gate (deterministyczny)
+## Step 1 — Gate (deterministic)
 
-`pnpm sdd:check` (frontmatter, sekcje specu, tabela zadań, traceability
-`plan.<verb>.<slug>` → `spec`). **Błędy → zatrzymaj się i zaraportuj** — analiza
-semantyczna nie ma sensu na niespójnej strukturze.
+`pnpm sdd:check` (frontmatter, spec sections, task table, traceability
+`plan.<verb>.<slug>` → `spec`). **Errors → stop and report** — semantic
+analysis is pointless on an inconsistent structure.
 
-## Krok 2 — Analiza semantyczna (per spec)
+## Step 2 — Semantic analysis (per spec)
 
-Dla `docs/specs/<slug>/spec.md` + planu `docs/plans/*-<slug>.md`:
+For `docs/specs/<slug>/spec.md` + plan `docs/plans/*-<slug>.md`:
 
-1. **Pokrycie** — każde `## Acceptance criteria` ma zadanie w tabeli planu? Wskaż AC bez
-   zadania **oraz** zadania bez AC (scope creep). **Trójka testowa** (scenariusze + Vitest
-   - Playwright) obecna w tabeli? Brak = blocker.
-2. **Otwarte `[?]`** — każde to ryzyko przed implementacją.
-3. **Dryf kodu** — jeśli kod istnieje, czy kontrakty (typy / granice / nazwy pól) zgadzają
-   się ze specem? Rozjazdy z `file:line`.
-4. **Sprzeczności** — spec vs plan vs kod (nazwy, budżety, zakres); zgodność kolumny
-   `model` z `model:` agentów.
+1. **Coverage** — does every `## Acceptance criteria` have a task in the plan table? Flag AC
+   with no task **and** tasks with no AC (scope creep). Is the **test trio** (scenarios + Vitest
+   - Playwright) present in the table? Missing = blocker.
+2. **Open `[?]`** — each one is a risk before implementation.
+3. **Code drift** — if code exists, do the contracts (types / boundaries / field names) match
+   the spec? Mismatches with `file:line`.
+4. **Contradictions** — spec vs plan vs code (names, budgets, scope); agreement of the
+   `model` column with agents' `model:`.
 
 ## Format
 
-Tabela `artefakt | finding | severity (blocker / major / minor) | sugestia`. Na końcu
-jednoznaczny **go / no-go** + jedno zdanie uzasadnienia.
+Table `artifact | finding | severity (blocker / major / minor) | suggestion`. At the end an
+unambiguous **go / no-go** + a one-sentence rationale.
 
-## NIE
+## DON'T
 
-Nie modyfikuj spec / plan / kodu (read-only). Nie pomijaj Kroku 1. Nie wymyślaj kryteriów
-— pracuj na tym, co realnie w `docs/specs/`.
+Don't modify spec / plan / code (read-only). Don't skip Step 1. Don't invent criteria
+— work with what's actually in `docs/specs/`.

@@ -1,65 +1,65 @@
 ---
 name: ai-config-quality
-description: Rubryka jakości configu AI angular22 (agents/skills/instructions/prompts) — DRY (kanon, nie duplikat), single-responsibility, granice, house-style, cross-refy, frontmatter per typ, token economy, reguła MCP; stosuje agent `meta-reviewer`. Użyj przy zmianach w `.github/{agents,skills,instructions,prompts}`, `AGENTS.md`, `copilot-instructions`.
+description: Quality rubric for angular22 AI config (agents/skills/instructions/prompts) — DRY (canon, not duplicate), single-responsibility, boundaries, house-style, cross-refs, frontmatter per type, token economy, MCP rule; applied by the `meta-reviewer` agent. Use on changes to `.github/{agents,skills,instructions,prompts}`, `AGENTS.md`, `copilot-instructions`.
 ---
 
-# AI config quality — playbook repo
+# AI config quality — repo playbook
 
-Wiedza, którą stosuje agent [`meta-reviewer`](../../agents/meta-reviewer.agent.md) (read-only).
-Tu jest **JAK** ocenić config AI **ponad** strukturalny guard `pnpm ai:validate`
-([`validate-ai-config.mjs`](../../../tools/scripts/validate-ai-config.mjs): 1 widoczny agent,
-frontmattery, `mcp.json`). Guard łapie strukturę; **Ty łapiesz semantykę** — DRY, granice,
-overlap, house-style. Czerwony `ai:validate` = `no-go` od razu, bez analizy semantycznej.
+Knowledge applied by the [`meta-reviewer`](../../agents/meta-reviewer.agent.md) agent (read-only).
+This is **HOW** to assess AI config **beyond** the structural guard `pnpm ai:validate`
+([`validate-ai-config.mjs`](../../../tools/scripts/validate-ai-config.mjs): 1 visible agent,
+frontmatters, `mcp.json`). The guard catches structure; **you catch semantics** — DRY, boundaries,
+overlap, house-style. Red `ai:validate` = `no-go` immediately, no semantic analysis.
 
-## Rubryka (proza-config, analogicznie do kodu)
+## Rubric (config prose, same as code)
 
-1. **DRY / single source of truth** — reguła żyje w **JEDNYM** kanonie
+1. **DRY / single source of truth** — a rule lives in **ONE** canon
    ([`copilot-instructions`](../../copilot-instructions.md) / `angular.instructions` /
-   [`AGENTS.md`](../../../AGENTS.md) / dany skill), inne pliki **wskazują linkiem** (repo:
-   „jedyne źródło — inne pliki tu wskazują"). Skopiowana reguła = **finding** (rozjazd kanonu).
-2. **Single-responsibility** — każdy agent ma **JEDNĄ** jasną rolę. Overlap dwóch agentów =
-   scal albo rozgranicz (precedens: `angular` → `angular-engineer`). Dwa pliki o tym samym = finding.
-3. **Granice / hand-off** — każdy agent ma sekcję rozgraniczającą wskazującą sąsiadów
-   (`accessibility` kod ⇄ `ux-verifier` runtime; `styles` SCSS ⇄ `material-wrapper` tokeny).
-   Brak granicy = ryzyko kolizji routingu = finding.
-4. **House-style** — PL proza zwięzła; agent: intro „Subagent orchestratora …" + Kiedy / Pętla /
-   Granica / Format + zamykające **NIE**. Identyfikatory w \`backtickach\`, cross-refy linkiem względnym.
-5. **Frontmatter per typ** (poza tym co wymusza guard):
-   - agent → `description` + `model` + `tools` (+ `user-invocable: false` dla nie-orchestratora),
+   [`AGENTS.md`](../../../AGENTS.md) / a given skill), other files **point to it via link** (repo:
+   "single source — other files point here"). A copied rule = **finding** (canon drift).
+2. **Single-responsibility** — each agent has **ONE** clear role. Overlap of two agents =
+   merge or delineate (precedent: `angular` → `angular-engineer`). Two files about the same thing = finding.
+3. **Boundaries / hand-off** — each agent has a delineating section pointing to its neighbors
+   (`accessibility` code ⇄ `ux-verifier` runtime; `styles` SCSS ⇄ `material-wrapper` tokens).
+   Missing boundary = routing-collision risk = finding.
+4. **House-style** — concise PL prose; agent: intro "Orchestrator subagent …" + When / Loop /
+   Boundary / Format + closing **NO**. Identifiers in \`backticks\`, cross-refs via relative link.
+5. **Frontmatter per type** (beyond what the guard enforces):
+   - agent → `description` + `model` + `tools` (+ `user-invocable: false` for non-orchestrator),
    - prompt → `agent` + `description`,
-   - skill → `name` + `description` (**bez `tools`**),
-   - instrukcja → `applyTo` + `description`.
-6. **Cross-refy** — linki względne wskazują **istniejące** pliki (osierocony link = finding);
-   nazwy agentów w prozie zgodne z `.github/agents/*.agent.md`. Literówka w nazwie = finding.
-7. **Token economy** — gęsto, bez bloatu i powtórzeń; agent ~30-60 linii. Model wg tieru:
-   kod / fix / review / audyt / UX → `Gemini 3.5 Flash`; doc-MCP → `GPT-5 mini`; orchestrator → Opus.
-8. **Reguła MCP** — doc-MCP (`context7` / `nx` / `angular-cli`) woła **tylko** ich dedykowany
-   agent GPT-5 mini; reszta **deleguje**. `playwright` MCP = tylko `playwright` / `ux-verifier` /
-   `pixel-perfect` (kanon allowlisty → [`mcp-usage`](../../instructions/mcp-usage.instructions.md)).
-   Bezpośrednie wołanie MCP poza właścicielem = **finding**.
+   - skill → `name` + `description` (**no `tools`**),
+   - instruction → `applyTo` + `description`.
+6. **Cross-refs** — relative links point to **existing** files (orphaned link = finding);
+   agent names in prose match `.github/agents/*.agent.md`. Typo in a name = finding.
+7. **Token economy** — dense, no bloat or repetition; agent ~30-60 lines. Model per tier:
+   code / fix / review / audit / UX → `Gemini 3.5 Flash`; doc-MCP → `GPT-5 mini`; orchestrator → Opus.
+8. **MCP rule** — doc-MCP (`context7` / `nx` / `angular-cli`) is called **only** by its dedicated
+   GPT-5 mini agent; everyone else **delegates**. `playwright` MCP = only `playwright` / `ux-verifier` /
+   `pixel-perfect` (allowlist canon → [`mcp-usage`](../../instructions/mcp-usage.instructions.md)).
+   Direct MCP call outside the owner = **finding**.
 
 ## Severity
 
-| severity    | znaczenie                         | przykład                                                |
-| ----------- | --------------------------------- | ------------------------------------------------------- |
-| **blocker** | łamie guard / kontrakt / DRY      | duplikat reguły, osierocony link, MCP poza właścicielem |
-| **major**   | działa, ale dług / ryzyko kolizji | brak sekcji granicy, overlap ról, zły tier modelu       |
-| **minor**   | kosmetyka                         | drift house-style, zbędne powtórzenie, długi agent      |
+| severity    | meaning                          | example                                                  |
+| ----------- | -------------------------------- | -------------------------------------------------------- |
+| **blocker** | breaks guard / contract / DRY    | duplicated rule, orphaned link, MCP outside owner        |
+| **major**   | works, but debt / collision risk | missing boundary section, role overlap, wrong model tier |
+| **minor**   | cosmetics                        | house-style drift, redundant repetition, long agent      |
 
-## Format werdyktu
+## Verdict format
 
-Tabela + werdykt cząstkowy:
+Table + partial verdict:
 
 ```
-| plik | finding | zasada | severity | sugestia |
+| file | finding | rule | severity | suggestion |
 ```
 
-Po tabeli **jedno zdanie**: `go` / `no-go`. Jeden blocker = `no-go`. **Werdykt końcowy
-należy do orchestratora (Opus)** — Ty dostarczasz materiał, nie decyzję merge.
+After the table, **one sentence**: `go` / `no-go`. One blocker = `no-go`. **The final verdict
+belongs to the orchestrator (Opus)** — you supply the material, not the merge decision.
 
-## NIE
+## NO
 
-- **Nie edytuj plików** — audyt jest read-only; wskazujesz finding, nie patchujesz.
-- **Nie dubluj guarda** — strukturę (1 widoczny, frontmatter, `mcp.json`) sprawdza `ai:validate`;
-  Ty oceniasz **semantykę** ponad nią.
-- **Nie wymyślaj reguł** — kotwicz każdy finding w realnym kanonie repo, nie w generycznym „best practice".
+- **Don't edit files** — the audit is read-only; you flag the finding, you don't patch it.
+- **Don't duplicate the guard** — structure (1 visible, frontmatter, `mcp.json`) is checked by `ai:validate`;
+  you assess the **semantics** beyond it.
+- **Don't invent rules** — anchor every finding in a real repo canon, not a generic "best practice".

@@ -1,44 +1,44 @@
 ---
 applyTo: '**'
-description: Serwery MCP angular22 (context7, nx, angular-cli, playwright) — kiedy którego użyć + token economy
+description: angular22 MCP servers (context7, nx, angular-cli, playwright) — when to use which + token economy
 ---
 
-# Serwery MCP — użycie i token economy
+# MCP servers — usage and token economy
 
-Konfiguracja: [`.vscode/mcp.json`](../../.vscode/mcp.json) (bez `inputs`; opcje w polach
-`comment`). Zasada nadrzędna: **niepewne API → MCP, nie z pamięci** — repo jest na
-Angular 22 i wzorce z pamięci modelu bywają przestarzałe.
+Configuration: [`.vscode/mcp.json`](../../.vscode/mcp.json) (no `inputs`; options in
+`comment` fields). Overriding principle: **uncertain API → MCP, not from memory** — the repo is on
+Angular 22 and patterns from the model's memory are often outdated.
 
-**Kto woła MCP:** doc-MCP (`angular-cli`, `nx`, `context7`) wołają **wyłącznie** dedykowani
-agenci na `GPT-5 mini` o tych samych nazwach — pozostali agenci (`angular-engineer`,
+**Who calls MCP:** doc-MCP (`angular-cli`, `nx`, `context7`) are called **exclusively** by dedicated
+agents on `GPT-5 mini` with the same names — the other agents (`angular-engineer`,
 `material-wrapper`, `typescript`, `styles`, `html`, `seo-routing`, `performance`, `i18n`, `deps`,
-`nx-architect`, `migration`, `web-components`, `docs`, …) **delegują**
-do nich zapytania, **nie wołają MCP sami**. Serwer `playwright` (żywa przeglądarka) → agenci
-`playwright` / `ux-verifier` / `pixel-perfect` (runtime, nie doc-lookup).
+`nx-architect`, `migration`, `web-components`, `docs`, …) **delegate**
+queries to them, **they don't call MCP themselves**. The `playwright` server (live browser) → agents
+`playwright` / `ux-verifier` / `pixel-perfect` (runtime, not doc-lookup).
 
-| Serwer        | Narzędzia                                                           | Kiedy                                                                                                    |
-| ------------- | ------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
-| `angular-cli` | `get_best_practices` · `search_documentation` · `find_examples`     | **przed** kodem dotykającym API Angular/Signal Forms; best practices                                     |
-| `nx`          | `nx_docs` · `nx_workspace` · `nx_generators` · `nx_project_details` | flagi generatorów/executorów, graf, tagi — zamiast zgadywania                                            |
-| `context7`    | `resolve-library-id` → `query-docs`                                 | docs dowolnej biblioteki (Material 22, Playwright, Vitest, 3rd-party)                                    |
-| `playwright`  | browser\_\* (żywa przeglądarka, headed)                             | debug e2e, audyt UX (`ux-verifier`) + wierność wizualna vs mockup (`pixel-perfect`), weryfikacja runtime |
+| Server        | Tools                                                               | When                                                                                                    |
+| ------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| `angular-cli` | `get_best_practices` · `search_documentation` · `find_examples`     | **before** code touching the Angular/Signal Forms API; best practices                                   |
+| `nx`          | `nx_docs` · `nx_workspace` · `nx_generators` · `nx_project_details` | generator/executor flags, graph, tags — instead of guessing                                             |
+| `context7`    | `resolve-library-id` → `query-docs`                                 | docs for any library (Material 22, Playwright, Vitest, 3rd-party)                                       |
+| `playwright`  | browser\_\* (live browser, headed)                                  | e2e debug, UX audit (`ux-verifier`) + visual fidelity vs mockup (`pixel-perfect`), runtime verification |
 
-## Drabina docs
+## Docs ladder
 
-1. Konwencje repo (`angular.instructions`, skille) — najtańsze, zawsze najpierw.
-2. `angular-cli` / `nx` — domena Angular/Nx.
-3. `context7` — wszystko inne / weryfikacja świeżości.
+1. Repo conventions (`angular.instructions`, skills) — cheapest, always first.
+2. `angular-cli` / `nx` — Angular/Nx domain.
+3. `context7` — everything else / freshness check.
 
 ## Token economy
 
-- Najwęższe zapytanie + konkretny `topic`; jedno pytanie na wywołanie.
-- Deleguj minimalnym kontekstem (cel + ścieżki, nie całe pliki — subagent czyta sam).
-- Wynik MCP streszczaj (wniosek + minimalny snippet), nie wklejaj całych stron.
-- Playwright MCP: `browser_snapshot` (tanie drzewo a11y) przed `browser_take_screenshot`;
-  przed zrzutem wyłącz animacje (`* { animation: none !important }`).
+- Narrowest query + a specific `topic`; one question per call.
+- Delegate with minimal context (goal + paths, not whole files — the subagent reads them itself).
+- Summarize MCP output (conclusion + minimal snippet), don't paste whole pages.
+- Playwright MCP: `browser_snapshot` (cheap a11y tree) before `browser_take_screenshot`;
+  before a capture disable animations (`* { animation: none !important }`).
 
 ## Observability
 
-Wywołania MCP są widoczne jako spany **`execute_tool`** w trace OTel Copilota (VS Code ≥ 1.121) —
-koszt/latencja per serwer trafia do Galileo / backendu OTel. Włączenie + mapa span→krok: kanon
-[`docs/observability.md`](../../docs/observability.md) (domyślnie OFF; klucz/endpoint przez env).
+MCP calls show up as **`execute_tool`** spans in Copilot's OTel trace (VS Code ≥ 1.121) —
+cost/latency per server lands in Galileo / the OTel backend. Enabling + span→step map: canon
+[`docs/observability.md`](../../docs/observability.md) (OFF by default; key/endpoint via env).

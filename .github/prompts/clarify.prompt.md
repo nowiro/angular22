@@ -3,34 +3,34 @@ agent: agent
 description: Resolve open [?] placeholders in a docs/specs spec via structured Q&A, then re-validate. Clarify step of SDD (specify → clarify → plan → analyze → implement). Writes only the target spec.md, never fabricates — unanswered stay draft.
 ---
 
-# /clarify — domknij spec przed planem
+# /clarify — close out the spec before planning
 
-Zamienia `[?]` w `docs/specs/<slug>/spec.md` w konkrety przez **ustrukturyzowane Q&A**.
-`validate-sdd` traktuje `[?]` w nie-draft specie jako błąd — ten prompt je domyka. Pisze
-**tylko** do docelowego `spec.md`. Kanon: `docs/sdd/methodology.md`.
+Turns `[?]` in `docs/specs/<slug>/spec.md` into concrete answers via **structured Q&A**.
+`validate-sdd` treats `[?]` in a non-draft spec as an error — this prompt resolves them. Writes
+**only** to the target `spec.md`. Canon: `docs/sdd/methodology.md`.
 
-## Wejście
+## Input
 
-`/clarify <slug>` — konkretny spec; bez argumentu — przeskanuj `docs/specs/*/spec.md` po
-`[?]`, pokaż kandydatów, zapytaj który.
+`/clarify <slug>` — a specific spec; with no argument — scan `docs/specs/*/spec.md` for
+`[?]`, show candidates, ask which one.
 
-## Procedura
+## Procedure
 
-1. **Zbierz luki** — każda linia `[?]` z nagłówkiem sekcji; dołóż luki implicytne (AC nie
-   w formie Given/When/Then, metryki bez liczb, nieostry zakres).
-2. **Pytaj pojedynczo** — jedno pytanie naraz, najpierw `Acceptance criteria` i zakres; do
-   każdego **proponuj default / opcje**. Limit ~5–7 pytań / przebieg, resztę zostaw `[?]`.
-3. **Zapisz** — podmień `[?]` in-place; dopisz `## Clarifications` (log `data — pytanie →
-odpowiedź`); gdy **nie został żaden `[?]`** → frontmatter `status: clarified`.
-4. **Re-waliduj** — `pnpm sdd:check`. Raportuj green / red.
-5. **Hand-off** — zaproponuj `/analyze` → implementacja (delegacja przez orchestratora).
+1. **Collect gaps** — every `[?]` line with its section heading; add implicit gaps (AC not
+   in Given/When/Then form, metrics without numbers, fuzzy scope).
+2. **Ask one at a time** — one question at a time, `Acceptance criteria` and scope first; for
+   each one **propose a default / options**. Limit ~5–7 questions / pass, leave the rest `[?]`.
+3. **Save** — replace `[?]` in-place; append `## Clarifications` (log `date — question →
+answer`); when **no `[?]` remains** → frontmatter `status: clarified`.
+4. **Re-validate** — `pnpm sdd:check`. Report green / red.
+5. **Hand-off** — propose `/analyze` → implementation (delegated via the orchestrator).
 
 ## Format
 
-W trakcie: pojedyncze pytania z proponowanym defaultem. Na koniec: lista domkniętych `[?]`
-(sekcja → wartość), status (`draft` / `clarified`), wynik `sdd:check`, następny krok.
+During: single questions with a proposed default. At the end: list of resolved `[?]`
+(section → value), status (`draft` / `clarified`), `sdd:check` result, next step.
 
-## NIE
+## DON'T
 
-**Nie zmyślaj** — „nie wiem / pomiń" → zostaw `[?]`, trzymaj `status: draft`. Nie dotykaj
-kodu ani planu. Nie pytaj 15 naraz — sekwencyjnie, priorytet na to, co blokuje plan.
+**Don't fabricate** — "I don't know / skip" → leave `[?]`, keep `status: draft`. Don't touch
+code or the plan. Don't ask 15 at once — sequentially, prioritizing what blocks the plan.

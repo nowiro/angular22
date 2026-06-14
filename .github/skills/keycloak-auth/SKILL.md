@@ -1,34 +1,34 @@
 ---
 name: keycloak-auth
-description: Playbook uwierzytelniania + RBAC angular22 (`@angular22/shared-auth`, keycloak-angular + keycloak-js) — provideAuth (mock↔keycloak), AuthStore (sygnały), `*a22HasRole`, roleGuard, role admin/user/guest, bezpieczeństwo authz. Użyj przy logowaniu, ukrywaniu elementów wg uprawnień, ochronie tras.
+description: angular22 authentication + RBAC playbook (`@angular22/shared-auth`, keycloak-angular + keycloak-js) — provideAuth (mock↔keycloak), AuthStore (signals), `*a22HasRole`, roleGuard, admin/user/guest roles, authz security. Use for login, hiding elements by permission, route protection.
 ---
 
-# Keycloak / auth-RBAC — playbook repo
+# Keycloak / auth-RBAC — repo playbook
 
-Auth i RBAC żyją w [`@angular22/shared-auth`](../../../libs/shared/auth/src/index.ts). Pilnuje go
-agent [`keycloak`](../../agents/keycloak.agent.md). Stack: `keycloak-angular` + `keycloak-js`
-(kanon → [`tech-stack`](../../../docs/tech-stack.md)). Role: **admin ⊇ user ⊇ guest** (lista
-granted-roles jest płaska — admin niesie wszystkie trzy).
+Auth and RBAC live in [`@angular22/shared-auth`](../../../libs/shared/auth/src/index.ts). Guarded by
+the [`keycloak`](../../agents/keycloak.agent.md) agent. Stack: `keycloak-angular` + `keycloak-js`
+(canon → [`tech-stack`](../../../docs/tech-stack.md)). Roles: **admin ⊇ user ⊇ guest** (the
+granted-roles list is flat — admin carries all three).
 
-## Bootstrap (raz, w `app.config.ts`)
+## Bootstrap (once, in `app.config.ts`)
 
 ```ts
-provideAuth({ mode: 'mock', initialRole: 'user' }); // demo: bez serwera
-// realny IdP: provideAuth({ mode: 'keycloak', keycloak: { url, realm, clientId } })
+provideAuth({ mode: 'mock', initialRole: 'user' }); // demo: no server
+// real IdP: provideAuth({ mode: 'keycloak', keycloak: { url, realm, clientId } })
 ```
 
-`provideMockAuth` seeduje `AuthStore` rolą z `localStorage` (`a22.mock-role`, przełączane przez
-`setMockRole` + reload); `provideKeycloakAuth` woła `provideKeycloak` (`check-sso`, PKCE `S256`) i
-mostkuje realm roles do `AuthStore`. Reszta apki zależy **tylko** od `AuthStore`.
+`provideMockAuth` seeds `AuthStore` with a role from `localStorage` (`a22.mock-role`, toggled via
+`setMockRole` + reload); `provideKeycloakAuth` calls `provideKeycloak` (`check-sso`, PKCE `S256`) and
+bridges realm roles into `AuthStore`. The rest of the app depends **only** on `AuthStore`.
 
-## Czytanie stanu (sygnały)
+## Reading state (signals)
 
 ```ts
 private readonly auth = inject(AuthStore);
 // auth.isAuthenticated() · auth.username() · auth.roles() · auth.hasRole('admin') · auth.hasAnyRole('admin','user')
 ```
 
-## Gating elementów (UI)
+## Gating elements (UI)
 
 ```html
 <button
@@ -45,36 +45,36 @@ private readonly auth = inject(AuthStore);
 </a>
 ```
 
-Reaktywne — pokazuje/chowa po zmianie roli. To **tylko afordancja UI**.
+Reactive — shows/hides on role change. This is **UI affordance only**.
 
-## Ochrona tras (twarde authz)
+## Route protection (hard authz)
 
 ```ts
 { path: 'admin', canMatch: [roleGuard('admin')], loadComponent: … }
 ```
 
-Rola bez uprawnień → redirect `/forbidden`; **deep-link odrzucony**. Trasa wrażliwa **musi** mieć
-`roleGuard` — samo `*a22HasRole` nie chroni (przycisk ukryty, URL nadal osiągalny).
+Role without permission → redirect `/forbidden`; **deep-link rejected**. A sensitive route **must** have
+`roleGuard` — `*a22HasRole` alone doesn't protect (button hidden, URL still reachable).
 
-## Bezpieczeństwo (twarde)
+## Security (hard)
 
-- **Ukrycie ≠ ochrona** — zawsze `roleGuard` na trasie (i realnie backend); UI to wygoda.
-- **Rola z tokenu** — `rolesFromStrings(realm_access.roles)`; nigdy z inputu/URL/cudzego źródła
-  (mock-switch przez `localStorage` to **wyłącznie** demo).
-- **PKCE `S256`**, `onLoad: 'check-sso'`; token w pamięci (nie `localStorage`) w trybie realnym.
-- **Klient = afordancja** — `roleGuard`/`*a22HasRole` to UX; **resource server MUSI** rewalidować
-  bearer token + realm roles przy każdym żądaniu. Wygaśnięcie tokenu obsługuje `withAutoRefreshToken`
-  (odświeża lub wylogowuje → czyści `AuthStore`), więc UI nie trzyma roli z wygasłego tokenu.
+- **Hiding ≠ protection** — always `roleGuard` on the route (and the backend for real); UI is convenience.
+- **Role from token** — `rolesFromStrings(realm_access.roles)`; never from input/URL/another source
+  (mock-switch via `localStorage` is **demo only**).
+- **PKCE `S256`**, `onLoad: 'check-sso'`; token in memory (not `localStorage`) in real mode.
+- **Client = affordance** — `roleGuard`/`*a22HasRole` is UX; the **resource server MUST** revalidate
+  the bearer token + realm roles on every request. Token expiry is handled by `withAutoRefreshToken`
+  (refreshes or logs out → clears `AuthStore`), so the UI doesn't hold a role from an expired token.
 
-## Testy (per rola)
+## Tests (per role)
 
-Unit (pure): `auth-rules`/`AuthStore` (Vitest). E2e (`playwright`): **per rola** (admin/user/guest)
-ustaw `a22.mock-role` (`addInitScript`) → sweep elementów: widoczny/aktywny dla uprawnionej roli,
-**ukryty + deep-link odrzucony** dla nieuprawnionej (negatywny authz). Macierz RBAC → `test-strategy`.
+Unit (pure): `auth-rules`/`AuthStore` (Vitest). E2e (`playwright`): **per role** (admin/user/guest)
+set `a22.mock-role` (`addInitScript`) → element sweep: visible/active for the permitted role,
+**hidden + deep-link rejected** for the unpermitted one (negative authz). RBAC matrix → `test-strategy`.
 
-## NIE
+## NO
 
-- ❌ Czytanie roli/tokenu z keycloak-js w komponencie — przez `AuthStore`.
-- ❌ Trasa wrażliwa bez `roleGuard` (samo ukrycie UI).
-- ❌ Zaufanie roli z inputu/URL/`localStorage` w trybie realnym.
-- ❌ Nowa biblioteka auth (auth0/firebase) — stack zamknięty: **keycloak-angular**.
+- ❌ Reading role/token from keycloak-js in a component — go through `AuthStore`.
+- ❌ Sensitive route without `roleGuard` (UI hiding alone).
+- ❌ Trusting a role from input/URL/`localStorage` in real mode.
+- ❌ A new auth library (auth0/firebase) — stack is closed: **keycloak-angular**.

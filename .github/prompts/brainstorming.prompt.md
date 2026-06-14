@@ -3,43 +3,43 @@ agent: agent
 description: Pre-spec ideation — diverge into distinct approaches, weigh trade-offs against repo conventions, converge on one recommendation, then hand off to pnpm workflow:specify. Read-only; writes no artifacts.
 ---
 
-# /brainstorming — rozgrzewka przed drabiną SDD
+# /brainstorming — warm-up before the SDD ladder
 
-Ustrukturyzowana ideacja **przed** `specify`. Z tematu/problemu robi 3–5 **odrębnych**
-podejść, waży je względem twardych reguł repo i schodzi do **jednej** rekomendacji.
-Read-only — żadnego kodu, specu ani plików w repo. Kanon:
+Structured ideation **before** `specify`. Turns a topic/problem into 3–5 **distinct**
+approaches, weighs them against the repo's hard rules, and converges on **one**
+recommendation. Read-only — no code, spec, or files in the repo. Canon:
 [`docs/sdd/methodology.md`](../../docs/sdd/methodology.md).
 
-## Wejście
+## Input
 
-`/brainstorming <temat/problem>` — luźny opis pomysłu, bólu albo „co gdyby". Bez argumentu:
-poproś o jedno zdanie problemu, nie zgaduj.
+`/brainstorming <topic/problem>` — a loose description of an idea, pain point, or "what if".
+With no argument: ask for a one-sentence problem statement, don't guess.
 
-## Procedura
+## Procedure
 
-1. **Rozbieżność** — wygeneruj **3–5 wyraźnie różnych** podejść (inna architektura / lib /
-   granica, nie warianty jednego pomysłu). Każde jednym zdaniem: na czym polega.
-2. **Ocena** — tabela `podejście | złożoność | ryzyko | zgodność z konwencjami repo |
-koszt`. Oceniaj względem **twardych reguł**: Signal Forms (`form()`/`schema()`,
-   zakaz `FormGroup`/`ngModel`), wrappery `@angular22/ui-material` (nie `@angular/material/*`
-   poza `libs/ui/material`), komponenty tylko przez `pnpm nx g @nx/angular:component`,
-   i18n `a22T` (PL = klucz), próg SDD. Podejście łamiące regułę → **niska zgodność**.
-3. **Zbieżność** — rekomenduj **JEDNO** podejście z **jednym zdaniem** uzasadnienia;
-   odrzucone wymień z powodem (jedno zdanie / podejście). Bez cichego wyboru — pokaż stół.
-4. **Hand-off** — zaproponuj konkretny start drabiny:
-   `pnpm workflow:specify -- --verb=<verb> --slug=<slug>` z dobranym verbem
-   (`feature` / `component` / `fix` / `refactor` / `deps` / `chore` / `security`) i `slug`em
-   (`[a-z0-9-]+`). Dalej: [`/clarify`](./clarify.prompt.md) → plan → `/analyze`.
+1. **Diverge** — generate **3–5 clearly different** approaches (different architecture / lib /
+   boundary, not variants of one idea). Each in one sentence: what it is.
+2. **Evaluate** — table `approach | complexity | risk | fit with repo conventions |
+cost`. Evaluate against the **hard rules**: Signal Forms (`form()`/`schema()`,
+   no `FormGroup`/`ngModel`), `@angular22/ui-material` wrappers (not `@angular/material/*`
+   outside `libs/ui/material`), components only via `pnpm nx g @nx/angular:component`,
+   i18n `a22T` (PL = key), the SDD threshold. An approach that breaks a rule → **low fit**.
+3. **Converge** — recommend **ONE** approach with a **one-sentence** rationale;
+   list the rejected ones with a reason (one sentence / approach). No silent pick — show the table.
+4. **Hand-off** — propose a concrete ladder start:
+   `pnpm workflow:specify -- --verb=<verb> --slug=<slug>` with the chosen verb
+   (`feature` / `component` / `fix` / `refactor` / `deps` / `chore` / `security`) and a `slug`
+   (`[a-z0-9-]+`). Next: [`/clarify`](./clarify.prompt.md) → plan → `/analyze`.
 
 ## Format
 
-Tabela opcji (krok 2) → rekomendacja + odrzucone z powodem → **następny krok** jako gotowa
-komenda `specify`. Zwięźle: wynik ponad proces.
+Options table (step 2) → recommendation + rejected with reason → **next step** as a ready
+`specify` command. Concise: outcome over process.
 
-## NIE
+## DON'T
 
-**Nie pisz kodu ani specu**, niczego nie generuj w repo (read-only — `specify` to robi).
-Nie decyduj po cichu — zawsze pokaż opcje i powód odrzucenia. Nie przeskakuj do
-implementacji ani planu. Nie mnóż wariantów jednego pomysłu jako „różne podejścia" —
-różne = inna granica/lib/architektura. Twarde reguły z
-[`copilot-instructions`](../copilot-instructions.md) są aksjomatem, nie przedmiotem burzy.
+**Don't write code or a spec**, generate nothing in the repo (read-only — `specify` does that).
+Don't decide silently — always show the options and the reason for rejection. Don't jump to
+implementation or the plan. Don't multiply variants of one idea as "different approaches" —
+different = different boundary/lib/architecture. The hard rules from
+[`copilot-instructions`](../copilot-instructions.md) are axioms, not subjects of the brainstorm.

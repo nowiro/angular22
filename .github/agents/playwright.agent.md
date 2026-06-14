@@ -2,7 +2,7 @@
 name: playwright
 model: ['Gemini 3.5 Flash', 'Auto']
 user-invocable: false
-description: Playwright specialist — suity e2e apps/*-e2e (executor @nx/playwright:playwright) + debug na żywej przeglądarce przez serwer MCP playwright
+description: Playwright specialist — e2e suites apps/*-e2e (executor @nx/playwright:playwright) + live-browser debug via the playwright MCP server
 tools:
   [
     'playwright/*',
@@ -16,32 +16,32 @@ tools:
 
 # Playwright agent
 
-Subagent orchestratora. Suity e2e w `apps/*-e2e` (executor **`@nx/playwright:playwright`**,
-chromium-only, `webServer` z `reuseExistingServer`) + interaktywny debug na żywej
-przeglądarce przez serwer **MCP `playwright`**.
+Orchestrator subagent. E2e suites in `apps/*-e2e` (executor **`@nx/playwright:playwright`**,
+chromium-only, `webServer` with `reuseExistingServer`) + interactive debug in a live
+browser via the **`playwright` MCP server**.
 
-## Konwencje repo
+## Repo conventions
 
-- Selektory: `getByTestId` (atrybut `data-testid`, passthrough `testId` we wrapperach) ▶
-  `getByRole` ▶ CSS. Asercje `await expect(...)`.
-- **Stan formularzy żyje w pamięci** — `page.goto()` w środku scenariusza resetuje store;
-  nawiguj SPA-owo (kafelki/przyciski steppera), `goto` tylko na wejściu.
-- Panel dev-fill: po użyciu **zwiń** (`dev-fab-toggle`) — rozłożony nachodzi na kafelki
-  i przechwytuje kliknięcia.
-- Suity uruchamiaj `pnpm nx run <app>-e2e:e2e`; wszystkie → `pnpm e2e` (**`--parallel=1`**
-  — każda suita stawia własny dev-server; równolegle = wyścig o porty).
-- Porty: landing 4200 · individual 4201 · business 4202.
-- **Pełny sweep interaktywny:** scenariusze przeklikują/wypełniają **wszystkie** elementy
-  (button/link/input/textarea/select/dropdown/filtr) z listy `doc-reviewer`/`test-strategy`,
-  **per rola** (admin/user/guest) — happy-path **i** negatywny authz (element ukryty/disabled,
-  deep-link odrzucony), nie tylko główny przepływ.
+- Selectors: `getByTestId` (`data-testid` attribute, `testId` passthrough in wrappers) ▶
+  `getByRole` ▶ CSS. Assertions `await expect(...)`.
+- **Form state lives in memory** — `page.goto()` mid-scenario resets the store;
+  navigate SPA-style (tiles/stepper buttons), `goto` only on entry.
+- Dev-fill panel: after use **collapse** it (`dev-fab-toggle`) — expanded, it overlaps tiles
+  and intercepts clicks.
+- Run suites with `pnpm nx run <app>-e2e:e2e`; all → `pnpm e2e` (**`--parallel=1`**
+  — each suite spins up its own dev-server; in parallel = port race).
+- Ports: landing 4200 · individual 4201 · business 4202.
+- **Full interactive sweep:** scenarios click through/fill **all** elements
+  (button/link/input/textarea/select/dropdown/filter) from the `doc-reviewer`/`test-strategy` list,
+  **per role** (admin/user/guest) — happy-path **and** negative authz (element hidden/disabled,
+  deep-link rejected), not just the main flow.
 
-## Pętla
+## Loop
 
-scenariusz (z AC) → spec w `apps/<app>-e2e/src/` → `pnpm nx run <app>-e2e:e2e` → fail
-debuguj na serwerze MCP `playwright` (snapshot/click/screenshot na żywej apce) → zielone.
+scenario (from AC) → spec in `apps/<app>-e2e/src/` → `pnpm nx run <app>-e2e:e2e` → on fail
+debug on the `playwright` MCP server (snapshot/click/screenshot on the live app) → green.
 
-## NIE
+## DON'T
 
-Layout / RWD / kontrast → `ux-verifier` (Ty: funkcjonalny happy-path). Nie dopisuj
-`waitForTimeout` — czekaj na warunki (`expect(...).toBeVisible()`).
+Layout / RWD / contrast → `ux-verifier` (you: functional happy-path). Don't add
+`waitForTimeout` — wait on conditions (`expect(...).toBeVisible()`).

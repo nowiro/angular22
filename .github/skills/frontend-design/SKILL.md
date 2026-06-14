@@ -1,79 +1,79 @@
 ---
 name: frontend-design
-description: Zasady projektowania UI/UX dla angular22 — hierarchia, rytm i spacing na tokenach --mat-sys-*, typografia, kontrast WCAG, RWD per breakpoint, stany, UX formularzy Signal Forms, polish checklist. Użyj przy budowie/poprawianiu ekranów i wrapperów.
+description: UI/UX design rules for angular22 — hierarchy, rhythm and spacing on --mat-sys-* tokens, typography, WCAG contrast, RWD per breakpoint, states, Signal Forms form UX, polish checklist. Use when building/fixing screens and wrappers.
 ---
 
-# Frontend design — zasady repo
+# Frontend design — repo rules
 
-Buduj **tylko przez wrappery** `@angular22/ui-material` ([`material-wrappers`](../material-wrappers/SKILL.md))
-i tokeny `--mat-sys-*`. Każda zasada niżej jest **mierzalna na żywej apce** — audytuje ją
+Build **only through wrappers** `@angular22/ui-material` ([`material-wrappers`](../material-wrappers/SKILL.md))
+and `--mat-sys-*` tokens. Every rule below is **measurable on the live app** — audited by
 [`ux-verifier`](../../agents/ux-verifier.agent.md) (`rect`/`scrollWidth`/`getComputedStyle`),
-nie z lektury kodu. Wierność vs **mockupy** (gdy są) →
-[`pixel-perfect`](../../agents/pixel-perfect.agent.md). Konwencje warstwy →
+not from reading code. Fidelity vs **mockups** (when present) →
+[`pixel-perfect`](../../agents/pixel-perfect.agent.md). Layer conventions →
 [`angular.instructions`](../../instructions/angular.instructions.md),
-twarde reguły → [`copilot-instructions`](../../copilot-instructions.md).
+hard rules → [`copilot-instructions`](../../copilot-instructions.md).
 
-## Hierarchia wizualna i rytm
+## Visual hierarchy and rhythm
 
-- **Skala 4/8 px** (`0.25`/`0.5`/`1`/`1.5`/`3rem`) — żadnych magic px. Jeden rytm pionowy
-  na ekranie; grupuj powiązane pola bliżej (gap mniejszy), sekcje dalej.
-- **Density** spójna w obrębie ekranu — nie mieszaj zagęszczonych i luźnych `a22-card`
-  w jednym gridzie (audyt: równe `getBoundingClientRect().height` kart w rzędzie).
-- Jeden dominujący akcent na widok (primary `a22-button`); reszta `text`/`outline`.
+- **4/8 px scale** (`0.25`/`0.5`/`1`/`1.5`/`3rem`) — no magic px. One vertical rhythm
+  per screen; group related fields closer (smaller gap), sections farther apart.
+- **Density** consistent within a screen — don't mix dense and loose `a22-card`
+  in one grid (audit: equal `getBoundingClientRect().height` for cards in a row).
+- One dominant accent per view (primary `a22-button`); the rest `text`/`outline`.
 
-## Typografia
+## Typography
 
-- **Material type scale przez tokeny**: `font: var(--mat-sys-body-medium)`,
-  `--mat-sys-label-large`, `--mat-sys-title-*`. **Nigdy** `font-size: 14px` na sztywno
-  (audyt: `getComputedStyle().font` ma dziedziczyć rolę, nie hardcode).
-- Max 2–3 stopnie typografii na ekran; nagłówki przez role title, nie pogrubiony body.
+- **Material type scale via tokens**: `font: var(--mat-sys-body-medium)`,
+  `--mat-sys-label-large`, `--mat-sys-title-*`. **Never** hardcode `font-size: 14px`
+  (audit: `getComputedStyle().font` must inherit the role, not hardcode).
+- Max 2–3 typography steps per screen; headings via title roles, not bold body.
 
-## Kolor i kontrast
+## Color and contrast
 
-- **Tylko role `--mat-sys-*`**: `surface`/`on-surface`/`on-surface-variant`,
-  `primary`/`on-primary`, `error`/`error-container`, `outline-variant`. Zero hex w SCSS.
-- **WCAG AA ≥ 4.5:1** dla tekstu (≥ 3:1 dla ikon/borderów). Para zawsze rola + jej `on-*`
-  (`on-surface` na `surface`), nigdy `on-surface` na `primary`.
-- Ciemny motyw **bywa czarny-na-czarnym** gdy ktoś hardkoduje kolor — niewidoczne w
-  źródle, łapie to `ux-verifier` (computed colors). Brakuje roli/tokena → zgłoś do
-  `material-wrapper`, nie obchodź bramki własnym hexem.
+- **Only `--mat-sys-*` roles**: `surface`/`on-surface`/`on-surface-variant`,
+  `primary`/`on-primary`, `error`/`error-container`, `outline-variant`. Zero hex in SCSS.
+- **WCAG AA ≥ 4.5:1** for text (≥ 3:1 for icons/borders). The pair is always a role + its `on-*`
+  (`on-surface` on `surface`), never `on-surface` on `primary`.
+- Dark theme **can go black-on-black** when someone hardcodes a color — invisible in
+  source, caught by `ux-verifier` (computed colors). Missing role/token → report to
+  `material-wrapper`, don't bypass the gate with your own hex.
 
-## Layout i RWD
+## Layout and RWD
 
-- **Mobile-first**, breakpointy **360 / 768 / 1280 / 1920**; `@media (min-width: 768px)`
-  jak w `wizard-shell`. Grid `grid-template-columns: 1fr` → `repeat(2/3, 1fr)` wyżej.
-- **Stepper** (`a22-wizard-stepper`) flipuje na **vertical < 768**; poniżej 360 brak
-  poziomego scrolla (audyt: `scrollingElement.scrollWidth ≤ clientWidth`).
-- **Touch targets ≥ 44×44 px** — przyciski/ikony (`rect.width/height ≥ 44`).
-- Kontener `min-height: 100vh`, treść nie ucieka poza viewport.
+- **Mobile-first**, breakpoints **360 / 768 / 1280 / 1920**; `@media (min-width: 768px)`
+  as in `wizard-shell`. Grid `grid-template-columns: 1fr` → `repeat(2/3, 1fr)` higher up.
+- **Stepper** (`a22-wizard-stepper`) flips to **vertical < 768**; below 360 no
+  horizontal scroll (audit: `scrollingElement.scrollWidth ≤ clientWidth`).
+- **Touch targets ≥ 44×44 px** — buttons/icons (`rect.width/height ≥ 44`).
+- Container `min-height: 100vh`, content doesn't escape the viewport.
 
-## Stany
+## States
 
-Zaprojektuj **empty / loading / error / disabled / focus-visible** — każdy widoczny,
-żaden nie powoduje **skoku layoutu** (audyt: rect stabilny między stanami). `focus-visible`
-musi mieć widoczny outline; disabled czytelny, ale wyraźnie inny niż enabled.
+Design **empty / loading / error / disabled / focus-visible** — each visible,
+none causing a **layout shift** (audit: rect stable across states). `focus-visible`
+must have a visible outline; disabled readable, but clearly different from enabled.
 
-## UX formularzy (Signal Forms)
+## Form UX (Signal Forms)
 
-Reszta → skill [`signal-forms`](../signal-forms/SKILL.md). Z perspektywy designu:
-inline walidacja **po blur**, **stałe miejsce na komunikat** (`a22-field-error` rezerwuje
-wysokość — bez skoku), **required** oznaczone wizualnie, focus na **pierwszym błędnym
-polu** po submit, komunikaty **po polsku** (PL = klucz `a22T`).
+Rest → skill [`signal-forms`](../signal-forms/SKILL.md). From a design perspective:
+inline validation **on blur**, **fixed space for the message** (`a22-field-error` reserves
+height — no shift), **required** marked visually, focus on the **first invalid
+field** after submit, messages **in Polish** (PL = `a22T` key).
 
 ## Motion
 
-Subtelny, krótki; **respektuj `prefers-reduced-motion`** (wyłącz animacje). `ux-verifier`
-przed zrzutem i tak wstrzykuje `* { animation: none; transition: none; }`.
+Subtle, short; **respect `prefers-reduced-motion`** (disable animations). `ux-verifier`
+injects `* { animation: none; transition: none; }` before the screenshot anyway.
 
 ## Pro-max checklist
 
-**Alignment** (wspólna krawędź, audyt: równe `rect.left`) · **spójność** density/typografii
-/spacingu · **brak martwego theming** (computed color ≠ tło) · **długość stringów EN** po
-i18n (nie ucina, nie zawija brzydko) · stany kompletne · touch ≥ 44 · zero poziomego scrolla.
+**Alignment** (shared edge, audit: equal `rect.left`) · **consistency** of density/typography
+/spacing · **no dead theming** (computed color ≠ background) · **EN string length** after
+i18n (doesn't truncate, doesn't wrap badly) · states complete · touch ≥ 44 · zero horizontal scroll.
 
-## NIE
+## NO
 
-- ❌ Hardcoded kolor (hex/rgb) ani `font-size`/spacing w px — tylko `--mat-sys-*` i skala 4/8.
-- ❌ `::ng-deep`, `--mdc-*`, `--sys-*` (cicho nie działają).
-- ❌ Projektowanie **wokół** bramki wrapperów/theming — brakuje wrappera/roli → `material-wrapper`.
-- ❌ Werdykt „UX OK" **z czytania kodu** — tylko z uruchomienia (`pnpm start:*` + `ux-verifier`).
+- ❌ Hardcoded color (hex/rgb) or `font-size`/spacing in px — only `--mat-sys-*` and the 4/8 scale.
+- ❌ `::ng-deep`, `--mdc-*`, `--sys-*` (silently don't work).
+- ❌ Designing **around** the wrapper/theming gate — missing wrapper/role → `material-wrapper`.
+- ❌ "UX OK" verdict **from reading code** — only from running (`pnpm start:*` + `ux-verifier`).

@@ -1,19 +1,19 @@
 ---
 name: nx-generators
-description: Scaffolding w angular22 — komponenty/liby wyłącznie przez nx g (@nx/angular), defaults repo, tagi scope/type, mapa executorów Nx, wiring vitest dla nowego liba. Użyj przy tworzeniu komponentu, liba lub targetu.
+description: Scaffolding in angular22 — components/libs exclusively via nx g (@nx/angular), repo defaults, scope/type tags, Nx executor map, vitest wiring for a new lib. Use when creating a component, lib, or target.
 ---
 
-# Generatory i executory Nx — przepis repo
+# Nx generators and executors — repo recipe
 
-## Komponent (NIGDY ręcznie)
+## Component (NEVER by hand)
 
 ```bash
-pnpm nx g @nx/angular:component <name> --directory=<projekt>/src/lib/<name>
+pnpm nx g @nx/angular:component <name> --directory=<project>/src/lib/<name>
 ```
 
-Defaults z `nx.json`: SCSS · OnPush · `displayBlock` · prefix `a22` · **trzy pliki**
-(`.ts`/`.html`/`.scss`). Po wygenerowaniu: eksport w `src/index.ts` liba; klasa z sufiksem
-`Component` (lint). Niepewne flagi → MCP `nx` (`nx_generators`), nie zgadywanie.
+Defaults from `nx.json`: SCSS · OnPush · `displayBlock` · prefix `a22` · **three files**
+(`.ts`/`.html`/`.scss`). After generating: export in the lib's `src/index.ts`; class with the
+`Component` suffix (lint). Unsure about flags → MCP `nx` (`nx_generators`), not guessing.
 
 ## Lib
 
@@ -22,32 +22,32 @@ pnpm nx g @nx/angular:library --directory=libs/<scope>/<name> --name=<name> \
   --importPath=@angular22/<name> --tags=scope:<scope>,type:<type>
 ```
 
-Tagi: `scope:shared|individual-wizard|business-wizard|landing` ×
-`type:feature|ui|data-access|util`. Granice: `app → feature → ui/data-access → util`;
-wizardy nie widzą się nawzajem; `scope:shared` widoczny dla wszystkich.
+Tags: `scope:shared|individual-wizard|business-wizard|landing` ×
+`type:feature|ui|data-access|util`. Boundaries: `app → feature → ui/data-access → util`;
+wizards can't see each other; `scope:shared` is visible to all.
 
-## Mapa executorów (wszystko przez Nx)
+## Executor map (everything via Nx)
 
-| target    | executor                            | uwagi                                                |
+| target    | executor                            | notes                                                |
 | --------- | ----------------------------------- | ---------------------------------------------------- |
-| build     | `@angular/build:application`        | apki; budżety w project.json                         |
-| serve     | `@angular/build:dev-server`         | porty: 4200 portal · 4201 individual · 4202 business |
+| build     | `@angular/build:application`        | apps; budgets in project.json                        |
+| serve     | `@angular/build:dev-server`         | ports: 4200 portal · 4201 individual · 4202 business |
 | lint      | `@nx/eslint:lint` (inferred plugin) | flat config root                                     |
 | test      | `@nx/vitest:test`                   | `options.configFile` = per-lib vitest.config.ts      |
 | e2e       | `@nx/playwright:playwright`         | `options.config` = per-app playwright.config.ts      |
-| typecheck | `nx:run-commands` (tsc --noEmit)    | brak dedykowanego executora — świadomie              |
+| typecheck | `nx:run-commands` (tsc --noEmit)    | no dedicated executor — deliberately                 |
 
-## Wiring testów dla NOWEGO liba (unitTestRunner=none w defaults)
+## Test wiring for a NEW lib (unitTestRunner=none in defaults)
 
-1. `vitest.config.ts` (environment `node`, `resolve.alias` dla używanych `@angular22/*`),
-2. `tsconfig.spec.json` z **`"exclude": []`** (base wyklucza `**/*.spec.ts`!) + referencja
-   w `tsconfig.json`,
-3. target `test` = `@nx/vitest:test` w `project.json`,
-4. specy importujące Angularowe barrele → `test-setup.ts` z `import '@angular/compiler'`.
+1. `vitest.config.ts` (environment `node`, `resolve.alias` for the `@angular22/*` you use),
+2. `tsconfig.spec.json` with **`"exclude": []`** (base excludes `**/*.spec.ts`!) + a reference
+   in `tsconfig.json`,
+3. `test` target = `@nx/vitest:test` in `project.json`,
+4. specs importing Angular barrels → `test-setup.ts` with `import '@angular/compiler'`.
 
-Wzorzec 1:1: `libs/wizard/validators`.
+1:1 pattern: `libs/wizard/validators`.
 
-## Uruchamianie
+## Running
 
-`pnpm nx run <projekt>:<target>` · `pnpm nx affected -t lint test build` ·
-`pnpm e2e` (= `run-many -t e2e --parallel=1` — suity stawiają własne dev-servery).
+`pnpm nx run <project>:<target>` · `pnpm nx affected -t lint test build` ·
+`pnpm e2e` (= `run-many -t e2e --parallel=1` — suites spin up their own dev-servers).

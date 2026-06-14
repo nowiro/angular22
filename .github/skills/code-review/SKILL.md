@@ -1,69 +1,69 @@
 ---
 name: code-review
-description: Playbook code review dla angular22 — rubryka severity, bramki auto-blocker (Material/Signal Forms/i18n/testy), warstwy przeglądu diffu i format findingów. Użyj przy ocenie diffu przed merge (agent reviewer).
+description: Code review playbook for angular22 — severity rubric, auto-blocker gates (Material/Signal Forms/i18n/tests), diff review layers and finding format. Use when assessing a diff before merge (reviewer agent).
 ---
 
-# Code review — playbook repo
+# Code review — repo playbook
 
-Wiedza, którą stosuje agent [`reviewer`](../../agents/reviewer.agent.md) (read-only).
-Tu jest **JAK**: rubryka, drabina, warstwy. Bramka decyduje, nie gust — auto-blockery niżej
-to naruszenia [`code-quality.instructions`](../../instructions/code-quality.instructions.md)
-i [`copilot-instructions`](../../copilot-instructions.md), nie „drobiazgi".
+Knowledge applied by the [`reviewer`](../../agents/reviewer.agent.md) agent (read-only).
+This is **HOW**: rubric, ladder, layers. The gate decides, not taste — the auto-blockers below
+are violations of [`code-quality.instructions`](../../instructions/code-quality.instructions.md)
+and [`copilot-instructions`](../../copilot-instructions.md), not "nitpicks".
 
-## Drabina (kolejność jest obowiązkowa)
+## Ladder (the order is mandatory)
 
-1. **Bramka deterministyczna NAJPIERW** — `pnpm verify` (lub `pnpm lint`) + `read/problems`.
-   Czerwona bramka = `no-go` od razu, bez analizy semantycznej. **Nie recenzuj na czerwonej
-   bramce** — finding z lintu jest tańszy i pewniejszy niż opinia.
-2. **Analiza semantyczna** — dopiero na zielonej bramce przechodzisz warstwy 1–5.
+1. **Deterministic gate FIRST** — `pnpm verify` (or `pnpm lint`) + `read/problems`.
+   Red gate = `no-go` immediately, no semantic analysis. **Don't review on a red
+   gate** — a lint finding is cheaper and surer than an opinion.
+2. **Semantic analysis** — only on a green gate do you go through layers 1–5.
 
-## Rubryka severity
+## Severity rubric
 
-| severity    | znaczenie                           | przykład                                                         |
-| ----------- | ----------------------------------- | ---------------------------------------------------------------- |
-| **blocker** | łamie bramkę / kontrakt — **no-go** | auto-blocker (niżej), AC bez pokrycia, regresja                  |
-| **major**   | działa, ale dług lub realne ryzyko  | mutacja stanu, edge-case `null` nieobsłużony, brak `data-testid` |
-| **minor**   | kosmetyka / nit                     | nazwa, komentarz, drobny refactor                                |
+| severity    | meaning                            | example                                                           |
+| ----------- | ---------------------------------- | ----------------------------------------------------------------- |
+| **blocker** | breaks gate / contract — **no-go** | auto-blocker (below), AC without coverage, regression             |
+| **major**   | works, but debt or real risk       | state mutation, unhandled `null` edge-case, missing `data-testid` |
+| **minor**   | cosmetics / nit                    | naming, comment, minor refactor                                   |
 
-### AUTO-BLOCKERY (zawsze blocker — nigdy major/minor)
+### AUTO-BLOCKERS (always blocker — never major/minor)
 
-- Import `@angular/material/*` lub `@angular/cdk/*` **poza** `libs/ui/material`.
-- `FormGroup`/`FormBuilder`/`ngModel` zamiast Signal Forms (`form()`/`schema()`/`[formField]`).
-- Brak **którejkolwiek** pozycji trójki testowej (scenariusze z AC + Vitest + e2e Playwright).
-- `.skip` / `.only` w testach.
-- `eslint-disable` bez uzasadnienia po `--` (jedyny dozwolony: `unbound-method` w `form-schema.ts`).
-- Public API liba poza `src/index.ts`.
-- Komponent pisany ręcznie zamiast `pnpm nx g @nx/angular:component` (inline template/styles, brak OnPush, nie-trzy-pliki).
-- Tekst UI bez pipe `a22T` (literał PL = klucz; brak wpisu EN w `*-translations.en.ts`).
-- Theming przez `--mdc-*` / `--sys-*` / `::ng-deep` zamiast `--mat-sys-*` + `mat.theme()`.
+- Import of `@angular/material/*` or `@angular/cdk/*` **outside** `libs/ui/material`.
+- `FormGroup`/`FormBuilder`/`ngModel` instead of Signal Forms (`form()`/`schema()`/`[formField]`).
+- Missing **any** item of the test triad (AC scenarios + Vitest + Playwright e2e).
+- `.skip` / `.only` in tests.
+- `eslint-disable` without justification after `--` (the only allowed one: `unbound-method` in `form-schema.ts`).
+- Lib public API outside `src/index.ts`.
+- Component written by hand instead of `pnpm nx g @nx/angular:component` (inline template/styles, no OnPush, not-three-files).
+- UI text without the `a22T` pipe (PL literal = key; no EN entry in `*-translations.en.ts`).
+- Theming via `--mdc-*` / `--sys-*` / `::ng-deep` instead of `--mat-sys-*` + `mat.theme()`.
 
-## Warstwy przeglądu
+## Review layers
 
-1. **Spec/AC** — każde AC z `docs/specs/<slug>/spec.md` ma pokrycie; kod **bez AC** = scope
-   creep (blocker). Wskaż AC bez kodu **i** kod bez AC.
-2. **Poprawność** — regresje, edge-case'y pusty string `''` / `null`, store aktualizuje model
-   **immutably** (`model.update`, nie mutacja w miejscu); efekty z guardem równości.
-3. **Granice** — tagi `scope:*`/`type:*` respektowane (`scope:individual-wizard` ⛔
-   `scope:business-wizard`), warstwy `app → feature → ui/data-access → util`.
-4. **Konwencje** — Signal Forms; trzy pliki na komponent + OnPush; i18n `a22T`; `data-testid`
-   na **każdym** interaktywnym elemencie; theming `--mat-sys-*`; selektory `a22-*`.
-5. **Testy** — trójka **obecna i zielona**; e2e celuje w `data-testid`, nie w tekst PL/EN.
+1. **Spec/AC** — every AC from `docs/specs/<slug>/spec.md` has coverage; code **without AC** = scope
+   creep (blocker). Flag AC without code **and** code without AC.
+2. **Correctness** — regressions, empty-string `''` / `null` edge-cases, store updates the model
+   **immutably** (`model.update`, not in-place mutation); effects with an equality guard.
+3. **Boundaries** — `scope:*`/`type:*` tags respected (`scope:individual-wizard` ⛔
+   `scope:business-wizard`), layers `app → feature → ui/data-access → util`.
+4. **Conventions** — Signal Forms; three files per component + OnPush; i18n `a22T`; `data-testid`
+   on **every** interactive element; theming `--mat-sys-*`; selectors `a22-*`.
+5. **Tests** — triad **present and green**; e2e targets `data-testid`, not PL/EN text.
 
-## Format findingów
+## Finding format
 
-> Kanon kształtu: [`templates/review.md`](../../../docs/sdd/templates/review.md).
+> Shape canon: [`templates/review.md`](../../../docs/sdd/templates/review.md).
 
-Tabela + werdykt cząstkowy:
+Table + partial verdict:
 
 ```
-| plik:linia | finding | severity | sugestia |
+| file:line | finding | severity | suggestion |
 ```
 
-Po tabeli **jedno zdanie**: `go` / `no-go` z uzasadnieniem. Jeden blocker = `no-go`.
-**Werdykt końcowy należy do orchestratora (Opus)** — Ty dostarczasz materiał, nie decyzję merge.
+After the table, **one sentence**: `go` / `no-go` with justification. One blocker = `no-go`.
+**The final verdict belongs to the orchestrator (Opus)** — you supply the material, not the merge decision.
 
-## NIE
+## NO
 
-- **Nie edytuj plików** — przegląd jest read-only (`git diff`/`git show`, nie patch).
-- **Nie przepuszczaj naruszenia bramki jako minor** — auto-blocker to blocker z definicji.
-- **Nie wymyślaj kryteriów** — pracuj na realnym spec/AC i realnym diffie; brak spec = wskaż brak, nie zgaduj intencję.
+- **Don't edit files** — the review is read-only (`git diff`/`git show`, not a patch).
+- **Don't let a gate violation pass as minor** — an auto-blocker is a blocker by definition.
+- **Don't invent criteria** — work from the real spec/AC and the real diff; no spec = flag the gap, don't guess intent.

@@ -1,56 +1,56 @@
 ---
 applyTo: '{apps,libs}/**'
-description: Konwencje Angular 22 dla angular22 — Signal Forms, wrappery Material, generatory Nx, i18n PL/EN, trzy pliki na komponent
+description: Angular 22 conventions for angular22 — Signal Forms, Material wrappers, Nx generators, i18n PL/EN, three files per component
 ---
 
-# Angular 22 — konwencje repo
+# Angular 22 — repo conventions
 
-Auto-ładowane na `apps/**` i `libs/**`. Reguły lintu → `code-quality.instructions.md`
-(przeczytaj NAJPIERW). Głębsze przepisy → skille `angular-developer` (szeroki przewodnik),
+Auto-loaded on `apps/**` and `libs/**`. Lint rules → `code-quality.instructions.md`
+(read FIRST). Deeper recipes → skills `angular-developer` (broad guide),
 `signal-forms`, `material-wrappers`, `nx-generators`, `angular-new-app`, `frontend-design`.
 
-## Komponenty
+## Components
 
-- **Generuj, nie pisz ręcznie:** `pnpm nx g @nx/angular:component <name>
---directory=<projekt>/src/lib/<name>` — defaults z `nx.json`: SCSS, OnPush, prefix `a22`,
-  **trzy pliki** (`.ts` + `.html` + `.scss`, `templateUrl`/`styleUrl`). Inline
-  template/styles są zakazane.
-- Zoneless (bez zone.js w polyfills) — stan wyłącznie w sygnałach; metody szablonu lekkie.
-- `ng-content` w gałęziach `@if`/`@switch` **gubi projekcję** — treść warunkowa przez
-  inputy (wzorzec: `A22ButtonComponent.label`).
+- **Generate, don't write by hand:** `pnpm nx g @nx/angular:component <name>
+--directory=<project>/src/lib/<name>` — defaults from `nx.json`: SCSS, OnPush, prefix `a22`,
+  **three files** (`.ts` + `.html` + `.scss`, `templateUrl`/`styleUrl`). Inline
+  template/styles are forbidden.
+- Zoneless (no zone.js in polyfills) — state only in signals; template methods lightweight.
+- `ng-content` inside `@if`/`@switch` branches **loses projection** — conditional content via
+  inputs (pattern: `A22ButtonComponent.label`).
 
-## Formularze = Signal Forms (jedyny wzorzec)
+## Forms = Signal Forms (the only pattern)
 
-Model `signal<T>()` + walidacja `schema()` (`required`/`validate`/`applyWhen`/`applyEach`/
-`hidden`/`disabled`, komunikaty **PL**) + bindowanie `[formField]`. Store per wizard
-(`form()` w polu serwisu root, helpery tablic = immutable `model.update`). Zakaz
-`FormGroup`/`FormBuilder`/`ngModel` — **egzekwowany lintem** (`no-restricted-syntax`) od
-Angulara ≥ 22: import gołego `@angular/forms` = błąd; na starszych majorach reguła
-wyłączona (wsparcie migracji). Wrappery pól = `FormValueControl`/`FormCheckboxControl`.
-Warunki widoczności: te same predykaty w schemacie (`applyWhen`+`hidden`) i szablonie (`@if`).
+Model `signal<T>()` + validation `schema()` (`required`/`validate`/`applyWhen`/`applyEach`/
+`hidden`/`disabled`, messages **PL**) + binding `[formField]`. Store per wizard
+(`form()` in a root service field, array helpers = immutable `model.update`). No
+`FormGroup`/`FormBuilder`/`ngModel` — **lint-enforced** (`no-restricted-syntax`) from
+Angular ≥ 22: importing bare `@angular/forms` = error; on older majors the rule is
+disabled (migration support). Field wrappers = `FormValueControl`/`FormCheckboxControl`.
+Visibility conditions: the same predicates in the schema (`applyWhen`+`hidden`) and template (`@if`).
 
-## Material — tylko wrappery
+## Material — wrappers only
 
 `@angular22/ui-material` (`a22-text-field`, `a22-select`, `a22-checkbox`, `a22-date-field`,
 `a22-number-field`, `a22-button`, `a22-card`, `a22-toolbar`, `a22-icon`, `a22-divider`,
-`a22-wizard-stepper`, `A22NotificationService`). Brakuje wrappera → dodaj go w
-`libs/ui/material` (agent `material-wrapper`), nie omijaj bramki. Theming: tokeny
-`--mat-sys-*` + `mat.theme()` w `styles.scss` apki; zakaz `--mdc-*`/`--sys-*`/`::ng-deep`.
+`a22-wizard-stepper`, `A22NotificationService`). Missing a wrapper → add it in
+`libs/ui/material` (agent `material-wrapper`), don't bypass the gate. Theming: `--mat-sys-*`
+tokens + `mat.theme()` in the app's `styles.scss`; no `--mdc-*`/`--sys-*`/`::ng-deep`.
 
-## i18n (PL domyślny, EN drugi)
+## i18n (PL default, EN second)
 
-- Teksty UI w szablonach: **literał PL przez pipe `a22T`** (`@angular22/shared-i18n`):
-  `{{ 'Dalej' | a22T }}`, `[label]="'Imię' | a22T"`. PL string **jest kluczem**; EN żyje w
-  mapach `*-translations.en.ts` (brak wpisu → fallback PL).
-- W TS (computed/serwisy): `inject(I18nStore).t('…')` — reaktywne względem języka.
-- Wrappery tłumaczą same: opcje selectów, komunikaty błędów, etykiety zgód — słowniki i
-  schematy w libach data zostają **po polsku** i niczego nie importują z i18n.
-- Nowy tekst = literał PL w szablonie + wpis EN w mapie tłumaczeń tej samej warstwy.
-- Przełącznik: `a22-language-switcher` w toolbarach; wybór trwały (`localStorage`),
-  `document.documentElement.lang` aktualizowany.
+- UI text in templates: **PL literal via the `a22T` pipe** (`@angular22/shared-i18n`):
+  `{{ 'Dalej' | a22T }}`, `[label]="'Imię' | a22T"`. The PL string **is the key**; EN lives in
+  `*-translations.en.ts` maps (no entry → PL fallback).
+- In TS (computed/services): `inject(I18nStore).t('…')` — reactive to language.
+- Wrappers translate themselves: select options, error messages, consent labels — dictionaries and
+  schemas in data libs stay **in Polish** and import nothing from i18n.
+- New text = PL literal in the template + EN entry in that layer's translation map.
+- Switcher: `a22-language-switcher` in toolbars; choice persisted (`localStorage`),
+  `document.documentElement.lang` kept up to date.
 
-## Testy i weryfikacja
+## Tests and verification
 
-Unit: Vitest w libach (executor `@nx/vitest:test`) — patrz agent `vitest`. E2E: Playwright
-(executor `@nx/playwright:playwright`, `data-testid`) — patrz agent `playwright`.
-**UX weryfikuj uruchomieniem** (`pnpm start:*`), nie z kodu — agent `ux-verifier`.
+Unit: Vitest in libs (executor `@nx/vitest:test`) — see agent `vitest`. E2E: Playwright
+(executor `@nx/playwright:playwright`, `data-testid`) — see agent `playwright`.
+**Verify UX by running** (`pnpm start:*`), not from the code — agent `ux-verifier`.

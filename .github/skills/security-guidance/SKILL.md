@@ -1,74 +1,74 @@
 ---
 name: security-guidance
-description: Checklist bezpieczeństwa web/Angular dla angular22 (repo front-end-only, brak backendu) — sinki XSS, DomSanitizer, embedding @angular/elements + CSP, fetch config.json, params routingu, storage, zależności, sekrety. Użyj przy verbie `security` i zmianach dotykających tych obszarów.
+description: Web/Angular security checklist for angular22 (front-end-only repo, no backend) — XSS sinks, DomSanitizer, embedding @angular/elements + CSP, config.json fetch, routing params, storage, dependencies, secrets. Use for the `security` verb and changes touching these areas.
 ---
 
-# Security guidance — checklist repo
+# Security guidance — repo checklist
 
-**Zakres szczerze:** to demo **tylko front-end** — trzy apki + liby, **zero backendu**,
-zero serwerowego API, stan w sygnałowych store'ach. Więc **nie ma** SQLi / authz / sesji
-serwera / SSRF. Powierzchnia ataku jest **kliencka**: sinki DOM, embedding przez
-`@angular/elements`, fetch `config.json`, params routingu, storage, zależności, sekrety.
-Aktor → agent [`security`](../../agents/security.agent.md). Konwencje →
+**Scope, honestly:** this is a **front-end-only** demo — three apps + libs, **zero backend**,
+no server API, state in signal stores. So there's **no** SQLi / authz / server sessions /
+SSRF. The attack surface is **client-side**: DOM sinks, embedding via
+`@angular/elements`, fetching `config.json`, routing params, storage, dependencies, secrets.
+Actor → the [`security`](../../agents/security.agent.md) agent. Conventions →
 [`angular.instructions`](../../instructions/angular.instructions.md) ·
 [`copilot-instructions`](../../copilot-instructions.md) · [`AGENTS.md`](../../../AGENTS.md).
 
-## 1 · Sinki XSS
+## 1 · XSS sinks
 
-Dziś w repo **brak** `innerHTML` / `[innerHTML]`, `DomSanitizer`, `bypassSecurityTrust*`,
-`sanitize`, `document.write`, `eval` / `new Function` — i tak ma zostać. Tekst leci przez
-**interpolację + `a22T`** (Angular auto-escape'uje). Nowy `[innerHTML]` lub
-`bypassSecurityTrust*` = **czerwona flaga**: tylko z udokumentowanym uzasadnieniem w diffie.
+Today the repo has **no** `innerHTML` / `[innerHTML]`, `DomSanitizer`, `bypassSecurityTrust*`,
+`sanitize`, `document.write`, `eval` / `new Function` — and it should stay that way. Text goes through
+**interpolation + `a22T`** (Angular auto-escapes). A new `[innerHTML]` or
+`bypassSecurityTrust*` = a **red flag**: only with a documented rationale in the diff.
 
-## 2 · Zaufanie URL i resource-URL
+## 2 · URL and resource-URL trust
 
-`[href]="standaloneUrl(...)"` (`home`, `embed-host`) bierze URL z `config.json` →
-trzymaj **`target="_blank" rel="noopener"`** (reverse-tabnabbing; tak jest dziś). **Brak**
-`window.open` i schematów `javascript:` — nie dodawaj. Nawigacja zawsze `routerLink`, nie
-ręczne `location.href`.
+`[href]="standaloneUrl(...)"` (`home`, `embed-host`) takes the URL from `config.json` →
+keep **`target="_blank" rel="noopener"`** (reverse tabnabbing; that's how it is today). **No**
+`window.open` and no `javascript:` schemes — don't add them. Navigation is always `routerLink`, not
+manual `location.href`.
 
 ## 3 · Embedding `@angular/elements`
 
-`createCustomElement` w obu `element.ts`; portal montuje tag przez `ElementLoader`.
-**Bramka jest w [`element-loader.ts`](../../../libs/shared/config/src/lib/element-loader.ts)**:
-`isSameOriginScriptPath` kanonikalizuje URL parserem i **blokuje** protocol-relative
-(`//host`), `/\evil`, schematy, cross-origin — `config.json` nie wstrzyknie obcego bundla.
-Nie cofaj tego do `startsWith('/')`. Element jest dormantny (bez routera/fetchu) — **nie
-czytaj globali hosta**, input z granicy (atrybut `lang`) traktuj jak niezaufany.
+`createCustomElement` in both `element.ts`; the portal mounts the tag via `ElementLoader`.
+**The gate is in [`element-loader.ts`](../../../libs/shared/config/src/lib/element-loader.ts)**:
+`isSameOriginScriptPath` canonicalizes the URL with a parser and **blocks** protocol-relative
+(`//host`), `/\evil`, schemes, cross-origin — `config.json` can't inject a foreign bundle.
+Don't revert this to `startsWith('/')`. The element is dormant (no router/fetch) — **don't
+read host globals**, treat input from the boundary (the `lang` attribute) as untrusted.
 
-## 4 · Zewnętrzny fetch (`config.json`)
+## 4 · External fetch (`config.json`)
 
-`provideFeatureFlags` robi `fetch('config.json', { cache: 'no-store' })` same-origin.
-**Kształt waliduj** — `mergeAppConfig` sprawdza typy i scala nad `DEFAULT_APP_CONFIG`;
-nie `JSON.parse → użyj na ślepo`. Odpowiedź **nigdy** do `eval` ani do DOM jako HTML.
-Fallback permisywny (wszystko on) jest świadomy — pamiętaj o tym oceniając tampering.
+`provideFeatureFlags` does `fetch('config.json', { cache: 'no-store' })` same-origin.
+**Validate the shape** — `mergeAppConfig` checks types and merges over `DEFAULT_APP_CONFIG`;
+not `JSON.parse → use blindly`. The response **never** goes to `eval` or to the DOM as HTML.
+The permissive fallback (everything on) is deliberate — keep it in mind when assessing tampering.
 
-## 5 · Params routingu / deep-linki
+## 5 · Routing params / deep links
 
-`featureId` wchodzi route-inputem (`withComponentInputBinding`), typ `FeatureId`.
-Każdy param/segment **waliduj do allow-listy** przed użyciem; **nigdy** nie wstrzykuj
-wartości z URL do DOM ani do `scriptUrl`/`tagName`.
+`featureId` comes in as a route input (`withComponentInputBinding`), type `FeatureId`.
+Every param/segment must be **validated against an allow-list** before use; **never** inject
+a value from the URL into the DOM or into `scriptUrl`/`tagName`.
 
 ## 6 · Storage
 
-`localStorage` używany **wyłącznie** na język i18n (`a22.lang`, try/catch) — patrz
-[`i18n-store.ts`](../../../libs/shared/i18n/src/lib/i18n-store.ts). **Brak** `sessionStorage`.
-Reguła: storage = tylko preferencje UI + flagi. **NIGDY** sekrety / PII / tokeny.
+`localStorage` is used **exclusively** for the i18n language (`a22.lang`, try/catch) — see
+[`i18n-store.ts`](../../../libs/shared/i18n/src/lib/i18n-store.ts). **No** `sessionStorage`.
+Rule: storage = only UI preferences + flags. **NEVER** secrets / PII / tokens.
 
-## 7 · Zależności
+## 7 · Dependencies
 
-Instalacja **tylko `pnpm install`** (`preinstall: only-allow pnpm`); lockfile pinuje wersje.
-`prepare: husky` to jedyny skrypt cyklu — **żadnych niespodzianek w `postinstall`** w
-nowych paczkach. Nowa zależność → uzasadnij i sprawdź CVE (pełna bramka `pnpm verify`).
+Installation **only `pnpm install`** (`preinstall: only-allow pnpm`); the lockfile pins versions.
+`prepare: husky` is the only lifecycle script — **no surprises in `postinstall`** in
+new packages. A new dependency → justify it and check CVEs (full `pnpm verify` gate).
 
-## 8 · Sekrety
+## 8 · Secrets
 
-**Zero sekretów** w repo i configu. Spójnie z `.vscode/mcp.json` (4 serwery **keyless,
-bez `inputs`/promptów**). `config.json` jest publiczny (same-origin, obok `index.html`) —
-nie wkładaj tam nic poufnego.
+**Zero secrets** in the repo and config. Consistent with `.vscode/mcp.json` (4 **keyless
+servers, no `inputs`/prompts**). `config.json` is public (same-origin, next to `index.html`) —
+don't put anything confidential there.
 
-## NIE
+## DON'T
 
-- **Nie wymyślaj** zagrożeń serwerowych (SQLi, authz, sesja, SSRF) — **brak backendu**.
-- **Nie omijaj** sanitizera / same-origin guarda bez udokumentowanego uzasadnienia.
-- **Nie kopiuj** generycznych porad OWASP bez zakotwiczenia w realnym sinku tego repo.
+- **Don't invent** server-side threats (SQLi, authz, session, SSRF) — **no backend**.
+- **Don't bypass** the sanitizer / same-origin guard without a documented rationale.
+- **Don't copy** generic OWASP advice without anchoring it in a real sink of this repo.

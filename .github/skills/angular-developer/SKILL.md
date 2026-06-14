@@ -1,75 +1,75 @@
 ---
 name: angular-developer
-description: Wzorce nowoczesnego Angulara 22 dla angular22 (zoneless, standalone, signals-first) — sygnały/computed/effect, control flow @if/@for/@switch, DI inject(), wejścia input()/model(), OnPush, routing, a11y, testy. Szeroki przewodnik; szczegóły w skillach signal-forms/material-wrappers/nx-generators. Użyj przy logice komponentu/serwisu poza formularzami.
+description: Modern Angular 22 patterns for angular22 (zoneless, standalone, signals-first) — signals/computed/effect, control flow @if/@for/@switch, DI inject(), inputs input()/model(), OnPush, routing, a11y, tests. Broad guide; details in the signal-forms/material-wrappers/nx-generators skills. Use for component/service logic outside forms.
 ---
 
-# Angular 22 — szeroki przewodnik repo
+# Angular 22 — broad repo guide
 
-Warstwa łącząca dla **logiki komponentu/serwisu**. Granice: **formularze** →
+The connecting layer for **component/service logic**. Boundaries: **forms** →
 [`signal-forms`](../signal-forms/SKILL.md); **Material/theming** →
-[`material-wrappers`](../material-wrappers/SKILL.md); **tworzenie komponentu/liba** →
-[`nx-generators`](../nx-generators/SKILL.md). Konwencje → [`angular.instructions`](../../instructions/angular.instructions.md),
-reguły lintu → [`code-quality.instructions`](../../instructions/code-quality.instructions.md). Niepewne API → MCP
-`angular-cli`/`context7`, **nie z pamięci**. Pełne reguły: [`copilot-instructions`](../../copilot-instructions.md).
+[`material-wrappers`](../material-wrappers/SKILL.md); **creating a component/lib** →
+[`nx-generators`](../nx-generators/SKILL.md). Conventions → [`angular.instructions`](../../instructions/angular.instructions.md),
+lint rules → [`code-quality.instructions`](../../instructions/code-quality.instructions.md). Unsure about an API → MCP
+`angular-cli`/`context7`, **not from memory**. Full rules: [`copilot-instructions`](../../copilot-instructions.md).
 
-## Reaktywność (signals-first)
+## Reactivity (signals-first)
 
-**Zoneless by construction** — brak zone.js w polyfills (default Angular 22, bez jawnego
-providera). Stan **wyłącznie w sygnałach**; metody szablonu lekkie (bez I/O, bez pętli).
+**Zoneless by construction** — no zone.js in polyfills (Angular 22 default, no explicit
+provider). State **exclusively in signals**; template methods are lightweight (no I/O, no loops).
 
-- `signal()` stan, `computed()` pochodne (memoizowane), `effect()` efekty uboczne — z
-  **guardem równości**, by nie zapętlić (wzorzec: PESEL→data urodzenia w `wizard-store.ts`).
-- `inject()` zawsze zamiast wstrzykiwania w konstruktorze.
-- `linkedSignal()`/`resource()`/`httpResource()` — **brak backendu, brak w repo**; gdy
-  pojawi się async (resource dla fetchu, linkedSignal dla writable-pochodnej) — wzorzec
-  zalecany, składnię zweryfikuj przez MCP `context7`, nie z pamięci.
+- `signal()` state, `computed()` derived (memoized), `effect()` side effects — with an
+  **equality guard** so they don't loop (pattern: PESEL→birth date in `wizard-store.ts`).
+- `inject()` always instead of constructor injection.
+- `linkedSignal()`/`resource()`/`httpResource()` — **no backend, not in the repo**; once
+  async appears (resource for fetch, linkedSignal for a writable-derived) — the pattern is
+  recommended, verify the syntax via MCP `context7`, not from memory.
 
-## Control flow (natywny, nigdy `*ngIf`/`*ngFor`)
+## Control flow (native, never `*ngIf`/`*ngFor`)
 
-`@if` / `@switch` (wzorzec: `button.component.html`) · `@for` **z obowiązkowym `track`**
-(`track item.key` lub `track $index` dla list immutable) · `@defer`/`@placeholder`/`@loading`
-— niewykorzystane, **zalecane** dla ciężkich gałęzi (np. embed wizardów). **`ng-content` w
-`@if`/`@switch` gubi projekcję** → treść warunkowa przez `input()` (wzorzec `A22ButtonComponent.label`).
+`@if` / `@switch` (pattern: `button.component.html`) · `@for` **with mandatory `track`**
+(`track item.key` or `track $index` for immutable lists) · `@defer`/`@placeholder`/`@loading`
+— unused, **recommended** for heavy branches (e.g. wizard embeds). **`ng-content` inside
+`@if`/`@switch` loses projection** → conditional content via `input()` (pattern `A22ButtonComponent.label`).
 
-## Komponenty
+## Components
 
-- **Generuj, nie pisz** → [`nx-generators`](../nx-generators/SKILL.md): SCSS · **OnPush** ·
-  trzy pliki · prefix `a22`. **Zakaz** inline `template`/`styles`.
-- `input()`/`output()`/`model()` zamiast `@Input()`/`@Output()`; `model()` dla dwukierunkowych
-  (wzorzec wrapperów). Host binding przez `host: { '[style.display]': "hidden() ? 'none' : 'block'" }`
-  (wzorzec `text-field.component.ts`), nie `@HostBinding`.
-- Klasa z sufiksem `Component`; selektor `a22-*`. Złożoność `cognitive-complexity ≤ 15` —
-  rozbijaj na `computed`/metody pomocnicze.
+- **Generate, don't write** → [`nx-generators`](../nx-generators/SKILL.md): SCSS · **OnPush** ·
+  three files · prefix `a22`. **No** inline `template`/`styles`.
+- `input()`/`output()`/`model()` instead of `@Input()`/`@Output()`; `model()` for two-way
+  (the wrapper pattern). Host binding via `host: { '[style.display]': "hidden() ? 'none' : 'block'" }`
+  (pattern `text-field.component.ts`), not `@HostBinding`.
+- Class with the `Component` suffix; selector `a22-*`. Complexity `cognitive-complexity ≤ 15` —
+  split into `computed`/helper methods.
 
-## DI i routing
+## DI and routing
 
-- Providery na poziomie **route/komponentu** (np. `provideNativeDateAdapter()` w datepickerze),
-  globalne w `app.config.ts`. `inject()` działa w injection context (pole, `constructor`,
-  factory) — poza nim cachuj referencję.
-- `provideRouter(appRoutes, withComponentInputBinding())` → **param/`data` trasy jako `input()`**
-  (wzorce: `wizard-shell.component.ts`, `embed-host.component.ts`). Trasy **lazy** przez
-  `loadComponent: () => import(...)`. Brak `ActivatedRoute` gdy hostowane jako web component
-  (portal embeduje wizardy przez `@angular/elements`) — komponent musi to znieść.
-- **Brak SSR/hydracji** (`provideClientHydration`/`@angular/ssr` nieobecne) — apki to czyste SPA.
+- Providers at the **route/component** level (e.g. `provideNativeDateAdapter()` in the datepicker),
+  global ones in `app.config.ts`. `inject()` works in an injection context (field, `constructor`,
+  factory) — outside it, cache the reference.
+- `provideRouter(appRoutes, withComponentInputBinding())` → **route param/`data` as `input()`**
+  (patterns: `wizard-shell.component.ts`, `embed-host.component.ts`). **Lazy** routes via
+  `loadComponent: () => import(...)`. No `ActivatedRoute` when hosted as a web component
+  (the portal embeds wizards via `@angular/elements`) — the component must tolerate that.
+- **No SSR/hydration** (`provideClientHydration`/`@angular/ssr` absent) — the apps are pure SPAs.
 
-## Dostępność (a11y)
+## Accessibility (a11y)
 
-ARIA tylko gdy semantyka HTML nie wystarcza · `focus-visible` · poprawne `role` ·
-`click-events-have-key-events` + `interactive-supports-focus` (lint error). **Audyt na żywej
-apce** (`pnpm start:*`) przez agenta `ux-verifier` — overflow, kontrast, RWD, i18n; nie z kodu.
+ARIA only when HTML semantics aren't enough · `focus-visible` · correct `role` ·
+`click-events-have-key-events` + `interactive-supports-focus` (lint error). **Audit on the live
+app** (`pnpm start:*`) via the `ux-verifier` agent — overflow, contrast, RWD, i18n; not from code.
 
-## Styl i testy
+## Style and tests
 
-- **Styl**: SCSS w trzecim pliku; kolory tylko tokeny `--mat-sys-*`; zakaz `--mdc-*`/`::ng-deep`
+- **Style**: SCSS in the third file; colors only `--mat-sys-*` tokens; no `--mdc-*`/`::ng-deep`
   → [`material-wrappers`](../material-wrappers/SKILL.md).
-- **Testy**: Vitest unit w libach (agent `vitest`) + Playwright e2e z `data-testid` (agent
-  `playwright`). Każdy plan: scenariusze z AC + unit + e2e — brak = no-go.
+- **Tests**: Vitest unit in libs (the `vitest` agent) + Playwright e2e with `data-testid` (the
+  `playwright` agent). Every plan: scenarios from AC + unit + e2e — missing = no-go.
 
-## NIE
+## DON'T
 
-- ❌ wzorce zone.js / `zone.js` w polyfills · stan poza sygnałami.
-- ❌ `@for` bez `track` · `*ngIf`/`*ngFor` · inline `template`/`styles`.
-- ❌ `@Input()`/`@Output()`/DI w konstruktorze · `@HostBinding` (użyj `host:`).
-- ❌ omijanie wrapperów Material · `@angular/material` poza `libs/ui/material`.
-- ❌ formularze ręcznie / `FormGroup` / `ngModel` — **tylko** Signal Forms → [`signal-forms`](../signal-forms/SKILL.md).
-- ❌ niepewne API z pamięci — MCP `angular-cli`/`context7`.
+- ❌ zone.js patterns / `zone.js` in polyfills · state outside signals.
+- ❌ `@for` without `track` · `*ngIf`/`*ngFor` · inline `template`/`styles`.
+- ❌ `@Input()`/`@Output()`/constructor DI · `@HostBinding` (use `host:`).
+- ❌ bypassing Material wrappers · `@angular/material` outside `libs/ui/material`.
+- ❌ forms by hand / `FormGroup` / `ngModel` — **only** Signal Forms → [`signal-forms`](../signal-forms/SKILL.md).
+- ❌ unsure APIs from memory — MCP `angular-cli`/`context7`.

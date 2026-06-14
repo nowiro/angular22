@@ -1,42 +1,42 @@
 ---
 name: material-wrappers
-description: Jak dodać/zmienić wrapper Angular Material w libs/ui/material — kontrakt FormValueControl/FormCheckboxControl, bramka no-restricted-imports, tokeny M3, i18n we wrapperze. Użyj gdy brakuje wrappera albo zmieniasz ui-material.
+description: How to add/change an Angular Material wrapper in libs/ui/material — the FormValueControl/FormCheckboxControl contract, the no-restricted-imports gate, M3 tokens, i18n inside the wrapper. Use when a wrapper is missing or you change ui-material.
 ---
 
-# Wrappery Material — przepis
+# Material wrappers — recipe
 
-`libs/ui/material` to **jedyne** miejsce importu `@angular/material/*` / `@angular/cdk/*`
-(lint gate). Apki i pozostałe liby konsumują `@angular22/ui-material`.
+`libs/ui/material` is the **only** place to import `@angular/material/*` / `@angular/cdk/*`
+(lint gate). Apps and the other libs consume `@angular22/ui-material`.
 
-## Nowy wrapper pola formularza (krok po kroku)
+## New form field wrapper (step by step)
 
 1. `pnpm nx g @nx/angular:component <name> --directory=libs/ui/material/src/lib` —
-   trzy pliki, OnPush, prefix `a22`.
-2. Implementuj **`FormValueControl<T>`**: `readonly value = model<T>(początkowa)`;
-   opcjonalnie `touched = model(false)`, `disabled/readonly/hidden/invalid = input(false)`,
-   `errors = input<readonly WithOptionalFieldTree<ValidationError>[]>([])` — dyrektywa
-   `[formField]` zsynchronizuje wszystko sama. Checkbox → **`FormCheckboxControl`**
-   (`checked = model(false)`, bez `value`).
-3. W szablonie Material bindowany RĘCZNIE: `[value]="value()"` +
+   three files, OnPush, prefix `a22`.
+2. Implement **`FormValueControl<T>`**: `readonly value = model<T>(initial)`;
+   optionally `touched = model(false)`, `disabled/readonly/hidden/invalid = input(false)`,
+   `errors = input<readonly WithOptionalFieldTree<ValidationError>[]>([])` — the
+   `[formField]` directive syncs everything itself. Checkbox → **`FormCheckboxControl`**
+   (`checked = model(false)`, no `value`).
+3. In the template, bind Material MANUALLY: `[value]="value()"` +
    `(input)/(selectionChange)/(change)` → `value.set(...)`, `(blur)` → `touched.set(true)`.
-4. Błędy: `<a22-field-error [errors]="showError() ? errors() : []" />` gdzie
+4. Errors: `<a22-field-error [errors]="showError() ? errors() : []" />` where
    `showError = computed(() => touched() && invalid())`.
-5. **i18n we wrapperze**: teksty pochodzące z danych (opcje selecta, `error.message`,
-   etykiety zgód) przepuszczaj przez pipe `a22T` — wtedy liby data zostają czysto polskie.
-6. `testId = input('')` → `[attr.data-testid]="testId() || null"` na elemencie interaktywnym.
-7. Eksport w `src/index.ts`; selektor generyczny `T extends string` dla selectów
-   (`value = model<T>(undefined as unknown as T)` — formField nadpisze natychmiast).
+5. **i18n inside the wrapper**: text coming from data (select options, `error.message`,
+   consent labels) goes through the `a22T` pipe — that way the data libs stay purely Polish.
+6. `testId = input('')` → `[attr.data-testid]="testId() || null"` on the interactive element.
+7. Export in `src/index.ts`; generic selector `T extends string` for selects
+   (`value = model<T>(undefined as unknown as T)` — formField overrides it immediately).
 
-## Pułapki
+## Pitfalls
 
-- **`ng-content` w `@switch`/`@if` gubi projekcję** — etykieta jako `label = input('')`
-  (wzorzec `A22ButtonComponent`).
-- `mat-error` nie działa bez NgControl — używamy własnego `a22-field-error`.
-- Datepicker: `provideNativeDateAdapter()` w `providers` KOMPONENTU wrappera.
-- Stepper: kroki przez `ng-template[a22Step]` + `contentChildren` + `NgTemplateOutlet`;
-  nawigacja przez publiczne `next()/previous()` (template ref `#stepper`).
+- **`ng-content` inside `@switch`/`@if` loses projection** — label as `label = input('')`
+  (the `A22ButtonComponent` pattern).
+- `mat-error` doesn't work without NgControl — we use our own `a22-field-error`.
+- Datepicker: `provideNativeDateAdapter()` in the wrapper COMPONENT's `providers`.
+- Stepper: steps via `ng-template[a22Step]` + `contentChildren` + `NgTemplateOutlet`;
+  navigation via public `next()/previous()` (template ref `#stepper`).
 
 ## Theming
 
-Tylko `--mat-sys-*` / `--mat-*` + `mat.theme()` w `styles.scss` apki (palety per apka:
-azure/rose · violet/cyan). Zakaz `--mdc-*`/`--sys-*` (cicho nie działają) i `::ng-deep`.
+Only `--mat-sys-*` / `--mat-*` + `mat.theme()` in the app's `styles.scss` (palettes per app:
+azure/rose · violet/cyan). No `--mdc-*`/`--sys-*` (they silently fail) and no `::ng-deep`.

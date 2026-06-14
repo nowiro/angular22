@@ -1,71 +1,71 @@
 ---
 applyTo: '**/*.{ts,html}'
-description: Destylat reguł-error ESLint angular22 — pisz kod lint-clean od pierwszej linii; zero poprawiania po fakcie
+description: Distilled angular22 ESLint error-rules — write lint-clean code from the first line; zero after-the-fact fixing
 ---
 
-# Jakość kodu — reguły egzekwowane PRZED pisaniem
+# Code quality — rules enforced BEFORE writing
 
-Wszystko niżej **egzekwuje `pnpm lint`** ([`eslint.config.mjs`](../../eslint.config.mjs)
-— flat config, type-aware przez `projectService`). Pisz zgodnie **od razu** — kod, który
-wymaga rundy poprawek po lincie, nie spełnia Definition of Done. Po zmianie configu ESLint
-zaktualizuj ten destylat (agent `eslint`).
+Everything below is **enforced by `pnpm lint`** ([`eslint.config.mjs`](../../eslint.config.mjs)
+— flat config, type-aware via `projectService`). Write to spec **upfront** — code that
+needs a fix-up round after linting does not meet the Definition of Done. After changing the ESLint
+config, update this distillate (agent `eslint`).
 
 ## TypeScript (typescript-eslint, type-aware)
 
-- `no-explicit-any` — typuj konkretnie; w testach dozwolone.
+- `no-explicit-any` — type concretely; allowed in tests.
 - `no-floating-promises` / `no-misused-promises` — `await`, `void router.navigate(...)`.
-- `consistent-type-imports` — typy przez `import type { X }`.
-- `consistent-type-definitions` — `interface`, nie `type` dla kształtów obiektów.
-- `explicit-member-accessibility` (`no-public`) — pisz `private`/`protected`, nigdy `public`.
-- `no-non-null-assertion` — zamiast `!` użyj zawężenia / `??` / guard.
-- `no-unused-vars` — nieużywane parametry prefiksuj `_`.
-- `unbound-method` — destrukturyzacja `value`/`valueOf` z FieldContext w schematach Signal
-  Forms to udokumentowany idiom → plikowy `eslint-disable` z uzasadnieniem po `--`
-  (wzorzec w `libs/*/data/src/lib/form-schema.ts`); nigdzie indziej nie wyłączaj.
+- `consistent-type-imports` — types via `import type { X }`.
+- `consistent-type-definitions` — `interface`, not `type` for object shapes.
+- `explicit-member-accessibility` (`no-public`) — write `private`/`protected`, never `public`.
+- `no-non-null-assertion` — instead of `!` use narrowing / `??` / a guard.
+- `no-unused-vars` — prefix unused parameters with `_`.
+- `unbound-method` — destructuring `value`/`valueOf` from FieldContext in Signal
+  Forms schemas is a documented idiom → file-level `eslint-disable` with a justification after `--`
+  (pattern in `libs/*/data/src/lib/form-schema.ts`); don't disable anywhere else.
 
 ## Angular (angular-eslint)
 
-- Selektory: komponent `a22-*` kebab-case, dyrektywa `a22*` camelCase; klasy z sufiksem
-  `Component`/`Directive`/`Pipe`/`Service`.
-- `prefer-standalone` + `prefer-on-push-component-change-detection` (**error**) — każdy
-  komponent standalone + `ChangeDetectionStrategy.OnPush`.
-- `prefer-signals` / `prefer-inject` — `input()`/`model()`/`output()`/`computed()` i
-  `inject()`; zakaz `@Input()`/`@Output()`/konstruktora DI.
-- Szablony: natywny control flow `@if`/`@for (…; track …)`/`@switch` (**nigdy**
+- Selectors: component `a22-*` kebab-case, directive `a22*` camelCase; classes with the
+  `Component`/`Directive`/`Pipe`/`Service` suffix.
+- `prefer-standalone` + `prefer-on-push-component-change-detection` (**error**) — every
+  component standalone + `ChangeDetectionStrategy.OnPush`.
+- `prefer-signals` / `prefer-inject` — `input()`/`model()`/`output()`/`computed()` and
+  `inject()`; no `@Input()`/`@Output()`/constructor DI.
+- Templates: native control flow `@if`/`@for (…; track …)`/`@switch` (**never**
   `*ngIf`/`*ngFor`), `prefer-self-closing-tags`, a11y: `click-events-have-key-events`,
-  `interactive-supports-focus`, zakaz `[ngClass]`-style any (`template/no-any`).
+  `interactive-supports-focus`, no `[ngClass]`-style any (`template/no-any`).
 
 ## SonarJS / Unicorn / import-x
 
-- `sonarjs/cognitive-complexity` ≤ 15 — rozbijaj funkcje zamiast piętrzyć warunki.
-- `sonarjs/no-nested-conditional` — zamiast zagnieżdżonych ternarów mapa
-  `Record<K, V>` lub `@switch`.
-- `sonarjs/no-duplicate-string` (próg 5) — powtarzany literał → stała.
-- `sonarjs/different-types-comparison` — nie porównuj z `undefined` wartości, które wg
-  typów nie mogą nim być (np. element indeksowanej tablicy) — sprawdzaj `length`.
-- `unicorn/filename-case` — pliki kebab-case.
-- `unicorn/prefer-node-protocol` — w skryptach `node:fs`, nie `fs`.
-- `import/no-default-export` (poza plikami config) · `import/no-cycle`.
-- `no-console` (**error**) — żadnych `console.*` w kodzie produkcyjnym.
+- `sonarjs/cognitive-complexity` ≤ 15 — split functions instead of stacking conditions.
+- `sonarjs/no-nested-conditional` — instead of nested ternaries use a
+  `Record<K, V>` map or `@switch`.
+- `sonarjs/no-duplicate-string` (threshold 5) — a repeated literal → a constant.
+- `sonarjs/different-types-comparison` — don't compare against `undefined` values that by
+  their types can't be it (e.g. an indexed array element) — check `length`.
+- `unicorn/filename-case` — kebab-case files.
+- `unicorn/prefer-node-protocol` — in scripts `node:fs`, not `fs`.
+- `import/no-default-export` (except config files) · `import/no-cycle`.
+- `no-console` (**error**) — no `console.*` in production code.
 
-## Bramki architektoniczne (lint!)
+## Architectural gates (lint!)
 
-- **Material gate** — `@angular/material/*` i `@angular/cdk/*` wolno importować **tylko**
-  w `libs/ui/material` (`no-restricted-imports`). Wszędzie indziej: wrappery
-  `@angular22/ui-material`.
-- **Signal Forms gate** (Angular ≥ 22) — import/re-export z gołego `@angular/forms` to
-  **błąd lintu** (`no-restricted-syntax`): klasyczny reactive/template API (`FormGroup`,
-  `FormBuilder`, `FormControl`, `ReactiveFormsModule`, `FormsModule`, `ngModel`) zakazany;
-  `ngModel` pada transitywnie (potrzebuje `FormsModule`). Używaj **`@angular/forms/signals`**
-  (`form()`/`schema()`/`[formField]`, wrappery pól = `FormValueControl`/`FormCheckboxControl`).
-  Brama jest **wersjonowana** (major z `package.json`): na Angularze < 22 reguła jest
-  wyłączona — klasyczne formularze wspierane dla checkoutu sprzed migracji.
-- **Granice modułów** (`@nx/enforce-module-boundaries`) — `scope:individual-wizard` ⛔
-  `scope:business-wizard` (i odwrotnie); warstwy `app → feature → ui/data-access → util`;
-  public API liba **tylko** przez `src/index.ts`.
+- **Material gate** — `@angular/material/*` and `@angular/cdk/*` may be imported **only**
+  in `libs/ui/material` (`no-restricted-imports`). Everywhere else: `@angular22/ui-material`
+  wrappers.
+- **Signal Forms gate** (Angular ≥ 22) — import/re-export from bare `@angular/forms` is a
+  **lint error** (`no-restricted-syntax`): the classic reactive/template API (`FormGroup`,
+  `FormBuilder`, `FormControl`, `ReactiveFormsModule`, `FormsModule`, `ngModel`) is forbidden;
+  `ngModel` fails transitively (it needs `FormsModule`). Use **`@angular/forms/signals`**
+  (`form()`/`schema()`/`[formField]`, field wrappers = `FormValueControl`/`FormCheckboxControl`).
+  The gate is **versioned** (major from `package.json`): on Angular < 22 the rule is
+  disabled — classic forms supported for pre-migration checkout.
+- **Module boundaries** (`@nx/enforce-module-boundaries`) — `scope:individual-wizard` ⛔
+  `scope:business-wizard` (and vice versa); layers `app → feature → ui/data-access → util`;
+  a lib's public API **only** via `src/index.ts`.
 
 ## Format
 
-Prettier (`pnpm format`) z sortowaniem importów (`@angular/*` → 3rd-party → `@angular22/*`
-→ relative) i `singleAttributePerLine` w HTML — nie układaj importów/atrybutów ręcznie
-wbrew tym grupom.
+Prettier (`pnpm format`) with import sorting (`@angular/*` → 3rd-party → `@angular22/*`
+→ relative) and `singleAttributePerLine` in HTML — don't arrange imports/attributes by hand
+against these groups.
