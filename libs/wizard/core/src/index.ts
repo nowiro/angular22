@@ -5,6 +5,7 @@
  *
  * @packageDocumentation
  */
+export { filledAddress, grantConsents } from './lib/demo-fill';
 export { WIZARD_FILL_PRESETS } from './lib/fill-presets';
 export type { FillMode, WizardFillPresets } from './lib/fill-presets';
 export { applyFinalChecks } from './lib/final-validators';
@@ -52,6 +53,7 @@ export type {
   PhoneValue,
   StreetType,
 } from './lib/shared-models';
-export { stepStatus } from './lib/step-status';
+export { STEP_STATUS_LABELS, stepStatus } from './lib/step-status';
 export type { StepStateLike, WizardStepStatus } from './lib/step-status';
 export type { WizardTileDescriptor } from './lib/tile';
+export { WizardPath } from './lib/wizard-path';

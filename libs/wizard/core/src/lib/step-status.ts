@@ -22,3 +22,13 @@ export function stepStatus(state: StepStateLike): WizardStepStatus {
   if (state.valid()) return 'done';
   return state.touched() ? 'incomplete' : 'untouched';
 }
+
+/**
+ * Human labels for each step status, shared by both wizard dashboards. The
+ * Polish source string IS the i18n key (rendered through the `a22T` pipe).
+ */
+export const STEP_STATUS_LABELS: Record<WizardStepStatus, string> = {
+  done: 'Ukończone',
+  incomplete: 'W trakcie',
+  untouched: 'Nie rozpoczęte',
+};

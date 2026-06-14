@@ -5,25 +5,21 @@
  */
 import type { FillMode } from '@angular22/wizard-core';
 import {
-  emptyAddress,
   emptyPhone,
+  filledAddress,
   generateValidNip,
   generateValidPesel,
+  grantConsents,
   pick,
-  randomCity,
   randomCompany,
   randomEmail,
   randomEmployedSince,
   randomFirstName,
-  randomFlatNumber,
-  randomHouseNumber,
   randomKeyword,
   randomLastName,
   randomMonthlyGross,
   randomPhoneNumber,
   randomPosition,
-  randomPostalCode,
-  randomStreet,
   randomThesisTopic,
   randomUniversity,
 } from '@angular22/wizard-core';
@@ -31,17 +27,6 @@ import {
 import { applicableConsents } from './consents-catalog';
 import type { IndividualData } from './models';
 import { emptyContract, initialIndividualData } from './models';
-
-function filledAddress(purpose: string): IndividualData['contact']['addresses'][number] {
-  return {
-    ...emptyAddress(purpose),
-    street: randomStreet(),
-    houseNumber: randomHouseNumber(),
-    flatNumber: randomFlatNumber(),
-    postalCode: randomPostalCode(),
-    city: randomCity(),
-  };
-}
 
 function filledContract(): IndividualData['survey']['employment']['details']['contracts'][number] {
   return { type: pick(['uop', 'b2b'] as const), since: randomEmployedSince(), grossMonthly: randomMonthlyGross() };
@@ -117,10 +102,7 @@ export function buildIndividualPreset(mode: FillMode): IndividualData {
   data.meta.acceptTerms = true;
   // Consents resolved from the final shape; required always granted, optional
   // ones granted in the fuller modes.
-  data.consents.items = applicableConsents(data).map((item) => ({
-    ...item,
-    granted: mode === 'required' ? item.required : true,
-  }));
+  data.consents.items = grantConsents(applicableConsents(data), mode);
 
   return data;
 }

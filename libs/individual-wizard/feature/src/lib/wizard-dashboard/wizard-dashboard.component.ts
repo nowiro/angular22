@@ -6,7 +6,7 @@ import { IndividualWizardStore, WizardNav } from '@angular22/individual-wizard-d
 import { A22LanguageSwitcherComponent, A22TranslatePipe } from '@angular22/shared-i18n';
 import { A22IconComponent, A22ToolbarComponent } from '@angular22/ui-material';
 import type { WizardStepStatus, WizardTileDescriptor } from '@angular22/wizard-core';
-import { stepStatus } from '@angular22/wizard-core';
+import { STEP_STATUS_LABELS, stepStatus } from '@angular22/wizard-core';
 
 const TILES: readonly WizardTileDescriptor<IndividualWizardStepIndex>[] = [
   { step: 1, icon: 'badge', title: 'Dane podstawowe', subtitle: 'Imię, nazwisko, PESEL, data urodzenia' },
@@ -15,12 +15,6 @@ const TILES: readonly WizardTileDescriptor<IndividualWizardStepIndex>[] = [
   { step: 4, icon: 'fact_check', title: 'Zgody i sprzeciwy', subtitle: 'RODO, marketing, weryfikacje' },
   { step: 5, icon: 'summarize', title: 'Podsumowanie', subtitle: 'Przegląd danych i wysyłka' },
 ];
-
-const STATUS_LABELS: Record<WizardStepStatus, string> = {
-  done: 'Ukończone',
-  incomplete: 'W trakcie',
-  untouched: 'Nie rozpoczęte',
-};
 
 /** Dashboard — 5 deep-linking tiles with live form-state statuses. */
 @Component({
@@ -34,7 +28,7 @@ export class WizardDashboardComponent {
   private readonly store = inject(IndividualWizardStore);
 
   protected readonly tiles = TILES;
-  protected readonly statusLabels = STATUS_LABELS;
+  protected readonly statusLabels = STEP_STATUS_LABELS;
   protected readonly wizardLink = WizardNav.wizard();
 
   protected readonly statuses = computed<Record<IndividualWizardStepIndex, WizardStepStatus>>(() => {

@@ -1,20 +1,13 @@
 /**
- * Route registry — single source of truth for every URL in the
- * demo-business-wizard app.
+ * Route registry for the demo-business-wizard app. The shared URL path table
+ * (`WizardPath`) lives in `@angular22/wizard-core`; this file adds the app's
+ * typed `WizardNav` command builders and step-index type on top of it.
  */
 
 /** Stepper step indices — 1-indexed in the URL for user-friendliness. */
 export type BusinessWizardStepIndex = 1 | 2 | 3 | 4 | 5 | 6;
 
 export const BUSINESS_WIZARD_STEP_COUNT = 6;
-
-export const WizardPath = {
-  Dashboard: '',
-  Wizard: 'wizard',
-  WizardStep: 'wizard/:step',
-  Wildcard: '**',
-} as const;
-export type WizardPath = (typeof WizardPath)[keyof typeof WizardPath];
 
 export const WizardNav = {
   /** `/` — dashboard with 6 step tiles. */

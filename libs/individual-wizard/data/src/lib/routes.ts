@@ -1,21 +1,13 @@
 /**
- * Route registry — single source of truth for every URL in the
- * demo-individual-wizard app. `WizardPath.*` configures `Routes[]`;
- * `WizardNav.*` returns typed RouterLink command arrays.
+ * Route registry for the demo-individual-wizard app. The shared URL path table
+ * (`WizardPath`) lives in `@angular22/wizard-core`; this file adds the app's
+ * typed `WizardNav` command builders and step-index type on top of it.
  */
 
 /** Stepper step indices — 1-indexed in the URL for user-friendliness. */
 export type IndividualWizardStepIndex = 1 | 2 | 3 | 4 | 5;
 
 export const INDIVIDUAL_WIZARD_STEP_COUNT = 5;
-
-export const WizardPath = {
-  Dashboard: '',
-  Wizard: 'wizard',
-  WizardStep: 'wizard/:step',
-  Wildcard: '**',
-} as const;
-export type WizardPath = (typeof WizardPath)[keyof typeof WizardPath];
 
 export const WizardNav = {
   /** `/` — dashboard with 5 step tiles. */

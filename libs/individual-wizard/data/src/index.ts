@@ -48,6 +48,6 @@ export type {
   SurveyValue,
   ThesisValue,
 } from './lib/models';
-export { INDIVIDUAL_WIZARD_STEP_COUNT, WizardNav, WizardPath } from './lib/routes';
+export { INDIVIDUAL_WIZARD_STEP_COUNT, WizardNav } from './lib/routes';
 export type { IndividualWizardStepIndex } from './lib/routes';
 export { IndividualWizardStore } from './lib/wizard-store';

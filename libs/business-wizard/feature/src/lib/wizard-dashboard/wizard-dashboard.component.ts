@@ -6,7 +6,7 @@ import { BusinessWizardStore, WizardNav } from '@angular22/business-wizard-data'
 import { A22LanguageSwitcherComponent, A22TranslatePipe } from '@angular22/shared-i18n';
 import { A22IconComponent, A22ToolbarComponent } from '@angular22/ui-material';
 import type { WizardStepStatus, WizardTileDescriptor } from '@angular22/wizard-core';
-import { stepStatus } from '@angular22/wizard-core';
+import { STEP_STATUS_LABELS, stepStatus } from '@angular22/wizard-core';
 
 const TILES: readonly WizardTileDescriptor<BusinessWizardStepIndex>[] = [
   { step: 1, icon: 'domain', title: 'Dane firmy', subtitle: 'Nazwa, forma prawna, NIP/REGON/KRS' },
@@ -16,12 +16,6 @@ const TILES: readonly WizardTileDescriptor<BusinessWizardStepIndex>[] = [
   { step: 5, icon: 'fact_check', title: 'Zgody', subtitle: 'RODO, PSD2, sankcje, marketing' },
   { step: 6, icon: 'summarize', title: 'Podsumowanie', subtitle: 'Przegląd danych i wysyłka' },
 ];
-
-const STATUS_LABELS: Record<WizardStepStatus, string> = {
-  done: 'Ukończone',
-  incomplete: 'W trakcie',
-  untouched: 'Nie rozpoczęte',
-};
 
 /** Dashboard — 6 deep-linking tiles with live form-state statuses. */
 @Component({
@@ -35,7 +29,7 @@ export class WizardDashboardComponent {
   private readonly store = inject(BusinessWizardStore);
 
   protected readonly tiles = TILES;
-  protected readonly statusLabels = STATUS_LABELS;
+  protected readonly statusLabels = STEP_STATUS_LABELS;
   protected readonly wizardLink = WizardNav.wizard();
 
   protected readonly statuses = computed<Record<BusinessWizardStepIndex, WizardStepStatus>>(() => {

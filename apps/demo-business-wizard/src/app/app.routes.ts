@@ -1,8 +1,8 @@
 import type { Routes } from '@angular/router';
 
-import { WizardPath } from '@angular22/business-wizard-data';
 import { featureEnabledGuard } from '@angular22/shared-config';
 import { A22ErrorKind, A22ErrorScreenComponent } from '@angular22/ui-feedback';
+import { WizardPath } from '@angular22/wizard-core';
 
 /**
  * `/disabled`      → feature-flag notice (always reachable)

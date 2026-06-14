@@ -3,40 +3,25 @@
  */
 import type { FillMode } from '@angular22/wizard-core';
 import {
-  emptyAddress,
   emptyPhone,
+  filledAddress,
   generateValidKrs,
   generateValidNip,
   generateValidRegon,
+  grantConsents,
   pickInt,
-  randomCity,
   randomCompany,
   randomEmail,
   randomFirstName,
-  randomFlatNumber,
   randomFoundingYear,
-  randomHouseNumber,
   randomLastName,
   randomPhoneNumber,
-  randomPostalCode,
-  randomStreet,
   randomWebsiteUrl,
 } from '@angular22/wizard-core';
 
 import { applicableConsents } from './consents-catalog';
 import type { BusinessData, RepresentativeValue } from './models';
 import { initialBusinessData } from './models';
-
-function filledAddress(purpose: string): BusinessData['contact']['addresses'][number] {
-  return {
-    ...emptyAddress(purpose),
-    street: randomStreet(),
-    houseNumber: randomHouseNumber(),
-    flatNumber: randomFlatNumber(),
-    postalCode: randomPostalCode(),
-    city: randomCity(),
-  };
-}
 
 function filledRepresentative(role: RepresentativeValue['role']): RepresentativeValue {
   return {
@@ -102,10 +87,7 @@ export function buildBusinessPreset(mode: FillMode): BusinessData {
   }
 
   data.meta.acceptTerms = true;
-  data.consents.items = applicableConsents(data).map((item) => ({
-    ...item,
-    granted: mode === 'required' ? item.required : true,
-  }));
+  data.consents.items = grantConsents(applicableConsents(data), mode);
 
   return data;
 }

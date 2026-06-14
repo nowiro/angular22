@@ -44,6 +44,6 @@ export type {
   RepresentativeValue,
   RevenueRange,
 } from './lib/models';
-export { BUSINESS_WIZARD_STEP_COUNT, WizardNav, WizardPath } from './lib/routes';
+export { BUSINESS_WIZARD_STEP_COUNT, WizardNav } from './lib/routes';
 export type { BusinessWizardStepIndex } from './lib/routes';
 export { BusinessWizardStore } from './lib/wizard-store';

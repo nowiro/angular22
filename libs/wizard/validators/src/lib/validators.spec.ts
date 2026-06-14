@@ -1,9 +1,24 @@
 import { describe, expect, it } from 'vitest';
 
 import { ageInYears, isAdult } from './age';
-import { adultAgeError, krsError, nipError, peselError, regonError } from './field-errors';
+import {
+  adultAgeError,
+  krsError,
+  nipError,
+  peselError,
+  plPhoneError,
+  plPostalCodeError,
+  regonError,
+  websiteUrlError,
+} from './field-errors';
 import { isValidKrs } from './krs';
-import { defineValidator, registerValidationLabel, validationLabel } from './label-registry';
+import {
+  defineValidator,
+  registerValidationLabel,
+  registerValidationLabels,
+  validationLabel,
+  validationLabels,
+} from './label-registry';
 import { isValidNip, normaliseNip } from './nip';
 import { isValidPeselChecksum, parsePesel } from './pesel';
 import { isValidPlPhone } from './phone';
@@ -137,6 +152,9 @@ describe('field-errors', () => {
     expect(nipError('')).toBeNull();
     expect(regonError('')).toBeNull();
     expect(krsError('')).toBeNull();
+    expect(plPhoneError('')).toBeNull();
+    expect(plPostalCodeError('')).toBeNull();
+    expect(websiteUrlError('')).toBeNull();
     expect(adultAgeError(null)).toBeNull();
   });
 
@@ -145,6 +163,9 @@ describe('field-errors', () => {
     expect(nipError('123')).toMatchObject({ kind: 'nip' });
     expect(regonError('123')).toMatchObject({ kind: 'regon' });
     expect(krsError('123')).toMatchObject({ kind: 'krs' });
+    expect(plPhoneError('12345')).toMatchObject({ kind: 'phone' });
+    expect(plPostalCodeError('00950')).toMatchObject({ kind: 'postalCode' });
+    expect(websiteUrlError('not a url')).toMatchObject({ kind: 'url' });
   });
 });
 
@@ -169,5 +190,24 @@ describe('label registry / defineValidator', () => {
     expect(evenError(4)).toBeNull();
     expect(evenError(3)).toEqual({ kind: 'demo.even', message: 'Liczba musi być parzysta.' });
     expect(validationLabel('demo.even')).toBe('Liczba musi być parzysta.');
+  });
+
+  it('registers many labels at once and snapshots the dictionary', () => {
+    registerValidationLabels([
+      { key: 'demo.bulk-a', label: 'Reguła A.' },
+      { key: 'demo.bulk-b', label: 'Reguła B.' },
+    ]);
+    expect(validationLabel('demo.bulk-a')).toBe('Reguła A.');
+    expect(validationLabel('demo.bulk-b')).toBe('Reguła B.');
+    const snapshot = validationLabels();
+    expect(snapshot).toContainEqual({ key: 'demo.bulk-a', label: 'Reguła A.' });
+    expect(snapshot.length).toBeGreaterThanOrEqual(2);
+  });
+
+  it('overrides an existing label by re-registering its key', () => {
+    registerValidationLabel({ key: 'demo.override', label: 'Stara.' });
+    expect(validationLabel('demo.override')).toBe('Stara.');
+    registerValidationLabel({ key: 'demo.override', label: 'Nowa.' });
+    expect(validationLabel('demo.override')).toBe('Nowa.');
   });
 });
