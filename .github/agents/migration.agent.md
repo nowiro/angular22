@@ -2,7 +2,7 @@
 name: migration
 model: ['Gemini 3.5 Flash', 'Auto']
 user-invocable: false
-description: Migration specialist — `nx migrate` / `ng update` (Angular/Nx/Material), codemody, breaking changes, utrzymanie demo na najnowszym; weryfikacja przez `pnpm verify`
+description: Migration specialist — `nx migrate` / `ng update` (Angular/Nx/Material), breaking changes + modernizacja kodu schematic'ami `@angular/core` (standalone → control-flow → inject → signals → … → zoneless, v19–v22); weryfikacja przez `pnpm verify`
 tools:
   [
     'edit/editFiles',
@@ -36,6 +36,16 @@ Verb SDD `deps` z **breaking change** / przeskokiem majora frameworka, **lub** g
 4. **Bramka:** `pnpm verify` (pełna bramka; skład → [`AGENTS.md`](../../AGENTS.md#komendy)) musi
    być **zielona** + dotknięte `pnpm e2e` zielone. Rozjazd frameworkowy po migracji →
    fix tutaj albo **deleguj** do `angular-engineer`.
+
+## Migracje kodu (schematic'y `@angular/core`)
+
+Modernizacja **kodu wewnątrz** wersji (standalone → control-flow → inject → lazy → signals →
+template polish → testy → **zoneless**) — playbook (kolejność, pętla per krok, wielowersyjność)
+→ skill [`angular-migrations`](../skills/angular-migrations/SKILL.md); pełna tabela 13 migracji +
+komendy + meta zoneless → kanon [`docs/angular-migrations.md`](../../docs/angular-migrations.md).
+**Jedna migracja = jeden commit + `pnpm verify`**; idempotentne; flagi/dostępność per major
+potwierdzasz przez `angular-cli` MCP (nie z pamięci). Brama Signal-Forms jest **wersjonowana**
+(≥ 22 enforce, < 22 off) — `eslint.config.mjs`.
 
 ## Delegacja (nie zgadujesz)
 

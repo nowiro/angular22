@@ -7,7 +7,7 @@
 > agenci → [`AGENTS.md`](../AGENTS.md); SDD → [`docs/sdd/methodology.md`](../docs/sdd/methodology.md);
 > skille (`.github/skills/`): `angular-developer` · `angular-new-app` · `signal-forms` ·
 > `material-wrappers` · `nx-generators` · `frontend-design` · `code-review` · `security-guidance` ·
-> `ai-config-quality` · `keycloak-auth`.
+> `ai-config-quality` · `keycloak-auth` · `angular-migrations`.
 
 ## Tożsamość
 

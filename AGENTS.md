@@ -32,7 +32,7 @@ Guard `pnpm ai:validate` wymusza 1 widocznego. Po zmianie agentów: **Reload Win
 | [`deps`](.github/agents/deps.agent.md)                         | Gemini Flash | higiena zależności — ncu / CVE / lockfile / licencje (verb `deps`)                                               |
 | [`stack-guardian`](.github/agents/stack-guardian.agent.md)     | Gemini Flash | zgodność ze stackiem — off-stack / pinowanie / spójność wg `docs/tech-stack.md` (read-only)                      |
 | [`nx-architect`](.github/agents/nx-architect.agent.md)         | Gemini Flash | granice modułów / tagi `scope:*`/`type:*` / graf / public API                                                    |
-| [`migration`](.github/agents/migration.agent.md)               | Gemini Flash | `ng update` / `nx migrate` / breaking changes / utrzymanie na najnowszym                                         |
+| [`migration`](.github/agents/migration.agent.md)               | Gemini Flash | `ng update`/`nx migrate` + schematic'y modernizacji (standalone→zoneless, v19–22; skill `angular-migrations`)    |
 | [`web-components`](.github/agents/web-components.agent.md)     | Gemini Flash | embedding `@angular/elements` — element.ts / loader / same-origin guard                                          |
 | [`docs`](.github/agents/docs.agent.md)                         | Gemini Flash | README / JSDoc / sync AGENTS ↔ kod / changelog (DRY: wskazuje kanon)                                             |
 | [`scm`](.github/agents/scm.agent.md)                           | Gemini Flash | conventional commits / opisy PR / higiena brancha                                                                |
@@ -61,7 +61,8 @@ ustawiasz globalnie w pickerze VS Code.
   `.github/` (`copilot-instructions.md`, `agents/`, `instructions/` auto per `applyTo`,
   `prompts/`: `/clarify`, `/analyze`, `/checklist`, `/brainstorming`, `/feature-dev`; `skills/`:
   `angular-developer`, `angular-new-app`, `signal-forms`, `material-wrappers`, `nx-generators`,
-  `frontend-design`, `code-review`, `security-guidance`, `ai-config-quality`, `keycloak-auth`).
+  `frontend-design`, `code-review`, `security-guidance`, `ai-config-quality`, `keycloak-auth`,
+  `angular-migrations`).
 - `docs/sdd/` — metodologia SDD (adaptacja spec-kit; kanon: [`docs/sdd/methodology.md`](docs/sdd/methodology.md)).
   Artefakty `docs/specs|plans|runs` — **wersjonowane w gicie** (każda zmiana przez SDD → zapis w `docs/`).
 - **Observability:** `.vscode/settings.json` (OTel-export Copilota, domyślnie **OFF**) → backend
