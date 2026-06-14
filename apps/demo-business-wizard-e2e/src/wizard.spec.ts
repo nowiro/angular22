@@ -28,7 +28,7 @@ test.describe('Business wizard — smoke', () => {
   test('finance industry adds the PSD2 consent', async ({ page }) => {
     await page.goto('/wizard/3');
     await page.getByTestId('profile-industry').click();
-    await page.getByRole('option', { name: 'Finanse i ubezpieczenia' }).click();
+    await page.getByTestId('profile-industry-opt-finance').click();
     // Navigate within the SPA (a hard `goto` would reset the in-memory store).
     await page.getByTestId('step-3-next').click();
     await page.getByTestId('step-4-next').click();

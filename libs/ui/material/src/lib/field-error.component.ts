@@ -19,6 +19,8 @@ import { errorMessage } from './error-message';
 })
 export class A22FieldErrorComponent {
   readonly errors = input<readonly WithOptionalFieldTree<ValidationError>[]>([]);
+  /** Stable element id so a host control can point `aria-describedby` at the error. */
+  readonly errorId = input('');
 
   protected readonly message = computed(() => errorMessage(this.errors()));
 }

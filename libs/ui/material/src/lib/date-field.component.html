@@ -7,7 +7,9 @@
     [matDatepicker]="picker"
     [value]="value()"
     [disabled]="disabled()"
+    [required]="required()"
     [attr.aria-invalid]="showError()"
+    [attr.aria-describedby]="showError() && errorId() ? errorId() : null"
     [attr.data-testid]="testId() || null"
     (dateChange)="onDate($event.value ?? null)"
     (blur)="touched.set(true)"
@@ -23,4 +25,7 @@
     <mat-hint>{{ hint() }}</mat-hint>
   }
 </mat-form-field>
-<a22-field-error [errors]="showError() ? errors() : []" />
+<a22-field-error
+  [errorId]="errorId()"
+  [errors]="showError() ? errors() : []"
+/>

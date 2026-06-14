@@ -2,6 +2,7 @@
   <p
     class="a22-field-error"
     role="alert"
+    [id]="errorId() || null"
     data-testid="field-error"
   >
     {{ message() | a22T }}

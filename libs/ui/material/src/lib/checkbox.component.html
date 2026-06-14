@@ -1,6 +1,7 @@
 <mat-checkbox
   [checked]="checked()"
   [disabled]="disabled()"
+  [required]="required()"
   [attr.data-testid]="testId() || null"
   (change)="onChange($event.checked)"
 >

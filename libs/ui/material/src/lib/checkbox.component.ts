@@ -26,6 +26,7 @@ export class A22CheckboxComponent implements FormCheckboxControl {
   readonly disabled = input(false);
   readonly hidden = input(false);
   readonly invalid = input(false);
+  readonly required = input(false);
   readonly errors = input<readonly WithOptionalFieldTree<ValidationError>[]>([]);
 
   readonly testId = input('');

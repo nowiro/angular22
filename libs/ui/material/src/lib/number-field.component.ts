@@ -25,6 +25,7 @@ export class A22NumberFieldComponent implements FormValueControl<number | null> 
   readonly readonly = input(false);
   readonly hidden = input(false);
   readonly invalid = input(false);
+  readonly required = input(false);
   readonly errors = input<readonly WithOptionalFieldTree<ValidationError>[]>([]);
 
   readonly label = input.required<string>();
@@ -33,6 +34,7 @@ export class A22NumberFieldComponent implements FormValueControl<number | null> 
   readonly testId = input('');
 
   protected readonly showError = computed(() => this.touched() && this.invalid());
+  protected readonly errorId = computed(() => (this.testId() ? `${this.testId()}-error` : ''));
   protected readonly displayValue = computed(() => {
     const value = this.value();
     return value === null ? '' : String(value);

@@ -32,6 +32,7 @@ export class A22TextFieldComponent implements FormValueControl<string> {
   readonly readonly = input(false);
   readonly hidden = input(false);
   readonly invalid = input(false);
+  readonly required = input(false);
   readonly errors = input<readonly WithOptionalFieldTree<ValidationError>[]>([]);
 
   readonly label = input.required<string>();
@@ -41,6 +42,7 @@ export class A22TextFieldComponent implements FormValueControl<string> {
   readonly testId = input('');
 
   protected readonly showError = computed(() => this.touched() && this.invalid());
+  protected readonly errorId = computed(() => (this.testId() ? `${this.testId()}-error` : ''));
 
   protected onInput(event: Event): void {
     this.value.set((event.target as HTMLInputElement).value);

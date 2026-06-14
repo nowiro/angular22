@@ -31,6 +31,7 @@ export class A22SelectComponent<T extends string> implements FormValueControl<T>
   readonly disabled = input(false);
   readonly hidden = input(false);
   readonly invalid = input(false);
+  readonly required = input(false);
   readonly errors = input<readonly WithOptionalFieldTree<ValidationError>[]>([]);
 
   readonly label = input.required<string>();
@@ -39,6 +40,7 @@ export class A22SelectComponent<T extends string> implements FormValueControl<T>
   readonly testId = input('');
 
   protected readonly showError = computed(() => this.touched() && this.invalid());
+  protected readonly errorId = computed(() => (this.testId() ? `${this.testId()}-error` : ''));
 
   protected onSelection(value: T): void {
     this.value.set(value);

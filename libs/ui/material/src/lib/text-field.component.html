@@ -8,8 +8,10 @@
     [value]="value()"
     [disabled]="disabled()"
     [readonly]="readonly()"
+    [required]="required()"
     [placeholder]="placeholder()"
     [attr.aria-invalid]="showError()"
+    [attr.aria-describedby]="showError() && errorId() ? errorId() : null"
     [attr.data-testid]="testId() || null"
     (input)="onInput($event)"
     (blur)="touched.set(true)"
@@ -19,4 +21,7 @@
     <mat-hint>{{ hint() }}</mat-hint>
   }
 </mat-form-field>
-<a22-field-error [errors]="showError() ? errors() : []" />
+<a22-field-error
+  [errorId]="errorId()"
+  [errors]="showError() ? errors() : []"
+/>

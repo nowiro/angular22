@@ -27,6 +27,7 @@ export class A22DateFieldComponent implements FormValueControl<Date | null> {
   readonly disabled = input(false);
   readonly hidden = input(false);
   readonly invalid = input(false);
+  readonly required = input(false);
   readonly errors = input<readonly WithOptionalFieldTree<ValidationError>[]>([]);
 
   readonly label = input.required<string>();
@@ -34,6 +35,7 @@ export class A22DateFieldComponent implements FormValueControl<Date | null> {
   readonly testId = input('');
 
   protected readonly showError = computed(() => this.touched() && this.invalid());
+  protected readonly errorId = computed(() => (this.testId() ? `${this.testId()}-error` : ''));
 
   protected onDate(value: Date | null): void {
     this.value.set(value);

@@ -106,16 +106,16 @@ test.describe('Individual wizard — smoke', () => {
 
     // secondary → phd reveals the higher-education branch.
     await page.getByTestId('survey-education-level').click();
-    await page.getByRole('option', { name: 'Doktorat' }).click();
+    await page.getByTestId('survey-education-level-opt-phd').click();
     await expect(page.getByTestId('survey-higher-education')).toBeVisible();
 
     // IT field reveals the specialisation; data/security branch reveals the thesis.
     await page.getByTestId('survey-study-field').click();
-    await page.getByRole('option', { name: 'Informatyka' }).click();
+    await page.getByTestId('survey-study-field-opt-IT').click();
     await expect(page.getByTestId('survey-specialisation')).toBeVisible();
 
     await page.getByTestId('survey-branch').click();
-    await page.getByRole('option', { name: 'Cybersecurity' }).click();
+    await page.getByTestId('survey-branch-opt-security').click();
     await expect(page.getByTestId('survey-thesis')).toBeVisible();
   });
 });
