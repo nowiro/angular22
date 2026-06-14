@@ -1,7 +1,7 @@
 ---
 type: spec
 id: 'spec.galileo-observability'
-status: draft
+status: clarified
 title: 'Galileo — observability/eval agentów (trace per krok, scoring wyboru narzędzi, koszt+latencja)'
 created: '2026-06-13'
 ---
@@ -9,7 +9,7 @@ created: '2026-06-13'
 # Spec: Galileo — observability/eval agentów (trace per krok, scoring wyboru narzędzi, koszt+latencja)
 
 > Artefakt SDD **wersjonowany** w `docs/specs/`. Kanon kształtu:
-> `docs/sdd/templates/spec.md`. Domknij `[?]` przez `/clarify` przed planem.
+> `docs/sdd/templates/spec.md`. Otwarte pytania domknięte w `/clarify` (sekcja „Decyzje").
 
 ## Kontekst
 
@@ -71,16 +71,19 @@ była zasilana **realnymi danymi**, a regresje jakości/kosztu były widoczne za
 - **Brak** Warp i **brak** `.github/workflows/` (repo Copilot-only, zero Actions — inwariant).
 - **Brak** wyboru płatnego planu eval w tej rundzie, jeśli spike OTel-only wystarcza (→ open Q).
 
-## Open questions
+## Decyzje (clarify — domknięte)
 
-> Wszystko, co wymaga decyzji przed implementacją. `/clarify` to domyka.
+> Domknięte w kroku `/clarify`. Instrumentacja = standardowy **OTel GenAI**, więc wszystkie
+> poniższe są odwracalne (backend podmienny bez zmiany configu).
 
-- [?] **Backend:** Galileo cloud od razu, czy najpierw **spike OTel-only** (Langfuse / Arize
-  Phoenix — ten sam endpoint OTel, self-host/free) by potwierdzić wartość trace'ów przed płatną
-  warstwą eval?
-- [?] **Kolektor:** gdzie biegnie (lokalny dev per maszyna vs współdzielony endpoint)? Wpływa na
-  politykę sieciową i miejsce klucza.
-- [?] **Sekret:** nazwa zmiennej env na klucz Galileo / endpoint (np. `GALILEO_API_KEY`,
-  `OTEL_EXPORTER_OTLP_ENDPOINT`) i gdzie dokumentowana (nie w repo).
-- [?] **Zakres scoringu:** które metryki eval włączamy na start (tool-selection + koszt), a które
-  odkładamy (np. quality/hallucination), by nie rozdmuchać kosztu eval.
+- **Backend:** **primary = Galileo cloud** (warstwa eval/scoring na Luna-2); **interim = spike
+  OTel-only lokalnie** (kolektor → Arize Phoenix / Langfuse, free) na identycznym configu. Config
+  commitowany w repo celuje w **lokalny kolektor** (`http://localhost:4318`); Galileo cloud
+  wpinany **przez env** (poniżej) — bez zmian w repo.
+- **Kolektor:** **lokalny dev per maszyna** (OTLP/HTTP `localhost:4318`). Współdzielony endpoint
+  zespołowy = poza zakresem tej rundy.
+- **Sekret / env (nie w repo):** endpoint → `OTEL_EXPORTER_OTLP_ENDPOINT`; klucz Galileo →
+  `OTEL_EXPORTER_OTLP_HEADERS` (np. `Galileo-API-Key=...`). `captureContent` domyślnie **`false`**
+  (treść promptów/odpowiedzi nie opuszcza maszyny, dopóki świadomie nie włączysz).
+- **Zakres scoringu na start:** **tool-selection + koszt/latencja** (z trace). `quality` /
+  `hallucination` eval **odłożone** (osobna runda — koszt eval).

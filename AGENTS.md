@@ -64,6 +64,9 @@ ustawiasz globalnie w pickerze VS Code.
   `frontend-design`, `code-review`, `security-guidance`, `ai-config-quality`, `keycloak-auth`).
 - `docs/sdd/` — metodologia SDD (adaptacja spec-kit; kanon: [`docs/sdd/methodology.md`](docs/sdd/methodology.md)).
   Artefakty `docs/specs|plans|runs` — **wersjonowane w gicie** (każda zmiana przez SDD → zapis w `docs/`).
+- **Observability:** `.vscode/settings.json` (OTel-export Copilota, domyślnie **OFF**) → backend
+  trace/eval (Galileo / OTel-only); kanon [`docs/observability.md`](docs/observability.md). Zasila
+  sekcję „Telemetria" run-logów automatem. Klucz/endpoint **przez env**, nie w repo.
 - **Brak** `CLAUDE.md` / `.claude/` / `.ai/` / `.github/workflows/` — Copilot-only, zero Actions.
 
 ## Setup (bootstrap)
