@@ -1,6 +1,7 @@
 // @ts-check
 import eslint from '@eslint/js';
 import nx from '@nx/eslint-plugin';
+import vitest from '@vitest/eslint-plugin';
 import angular from 'angular-eslint';
 import prettier from 'eslint-config-prettier';
 import importPlugin from 'eslint-plugin-import-x';
@@ -11,9 +12,63 @@ import rxjsAngular from 'eslint-plugin-rxjs-angular-x';
 import rxjs from 'eslint-plugin-rxjs-x';
 import sonarjs from 'eslint-plugin-sonarjs';
 import unicorn from 'eslint-plugin-unicorn';
-import vitest from '@vitest/eslint-plugin';
 import globals from 'globals';
+import { createRequire } from 'node:module';
 import tseslint from 'typescript-eslint';
+
+const requirePkg = createRequire(import.meta.url);
+
+/**
+ * Signal Forms requirement gate (version-aware).
+ *
+ * Angular 22 promotes Signal Forms (`@angular/forms/signals`) to THE forms model.
+ * From major 22 on, the classic reactive/template API (`FormGroup`, `FormBuilder`,
+ * `ngModel`, …, all re-exported from the bare `@angular/forms` entry point) is a
+ * lint error, so the codebase can only grow Signal Forms. On earlier Angular
+ * majors the classic API stays supported — the same config lints a pre-22 checkout
+ * mid-migration without false errors.
+ *
+ * The Angular major is read from the workspace `package.json` — the canonical
+ * version source (docs/tech-stack.md). Bumping `@angular/core` to 22.x flips it on.
+ */
+const angularMajor = (() => {
+  // Prefer the actually-installed @angular/core version; fall back to the version
+  // declared in the workspace package.json (the canonical source — docs/tech-stack.md).
+  // Both reads are fail-safe: any throw / odd specifier (npm-alias, workspace:*, range)
+  // yields 0 → gate OFF, so a pre-22 checkout never produces false lint errors.
+  const sources = [
+    () => requirePkg('@angular/core/package.json').version,
+    () => requirePkg('./package.json').dependencies?.['@angular/core'],
+  ];
+  for (const read of sources) {
+    try {
+      const major = Number.parseInt(String(read() ?? '').replace(/^\D+/, ''), 10);
+      if (major) return major;
+    } catch {
+      // unresolved source — try the next one
+    }
+  }
+  return 0;
+})();
+const enforceSignalForms = angularMajor >= 22;
+const signalFormsBanMessage =
+  'Signal Forms are required on Angular >= 22: import from "@angular/forms/signals" ' +
+  '(form()/schema()/[formField]; field wrappers implement FormValueControl/FormCheckboxControl). ' +
+  'The classic "@angular/forms" API and its "@angular/forms/signals/compat" bridge ' +
+  '(FormGroup/FormBuilder/FormControl/AbstractControl/ReactiveFormsModule/FormsModule/ngModel) ' +
+  'are banned — see docs/tech-stack.md and .github/instructions/angular.instructions.md.';
+// Match the bare "@angular/forms" entry point AND the classic-compat bridge
+// "@angular/forms/signals/compat"; the pure "@angular/forms/signals" surface is
+// deliberately NOT matched. Covers static import, re-export, dynamic import() and
+// TS `import x = require(...)` so the gate can't be laundered through a non-static form.
+const bannedFormsSource = String.raw`/^@angular\/forms(\/signals\/compat)?$/`;
+const signalFormsBanSelectors = [
+  `ImportDeclaration[source.value=${bannedFormsSource}]`,
+  `ImportExpression[source.value=${bannedFormsSource}]`,
+  `ExportNamedDeclaration[source.value=${bannedFormsSource}]`,
+  `ExportAllDeclaration[source.value=${bannedFormsSource}]`,
+  `TSImportEqualsDeclaration > TSExternalModuleReference > Literal[value=${bannedFormsSource}]`,
+].map((selector) => ({ selector, message: signalFormsBanMessage }));
 
 /**
  * angular22 — ESLint flat config
@@ -135,9 +190,12 @@ export default tseslint.config(
 
       // ── RxJS + Angular (rxjs-angular-x) ──
       // prefer-takeuntil with DestroyRef alias — prevents subscription leaks in components
-      'rxjs-angular-x/prefer-takeuntil': ['warn', {
-        alias: ['takeUntilDestroyed'],
-      }],
+      'rxjs-angular-x/prefer-takeuntil': [
+        'warn',
+        {
+          alias: ['takeUntilDestroyed'],
+        },
+      ],
 
       // ── No console ──
       'no-console': 'error',
@@ -225,6 +283,30 @@ export default tseslint.config(
     },
   },
 
+  // ─── Signal Forms gate (Angular >= 22) ──────────────────────────
+  // Angular 22 makes Signal Forms (@angular/forms/signals) the required forms
+  // model. The classic reactive/template API — FormGroup, FormBuilder, FormControl,
+  // ReactiveFormsModule, FormsModule, ngModel, … reachable via the bare
+  // "@angular/forms" entry point or the "@angular/forms/signals/compat" bridge — is
+  // banned here across static import, re-export, dynamic import() and import=require.
+  // The pure "@angular/forms/signals" subpath is a DIFFERENT specifier and stays
+  // allowed, so the Material wrappers (FormValueControl/FormCheckboxControl) keep
+  // working. Template-driven ngModel is blocked transitively: it needs FormsModule,
+  // whose import is forbidden. On Angular < 22 this block is omitted → classic forms
+  // remain fully supported for a pre-migration checkout. Enforced via `nx lint`
+  // (pnpm lint), the pre-commit/CI path; a bare root `eslint` run resolves a
+  // different base path and is not the gate.
+  ...(enforceSignalForms
+    ? [
+        {
+          files: ['libs/**/*.ts', 'apps/**/*.ts'],
+          rules: {
+            'no-restricted-syntax': ['error', ...signalFormsBanSelectors],
+          },
+        },
+      ]
+    : []),
+
   // ─── Angular HTML templates ─────────────────────────────────────
   {
     files: ['**/*.html'],
@@ -247,8 +329,8 @@ export default tseslint.config(
   {
     files: ['libs/**/src/**/*.ts'],
     ignores: [
-      'libs/*/src/index.ts',      // public lib API boundary — allowed
-      'libs/*/*/src/index.ts',    // nested lib public API — allowed
+      'libs/*/src/index.ts', // public lib API boundary — allowed
+      'libs/*/*/src/index.ts', // nested lib public API — allowed
     ],
     plugins: { 'no-barrel-files': noBarrel },
     rules: {
@@ -261,11 +343,11 @@ export default tseslint.config(
     files: ['**/*.spec.ts', '**/*.test.ts'],
     plugins: { vitest },
     rules: {
-      'vitest/no-focused-tests': 'error',             // blocks committed test.only
-      'vitest/no-disabled-tests': 'warn',             // flags forgotten test.skip
-      'vitest/expect-expect': 'error',                // every test must have assertion
-      'vitest/no-identical-title': 'error',           // no duplicate describe/it names
-      'vitest/valid-expect': 'error',                 // correct expect() API usage
+      'vitest/no-focused-tests': 'error', // blocks committed test.only
+      'vitest/no-disabled-tests': 'warn', // flags forgotten test.skip
+      'vitest/expect-expect': 'error', // every test must have assertion
+      'vitest/no-identical-title': 'error', // no duplicate describe/it names
+      'vitest/valid-expect': 'error', // correct expect() API usage
       'vitest/consistent-test-it': ['warn', { fn: 'it' }], // prefer it() over test()
     },
   },
@@ -313,16 +395,11 @@ export default tseslint.config(
 
   // ─── Node.js rules (tooling scripts only) ────────────────────
   {
-    files: [
-      'tools/**/*.{ts,mjs,js,cjs}',
-      '**/vitest.config.*',
-      '**/playwright.config.*',
-      'eslint.config.mjs',
-    ],
+    files: ['tools/**/*.{ts,mjs,js,cjs}', '**/vitest.config.*', '**/playwright.config.*', 'eslint.config.mjs'],
     plugins: { n: nodePlugin },
     rules: {
-      'n/no-missing-import': 'error',      // catches missing deps in scripts
-      'n/no-unpublished-import': 'warn',   // flags test-only packages in tooling
+      'n/no-missing-import': 'error', // catches missing deps in scripts
+      'n/no-unpublished-import': 'warn', // flags test-only packages in tooling
       // n/prefer-node-protocol: OFF — duplicate of unicorn/prefer-node-protocol
     },
   },

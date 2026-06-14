@@ -36,7 +36,7 @@ dev/CLI (oznaczone). Źródło: `package.json`.
 | **Build**             | `@angular-devkit/core` · `@angular-devkit/schematics` · `@schematics/angular` · `@angular/compiler-cli` · `@angular/language-service`         | `22.0.1`                                                                                                                                                                                                     | = wersja Angulara (devkit/schematics sprzężone z frameworkiem)                                                                                                                                    |
 | **Język**             | `typescript`                                                                                                                                  | `6.0.3`                                                                                                                                                                                                      | `strict`; type-aware lint (Project Service)                                                                                                                                                       |
 | **Reaktywność**       | signals (core) + RxJS                                                                                                                         | `rxjs` `7.8.2` · `tslib` `2.8.1`                                                                                                                                                                             | signals = domyślny model stanu; RxJS interop tylko gdzie konieczny                                                                                                                                |
-| **Formularze**        | **Signal Forms** — `@angular/forms/signals`                                                                                                   | `22.0.1` (`@angular/forms`)                                                                                                                                                                                  | `form()` / `schema()` / `[formField]`; **zakaz** `FormGroup` / `FormBuilder` / `ngModel`                                                                                                          |
+| **Formularze**        | **Signal Forms** — `@angular/forms/signals`                                                                                                   | `22.0.1` (`@angular/forms`)                                                                                                                                                                                  | `form()` / `schema()` / `[formField]`; **zakaz** `FormGroup` / `FormBuilder` / `ngModel` (lint-enforced ≥ 22)                                                                                     |
 | **Testy (unit)**      | `vitest` + `@vitest/coverage-v8` + `@nx/vitest`                                                                                               | `vitest` `4.1.8` · coverage `4.1.8` · `@nx/vitest` `22.7.5`                                                                                                                                                  | runner `@nx/vitest:test`; `vite` `8.0.16`, `jsdom` `29.1.1`                                                                                                                                       |
 | **Testy (e2e)**       | `@playwright/test` + `@nx/playwright`                                                                                                         | `1.60.0` · `@nx/playwright` `22.7.5`                                                                                                                                                                         | runner `@nx/playwright:playwright`; chromium; debug przez MCP `playwright`                                                                                                                        |
 | **Lint**              | `eslint` (flat) + `@eslint/js` + `typescript-eslint` + `angular-eslint`                                                                       | `eslint` `10.5.0` · `@eslint/js` `10.0.1` · `typescript-eslint` `8.61.0` · `angular-eslint` `22.0.0`                                                                                                         | flat config (`eslint.config.mjs`); type-aware; `angular-eslint` major = Angular major                                                                                                             |
@@ -69,22 +69,30 @@ Egzekwowane przez `stack-guardian` (i ręcznie przy każdym `deps`/`chore`):
 Stack jest **zamknięty**. Poniższe są **banned** — nie wolno ich dodawać (lint / review /
 `stack-guardian` to wyłapią). Każdy zakaz ma kanoniczny zamiennik **na stacku**:
 
-| Zakazane (off-stack)                            | Powód                                       | Zamiennik (na stacku)                                                 |
-| ----------------------------------------------- | ------------------------------------------- | --------------------------------------------------------------------- |
-| `zone.js`                                       | aplikacja jest **zoneless**                 | signals + `provideZonelessChangeDetection`                            |
-| `npm` · `yarn`                                  | tylko pnpm (`preinstall: only-allow pnpm`)  | **pnpm**                                                              |
-| Jest · Karma · Jasmine · Cypress                | jeden runner unit + jeden e2e               | **Vitest** (unit) + **Playwright** (e2e)                              |
-| webpack                                         | builder oparty na esbuild                   | **`@angular/build`** application builder                              |
-| Tailwind · Bootstrap · inne CSS-frameworki      | jeden system theming                        | **`--mat-sys-*`** + `mat.theme()` + wrappery `@angular22/ui-material` |
-| ngrx · ngxs · akita · inne store libs           | stan trzymamy w signals                     | **signals** + (gdy trzeba) sygnałowy store                            |
-| `FormGroup` · `FormBuilder` · `ngModel`         | reactive/template forms zastąpione          | **Signal Forms** (`@angular/forms/signals`)                           |
-| ngx-translate · transloco · `@angular/localize` | i18n jest własne, runtime, signal-based     | **`@angular22/shared-i18n`** + pipe `a22T`                            |
-| `axios` · inne klienty HTTP                     | natywne API / `HttpClient`                  | **`fetch`** / `@angular/common/http`                                  |
-| `lodash` · `moment` · `date-fns`                | bez ciężkich utility libs                   | **native JS** + `Date`                                                |
-| inne biblioteki UI / komponentów                | jedyne źródło UI to Material przez wrappery | **`@angular22/ui-material`**                                          |
+| Zakazane (off-stack)                            | Powód                                                 | Zamiennik (na stacku)                                                 |
+| ----------------------------------------------- | ----------------------------------------------------- | --------------------------------------------------------------------- |
+| `zone.js`                                       | aplikacja jest **zoneless**                           | signals + `provideZonelessChangeDetection`                            |
+| `npm` · `yarn`                                  | tylko pnpm (`preinstall: only-allow pnpm`)            | **pnpm**                                                              |
+| Jest · Karma · Jasmine · Cypress                | jeden runner unit + jeden e2e                         | **Vitest** (unit) + **Playwright** (e2e)                              |
+| webpack                                         | builder oparty na esbuild                             | **`@angular/build`** application builder                              |
+| Tailwind · Bootstrap · inne CSS-frameworki      | jeden system theming                                  | **`--mat-sys-*`** + `mat.theme()` + wrappery `@angular22/ui-material` |
+| ngrx · ngxs · akita · inne store libs           | stan trzymamy w signals                               | **signals** + (gdy trzeba) sygnałowy store                            |
+| `FormGroup` · `FormBuilder` · `ngModel`         | reactive/template zastąpione · **lint-enforced ≥ 22** | **Signal Forms** (`@angular/forms/signals`)                           |
+| ngx-translate · transloco · `@angular/localize` | i18n jest własne, runtime, signal-based               | **`@angular22/shared-i18n`** + pipe `a22T`                            |
+| `axios` · inne klienty HTTP                     | natywne API / `HttpClient`                            | **`fetch`** / `@angular/common/http`                                  |
+| `lodash` · `moment` · `date-fns`                | bez ciężkich utility libs                             | **native JS** + `Date`                                                |
+| inne biblioteki UI / komponentów                | jedyne źródło UI to Material przez wrappery           | **`@angular22/ui-material`**                                          |
 
 Raw `@angular/material` / `@angular/cdk` poza `libs/ui/material` = **lint error**
 (`no-restricted-imports` w `eslint.config.mjs`).
+
+Import gołego `@angular/forms` (klasyczny `FormGroup`/`FormBuilder`/`ngModel`) oraz mostka
+`@angular/forms/signals/compat` = **lint error** (`no-restricted-syntax` w `eslint.config.mjs`,
+egzekwowane przez `nx lint`) — łapie static import, re-export, dynamiczny `import()` i
+`import = require()`. Brama jest **wersjonowana**: aktywna od Angulara ≥ 22 (major z
+zainstalowanego `@angular/core`, fallback do `package.json`), na starszych majorach wyłączona,
+więc klasyczne formularze pozostają wspierane w trakcie migracji. Dozwolone wyłącznie czyste
+`@angular/forms/signals`.
 
 ## Proces zmiany stacku
 

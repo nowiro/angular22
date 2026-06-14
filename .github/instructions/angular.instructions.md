@@ -24,7 +24,9 @@ Auto-ładowane na `apps/**` i `libs/**`. Reguły lintu → `code-quality.instruc
 Model `signal<T>()` + walidacja `schema()` (`required`/`validate`/`applyWhen`/`applyEach`/
 `hidden`/`disabled`, komunikaty **PL**) + bindowanie `[formField]`. Store per wizard
 (`form()` w polu serwisu root, helpery tablic = immutable `model.update`). Zakaz
-`FormGroup`/`FormBuilder`/`ngModel`. Wrappery pól = `FormValueControl`/`FormCheckboxControl`.
+`FormGroup`/`FormBuilder`/`ngModel` — **egzekwowany lintem** (`no-restricted-syntax`) od
+Angulara ≥ 22: import gołego `@angular/forms` = błąd; na starszych majorach reguła
+wyłączona (wsparcie migracji). Wrappery pól = `FormValueControl`/`FormCheckboxControl`.
 Warunki widoczności: te same predykaty w schemacie (`applyWhen`+`hidden`) i szablonie (`@if`).
 
 ## Material — tylko wrappery

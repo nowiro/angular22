@@ -53,6 +53,13 @@ zaktualizuj ten destylat (agent `eslint`).
 - **Material gate** — `@angular/material/*` i `@angular/cdk/*` wolno importować **tylko**
   w `libs/ui/material` (`no-restricted-imports`). Wszędzie indziej: wrappery
   `@angular22/ui-material`.
+- **Signal Forms gate** (Angular ≥ 22) — import/re-export z gołego `@angular/forms` to
+  **błąd lintu** (`no-restricted-syntax`): klasyczny reactive/template API (`FormGroup`,
+  `FormBuilder`, `FormControl`, `ReactiveFormsModule`, `FormsModule`, `ngModel`) zakazany;
+  `ngModel` pada transitywnie (potrzebuje `FormsModule`). Używaj **`@angular/forms/signals`**
+  (`form()`/`schema()`/`[formField]`, wrappery pól = `FormValueControl`/`FormCheckboxControl`).
+  Brama jest **wersjonowana** (major z `package.json`): na Angularze < 22 reguła jest
+  wyłączona — klasyczne formularze wspierane dla checkoutu sprzed migracji.
 - **Granice modułów** (`@nx/enforce-module-boundaries`) — `scope:individual-wizard` ⛔
   `scope:business-wizard` (i odwrotnie); warstwy `app → feature → ui/data-access → util`;
   public API liba **tylko** przez `src/index.ts`.
