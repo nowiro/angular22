@@ -10,8 +10,7 @@ title: 'Observability — Galileo / OTel for agents'
 source: **Copilot agent mode** (VS Code ≥ 1.121) emits **OpenTelemetry** per GenAI semantic
 conventions — root `invoke_agent` with nested `chat` / `execute_tool` / `execute_hook`. Backend
 (trace + scoring + cost/latency): **Galileo** (eval on Luna-2) or an **OTel-only** spike (Arize
-Phoenix / Langfuse). Zero app code, zero GitHub Actions — the repo is **Copilot-only**. Decisions →
-[`docs/specs/galileo-observability/spec.md`](specs/galileo-observability/spec.md).
+Phoenix / Langfuse). Zero app code, zero GitHub Actions — the repo is **Copilot-only**.
 
 ## Settings (committed, OFF by default)
 
