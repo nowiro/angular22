@@ -19,3 +19,6 @@ allowBuilds:
   # unrs-resolver: native bindings used by eslint-plugin-import-x for fast module
   # resolution. Trusted (Rust binary auto-fetched per platform).
   unrs-resolver: true
+
+minimumReleaseAgeExclude:
+  - keycloak-angular@22.0.0
