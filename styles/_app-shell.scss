@@ -54,3 +54,12 @@ input[type='datetime-local'] {
   scrollbar-width: thin;
   scrollbar-color: var(--mat-sys-outline-variant) transparent;
 }
+
+/* Error snackbar (A22NotificationService.error) — error-container palette.
+ * Snackbars render in the CDK overlay (outside any component), so the panelClass
+ * styling lives here in the global shell. */
+.a22-snackbar-error {
+  --mdc-snackbar-container-color: var(--mat-sys-error-container);
+  --mdc-snackbar-supporting-text-color: var(--mat-sys-on-error-container);
+  --mat-snack-bar-button-color: var(--mat-sys-on-error-container);
+}

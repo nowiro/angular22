@@ -1,0 +1,14 @@
+<div
+  class="a22-spinner"
+  role="status"
+  [attr.aria-label]="label() || null"
+  [attr.data-testid]="testId() || null"
+>
+  <mat-progress-spinner
+    mode="indeterminate"
+    [diameter]="diameter()"
+  />
+  @if (label()) {
+    <p class="a22-spinner__label">{{ label() }}</p>
+  }
+</div>

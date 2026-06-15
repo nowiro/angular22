@@ -23,22 +23,12 @@
     </a>
   </div>
 
-  @if (state() === 'loading') {
-    <p
-      class="status"
-      data-testid="embed-loading"
-    >
-      {{ 'Ładowanie aplikacji…' | a22T }}
-    </p>
-  }
-  @if (state() === 'error') {
-    <p
-      class="status status--error"
-      role="alert"
-      data-testid="embed-error"
-    >
-      {{ 'Nie udało się załadować aplikacji. Odśwież stronę lub spróbuj później.' | a22T }}
-    </p>
+  @defer (on immediate) {
+    @if (statusView(); as view) {
+      <ng-container *ngComponentOutlet="view; inputs: statusInputs()" />
+    }
+  } @loading {
+    <a22-progress-spinner />
   }
 
   <div

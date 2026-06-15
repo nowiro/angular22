@@ -19,6 +19,7 @@ export { A22FieldErrorComponent } from './lib/field-error.component';
 export { A22IconComponent } from './lib/icon.component';
 export { A22NotificationService } from './lib/notification.service';
 export { A22NumberFieldComponent } from './lib/number-field.component';
+export { A22ProgressSpinnerComponent } from './lib/progress-spinner.component';
 export { A22SelectComponent } from './lib/select.component';
 export { A22StepDirective } from './lib/step.directive';
 export { A22TextFieldComponent } from './lib/text-field.component';
