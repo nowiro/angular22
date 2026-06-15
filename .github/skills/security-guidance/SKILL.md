@@ -5,7 +5,7 @@ description: Web/Angular security checklist for angular22 (front-end-only repo, 
 
 # Security guidance — repo checklist
 
-**Scope, honestly:** this is a **front-end-only** demo — three apps + libs, **zero backend**,
+**Scope, honestly:** this is a **front-end-only** demo — apps + libs, **zero backend**,
 no server API, state in signal stores. So there's **no** SQLi / authz / server sessions /
 SSRF. The attack surface is **client-side**: DOM sinks, embedding via
 `@angular/elements`, fetching `config.json`, routing params, storage, dependencies, secrets.
@@ -29,7 +29,7 @@ manual `location.href`.
 
 ## 3 · Embedding `@angular/elements`
 
-`createCustomElement` in both `element.ts`; the portal mounts the tag via `ElementLoader`.
+`createCustomElement` in each app's `element.ts`; the host app mounts the tag via `ElementLoader`.
 **The gate is in [`element-loader.ts`](../../../libs/shared/config/src/lib/element-loader.ts)**:
 `isSameOriginScriptPath` canonicalizes the URL with a parser and **blocks** protocol-relative
 (`//host`), `/\evil`, schemes, cross-origin — `config.json` can't inject a foreign bundle.

@@ -6,13 +6,17 @@
   },
   "eslint.useFlatConfig": true,
   "eslint.validate": ["javascript", "typescript", "html"],
-  "js/ts.tsdk.path": "node_modules/typescript/lib",
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
   "files.eol": "\n",
   "search.exclude": {
     "**/node_modules": true,
     "**/dist": true,
     "**/.nx": true,
-    "**/coverage": true
+    "**/.angular": true,
+    "**/coverage": true,
+    "**/test-results": true,
+    "**/playwright-report": true
   },
   "github.copilot.chat.summarizeAgentConversationHistory.enabled": true,
   "github.copilot.chat.otel.enabled": false,

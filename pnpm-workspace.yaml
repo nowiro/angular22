@@ -22,3 +22,13 @@ allowBuilds:
 
 minimumReleaseAgeExclude:
   - keycloak-angular@22.0.0
+  - "@vitest/coverage-v8@4.1.9"
+  - "@vitest/expect@4.1.9"
+  - "@vitest/mocker@4.1.9"
+  - "@vitest/pretty-format@4.1.9"
+  - "@vitest/runner@4.1.9"
+  - "@vitest/snapshot@4.1.9"
+  - "@vitest/spy@4.1.9"
+  - "@vitest/utils@4.1.9"
+  - eslint-plugin-unicorn@66.0.0
+  - vitest@4.1.9

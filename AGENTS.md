@@ -58,7 +58,7 @@ are set globally in the VS Code picker.
 ## Workspace
 
 - `apps/*` + `libs/*` (map → [`README.md`](README.md)) · `.vscode/mcp.json` (4 keyless MCP
-  servers + opt-in `firecrawl` live web research — table in [`mcp-usage`](.github/instructions/mcp-usage.instructions.md)) ·
+  servers — table in [`mcp-usage`](.github/instructions/mcp-usage.instructions.md)) ·
   `.github/` (`copilot-instructions.md`, `agents/`, `instructions/` auto per `applyTo`,
   `prompts/`: `/clarify`, `/analyze`, `/checklist`, `/brainstorming`, `/feature-dev`, `/import-app`; `skills/`:
   `angular-developer`, `angular-new-app`, `signal-forms`, `material-wrappers`, `nx-generators`,
@@ -91,13 +91,12 @@ pnpm install
 
 ## Commands
 
-| Command                                              | What it does                                                                                                              |
-| ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
-| `pnpm verify`                                        | Full gate (= `verify` script in `package.json`): format:check + ai:validate + sdd:check + lint + typecheck + test + build |
-| `pnpm ai:validate`                                   | Copilot config (1 visible agent, frontmatters, mcp.json)                                                                  |
-| `pnpm sdd:check`                                     | SDD gate (spec↔plan, traceability)                                                                                        |
-| `pnpm workflow:specify -- --verb=<v> --slug=<s>`     | Scaffold spec + plan + dated run-log                                                                                      |
-| `pnpm e2e`                                           | All Playwright suites (`--parallel=1`)                                                                                    |
-| `pnpm start` / `start:individual` / `start:business` | Serve apps (portal 4200 / individual 4201 / business 4202)                                                                |
-| `pnpm nx g @nx/angular:component <name>`             | New component (SCSS + OnPush + 3 files + `a22` prefix)                                                                    |
-| `pnpm watchdog` / `watchdog:check`                   | Upstream monitoring (npm/spec-kit/Copilot) → proposals via SDD (`docs/watchdog.md`)                                       |
+| Command                                          | What it does                                                                                                              |
+| ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------- |
+| `pnpm verify`                                    | Full gate (= `verify` script in `package.json`): format:check + ai:validate + sdd:check + lint + typecheck + test + build |
+| `pnpm ai:validate`                               | Copilot config (1 visible agent, frontmatters, mcp.json)                                                                  |
+| `pnpm sdd:check`                                 | SDD gate (spec↔plan, traceability)                                                                                        |
+| `pnpm workflow:specify -- --verb=<v> --slug=<s>` | Scaffold spec + plan + dated run-log                                                                                      |
+| `pnpm e2e`                                       | All Playwright suites (`--parallel=1`)                                                                                    |
+| `pnpm start` / `pnpm nx serve <app>`             | Serve apps (host app 4200, feature apps 4201/4202/…)                                                                      |
+| `pnpm nx g @nx/angular:component <name>`         | New component (SCSS + OnPush + 3 files + `a22` prefix)                                                                    |

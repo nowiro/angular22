@@ -21,7 +21,7 @@ no server API) — the surface is the client only. Knowledge → the
 1. **XSS sinks** — `[innerHTML]`/`innerHTML`, `DomSanitizer.bypassSecurityTrust*`,
    `document.write`, dynamic templates. **Today in the repo: none** — every new occurrence =
    blocker by default; prefer text-binding `{{ }}` / `a22T`.
-2. **URL & resource-URL trust** — `[href]`/`[src]` bound from data (portal tiles →
+2. **URL & resource-URL trust** — `[href]`/`[src]` bound from data (host-app tiles →
    `standaloneUrl`); require `rel="noopener"` with `target="_blank"`, reject `javascript:`
    and schemes outside http(s). Router/`window.open` from parameters = never without validation.
 3. **`@angular/elements` embedding** — `element.ts` (`createCustomElement`) + the script loader

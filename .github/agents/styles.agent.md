@@ -25,8 +25,8 @@ Orchestrator subagent. You write **component- and app-layer SCSS** — the `.scs
 
 - **Layout**: grid/flex, alignment to a shared edge, one vertical rhythm per screen;
   container `min-height: 100vh`, content stays within the viewport.
-- **RWD mobile-first**, breakpoints **360 / 768 / 1280 / 1920** (`@media (min-width: 768px)`
-  as in `wizard-shell`); grid `1fr` → `repeat(2/3, 1fr)`, no horizontal scroll below 360.
+- **RWD mobile-first**, breakpoints **360 / 768 / 1280 / 1920** (`@media (min-width: 768px)`,
+  mobile-first); grid `1fr` → `repeat(2/3, 1fr)`, no horizontal scroll below 360.
 - **Spacing scale 4/8** (`0.25`/`0.5`/`1`/`1.5`/`3rem`) — no magic px.
 - **States**: `focus-visible` with a visible outline, `hover`, `disabled` (legible, clearly
   distinct from enabled); no state causes a layout jump.

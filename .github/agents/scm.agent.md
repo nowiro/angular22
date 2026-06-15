@@ -24,7 +24,7 @@ prepare the content and enforce the convention. Judging the **diff content** →
 
 Format: `<verb>(<scope>): <imperative>` — verb from SDD ([`methodology.md`](../../docs/sdd/methodology.md)):
 `feat` · `fix` · `chore` · `refactor` · `deps` · `docs` · `test` (+ `component` / `security`).
-Scope = area (`feat(portal): …`, `fix(ui-material): …`, `deps(root): …`). Header concise,
+Scope = area (`feat(<app>): …`, `fix(ui-material): …`, `deps(root): …`). Header concise,
 imperative, no period; **the "why"** goes in the body (not the "what" — that's visible in the diff).
 Co-author / `BREAKING CHANGE:` in the footer when warranted.
 

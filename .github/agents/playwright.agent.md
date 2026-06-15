@@ -30,7 +30,7 @@ browser via the **`playwright` MCP server**.
   and intercepts clicks.
 - Run suites with `pnpm nx run <app>-e2e:e2e`; all → `pnpm e2e` (**`--parallel=1`**
   — each suite spins up its own dev-server; in parallel = port race).
-- Ports: landing 4200 · individual 4201 · business 4202.
+- Ports: host app `4200`, feature apps `4201`/`4202`/… (one per app).
 - **Full interactive sweep:** scenarios click through/fill **all** elements
   (button/link/input/textarea/select/dropdown/filter) from the `doc-reviewer`/`test-strategy` list,
   **per role** (admin/user/guest) — happy-path **and** negative authz (element hidden/disabled,

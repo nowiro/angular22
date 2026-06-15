@@ -21,7 +21,7 @@ strictness rules are anchored in [`tsconfig.base.json`](../../tsconfig.base.json
 
 ## Owns
 
-- **Models and contracts:** wizard, schema, and store-state interfaces/types; module
+- **Models and contracts:** feature model, schema, and store-state interfaces/types; module
   boundaries — correctness of the types a lib's public API exports (`src/index.ts`).
 - **Type tooling:** generics, narrowing, discriminated unions, `satisfies`, utility
   types, mapped/conditional types, type-only imports (`import type { X }`).

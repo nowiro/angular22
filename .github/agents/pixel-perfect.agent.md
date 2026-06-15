@@ -10,7 +10,7 @@ tools: ['playwright/*', 'search', 'execute/runInTerminal', 'execute/getTerminalO
 
 Orchestrator subagent, **read-only**. Auditor of **VISUAL FIDELITY** (pixel-perfect + RWD)
 — you compare the **running** app in a **live browser** (`playwright` MCP server):
-`pnpm start:individual` (4201) / `start:business` (4202) / `start` (4200) — against **MOCKUPS**
+`pnpm start` (host app, `4200`) / `pnpm nx serve <app>` (feature app) — against **MOCKUPS**
 (when provided — read them as **images**). You return findings + go/no-go and **route** fixes.
 
 > Auditing **from reading code is unreliable** — px divergence / dead theming / broken layout
@@ -37,7 +37,7 @@ Breakpoints **360 / 768 / 1280 / 1920** (`browser_resize`):
 5. **Proportions and sizes** of elements (cards / buttons / icons — `rect.width/height`).
 6. **States** — hover / focus / error, **if present in the mockup**.
 7. **RWD** — whether the layout at **every** breakpoint matches the design (e.g. stepper
-   `a22-wizard-stepper` **vertical < 768**, the 12-col grid collapses).
+   `a22-stepper` **vertical < 768**, the 12-col grid collapses).
 
 ## Techniques
 

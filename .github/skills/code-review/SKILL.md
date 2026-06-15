@@ -43,8 +43,8 @@ and [`copilot-instructions`](../../copilot-instructions.md), not "nitpicks".
    creep (blocker). Flag AC without code **and** code without AC.
 2. **Correctness** — regressions, empty-string `''` / `null` edge-cases, store updates the model
    **immutably** (`model.update`, not in-place mutation); effects with an equality guard.
-3. **Boundaries** — `scope:*`/`type:*` tags respected (`scope:individual-wizard` ⛔
-   `scope:business-wizard`), layers `app → feature → ui/data-access → util`.
+3. **Boundaries** — `scope:*`/`type:*` tags respected (`scope:<feature-a>` ⛔
+   `scope:<feature-b>`), layers `app → feature → ui/data-access → util`.
 4. **Conventions** — Signal Forms; three files per component + OnPush; i18n `a22T`; `data-testid`
    on **every** interactive element; theming `--mat-sys-*`; selectors `a22-*`.
 5. **Tests** — triad **present and green**; e2e targets `data-testid`, not PL/EN text.

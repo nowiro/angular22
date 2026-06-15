@@ -1,6 +1,6 @@
 {
   "$schema": "https://aka.ms/vscode-mcp.schema.json",
-  "comment": "MCP servers for angular22 (VS Code >= 1.121). All servers run via `cmd /c npx` (PATH-relative) — works interchangeably with nvm-windows and a standard Node install. macOS/Linux: replace command: \"cmd\", args: [\"/c\", \"npx\", …] with command: \"npx\", args: [\"-y\", …]. NO `inputs`/prompts — options are documented in each server's `comment` field. context7 works keyless; playwright requires a one-time `npx playwright install chromium`. The first four servers are keyless/zero-config; `firecrawl` is OPT-IN live web research (developer-driven, key via env) — the orchestrated agents stay keyless and never fetch.",
+  "comment": "MCP servers for angular22 (VS Code >= 1.121). All servers run via `cmd /c npx` (PATH-relative) — works interchangeably with nvm-windows and a standard Node install. macOS/Linux: replace command: \"cmd\", args: [\"/c\", \"npx\", …] with command: \"npx\", args: [\"-y\", …]. NO `inputs`/prompts — options are documented in each server's `comment` field. context7 works keyless; playwright requires a one-time `npx playwright install chromium`. All four servers are keyless/zero-config; the orchestrated agents stay keyless and never fetch.",
   "servers": {
     "context7": {
       "comment": "Up-to-date library docs (Angular 22, Signal Forms, Nx, Material), keyless. Option: env CONTEXT7_API_KEY (key from context7.com) for higher limits.",
@@ -25,13 +25,6 @@
       "type": "stdio",
       "command": "cmd",
       "args": ["/c", "npx", "-y", "@playwright/mcp@latest", "--browser", "chrome"]
-    },
-    "firecrawl": {
-      "comment": "OPT-IN live web research (scrape · crawl · search · extract) for ad-hoc developer queries — NOT wired into the orchestrated agents (they stay keyless and never fetch; see mcp-usage.instructions). Requires env FIRECRAWL_API_KEY (firecrawl.dev) — never commit a key; without it the server simply stays inactive. Web-search alternative: Brave (`@brave/brave-search-mcp-server`, env BRAVE_API_KEY). Social-media crawling intentionally omitted (ToS/fragility, no stable official MCP).",
-      "type": "stdio",
-      "command": "cmd",
-      "args": ["/c", "npx", "-y", "firecrawl-mcp"],
-      "env": { "FIRECRAWL_API_KEY": "${env:FIRECRAWL_API_KEY}" }
     }
   }
 }

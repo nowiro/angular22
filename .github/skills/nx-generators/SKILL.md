@@ -22,20 +22,20 @@ pnpm nx g @nx/angular:library --directory=libs/<scope>/<name> --name=<name> \
   --importPath=@angular22/<name> --tags=scope:<scope>,type:<type>
 ```
 
-Tags: `scope:shared|individual-wizard|business-wizard|landing` ×
+Tags: `scope:shared|<feature-a>|<feature-b>|<host>` ×
 `type:feature|ui|data-access|util`. Boundaries: `app → feature → ui/data-access → util`;
-wizards can't see each other; `scope:shared` is visible to all.
+sibling domains can't see each other; `scope:shared` is visible to all.
 
 ## Executor map (everything via Nx)
 
-| target    | executor                            | notes                                                |
-| --------- | ----------------------------------- | ---------------------------------------------------- |
-| build     | `@angular/build:application`        | apps; budgets in project.json                        |
-| serve     | `@angular/build:dev-server`         | ports: 4200 portal · 4201 individual · 4202 business |
-| lint      | `@nx/eslint:lint` (inferred plugin) | flat config root                                     |
-| test      | `@nx/vitest:test`                   | `options.configFile` = per-lib vitest.config.ts      |
-| e2e       | `@nx/playwright:playwright`         | `options.config` = per-app playwright.config.ts      |
-| typecheck | `nx:run-commands` (tsc --noEmit)    | no dedicated executor — deliberately                 |
+| target    | executor                            | notes                                           |
+| --------- | ----------------------------------- | ----------------------------------------------- |
+| build     | `@angular/build:application`        | apps; budgets in project.json                   |
+| serve     | `@angular/build:dev-server`         | ports: `4200` host app, `4201`/`4202`/… per app |
+| lint      | `@nx/eslint:lint` (inferred plugin) | flat config root                                |
+| test      | `@nx/vitest:test`                   | `options.configFile` = per-lib vitest.config.ts |
+| e2e       | `@nx/playwright:playwright`         | `options.config` = per-app playwright.config.ts |
+| typecheck | `nx:run-commands` (tsc --noEmit)    | no dedicated executor — deliberately            |
 
 ## Test wiring for a NEW lib (unitTestRunner=none in defaults)
 
@@ -45,7 +45,7 @@ wizards can't see each other; `scope:shared` is visible to all.
 3. `test` target = `@nx/vitest:test` in `project.json`,
 4. specs importing Angular barrels → `test-setup.ts` with `import '@angular/compiler'`.
 
-1:1 pattern: `libs/wizard/validators`.
+1:1 pattern: copy an existing `libs/<scope>/<name>` that already has a `vitest.config.ts`.
 
 ## Running
 

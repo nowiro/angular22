@@ -41,8 +41,8 @@ hard rules → [`copilot-instructions`](../../copilot-instructions.md).
 ## Layout and RWD
 
 - **Mobile-first**, breakpoints **360 / 768 / 1280 / 1920**; `@media (min-width: 768px)`
-  as in `wizard-shell`. Grid `grid-template-columns: 1fr` → `repeat(2/3, 1fr)` higher up.
-- **Stepper** (`a22-wizard-stepper`) flips to **vertical < 768**; below 360 no
+  mobile-first. Grid `grid-template-columns: 1fr` → `repeat(2/3, 1fr)` higher up.
+- **Stepper** (`a22-stepper`) flips to **vertical < 768**; below 360 no
   horizontal scroll (audit: `scrollingElement.scrollWidth ≤ clientWidth`).
 - **Touch targets ≥ 44×44 px** — buttons/icons (`rect.width/height ≥ 44`).
 - Container `min-height: 100vh`, content doesn't escape the viewport.
@@ -76,4 +76,4 @@ i18n (doesn't truncate, doesn't wrap badly) · states complete · touch ≥ 44 �
 - ❌ Hardcoded color (hex/rgb) or `font-size`/spacing in px — only `--mat-sys-*` and the 4/8 scale.
 - ❌ `::ng-deep`, `--mdc-*`, `--sys-*` (silently don't work).
 - ❌ Designing **around** the wrapper/theming gate — missing wrapper/role → `material-wrapper`.
-- ❌ "UX OK" verdict **from reading code** — only from running (`pnpm start:*` + `ux-verifier`).
+- ❌ "UX OK" verdict **from reading code** — only from running (`pnpm start` / `nx serve` + `ux-verifier`).

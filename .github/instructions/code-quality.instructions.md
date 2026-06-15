@@ -60,8 +60,8 @@ config, update this distillate (agent `eslint`).
   (`form()`/`schema()`/`[formField]`, field wrappers = `FormValueControl`/`FormCheckboxControl`).
   The gate is **versioned** (major from `package.json`): on Angular < 22 the rule is
   disabled — classic forms supported for pre-migration checkout.
-- **Module boundaries** (`@nx/enforce-module-boundaries`) — `scope:individual-wizard` ⛔
-  `scope:business-wizard` (and vice versa); layers `app → feature → ui/data-access → util`;
+- **Module boundaries** (`@nx/enforce-module-boundaries`) — `scope:<feature-a>` ⛔
+  `scope:<feature-b>` (and vice versa); layers `app → feature → ui/data-access → util`;
   a lib's public API **only** via `src/index.ts`.
 
 ## Format

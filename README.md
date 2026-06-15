@@ -111,3 +111,24 @@ instructions that make generated code pass ESLint on the first try. Gates: `pnpm
 
 GitHub Copilot only. Instructions live in [`.github/copilot-instructions.md`](.github/copilot-instructions.md);
 MCP servers (context7, nx, angular-cli, playwright) in [`.vscode/mcp.json`](.vscode/mcp.json).
+
+### MCP servers — install options
+
+By default the servers in [`.vscode/mcp.json`](.vscode/mcp.json) run via `npx -y <pkg>`, which
+**fetches them on demand** at every launch (zero-install, always the latest). To skip the
+per-launch download (faster start, pinned versions, works offline), pre-install the packages so
+`npx` resolves a local copy — either as **dev dependencies** or **globally**:
+
+```bash
+# as dev dependencies (pinned in package.json + lockfile, shared with the team)
+pnpm add -D @upstash/context7-mcp nx-mcp @playwright/mcp
+# @angular/cli is already a devDependency — it provides the `angular-cli` MCP (`ng mcp`)
+
+# or globally (installed once, reused across projects)
+pnpm add -g @upstash/context7-mcp nx-mcp @playwright/mcp @angular/cli
+```
+
+After installing, drop the `@latest` tag from that server's `args` in `.vscode/mcp.json`
+(e.g. `nx-mcp` instead of `nx-mcp@latest`) so `npx` uses the installed copy instead of
+re-resolving the dist-tag online. `playwright` still needs a one-time
+`pnpm exec playwright install chromium`.

@@ -67,7 +67,6 @@ run-log ([`docs/sdd/templates/run.md`](sdd/templates/run.md)) automatically inst
 
 - **Zero secrets in the repo** — Galileo endpoint and key only in env (`OTEL_EXPORTER_OTLP_*`).
 - `captureContent: false` by default — enable only deliberately (prompt content leaves the machine).
-- **Off-stack:** the collector/backend (Phoenix/Galileo) is an **external dev tool** (like the network in
-  [`watchdog`](watchdog.md)) — it does **not** add a dependency to `package.json` and does not break the
-  [`tech-stack.md`](tech-stack.md) canon.
+- **Off-stack:** the collector/backend (Phoenix/Galileo) is an **external dev tool** — it does **not**
+  add a dependency to `package.json` and does not break the [`tech-stack.md`](tech-stack.md) canon.
 - The **OTel** standard = swappable backend without config changes (Galileo ↔ Phoenix ↔ Langfuse).

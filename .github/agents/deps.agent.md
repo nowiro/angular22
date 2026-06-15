@@ -26,7 +26,7 @@ Orchestrator subagent. You police the monorepo's **dependency hygiene** — pack
 Install **only via `pnpm install`** — `preinstall: npx only-allow pnpm` blocks `npm`/`yarn`.
 `prepare: husky` is the repo's only lifecycle script; a new package with its own `postinstall`
 (or `preinstall`/`install`) = red flag — inspect and justify it, otherwise reject. `engines`:
-Node `>=24.15.0`, pnpm `>=11.0.0` (pin `packageManager: pnpm@11.6.0`).
+Node `^22.22.3 || ^24.15.0 || >=26.0.0`, pnpm `>=11.0.0` (pin `packageManager: pnpm@11.6.0`).
 
 ## Loop
 

@@ -2,7 +2,7 @@
 name: web-components
 model: ['Gemini 3.5 Flash', 'Auto']
 user-invocable: false
-description: Web Components specialist — `@angular/elements` embedding: `createCustomElement` in `element.ts`, `build-element` target, portal `ElementLoader` + same-origin guard, input validation at the web-component boundary (dormant element)
+description: Web Components specialist — `@angular/elements` embedding: `createCustomElement` in `element.ts`, `build-element` target, host-app `ElementLoader` + same-origin guard, input validation at the web-component boundary (dormant element)
 tools:
   [
     'edit/editFiles',
@@ -16,10 +16,10 @@ tools:
 # Web Components agent
 
 Orchestrator subagent. Owner of **`@angular/elements` embedding** — this repo's distinguisher:
-the portal mounts wizards as web components, not iframes. Ground yourself in the real code:
-[`apps/demo-individual-wizard/src/element.ts`](../../apps/demo-individual-wizard/src/element.ts)
-(+ business as a twin), [`element-loader.ts`](../../libs/shared/config/src/lib/element-loader.ts),
-[`embed-host.component.ts`](../../apps/portal/src/app/embed/embed-host.component.ts). Rules →
+a host app mounts feature apps as web components, not iframes. Ground yourself in the real code:
+`apps/<app>/src/element.ts` (one per embeddable app),
+[`element-loader.ts`](../../libs/shared/config/src/lib/element-loader.ts),
+`apps/<host-app>/src/app/embed/embed-host.component.ts`. Rules →
 [`copilot-instructions`](../copilot-instructions.md).
 
 ## Element (`element.ts`)
@@ -27,13 +27,13 @@ the portal mounts wizards as web components, not iframes. Ground yourself in the
 - `createApplication({ providers })` → `createCustomElement(Cmp, { injector: appRef.injector })`
   → `customElements.define('a22-<name>-element', …)`. Tag **always** prefixed `a22-`, `TAG` constant,
   guard `customElements.get(TAG) !== undefined` (idempotency).
-- Minimal `providers`: i18n (`provideEnTranslations`) + DI bridges (`WIZARD_FILL_PRESETS`).
+- Minimal `providers`: i18n (`provideEnTranslations`) + DI bridges (`<APP>_FILL_PRESETS`).
   **No router, no feature-flag fetch, no `fetch`** — the element is **dormant** until the host
   creates the tag. Async bootstrap — the only error sink is `console.error` (with `eslint-disable … --`).
-- Target `build-element` → `dist/elements/<app>/main.js`; portal serves it under `/elements/...`.
+- Target `build-element` → `dist/elements/<app>/main.js`; the host app serves it under `/elements/...`.
   Build: `pnpm nx run <app>:build-element`.
 
-## Host boundary (portal)
+## Host boundary (the host app)
 
 - [`ElementLoader`](../../libs/shared/config/src/lib/element-loader.ts) loads a bundle once per URL
   (`Map`), waits on `customElements.whenDefined`. The **gate** `isSameOriginScriptPath` canonicalizes

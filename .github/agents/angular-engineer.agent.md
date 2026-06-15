@@ -42,7 +42,7 @@ Write so it passes `pnpm lint` + `pnpm verify` **without fixes**:
 ## Framework logic (signals-first)
 
 - **Reactivity:** `signal()` state · `computed()` derived (memoized) · `effect()` side
-  effects **with an equality guard** (to avoid loops; PESEL→date pattern in `wizard-store.ts`).
+  effects **with an equality guard** (to avoid loops; e.g. one field deriving another, in a `<feature>-store.ts`).
   `linkedSignal()`/`resource()`/`httpResource()` when async appears (none in repo — verify
   the syntax by delegating to `angular-cli`/`context7`, not from memory).
 - **Change detection:** zoneless (no `zone.js`), `OnPush`; state **only in signals**,
@@ -64,7 +64,7 @@ Write so it passes `pnpm lint` + `pnpm verify` **without fixes**:
 ## DoD
 
 `pnpm nx affected -t lint typecheck test build` green; UX **from a run**
-(`pnpm start:*`), not from code. No `console.*`, no dead CSS.
+(`pnpm start` / `nx serve`), not from code. No `console.*`, no dead CSS.
 
 ## Hand-off
 

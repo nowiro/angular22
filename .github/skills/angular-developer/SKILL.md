@@ -18,7 +18,7 @@ lint rules → [`code-quality.instructions`](../../instructions/code-quality.ins
 provider). State **exclusively in signals**; template methods are lightweight (no I/O, no loops).
 
 - `signal()` state, `computed()` derived (memoized), `effect()` side effects — with an
-  **equality guard** so they don't loop (pattern: PESEL→birth date in `wizard-store.ts`).
+  **equality guard** so they don't loop (pattern: one field deriving another, in a `<feature>-store.ts`).
 - `inject()` always instead of constructor injection.
 - `linkedSignal()`/`resource()`/`httpResource()` — **no backend, not in the repo**; once
   async appears (resource for fetch, linkedSignal for a writable-derived) — the pattern is
@@ -28,7 +28,7 @@ provider). State **exclusively in signals**; template methods are lightweight (n
 
 `@if` / `@switch` (pattern: `button.component.html`) · `@for` **with mandatory `track`**
 (`track item.key` or `track $index` for immutable lists) · `@defer`/`@placeholder`/`@loading`
-— unused, **recommended** for heavy branches (e.g. wizard embeds). **`ng-content` inside
+— unused, **recommended** for heavy branches (e.g. embedded apps). **`ng-content` inside
 `@if`/`@switch` loses projection** → conditional content via `input()` (pattern `A22ButtonComponent.label`).
 
 ## Components
@@ -47,16 +47,16 @@ provider). State **exclusively in signals**; template methods are lightweight (n
   global ones in `app.config.ts`. `inject()` works in an injection context (field, `constructor`,
   factory) — outside it, cache the reference.
 - `provideRouter(appRoutes, withComponentInputBinding())` → **route param/`data` as `input()`**
-  (patterns: `wizard-shell.component.ts`, `embed-host.component.ts`). **Lazy** routes via
+  (patterns: a feature shell + the host's `embed-host.component.ts`). **Lazy** routes via
   `loadComponent: () => import(...)`. No `ActivatedRoute` when hosted as a web component
-  (the portal embeds wizards via `@angular/elements`) — the component must tolerate that.
+  (the host app embeds feature apps via `@angular/elements`) — the component must tolerate that.
 - **No SSR/hydration** (`provideClientHydration`/`@angular/ssr` absent) — the apps are pure SPAs.
 
 ## Accessibility (a11y)
 
 ARIA only when HTML semantics aren't enough · `focus-visible` · correct `role` ·
 `click-events-have-key-events` + `interactive-supports-focus` (lint error). **Audit on the live
-app** (`pnpm start:*`) via the `ux-verifier` agent — overflow, contrast, RWD, i18n; not from code.
+app** (`pnpm start` / `nx serve`) via the `ux-verifier` agent — overflow, contrast, RWD, i18n; not from code.
 
 ## Style and tests
 

@@ -23,21 +23,20 @@ full rules → [`copilot-instructions`](../copilot-instructions.md).
 
 ## Routing
 
-- **Lazy** routes via `loadComponent: () => import(...)` — the `portal/app.routes.ts` pattern
-  (`apps/individual`, `apps/business`) and `demo-individual-wizard/app.routes.ts` (`children`
-  under a guard). Never eager for a feature.
+- **Lazy** routes via `loadComponent: () => import(...)` — the host app's `app.routes.ts` pattern
+  and a feature app's `app.routes.ts` (`children` under a guard). Never eager for a feature.
 - Guards = **feature-flag** `featureEnabledGuard('<id>', '<fallback>')` in `canMatch`; don't
   duplicate — it already exists in `@angular22/shared-config`. Unknown paths → `**` (404 screen or
   `redirectTo`), patterns in both apps.
 - `withComponentInputBinding()` → **route param / `data` as `input()`** (e.g. `featureId`,
   `:step`); the component reads via `input()`, not `ActivatedRoute` (embedding as a web component
   loses `ActivatedRoute`).
-- Route titles: `Title` / a custom `TitleStrategy` on `data.title` — consistent across portal/wizard.
+- Route titles: `Title` / a custom `TitleStrategy` on `data.title` — consistent across host and feature apps.
 
 ## SEO
 
 `Title` + `Meta` (`@angular/platform-browser`): description, OG, Twitter, canonical, robots —
-**where it makes sense for an SPA**. `lang` is already in `index.html` (`<html lang="pl">`, `<title>Portal</title>`).
+**where it makes sense for an SPA**. `lang` is already in `index.html` (`<html lang="pl">`, a default `<title>`).
 Structured data (JSON-LD) injected into the DOM. UI text → PL literal through `a22T` (i18n).
 
 ## Honest about the limits (SPA)

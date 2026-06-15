@@ -24,7 +24,7 @@ Auto-loaded on `apps/**` and `libs/**`. Lint rules → `code-quality.instruction
 Model `signal<T>()` (a **`WritableSignal`** — `form()` requires it; never a `computed`/read-only
 `Signal`; programmatic writes via `model.update`/`model.set`) + validation `schema()`
 (`required`/`validate`/`applyWhen`/`applyEach`/`hidden`/`disabled`, messages **PL**) + binding
-`[formField]`. Store per wizard
+`[formField]`. Store per feature
 (`form()` in a root service field, array helpers = immutable `model.update`). No
 `FormGroup`/`FormBuilder`/`ngModel` — **lint-enforced** (`no-restricted-syntax`) from
 Angular ≥ 22: importing bare `@angular/forms` = error; on older majors the rule is
@@ -35,7 +35,7 @@ Visibility conditions: the same predicates in the schema (`applyWhen`+`hidden`) 
 
 `@angular22/ui-material` (`a22-text-field`, `a22-select`, `a22-checkbox`, `a22-date-field`,
 `a22-number-field`, `a22-button`, `a22-card`, `a22-toolbar`, `a22-icon`, `a22-divider`,
-`a22-wizard-stepper`, `A22NotificationService`). Missing a wrapper → add it in
+`a22-stepper`, `A22NotificationService`). Missing a wrapper → add it in
 `libs/ui/material` (agent `material-wrapper`), don't bypass the gate. Theming: `--mat-sys-*`
 tokens + `mat.theme()` in the app's `styles.scss`; no `--mdc-*`/`--sys-*`/`::ng-deep`.
 
@@ -55,4 +55,4 @@ tokens + `mat.theme()` in the app's `styles.scss`; no `--mdc-*`/`--sys-*`/`::ng-
 
 Unit: Vitest in libs (executor `@nx/vitest:test`) — see agent `vitest`. E2E: Playwright
 (executor `@nx/playwright:playwright`, `data-testid`) — see agent `playwright`.
-**Verify UX by running** (`pnpm start:*`), not from the code — agent `ux-verifier`.
+**Verify UX by running** (`pnpm start` / `nx serve`), not from the code — agent `ux-verifier`.

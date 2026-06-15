@@ -1,18 +1,18 @@
 ---
 name: signal-forms
-description: Signal Forms recipes (Angular 22 stable) for angular22 — model in signal(), schema() with applyWhen/applyEach/hidden/disabled, per-wizard store, FieldTree in components, repo gotchas. Use for any work on forms.
+description: Signal Forms recipes (Angular 22 stable) for angular22 — model in signal(), schema() with applyWhen/applyEach/hidden/disabled, per-feature store, FieldTree in components, repo gotchas. Use for any work on forms.
 ---
 
 # Signal Forms — repo recipes
 
-## Architecture (the pattern of both wizards)
+## Architecture (the per-feature pattern)
 
-1. **Model** = plain interface + `initial<X>Data()` in `libs/<wizard>/data/src/lib/models.ts`.
+1. **Model** = plain interface + `initial<X>Data()` in `libs/<feature>/data/src/lib/models.ts`.
    Conditional branches are ALWAYS present in the model; optional strings are `''` (not `null`).
 2. **Schema** = `schema<T>((path) => { … })` in `form-schema.ts` — the single source of validation.
    Messages are **in Polish** (the UI translates them via i18n on the wrapper side).
 3. **Store** (root `@Injectable`) — `form = form(this.model, schema)`; array helpers =
-   immutable `model.update`; effects (e.g. PESEL → birth date, consent rebuild) with an
+   immutable `model.update`; effects (e.g. one field deriving another, list rebuild) with an
    equality guard so they don't loop.
 4. **Component** — `[formField]="form.basicData.firstName"` on a wrapper from
    `@angular22/ui-material`; array index via a method
@@ -40,14 +40,14 @@ render never drift apart.
   `Signal`; it writes user input back into the model. Programmatic writes → `model.update`/`model.set`.
 - Destructuring `({ value, valueOf })` from FieldContext → `unbound-method`; file-level
   `eslint-disable` with rationale (pattern at the top of `form-schema.ts`).
-- `required(path, { when })` — conditional required (PESEL for PL, KRS for forms with KRS).
+- `required(path, { when })` — conditional required (e.g. a field required only in a given mode).
 - Disabled fields do NOT block writing to the **model** (the store can update) — they block the UI.
 - Tests importing the barrel from `@angular/forms/signals` → `test-setup.ts` with
   `import '@angular/compiler'`.
 - Custom errors: return `{ kind, message }` or `null`; factories in
-  `@angular22/wizard-validators` (`peselError`, `nipError`, …) — empty-pass, combine with `required`.
+  a domain validators lib (e.g. `@angular22/<domain>-validators`: `idError`, `codeError`, …) — empty-pass, combine with `required`.
 
 ## Dev-fill
 
 Preset = a complete model object (`buildXPreset(mode)`) → `model.set(preset)` +
-`form().markAsTouched()`. Checksum-valid identifiers from `@angular22/wizard-core`.
+`form().markAsTouched()`. Checksum-valid sample identifiers from a shared util lib.

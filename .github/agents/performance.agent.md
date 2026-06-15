@@ -24,10 +24,10 @@ and [`nx-generators`](../skills/nx-generators/SKILL.md) (executors/budgets).
 ## Owns
 
 - **Bundle budgets** — `apps/*/project.json` (executor `@angular/build:application`,
-  config `production`): `initial` (portal: warn `1.5mb` / error `2.5mb`) and `anyComponentStyle`
+  config `production`): `initial` (e.g. warn `1.5mb` / error `2.5mb`) and `anyComponentStyle`
   (`4kb`/`8kb`). You guard them, never relax them.
 - **Lazy** — `loadComponent: () => import(...)` on routes (`app.routes.ts` pattern) +
-  **`@defer`**/`@placeholder`/`@loading` on heavy/embedded branches (e.g. wizards
+  **`@defer`**/`@placeholder`/`@loading` on heavy/embedded branches (e.g. apps
   hosted via `@angular/elements`).
 - **Change-detection cost** — zoneless + `OnPush`, memoization in `computed`, **no heavy
   methods in the template** (no I/O, no loops; state in signals).

@@ -19,7 +19,7 @@ Defaults from `nx.json`: **standalone · zoneless · SCSS · OnPush · prefix `a
 = the app path (`apps/<name>`); `type:app` always, `scope:` from the map ([nx-generators](../nx-generators/SKILL.md)).
 Unsure about flags → MCP `nx` (`nx_generators`), not guessing.
 
-## Structure (the portal/wizard shape)
+## Structure (the app shape)
 
 | file                    | role                                                                       |
 | ----------------------- | -------------------------------------------------------------------------- |
@@ -28,7 +28,7 @@ Unsure about flags → MCP `nx` (`nx_generators`), not guessing.
 | `src/app/app.routes.ts` | `Routes` (lazy `loadComponent`, guards)                                    |
 | `src/element.ts`        | ONLY when the app is an embeddable web-component (see below)               |
 
-## Providers (canon — copy from `apps/portal/src/app/app.config.ts`)
+## Providers (canon — copy from `apps/<host-app>/src/app/app.config.ts`)
 
 ```ts
 providers: [
@@ -44,11 +44,11 @@ providers: [
 manual `provideZonelessChangeDetection()`. `provideFeatureFlags()` reads `config.json` before
 the first render, so tiles and guards see the flags from the start.
 
-## Embedding @angular/elements (when the app is to be embedded in the portal)
+## Embedding @angular/elements (when the app is to be embedded in a host app)
 
 A separate entry `src/element.ts`: `createApplication({ providers })` → `createCustomElement(Cmp, { injector })`
 → `customElements.define('a22-<name>-element', …)`. **No router and no feature-flags** — the host
-(portal) holds the URL and gating (pattern: `apps/demo-individual-wizard/src/element.ts`). The bundle is
+(the host app) holds the URL and gating (pattern: `apps/<app>/src/element.ts`). The bundle is
 built by the `build-element` target (separate budgets, `index:false`, `polyfills:[]`) → `dist/elements/<name>/main.js`,
 loaded same-origin by `ElementLoader` (`isSameOriginScriptPath` in `libs/shared/config`).
 Embedding security (CSP, same-origin, sinks) → [`security-guidance`](../security-guidance/SKILL.md).
@@ -57,8 +57,8 @@ Embedding security (CSP, same-origin, sinks) → [`security-guidance`](../securi
 
 `build`/`serve` = `@angular/build:application` / `:dev-server` ([executor map](../nx-generators/SKILL.md)).
 Prod budgets: `initial` 1.5mb/2.5mb · `anyComponentStyle` 4kb/8kb (an embeddable app: `build-element`
-has its own, looser ones). **Serve port = first free** after 4200 (portal) · 4201 (individual) ·
-4202 (business) → **`4203`**; do NOT duplicate.
+has its own, looser ones). **Serve port = first free**: the host app on `4200`, each extra app on the
+next free port (`4201`, `4202`, …); do NOT duplicate.
 
 ## i18n + config.json (briefly)
 
@@ -71,6 +71,6 @@ from `@angular22/shared-config`.
 
 - **NO** `ng new` / `ng generate` — exclusively `nx g @nx/angular:application`.
 - Do NOT skip the `scope:<scope>,type:app` tags.
-- Do NOT duplicate serve ports (4200/4201/4202 taken → 4203…).
+- Do NOT duplicate serve ports (one per app: `4200` host + one each).
 - Do NOT put secrets in `config.json` (public, same-origin); don't load cross-origin element scripts.
 - Do NOT bypass the `@angular22/ui-material` wrappers or Signal Forms in a new app ([material-wrappers], [signal-forms]).

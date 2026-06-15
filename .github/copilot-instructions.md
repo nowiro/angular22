@@ -11,10 +11,12 @@
 
 ## Identity
 
-**angular22** — demo monorepo **for GitHub Copilot only** (VS Code ≥ 1.121): Angular 22
-(zoneless, standalone, signals, **Signal Forms**) + Nx 22 + Angular Material 22. Three apps:
-`portal` (:4200 — tiles + wizards embedded as web components, feature flags from config.json) · `demo-individual-wizard` (:4201) · `demo-business-wizard`
-(:4202) + libs in `libs/*` (shared/ui/wizard/…). MCP servers (keyless core): `context7` · `nx` · `angular-cli` · `playwright`; plus **opt-in** `firecrawl` (live web research, key via env — developer-driven, not wired to the keyless agents).
+**angular22** — Nx monorepo **for GitHub Copilot only** (VS Code ≥ 1.121): Angular 22
+(zoneless, standalone, signals, **Signal Forms**) + Nx 22 + Angular Material 22. Apps in `apps/*`
+(`@angular/build` applications; some also shipped as `@angular/elements` web components that a host
+app embeds, gated by runtime feature flags from `config.json`), shared code in `libs/*` (`shared` +
+domain libraries). Concrete app/lib map → [`README.md`](../README.md). MCP servers (keyless):
+`context7` · `nx` · `angular-cli` · `playwright`.
 
 ## Language
 
@@ -60,7 +62,7 @@ concisely: outcome over process.
 - ✅ **i18n**: UI text as a PL literal via the `a22T` pipe (PL = key, EN in translation
   maps); new text = PL literal + EN entry. Switcher in the toolbar; PL default.
 - ✅ **Uncertain API → MCP** (`angular-cli`/`nx`/`context7`), not from memory. **Verify UX by
-  running** (`pnpm start:*`), not from the code.
+  running** (`pnpm start` / `nx serve`), not from the code.
 - ✅ **LLM models** (token economy): orchestrator → `Claude Opus 4.8` (plan + final
   verification); **doc-MCP** agents (`angular-cli`, `nx`, `context7`) → `GPT-5 mini` and **only they
   call doc-MCP** (the rest delegate to them); code / tests / e2e / review / UX / specialists
@@ -93,7 +95,6 @@ Nx 22 · TypeScript 6 · Vitest + Playwright · ESLint flat + Prettier · **pnpm
 
 ## Commands
 
-`pnpm verify` (full gate) · `pnpm e2e` (`--parallel=1`) · `pnpm start:individual` /
-`start:business` / `start` · `pnpm workflow:specify -- --verb=<v> --slug=<s>` ·
-`pnpm ai:validate` · `pnpm sdd:check` · `pnpm nx g @nx/angular:component <name>` ·
-`pnpm watchdog` (upstream monitoring → [`docs/watchdog.md`](../docs/watchdog.md)).
+`pnpm verify` (full gate) · `pnpm e2e` (`--parallel=1`) · `pnpm start` / `pnpm nx serve <app>` ·
+`pnpm workflow:specify -- --verb=<v> --slug=<s>` ·
+`pnpm ai:validate` · `pnpm sdd:check` · `pnpm nx g @nx/angular:component <name>`.

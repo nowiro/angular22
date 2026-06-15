@@ -50,7 +50,7 @@ faithful rewrite keeps the **behaviour**, not the old shape.
 ### 3) Scaffold on the LATEST Angular
 
 App via [`angular-new-app`](../angular-new-app/SKILL.md), on the version in
-[`tech-stack`](../../../docs/tech-stack.md) (kept latest by `migration` / watchdog). If the source is an
+[`tech-stack`](../../../docs/tech-stack.md) (kept latest by `migration`). If the source is an
 **old Angular**, prefer the [`angular-migrations`](../angular-migrations/SKILL.md) schematics where they
 apply over hand-rewriting.
 

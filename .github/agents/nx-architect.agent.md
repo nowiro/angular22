@@ -25,9 +25,9 @@ recipes → [`nx-generators`](../skills/nx-generators/SKILL.md); hard rules →
 
 The `tags` in `project.json` = `scope:*` × `type:*` (each lib/app gets exactly one from each axis):
 
-- **scope:** `shared` · `individual-wizard` · `business-wizard` · `portal`. `scope:portal`
-  and both `*-wizard` see **only** `scope:shared` + their own scope — **wizards don't see each
-  other**, portal doesn't reach into wizard libs. `scope:shared` depends **exclusively** on
+- **scope:** `shared` + one per domain (e.g. `<host>`, `<feature-a>`, `<feature-b>`). A domain
+  scope sees **only** `scope:shared` + its own scope — **sibling domains don't see each
+  other**, the host scope doesn't reach into feature libs. `scope:shared` depends **exclusively** on
   `scope:shared`.
 - **type:** layering `app → feature → ui/data-access → util` (one-directional). `ui` →
   `ui`+`util`; `data-access` → `data-access`+`util`; `util` → only `util`; `e2e` → only `util`.
@@ -54,6 +54,6 @@ design the fix (retag `project.json`, move code, split lib) →
 
 ## DON'T
 
-Don't allow cross-boundary imports (`scope:individual-wizard` ⛔ `scope:business-wizard`),
+Don't allow cross-boundary imports (`scope:<feature-a>` ⛔ `scope:<feature-b>`),
 public API outside `src/index.ts`, cycles, or a tag inconsistent with the layer. Don't call the
 `nx` MCP yourself. Don't relax `depConstraints` "to make it pass" — fix the structure.

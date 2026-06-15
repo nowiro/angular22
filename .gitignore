@@ -12,9 +12,6 @@ out-tsc
 .angular
 .eslintcache
 
-# Watchdog local snapshot (machine-local upstream markers; see docs/watchdog.md)
-tools/watchdog/state.json
-
 # Tests
 coverage
 test-results
