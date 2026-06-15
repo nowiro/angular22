@@ -21,8 +21,10 @@ Auto-loaded on `apps/**` and `libs/**`. Lint rules → `code-quality.instruction
 
 ## Forms = Signal Forms (the only pattern)
 
-Model `signal<T>()` + validation `schema()` (`required`/`validate`/`applyWhen`/`applyEach`/
-`hidden`/`disabled`, messages **PL**) + binding `[formField]`. Store per wizard
+Model `signal<T>()` (a **`WritableSignal`** — `form()` requires it; never a `computed`/read-only
+`Signal`; programmatic writes via `model.update`/`model.set`) + validation `schema()`
+(`required`/`validate`/`applyWhen`/`applyEach`/`hidden`/`disabled`, messages **PL**) + binding
+`[formField]`. Store per wizard
 (`form()` in a root service field, array helpers = immutable `model.update`). No
 `FormGroup`/`FormBuilder`/`ngModel` — **lint-enforced** (`no-restricted-syntax`) from
 Angular ≥ 22: importing bare `@angular/forms` = error; on older majors the rule is

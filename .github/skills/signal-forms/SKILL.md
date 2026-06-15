@@ -23,7 +23,8 @@ description: Signal Forms recipes (Angular 22 stable) for angular22 — model in
 `form` · `schema` · `apply` / `applyEach` / `applyWhen` / `applyWhenValue` · `validate` /
 `validateTree` · `required` / `email` / `pattern` / `min` / `max` / `minLength` /
 `maxLength` (options `{ message, when }`) · `hidden` / `disabled` / `readonly` logic
-(`{ when }`) · types `FieldTree` / `FieldState` / `FormValueControl` / `FormCheckboxControl`.
+(**`{ when }` only** — passing a bare function/string is `@deprecated` in v22) · types
+`FieldTree` / `FieldState` / `FormValueControl` / `FormCheckboxControl`.
 The **`FormField`** directive, selector `[formField]`.
 
 ## Conditions (canonical pattern)
@@ -35,6 +36,8 @@ render never drift apart.
 
 ## Gotchas (cost us debugging — don't repeat)
 
+- `form()` takes a **`WritableSignal`** (the `signal()` model) — never a `computed`/read-only
+  `Signal`; it writes user input back into the model. Programmatic writes → `model.update`/`model.set`.
 - Destructuring `({ value, valueOf })` from FieldContext → `unbound-method`; file-level
   `eslint-disable` with rationale (pattern at the top of `form-schema.ts`).
 - `required(path, { when })` — conditional required (PESEL for PL, KRS for forms with KRS).
