@@ -34,6 +34,22 @@ test.describe('Portal — smoke', () => {
     await expect(page.getByTestId('portal-home')).toBeVisible();
   });
 
+  test('a failed element bundle swaps the spinner for the error view + a snackbar', async ({ page }) => {
+    // Force the web-component bundle request to fail (network/API error path).
+    await page.route('**/elements/**/main.js', (route) => route.abort());
+
+    await page.goto('/apps/individual');
+
+    // The dynamically-rendered (ngComponentOutlet) status overlay flips to the
+    // error view; the loading spinner and the custom element never appear.
+    await expect(page.getByTestId('embed-error')).toBeVisible();
+    await expect(page.getByTestId('embed-loading')).toHaveCount(0);
+    await expect(page.locator('a22-individual-wizard-element')).toHaveCount(0);
+
+    // …and an API-error snackbar is raised (its "Zamknij" dismiss action is unique to it).
+    await expect(page.getByRole('button', { name: 'Zamknij' })).toBeVisible();
+  });
+
   test('stepping through the embedded wizard keeps the portal URL', async ({ page }) => {
     // Regression: the element has no provideRouter(), but Router is a
     // root-provided service — a navigate() on it used to reset the host URL
