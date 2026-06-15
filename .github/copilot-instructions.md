@@ -14,7 +14,7 @@
 **angular22** — demo monorepo **for GitHub Copilot only** (VS Code ≥ 1.121): Angular 22
 (zoneless, standalone, signals, **Signal Forms**) + Nx 22 + Angular Material 22. Three apps:
 `portal` (:4200 — tiles + wizards embedded as web components, feature flags from config.json) · `demo-individual-wizard` (:4201) · `demo-business-wizard`
-(:4202) + libs in `libs/*` (shared/ui/wizard/…). MCP servers: `context7` · `nx` · `angular-cli` · `playwright`.
+(:4202) + libs in `libs/*` (shared/ui/wizard/…). MCP servers (keyless core): `context7` · `nx` · `angular-cli` · `playwright`; plus **opt-in** `firecrawl` (live web research, key via env — developer-driven, not wired to the keyless agents).
 
 ## Language
 

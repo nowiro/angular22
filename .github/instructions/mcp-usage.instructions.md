@@ -1,6 +1,6 @@
 ---
 applyTo: '**'
-description: angular22 MCP servers (context7, nx, angular-cli, playwright) — when to use which + token economy
+description: angular22 MCP servers (context7, nx, angular-cli, playwright + opt-in firecrawl) — when to use which + token economy
 ---
 
 # MCP servers — usage and token economy
@@ -22,6 +22,18 @@ queries to them, **they don't call MCP themselves**. The `playwright` server (li
 | `nx`          | `nx_docs` · `nx_workspace` · `nx_generators` · `nx_project_details` | generator/executor flags, graph, tags — instead of guessing                                             |
 | `context7`    | `resolve-library-id` → `query-docs`                                 | docs for any library (Material 22, Playwright, Vitest, 3rd-party)                                       |
 | `playwright`  | browser\_\* (live browser, headed)                                  | e2e debug, UX audit (`ux-verifier`) + visual fidelity vs mockup (`pixel-perfect`), runtime verification |
+
+## Live web research (opt-in, developer-driven)
+
+`firecrawl` (scrape · crawl · search · extract) is available for **ad-hoc** live web/internet
+research — e.g. checking a library's current docs site, researching an external app slated for
+import. It is **OPT-IN**: it needs env `FIRECRAWL_API_KEY` (from firecrawl.dev, **never** committed),
+and without the key it simply stays inactive. **It is NOT wired into the orchestrated agents** —
+they stay **keyless and never fetch** (the doc-MCP ladder above covers their needs; `legacy-analyst`
+works only on provided source). Use it yourself in chat when a task genuinely needs live web data;
+prefer the keyless doc-MCP servers first. Web-search alternative: Brave
+(`@brave/brave-search-mcp-server`, env `BRAVE_API_KEY`). Social-media crawling is intentionally
+omitted (ToS/fragility, no stable official MCP).
 
 ## Docs ladder
 

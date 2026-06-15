@@ -57,8 +57,8 @@ are set globally in the VS Code picker.
 
 ## Workspace
 
-- `apps/*` + `libs/*` (map → [`README.md`](README.md)) · `.vscode/mcp.json` (4 MCP
-  servers — table in [`mcp-usage`](.github/instructions/mcp-usage.instructions.md)) ·
+- `apps/*` + `libs/*` (map → [`README.md`](README.md)) · `.vscode/mcp.json` (4 keyless MCP
+  servers + opt-in `firecrawl` live web research — table in [`mcp-usage`](.github/instructions/mcp-usage.instructions.md)) ·
   `.github/` (`copilot-instructions.md`, `agents/`, `instructions/` auto per `applyTo`,
   `prompts/`: `/clarify`, `/analyze`, `/checklist`, `/brainstorming`, `/feature-dev`, `/import-app`; `skills/`:
   `angular-developer`, `angular-new-app`, `signal-forms`, `material-wrappers`, `nx-generators`,
