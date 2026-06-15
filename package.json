@@ -14,6 +14,7 @@
     "start:portal": "nx serve portal",
     "start:individual": "nx serve demo-individual-wizard",
     "start:business": "nx serve demo-business-wizard",
+    "start:base": "nx serve base",
     "start:all": "nx run-many -t serve --projects=portal,demo-individual-wizard,demo-business-wizard --parallel=3 --output-style=stream",
     "build": "nx run-many -t build",
     "test": "nx run-many -t test",

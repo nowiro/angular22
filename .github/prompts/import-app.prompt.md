@@ -30,9 +30,10 @@ Derive `<slug>` (`[a-z0-9-]+`). Keyless: work on the **provided** source content
    test trio**: parity scenarios (from AC) + **Vitest** (`@nx/vitest:test`) + **Playwright**
    (`@nx/playwright:playwright`). Any item missing = **no-go**. [`/analyze`](./analyze.prompt.md) →
    unambiguous **go / no-go**.
-4. **implement** — **delegate to specialists** (orchestrator, `tool agent`), **LATEST Angular**: new
-   app/libs via [`angular-new-app`](../skills/angular-new-app/SKILL.md) (`pnpm nx g
-@nx/angular:application`, Nx libs tagged `scope:*/type:*`); **components ONLY via `pnpm nx g
+4. **implement** — **delegate to specialists** (orchestrator, `tool agent`), **LATEST Angular**: a new
+   app = **clone `apps/base`** ([`angular-new-app`](../skills/angular-new-app/SKILL.md): copy + swap
+   name/scope/port/i18n/branding), Nx **libs** via `pnpm nx g @nx/angular:library` tagged
+   `scope:*/type:*`; **components ONLY via `pnpm nx g
 @nx/angular:component`**; **Signal Forms** (`form()`/`schema()`/`[formField]`) + `ui-material`
    wrappers; **a22T** i18n; **lazy** routes. If the source is **old Angular**, modernize via
    [`angular-migrations`](../skills/angular-migrations/SKILL.md) instead of a hand-rewrite. The

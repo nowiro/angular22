@@ -219,6 +219,12 @@ export default tseslint.config(
               onlyDependOnLibsWithTags: ['scope:shared'],
             },
             {
+              // `base` = the starter/template app (apps/base). Like the host app it
+              // only consumes shared libs; a copy retags scope:base -> scope:<app>.
+              sourceTag: 'scope:base',
+              onlyDependOnLibsWithTags: ['scope:shared', 'scope:base'],
+            },
+            {
               sourceTag: 'scope:individual-wizard',
               onlyDependOnLibsWithTags: ['scope:shared', 'scope:individual-wizard'],
             },

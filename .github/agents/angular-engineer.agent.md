@@ -34,6 +34,9 @@ Write so it passes `pnpm lint` + `pnpm verify` **without fixes**:
 
 ## Scaffolding — NEVER by hand
 
+- **App:** **copy `apps/base` (+ `apps/base-e2e`)** — the header-only starter — and swap
+  name / `scope:*` / port / i18n / branding / `depConstraint` (skill
+  [`angular-new-app`](../skills/angular-new-app/SKILL.md)). NOT `nx g @nx/angular:application`.
 - **Component:** `pnpm nx g @nx/angular:component <name> --directory=<lib>/src/lib/<name>`
   — defaults from `nx.json`: SCSS + OnPush + three files (`.ts`/`.html`/`.scss`) + prefix `a22`.
 - **Lib:** `pnpm nx g @nx/angular:library --directory=libs/<scope>/<name>` + tags

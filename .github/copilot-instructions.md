@@ -54,6 +54,9 @@ concisely: outcome over process.
 - ✅ **Components ONLY via generator**: `pnpm nx g @nx/angular:component`
   (SCSS + OnPush + three files `.ts`/`.html`/`.scss` + prefix `a22`). Never by hand,
   never inline template/styles.
+- ✅ **New app = clone `apps/base`** (header-only starter, full `provideAppPlatform` spine): copy
+  `apps/base` + `apps/base-e2e`, then swap name / `scope:*` / port / i18n / branding / `depConstraint`
+  (skill `angular-new-app`). NOT `nx g @nx/angular:application`, never `ng new`.
 - ✅ **Material gate**: `@angular/material/*`/`@angular/cdk/*` only in `libs/ui/material`
   (lint error) — everywhere else use the `@angular22/ui-material` wrappers. Theming only via
   `--mat-sys-*` + `mat.theme()`.

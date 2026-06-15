@@ -1,0 +1,19 @@
+@use '@angular/material' as mat;
+@use '../../../styles/app-shell';
+
+/* Base app — global styles (Material 3, light scheme). Pick your app's palette
+ * here when scaffolding from this template. The shared reset / scrollbar polish
+ * lives in `styles/_app-shell.scss`. */
+
+html {
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$azure-palette,
+        tertiary: mat.$cyan-palette,
+      ),
+      typography: Roboto,
+      density: 0,
+    )
+  );
+}

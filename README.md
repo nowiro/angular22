@@ -19,11 +19,12 @@ Signal Forms**, with every Angular Material component consumed through Nx wrappe
 
 ## Apps
 
-| App                      | Port | Description                                                                |
-| ------------------------ | ---- | -------------------------------------------------------------------------- |
-| `portal`                 | 4200 | Portal — tiles open the wizards in a new tab OR embedded as web components |
-| `demo-individual-wizard` | 4201 | Personal-data wizard (PESEL, addresses, survey, consents)                  |
-| `demo-business-wizard`   | 4202 | Company wizard (NIP/REGON/KRS, profile, representatives)                   |
+| App                      | Port | Description                                                                        |
+| ------------------------ | ---- | ---------------------------------------------------------------------------------- |
+| `portal`                 | 4200 | Portal — tiles open the wizards in a new tab OR embedded as web components         |
+| `demo-individual-wizard` | 4201 | Personal-data wizard (PESEL, addresses, survey, consents)                          |
+| `demo-business-wizard`   | 4202 | Company wizard (NIP/REGON/KRS, profile, representatives)                           |
+| `base`                   | 4203 | Starter template — header only; copy to scaffold a new app (`apps/base/README.md`) |
 
 ## Libraries
 

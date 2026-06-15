@@ -76,9 +76,13 @@ Any of these missing = **no-go**.
 
 ## New apps and libs (highest quality)
 
-Creating/modifying an app or lib goes through the **full ladder** (above) + structural rules — **always
-via the Nx generator**, never by hand:
+Creating/modifying an app or lib goes through the **full ladder** (above) + structural rules — never by
+hand: a **new app = clone the `base` template**, a **lib/component = the Nx generator**:
 
+- **App:** **copy `apps/base` (+ `apps/base-e2e`)** — the header-only starter with the full
+  `provideAppPlatform` spine — then swap name / `scope:*` tag / port / i18n map / branding /
+  `depConstraint` (skill [`angular-new-app`](../skills/angular-new-app/SKILL.md)). NOT
+  `nx g @nx/angular:application`, never `ng new`.
 - **Lib:** `pnpm nx g @nx/angular:library` (or mirror an adjacent lib) → tag **`scope:*` + `type:*`**
   by boundaries (`type:util`→util only; `feature`→ui/util/data-access/feature — enforced by
   `@nx/enforce-module-boundaries`); public API **only** `src/index.ts` (the rest `no-barrel-files`);

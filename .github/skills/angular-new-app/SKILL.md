@@ -1,76 +1,59 @@
 ---
 name: angular-new-app
-description: Bootstrap a new app in angular22 — via nx g @nx/angular:application (not ng new): standalone+zoneless, providers (router, feature flags from config.json, i18n), embedding @angular/elements, budgets/port in project.json, scope/type tags. Use when setting up a new application in the monorepo.
+description: Stand up a new app in angular22 by CLONING the apps/base starter (header-only, full provideAppPlatform spine) — copy apps/base + apps/base-e2e, then swap name / scope tag / port / i18n map / branding / depConstraint. NOT `nx g @nx/angular:application`, never `ng new`. Use when setting up a new application in the monorepo.
 ---
 
-# New Angular application — repo recipe
+# New Angular application — clone the `base` template
 
-App = **`@nx/angular:application`**, NEVER `ng new`. Components/libs/test wiring →
-[`nx-generators`](../nx-generators/SKILL.md). Here: only the app bootstrap.
+A new app is a **copy of [`apps/base`](../../../apps/base)** (the header-only starter app), NOT
+`nx g @nx/angular:application` and **never** `ng new`. `base` is the canonical scaffold — cloning it
+keeps every convention right on the first try: standalone · zoneless · OnPush · prefix `a22` · the
+shared `provideAppPlatform` spine · `@angular22/ui-material` wrappers · Signal Forms · `a22T` i18n ·
+prod budgets · a Playwright e2e. Components/libs still use `pnpm nx g` →
+[`nx-generators`](../nx-generators/SKILL.md).
 
-## Generating
+## What `base` already wires (don't re-add)
 
-```bash
-pnpm nx g @nx/angular:application --directory=apps/<name> --name=<name> \
-  --prefix=a22 --tags=scope:<scope>,type:app
-```
+`app.config.ts` calls **`provideAppPlatform({ routes, translations })`** (→ `@angular22/app-platform`):
+global error listeners + handler, runtime feature flags (`config.json` loaded before bootstrap), mock
+auth, router (`withComponentInputBinding`), EN translations. Zoneless is by construction (no zone.js
+in polyfills) — do **not** add `provideZonelessChangeDetection()`. The root renders only an
+`a22-toolbar` header (brand + `a22-language-switcher`) over a `<router-outlet>`.
 
-Defaults from `nx.json`: **standalone · zoneless · SCSS · OnPush · prefix `a22`**. `--directory`
-= the app path (`apps/<name>`); `type:app` always, `scope:` from the map ([nx-generators](../nx-generators/SKILL.md)).
-Unsure about flags → MCP `nx` (`nx_generators`), not guessing.
+## Clone + adapt (the recipe)
 
-## Structure (the app shape)
+1. **Copy** `apps/base` → `apps/<name>` and `apps/base-e2e` → `apps/<name>-e2e`.
+2. **`project.json`** (both): rename `base`/`base-e2e` → `<name>`/`<name>-e2e`; retag
+   `scope:base` → `scope:<scope>`; update `sourceRoot`, `outputPath`, `tsConfig`/`config` paths and
+   `implicitDependencies`; set the **next free serve port** (`4204`, …) in `serve` + `serve-static`.
+3. **i18n**: rename `base-translations.en.ts` → `<name>-translations.en.ts`, `BASE_EN` → `<SCOPE>_EN`;
+   fix the import in `app.config.ts`; add your PL→EN entries.
+4. **Branding**: `<title>` in `index.html`, the brand literal in `app.component.html`, its EN entry.
+5. **Boundaries**: add a `scope:<scope>` entry to `depConstraints` in the root
+   [`eslint.config.mjs`](../../../eslint.config.mjs) (mirror `scope:base` →
+   `onlyDependOnLibsWithTags: ['scope:shared', 'scope:<scope>']`).
+6. **e2e**: in `apps/<name>-e2e/playwright.config.ts` set the `baseURL` port + `pnpm exec nx run
+<name>:serve`; adapt the smoke spec.
+7. **Pages**: add lazy `loadComponent` routes in `app.routes.ts` (base ships an empty `Routes`).
+8. Optional: a `start:<name>` script in `package.json`.
 
-| file                    | role                                                                       |
-| ----------------------- | -------------------------------------------------------------------------- |
-| `src/main.ts`           | `bootstrapApplication(AppComponent, appConfig)` + `.catch` (the only sink) |
-| `src/app/app.config.ts` | `ApplicationConfig` — all providers                                        |
-| `src/app/app.routes.ts` | `Routes` (lazy `loadComponent`, guards)                                    |
-| `src/element.ts`        | ONLY when the app is an embeddable web-component (see below)               |
+Verify the clone: `pnpm nx build <name>` · `lint` · `typecheck` · `pnpm nx run <name>-e2e:e2e`. If
+Nx doesn't see the new project, `pnpm nx reset` once.
 
-## Providers (canon — copy from `apps/<host-app>/src/app/app.config.ts`)
+## Embeddable app (when it must mount as a web component)
 
-```ts
-providers: [
-  provideBrowserGlobalErrorListeners(),
-  provideA22GlobalErrorHandler(), // @angular22/ui-feedback
-  provideFeatureFlags(), // @angular22/shared-config — loads config.json BEFORE bootstrap
-  provideRouter(appRoutes, withComponentInputBinding()),
-  provideEnTranslations(<APP>_EN), // @angular22/shared-i18n
-];
-```
-
-**Zoneless = by construction** — no zone.js in polyfills (Angular 22 default). Do NOT add a
-manual `provideZonelessChangeDetection()`. `provideFeatureFlags()` reads `config.json` before
-the first render, so tiles and guards see the flags from the start.
-
-## Embedding @angular/elements (when the app is to be embedded in a host app)
-
-A separate entry `src/element.ts`: `createApplication({ providers })` → `createCustomElement(Cmp, { injector })`
-→ `customElements.define('a22-<name>-element', …)`. **No router and no feature-flags** — the host
-(the host app) holds the URL and gating (pattern: `apps/<app>/src/element.ts`). The bundle is
-built by the `build-element` target (separate budgets, `index:false`, `polyfills:[]`) → `dist/elements/<name>/main.js`,
-loaded same-origin by `ElementLoader` (`isSameOriginScriptPath` in `libs/shared/config`).
-Embedding security (CSP, same-origin, sinks) → [`security-guidance`](../security-guidance/SKILL.md).
-
-## project.json (executors + port)
-
-`build`/`serve` = `@angular/build:application` / `:dev-server` ([executor map](../nx-generators/SKILL.md)).
-Prod budgets: `initial` 1.5mb/2.5mb · `anyComponentStyle` 4kb/8kb (an embeddable app: `build-element`
-has its own, looser ones). **Serve port = first free**: the host app on `4200`, each extra app on the
-next free port (`4201`, `4202`, …); do NOT duplicate.
-
-## i18n + config.json (briefly)
-
-PL = the source language and the key (`{{ 'Polski tekst' | a22T }}`); EN is provided by the app via
-`provideEnTranslations(<APP>_EN)`. `config.json` in `apps/<name>/public/` — **public,
-same-origin, per-environment** (enable/disable without a rebuild); shape = `AppConfig`/`FeatureConfig`
-from `@angular22/shared-config`.
+`base` is a **standalone** app (no `element.ts`). To also ship it embedded via `@angular/elements`,
+add `src/element.ts` (`createApplication` → `createCustomElement` →
+`customElements.define('a22-<name>-element', …)`, **no router/feature-flags**) + a `build-element`
+target (`index:false`, `polyfills:[]`, own budgets → `dist/elements/<name>/main.js`), loaded
+same-origin by `ElementLoader`. Pattern: the wizard apps +
+[`web-components`](../../agents/web-components.agent.md); security →
+[`security-guidance`](../security-guidance/SKILL.md).
 
 ## DON'T
 
-- **NO** `ng new` / `ng generate` — exclusively `nx g @nx/angular:application`.
-- Do NOT skip the `scope:<scope>,type:app` tags.
-- Do NOT duplicate serve ports (one per app: `4200` host + one each).
-- Do NOT put secrets in `config.json` (public, same-origin); don't load cross-origin element scripts.
-- Do NOT bypass the `@angular22/ui-material` wrappers or Signal Forms in a new app ([material-wrappers], [signal-forms]).
+- **NO** `nx g @nx/angular:application` / `ng new` — clone `apps/base` (the canonical scaffold).
+- Do NOT leave `base` / `scope:base` / `BASE_EN` / port `4203` behind after the copy.
+- Do NOT skip the `scope:<scope>` `depConstraint`, or duplicate a serve port.
+- Do NOT bypass the `@angular22/ui-material` wrappers or Signal Forms in a new app
+  ([material-wrappers](../material-wrappers/SKILL.md), [signal-forms](../signal-forms/SKILL.md)).
