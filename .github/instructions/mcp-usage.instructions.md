@@ -43,6 +43,10 @@ omitted (ToS/fragility, no stable official MCP).
 
 ## Token economy
 
+- **Context compaction (`compact`):** `github.copilot.chat.summarizeAgentConversationHistory.enabled: true`
+  (`.vscode/settings.json`) — Copilot summarizes earlier turns once history fills the context window
+  instead of carrying the full transcript, cutting token/credit cost on long sessions. Trigger it
+  manually with **`/compact`** in chat to refocus a long thread before it auto-summarizes.
 - Narrowest query + a specific `topic`; one question per call.
 - Delegate with minimal context (goal + paths, not whole files — the subagent reads them itself).
 - Summarize MCP output (conclusion + minimal snippet), don't paste whole pages.

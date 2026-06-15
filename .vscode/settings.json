@@ -14,6 +14,7 @@
     "**/.nx": true,
     "**/coverage": true
   },
+  "github.copilot.chat.summarizeAgentConversationHistory.enabled": true,
   "github.copilot.chat.otel.enabled": false,
   "github.copilot.chat.otel.exporterType": "otlp-http",
   "github.copilot.chat.otel.otlpEndpoint": "http://localhost:4318",
