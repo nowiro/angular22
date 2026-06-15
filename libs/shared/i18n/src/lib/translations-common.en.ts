@@ -6,6 +6,7 @@
 export const COMMON_EN: Readonly<Record<string, string>> = {
   // ── Navigation / common buttons ─────────────────────────────────────────
   Dalej: 'Next',
+  Zamknij: 'Close',
   Wstecz: 'Back',
   Pulpit: 'Dashboard',
   'Otwórz kreator': 'Open wizard',

@@ -50,6 +50,20 @@ test.describe('Portal — smoke', () => {
     await expect(page.getByRole('button', { name: 'Zamknij' })).toBeVisible();
   });
 
+  test('the error-snackbar action label follows the active language (EN → "Close")', async ({ page }) => {
+    await page.route('**/elements/**/main.js', (route) => route.abort());
+
+    await page.goto('/');
+    await page.getByTestId('lang-en').click();
+    await page.getByTestId('open-embed-individual-wizard').click();
+
+    await expect(page.getByTestId('embed-error')).toBeVisible();
+    // Regression: the toast showed an English message but a Polish "Zamknij" button —
+    // the action label is now translated through I18nStore too.
+    await expect(page.getByRole('button', { name: 'Close' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Zamknij' })).toHaveCount(0);
+  });
+
   test('stepping through the embedded wizard keeps the portal URL', async ({ page }) => {
     // Regression: the element has no provideRouter(), but Router is a
     // root-provided service — a navigate() on it used to reset the host URL
