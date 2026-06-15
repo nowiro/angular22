@@ -1,6 +1,6 @@
 ---
 name: signal-forms
-description: Signal Forms recipes (Angular 22 stable) for angular22 — model in signal(), schema() with applyWhen/applyEach/hidden/disabled, per-feature store, FieldTree in components, repo gotchas. Use for any work on forms.
+description: Signal Forms recipes (Angular 22 stable) for angular22 — model in signal(), schema() with applyWhen/applyEach/hidden/disabled/submit, per-feature store, field state + FieldTree in components, repo gotchas. Use for any work on forms.
 ---
 
 # Signal Forms — repo recipes
@@ -21,11 +21,28 @@ description: Signal Forms recipes (Angular 22 stable) for angular22 — model in
 ## API (verified on v22.0.0)
 
 `form` · `schema` · `apply` / `applyEach` / `applyWhen` / `applyWhenValue` · `validate` /
-`validateTree` · `required` / `email` / `pattern` / `min` / `max` / `minLength` /
-`maxLength` (options `{ message, when }`) · `hidden` / `disabled` / `readonly` logic
-(**`{ when }` only** — passing a bare function/string is `@deprecated` in v22) · types
-`FieldTree` / `FieldState` / `FormValueControl` / `FormCheckboxControl`.
-The **`FormField`** directive, selector `[formField]`.
+`validateTree` / `validateAsync` (async via `resource()` — `params` + `factory` + `onSuccess` /
+`onError`; **no backend in the repo yet**) · `required` / `email` / `pattern` / `min` / `max` /
+`minLength` / `maxLength` (`{ message }`) · `hidden` / `disabled` / `readonly` / `debounce(path, ms)`
+logic (**`{ when }` only** — a bare function/string is `@deprecated` in v22) ·
+`submit(form, async () => …)` · types `FieldTree` / `FieldState` / `FormValueControl` /
+`FormCheckboxControl`. The **`FormField`** directive, selector `[formField]`.
+
+**`{ when }` ≠ every validator.** State logic (`hidden` / `disabled` / `readonly`) takes `{ when }`,
+and among validators **only `required`** does; a conditional `pattern` / `min` / `validate` / … goes
+**inside `applyWhen(path, pred, sub)`**, never as a `{ when }` option.
+
+## Field state + submit
+
+- **Call a field as a function** to read its state: `form.email()` → a `FieldState` exposing
+  `value()` (the `WritableSignal`), `valid()` / `invalid()`, `touched()`, `dirty()`, `errors()`
+  (`{ kind, message }[]`), `pending()` (async), `disabled()`, `hidden()`, `readonly()`. Form-level:
+  `form().valid()` / `invalid()` / `pending()`. Array length: **`form.items.length`** (no `()`).
+- **`submit(form, async () => { … })`** marks every field touched, then runs the async callback
+  **only when valid** — prefer it over a manual `markAsTouched()` on real submit.
+- Rule context = `{ value, valueOf, state, stateOf, fieldTree, pathKeys }`: read other fields'
+  **values** via `valueOf(path)` and their **state** via `stateOf(path)` (e.g.
+  `stateOf(path.x).touched()`) — a bare `path.x` is **not callable** inside a rule.
 
 ## Conditions (canonical pattern)
 
@@ -42,6 +59,9 @@ render never drift apart.
   `eslint-disable` with rationale (pattern at the top of `form-schema.ts`).
 - `required(path, { when })` — conditional required (e.g. a field required only in a given mode).
 - Disabled fields do NOT block writing to the **model** (the store can update) — they block the UI.
+- **`[formField]` owns the field** — don't also bind `[value]` / `[disabled]` / `[readonly]` / `min` /
+  `max` on the same element; express those as schema rules (`min(s.age, 18)`, `disabled(path, { when })`).
+  A static `value` on a radio/checkbox (option identity) is the only exception.
 - Tests importing the barrel from `@angular/forms/signals` → `test-setup.ts` with
   `import '@angular/compiler'`.
 - Custom errors: return `{ kind, message }` or `null`; factories in
