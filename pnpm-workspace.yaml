@@ -4,6 +4,9 @@
 overrides:
   uuid: ^11.0.3
   whatwg-encoding: ^3.1.1
+  # browserslist 4.28.3 is a broken npm publish (comment-stripped node.js corrupts
+  # a regex). Pin to the fixed 4.28.4. Remove once the ecosystem moves past 4.28.3.
+  browserslist: 4.28.4
 
 # Native build scripts allow-list (pnpm 11+). Without this, pnpm warns at every
 # install. We trust these packages — they ship native bindings (file watchers,
@@ -32,3 +35,4 @@ minimumReleaseAgeExclude:
   - "@vitest/utils@4.1.9"
   - eslint-plugin-unicorn@66.0.0
   - vitest@4.1.9
+  - browserslist@4.28.4
