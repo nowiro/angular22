@@ -34,3 +34,5 @@ playwright-report
 Thumbs.db
 *.launch
 .history
+
+.nx/migrate-runs
