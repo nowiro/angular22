@@ -36,3 +36,7 @@ minimumReleaseAgeExclude:
   - eslint-plugin-unicorn@66.0.0
   - vitest@4.1.9
   - browserslist@4.28.4
+  - "@playwright/test@1.61.1"
+  - playwright-core@1.61.1
+  - playwright@1.61.1
+  - vite@8.1.0
